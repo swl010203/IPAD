@@ -1,0 +1,273 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+	.siteSearchlist01{ background: #fff;}
+	.siteSearchlistcur{background: #f5f5f5; float: left; }
+	.siteSearchlistcur .multi_lineul{ background: #f5f5f5;}
+	.siteSearchlistcur .siteSearchul{ width: auto; padding: 20px;overflow: hidden;}
+	.siteSearchlistcur .busi_fenleili{  padding: 0.1rem 0; width: 25%;float: left;background: #fff; position: relative; margin-bottom: 0.1rem;}
+	.siteSearchlistcur .busi_fenleia{ display: block; width: auto; float: inherit;text-align: center;}
+	.siteSearchlistcur .busi_fenleia img{    width: 260px; height: 260px; border:0;}
+	.siteSearchlistcur .busi_fenleir{ margin-left: 0;padding: 0 0.2rem}
+	.siteSearchlistcur .busi_fenleirrice{padding-top:0.1rem;}
+	.siteSearchul li{
+		margin-top:0;
+	}
+	/*.siteSearchlistcur .siteSearchul li:nth-child(2n){    float: right;}*/
+</style>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+	.shouqing2{
+		position: absolute;
+		bottom: 10px;
+		right: 10px;
+		width: 1.2rem;
+		height: 1.2rem;
+	}
+</style>
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+	<!--<div class="busi_searchwrap">
+		<div class="busi_searchcon">
+			<div class="busi_searchbor">
+				<input type="text" id="keyword" placeholder="请输入要搜索的商品名称" />
+			</div>
+			<a href="javascript:void(0)" onclick="swicthList();" class="busi_searchbtn">搜索</a>
+		</div>
+	</div>-->
+	<div class="eval_maintop busi_listtop">
+		<ul class="eval_topul">
+			<li class="eval_topli eval_topli01"><a href="#" class="eval_toplia">综合</a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_toplisalvol"><a href="#" class="eval_toplia">销量<i class="sales_sorticon"></i></a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_topliprice"><a href="#" class="eval_toplia">价格<i class="sales_sorticon"></i></a><span class="eval_line"></span></li>
+			<!--<li class="eval_topli eval_toplilast"><a href="#" class="eval_toplia">多行排列</a></li>-->
+		</ul>
+	</div>
+	<div class="siteSearchlistwrap">
+		<div class="siteSearchlist siteSearchlist01 siteSearchlistcur" >
+			<ul class="siteSearchul" id="goodslist">
+			
+				<!--<li class="busi_fenleili">
+						<div class="busi_fenlei">
+						<a href="#"class="busi_fenleia"><img src="images/mulit_img02.jpg"></a>
+						<div class="busi_fenleir">
+							<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保杏仁蜡菊保湿霜50g杏仁蜡菊保湿霜50g湿霜50g</a></p>
+							<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00<a href="#" class="cart_icon" style="position:inherit; float:right"></a></p>
+						</div>
+					</div>
+					
+				</li>
+				<li class="busi_fenleili">
+						<div class="busi_fenlei">
+						<a href="#"class="busi_fenleia"><img src="images/mulit_img02.jpg"></a>
+						<div class="busi_fenleir">
+							<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保杏仁蜡菊保湿霜50g杏仁蜡菊保湿霜50g湿霜50g</a></p>
+							<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00<a href="#" class="cart_icon" style="position:inherit; float:right"></a></p>
+						</div>
+					</div>
+				</li>-->
+				
+			</ul>
+		</div>
+				
+	</div>
+					
+</div>
+<div class="wp_100">
+	<div class="botH"></div>
+</div>
+
+
+<script type="text/javascript">
+	$(function(){
+		var doc=$('header').height();
+		var docw=$('.top_classify').width();
+// 分类的高度
+		$('.top_classify').css({
+			height:$(document).height()-doc
+		});
+		// 选中
+		$('.top_classifylist .top_classifya').click(function(){
+			$(this).addClass('top_classifyaur').siblings().removeClass('top_classifyaur');
+		});
+
+		// 销量切换
+		$('.eval_topul .eval_topli01').click(function(){
+			swicth_type =1;
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			swicthList();
+		});
+		// 多行
+		var flag=false;
+		$('.eval_topul .eval_toplilast').click(function(){
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			if (flag) {
+				$(this).find('a').text('多行排列');
+				// $('.multi_linecon').show();
+				// $('.siteSearchlist').hide();
+				$('.siteSearchlist').addClass('siteSearchlistcur');
+				flag=false
+			}else{
+				$(this).find('a').text('单行排列');
+				// $('.siteSearchlist').show();
+				// $('.multi_linecon').hide();
+				$('.siteSearchlist').removeClass('siteSearchlistcur');
+				flag=true
+			}
+			});
+			// 价格 销量
+		var flag0=true;
+		$('.eval_topul .eval_topliprice').click(function(){
+			$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			if (flag0) {
+				$(this).find('.sales_sorticon').addClass('sales_sorticon01');
+				swicth_type =4;
+				flag0=false;
+			}else{
+				swicth_type = 5;
+				$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+				flag0=true;
+			}
+			swicthList();
+		});
+		var flag1=true;
+		$('.eval_topul .eval_toplisalvol').click(function(){
+			$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+				if (flag1) {
+					swicth_type =2;
+					$(this).find('.sales_sorticon').addClass('sales_sorticon01');
+					flag1=false;
+				}else{
+					swicth_type=3;
+					$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+					flag1=true
+				}
+				swicthList();
+			});
+		});
+
+
+	var category_id = 0;  //三级分类
+	var page = 1;         //当前分页 第几页
+	var is_page = true;   //是否存在下一页
+	var keyword="";
+	var swicth_type=1;    //1综合 2销量升序 3销量降序 4价格升序 5价格降序
+	apiready = function(){
+		//优化点击
+		api.parseTapmode();
+		//加载状态
+		loading('mall_goods_list_body');
+
+		category_id = api.pageParam.type_id;
+		
+		var keywordparam = api.pageParam.keyword;
+		if(keywordparam !=''  && keywordparam !=undefined){
+			$("#keyword").val(keywordparam);
+		}
+//		//监听滚动条是否到底部
+//		api.addEventListener({
+//		    name:'scrolltobottom',
+//		    extra:{
+//		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+//		    }
+//		}, function(ret, err){        
+//		     if(is_page){
+//		         page++;
+//			     getGoodsList();
+//		     }
+//		});
+		
+
+		//获取列表
+		getGoodsList();
+	};
+	
+	/**
+	 * 筛选查询 
+	 */
+	function swicthList(){
+		page =1;
+		is_page = true;
+		getGoodsList();
+	}
+	
+	//获取列表
+	function getGoodsList(){
+		var keyword= $("#keyword").val();
+		_ajax(ajax_url+'Index/Owner/getGoods',{'type':swicth_type,'name':keyword,'id':category_id},'post',function(ret){
+			var strVar = "";
+			if(ret.status ==1){
+				$.each(ret.data,function(k,v){
+					strVar += "<li class=\"busi_fenleili\" onclick=\"openGoodsDetail("+v['goods_id']+","+v['channel_id']+")\" >";
+				    strVar += "<div class=\"busi_fenlei\">";
+				    strVar += "	<a href=\"javascript:void(0)\" class=\"busi_fenleia\"><img src=\""+v['goods_img']+"\"><\/a>";
+				    strVar += "	<div class=\"busi_fenleir\">";
+				    strVar += "		<p class=\"busi_fenleirtxt\">";
+				    strVar += "			<a href=\"javascript:void(0)\" class=\"busi_fenleirtxta dy_dd\">"+v['goods_name']+"<\/a>";
+				    strVar += "		<\/p>";
+				    strVar += "		<p class=\"busi_fenleirrice\">";
+				    strVar += "			<b class=\"busi_fenleirpriceb\">￥<\/b>"+v['shop_price']; //+"<a href=\"#\" class=\"cart_icon\" style=\"position:inherit; float:right\"><\/a>";
+				    strVar += "		<\/p>";
+				    strVar += "	<\/div>";
+				    if(v['goods_number'] < 1){
+				    	strVar += '<img class="shouqing2" src="../../images/shouqing2.png" />';
+				    }
+				    strVar += "<\/div>";
+				    strVar += "<\/li>";
+			    });
+			    is_page = true;
+				
+			}else{
+				is_page = false;
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$("#goodslist").html(strVar);
+		    }else{
+		    	$("#goodslist").append(strVar);
+		    }
+			
+			closeloading();
+		    
+		})
+	}
+
+
+	//频道信息
+var channel = [];
+	channel[1] = 'mall';
+	channel[2] = 'super';
+	channel[4] = 'food';
+	channel[5] = 'house';
+
+
+/**
+ * 跳转对应商品详情 
+ * @param goods_id  商品id
+ * @param type_id   频道Id   对应表示在  变量 channel中
+ */
+function openGoodsDetail(goods_id ,type_id){
+	var flag = channel[type_id];
+	_openWinByUrl(flag+"_goodsdetail","../"+flag+"/"+flag+"_goodsdetail",{'goods_id':goods_id})
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">消费记录</h1>
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="pl20 pr20 box_s">
+				<table class="xiaofeijilu_table mui-row" border="0" cellspacing="0" cellpadding="0">
+					<thead class="fs30">
+						<tr>
+							<th class="mui-col-xs-3 mui-col-sm-3"><span>类型</span></th>
+							<th class="mui-col-xs-3 mui-col-sm-3"><span>金额</span></th>
+							<th class="mui-col-xs-3 mui-col-sm-3"><span>状态</span></th>
+							<th class="mui-col-xs-3 mui-col-sm-3"><span>时间</span></th>
+						</tr>
+					</thead>
+					<tbody class="fs24 mui-text-center" id="mypay">
+						<!-- <tr>
+							<td class="mui-col-xs-3 mui-col-sm-3">购卡</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2000</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">已支付</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2018-09-12 16:54:30</td>
+						</tr>
+						<tr>
+							<td class="mui-col-xs-3 mui-col-sm-3">购卡</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2000</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">已支付</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2018-09-12 16:54:30</td>
+						</tr>
+						<tr>
+							<td class="mui-col-xs-3 mui-col-sm-3">购卡</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2000</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">已支付</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2018-09-12 16:54:30</td>
+						</tr>
+						<tr>
+							<td class="mui-col-xs-3 mui-col-sm-3">购卡</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2000</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">已支付</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2018-09-12 16:54:30</td>
+						</tr>
+						<tr>
+							<td class="mui-col-xs-3 mui-col-sm-3">购卡</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2000</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">已支付</td>
+							<td class="mui-col-xs-3 mui-col-sm-3">2018-09-12 16:54:30</td>
+						</tr> -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/app.js"></script>
+	<script src="../../script/api.js"></script>
+
+	<script type="text/javascript">
+		mui.init();
+		var uid = '';
+		apiready = function(){
+			api.addEventListener({
+			    name: 'keyback'
+			}, function(ret, err){
+			    fanhui();
+			});
+
+			uid = localStorage.getItem('uid');
+			myPayLog();
+		};
+		$('.mui-action-back').on('tap',function(){
+			fanhui();
+		});
+		function myPayLog(){
+			_ajax(ajax_url+'Index/Exercise/myPayLog',{'uid':uid},'post',function(ret,err){
+				if(ret.status == 1){
+					var strVar = '';
+					$.each(ret.data,function(k,v){
+						strVar += '<tr>';
+						strVar += '	<td class="mui-col-xs-3 mui-col-sm-3">'+v.order_type+'</td>';
+						strVar += '	<td class="mui-col-xs-3 mui-col-sm-3">'+v.price+'</td>';
+						strVar += '	<td class="mui-col-xs-3 mui-col-sm-3">'+v.pay_status+'</td>';
+						strVar += '	<td class="mui-col-xs-3 mui-col-sm-3">'+v.add_time+'</td>';
+						strVar += '</tr>';
+					});
+					$('#mypay').html(strVar);
+				}else{
+					_toast(ret.msg);
+					return false;
+				}
+			});
+		}
+
+		function fanhui(){
+			api.closeWin();
+		}
+	</script>
+</html>

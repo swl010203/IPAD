@@ -1,0 +1,367 @@
+<!doctype html>
+<html class="bgwhite">
+
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link href="../../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+        <style>
+        /*.zengping_icon{
+            width: 14px;
+            height: 14px;
+            background: url(../image/cart2.png) 0 0 no-repeat;
+            background-size: 100% 100%;
+            display: inline-block;
+            vertical-align: -3px;
+        }*/
+
+        </style>
+    </head>
+
+    <body class="bgwhite">
+        <header id="header" class="mui-bar mui-bar-nav bgRed">
+            <h1 class="mui-title">确认订单</h1>
+            <!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right bianjiClick">编辑</button>-->
+            <a class="mui-icon mui-icon-back" onclick="api.closeWin();"></a>
+        </header>
+        <div class="mui-content bgwhite">
+            <div class="qrdd_address clearfloat pl20 pr20 box_s mui-row">
+                <div class="mui-col-xs-11 mui-col-sm-11" onclick="goAddress();">
+                    <p class="fs32 font_weightB mt20">
+                        <span>收件人：<span class="consignee"></span></span>
+                        <span class="ml60 mobile"></span>
+                    </p>
+                    <p class="fs26 colorHui999 mt10 address"></p>
+                </div>
+                <div class="mui-col-xs-1 mui-col-sm-1 mui-text-right">
+                    <span class="mui-icon mui-icon-arrowright fs36 colorHui666 font_weightB"></span>
+                </div>
+            </div>
+            <div class="qrdd_shopImg mui-row pl20 pr20 box_s border_b10">
+                <div class="mui-col-sm-9 mui-col-xs-9 mui-row mt30 goodsImgContainer">
+                    <!-- <div class="mui-col-sm-3 mui-col-xs-3">
+                        <div class="qrdd_shopImg_div">
+                            <img src="../../images/qrdd1.jpg"/>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="mui-col-sm-3 mui-col-xs-3 mui-text-right">
+                    <!-- <span class="colorHui666 fs28">共<span class="goodsNumber"></span>件</span> -->
+                </div>
+            </div>
+            <div class="qrdd_fangshi fs28">
+                <ul class="border_b10">
+                    <li style="line-height: 36px;" class="qrdd_fangshi_li clearfloat border_b pl20 pr20 box_s" style="overflow: hidden;">
+                        <div class="mui-pull-left colorHui999"><span>配送方式</span></div>
+                        <div class="mui-pull-right peisong_payClick">
+                            <span class="sendMethod">惠管家配送</span>
+                            <span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>
+                        </div>
+                    </li>
+
+                    <li class="qrdd_fangshi_li clearfloat border_b pl20 pr20 box_s getGoodsContainer" style="display: none;" style="overflow: hidden;">
+                        <div class="mui-pull-left colorHui999"><span>取件时间</span></div>
+                        <div class="mui-pull-right">
+                            <span class="getGoodsTime">请选择取件时间</span>
+                            <span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>
+                        </div>
+                    </li>
+
+                    <li class="qrdd_fangshi_li clearfloat border_b pl20 pr20 box_s" style="overflow: hidden;">
+                        <div class="mui-pull-left colorHui999"><span>备注</span></div>
+                        <div class="mui-pull-right" style="width: 80%;">
+                            <input class="mui-text-right qrdd_inp" style="width: 100%;" type="text" name="note" id="note" value="" placeholder="请输入您的备注要求"/>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="border_b">
+                    <li class="qrdd_fangshi_li clearfloat pl20 pr20 box_s" style="overflow: hidden;">
+                        <div class="mui-pull-left colorHui999"><span>商品单价</span></div>
+                        <div class="mui-pull-right">
+                            <span>￥<span class="goods_price_one"></span></span>
+                        </div>
+                    </li>
+                    <li class="qrdd_fangshi_li clearfloat pl20 pr20 box_s" style="overflow: hidden;">
+                        <div class="mui-pull-left colorHui999"><span>商品数量</span></div>
+                        <div class="mui-pull-right">
+                            <span><span class="goodsNumber"></span></span>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="pl20 pr20 box_s clearfloat pt20">
+                    <p class="mui-pull-right">
+                        <span class="fs24">￥</span>
+                        <span class="fs36 allPrice0 total_goods_price"></span>
+                    </p>
+                </div>
+            </div>
+            <div style="height: 80px;background: #FFFFFF;"></div>
+            <footer class="cart_footer clearfloat fs24 mui-row pl20 box_s">
+                <div class="mui-col-sm-9 mui-col-xs-9">
+                    <div class="bianjiClick_div">
+                        <p style="line-height: 50px;">
+                            <span>应付金额:</span>
+                            <span class="fs24 colorRed">￥</span>
+                            <span class="fs36 colorRed allPrice0 confirm_price"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="mui-col-sm-3 mui-col-xs-3">
+                    <div class="buyNow colorWhite" onclick="order()">提交订单</div>
+                </div>
+            </footer>
+        </div>
+        <div class="mark_common mui-hidden">
+            <div class="qrdd_markPay bgwhite fs28" style="height: 130px;">
+                <ul id="getGoodsMethod" data-value="0">
+                    <li class="qrdd_markPay_li_con pl20 pr20 box_s border_b colorRed" data-value="0">惠管家配送</li>
+                    <li class="qrdd_markPay_li_con pl20 pr20 box_s border_b" data-value="1">线下自提</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script src="../../script/mui.min.js"></script>
+    <script src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript" src="../../script/md5.js"></script>
+    <script type="text/javascript">
+        mui.init();
+        $(".peisong_payClick").on("tap",function(){
+            $(".mark_common").removeClass("mui-hidden");
+            $(".qrdd_markPay").animate({height:"130px"});
+            show_mark();
+        });
+        $(".mark_common").on("tap",function(){
+            hidden_mark();
+            $(".qrdd_markPay").animate({height:"0px"},function(){
+                $(".mark_common").addClass("mui-hidden");
+            });
+        });
+        $(".qrdd_markPay li").on("tap",function(){
+            hidden_mark();
+            $(this).addClass("colorRed").siblings().removeClass("colorRed");
+            $(".qrdd_markPay").animate({height:"0px"},function(){
+                $(".mark_common").addClass("mui-hidden");
+            });
+        });
+
+        var date       = "";   //取件日期
+        var times      = "";  //取件时间
+        var userinfo   = '';
+        var address_id = 0;
+        var goods_id   = "";  //商品id
+        var goods_num  = 0;  //商品数量
+        var note       = "";        //备注
+        var aid        = 0;
+        var token      = 0;//防重复提交
+
+        //获取订单信息
+        var total_price = 0;
+
+        App.openWinReload = true;
+        var dot_type = '';
+        apiready = function(){
+            userinfo  = $api.getStorage('userinfo');
+            goods_id  = api.pageParam.gid;
+            aid       = api.pageParam.aid;
+            goods_num = api.pageParam.num;
+
+            // 监听收货地址
+            api.addEventListener({
+                name: 'sureaddress'
+            }, function(ret, err) {
+                address_id = ret.value.address_id;
+                if(address_id != ''){
+                    getAddress(address_id); // 获取收货地址
+                }
+            });
+
+            //取件日期
+            api.addEventListener({
+                name:'laundry_time'
+            },function(ret,err){
+                times = ret.value.times;
+                date = ret.value.date;
+                date_info = ret.value.date_info;
+                $(".getGoodsTime").text(date_info+" "+times);
+            });
+
+            //监听更新登陆信息
+            api.addEventListener({
+                name: 'refresh_userinfo'
+            }, function(ret, err) {
+                userinfo = ret.value.userinfo;
+            });
+
+            // 获取订单信息
+            confirmOrder();
+        };
+
+        //获取订单信息
+        function confirmOrder() {
+            var uid = userinfo.uid;
+            //判断用户登录
+            if( typeof uid == 'undefined' || uid == 0 || uid == '' ) {
+                api.openWin({
+                    name : 'login',
+                    url : '../login.html',
+                    reload : true
+                });
+                return false;
+            }
+            var paramData = {gid:goods_id, aid:aid, uid:uid, num:goods_num};
+            _ajax(ajax_url + "Index/Seckill/confirmOrder", paramData, 'post', function(ret) {
+                if( ret.status == 1 ) {
+                    token = ret.data.token;//防止重复提交
+                    var goodsHtml = '';
+                    goodsHtml += '<div class="mui-col-sm-3 mui-col-xs-3">';
+                    goodsHtml +=     '<div class="qrdd_shopImg_div">';
+                    goodsHtml +=         '<img src="'+ret.data.goods_img+'"/>';
+                    goodsHtml +=     '</div>';
+                    goodsHtml += '</div>';
+
+                    $('.goodsImgContainer').html( goodsHtml );
+                    $('.goodsNumber').html( goods_num );
+                    total_price = ret.data.total_price;//商品价格
+                    $('.goods_price_one').html( ret.data.shop_price );
+                    $('.total_goods_price').html( total_price );
+                    $('.confirm_price').html( total_price );
+                } else {
+                    mui.toast( ret.msg );
+                }
+                return false;
+            });
+        }
+
+        //提交订单
+        function order() {
+            if( typeof userinfo =='undefined' || userinfo =='' || userinfo ==null ) {
+                _openWinByUrl( 'login', '../login' );
+                return false;
+            }
+            var shipping_type = $('#getGoodsMethod').attr('data-value');
+            if( shipping_type == 1 ) {
+                if( date == ''  ||  times =='' ) {
+                    _toast( '请选择取件时间' );
+                    return false;
+                }
+            }else{
+            	var phoneStr = $('.mobile').text();
+            	if( phoneStr == ''  ||  phoneStr == undefined  ||  phoneStr == 'undefined' ) {
+                    _toast( '请完善地址信息' );
+                    return false;
+                }
+            }
+            var note = $('#note').val();    // 备注信息
+
+            var ajaxData ={
+                'uid'           : userinfo.uid,
+                'address_id'    : address_id,   //收货地址
+                'remark'        : note,         //备注
+                'num'           : goods_num,//数量
+                'aid'           : aid,//活动id
+                'gid'           : goods_id,//商品id
+                'shipping_type' : shipping_type,//取件类型
+                'token'         : token,//token验证
+                'take_time'     : times, //自提取件时间
+                'take_date'     : date,  //自提取件日期
+                'order_method'  : 1,//下单平台
+            };
+
+            /********参数加密 start*********/
+            //获取键
+            var sortKeyArr = [];
+            $.each(ajaxData, function(key, val) {
+                sortKeyArr.push( key );
+            });
+            //键排序
+            var sortKey = sortKeyArr.sort();
+            //加密字符串
+            var signStr = 'uid='+ajaxData.uid;
+            $.each(sortKey, function(key, val) {
+                signStr += '&'+val+'='+ajaxData[val];
+            });
+            var md5SignStr = md5( signStr );
+            ajaxData['sign_t'] = md5SignStr;
+            /********参数加密 endt*********/
+
+            _ajax(ajax_url +"Index/Seckill/placeOrder", ajaxData, 'post', function(ret){
+                if( ret.status == 1 ) {
+                    var order_sn = ret.data.order_sn;
+                    var order_id = ret.data.order_id;
+                    setTimeout(function(){
+                        _openWinByUrl( 'pay_head', '../order/pay_head', {'order_sn':order_sn,'pay_notify_type':26, 'goods_type':3});
+                    }, 1000);
+                } else {
+                    _toast( ret.msg );
+                }
+            });
+        }
+
+        // 前往收货地址页面
+        function goAddress(){
+            _openWinByUrl('address_head','../user/address_head');
+        }
+
+        // 获取收货地址
+        function getAddress(address_id){
+            var url = ajax_url + 'Index/SuperNew/getAddress';
+            var data = {
+                'uid' : userinfo.uid,
+                'address_id' : address_id,
+            };
+            _ajax(url, data, 'get', function(ret){
+                if(ret.status == 1){
+                    $('.mobile').text(ret.data.mobile);
+                    $('.consignee').text(ret.data.consignee);
+                    $('.address').text(ret.data.address);
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+
+        // 配送方式选择
+        $('#getGoodsMethod li').on('tap', function(){
+            $('.sendMethod').text($(this).text());
+            $('#getGoodsMethod').attr('data-value', $(this).attr('data-value'));
+            if($(this).attr('data-value') == 1){
+                $('.getGoodsContainer').css('display', 'block');
+            }else{
+                $('.getGoodsContainer').css('display', 'none');
+                $('.getGoodsTime').text('');    // 清空取件时间
+            }
+        });
+
+        //  取件时间选择
+        $('.getGoodsTime').parent().on('tap', function(){
+            _openWinByUrl('time', '../laundry/time', {'date':date,'times':times});
+        });
+
+        /**
+    	 * 计算价格
+    	 */
+    	function calcOrderPrice(){
+    		var shipping_type = $("input[name='shipping_type']:checked").val();
+    		if(shipping_type ==1){
+    			var price =total_goods_price - coupons_val ;
+    		}else{
+    			var price =total_goods_price - coupons_val + fee_price;
+    		}
+
+    		if(price < 0){
+    			price =0.00;
+    		}
+    		api.sendEvent({
+    	        name:'orderPrice',
+    	         extra:{
+                	price:price.toFixed(2)
+                }
+            });
+    	}
+    </script>
+</html>

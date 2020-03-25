@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/api.js"></script>
+<style type="text/css">
+	.card_imgnum{ top: 1.8rem; left: 0.4rem;}
+	.erweima_window01{ background: #fff; border-radius: 5px; position: absolute; top: 50%; margin-top: -200px; width: 90%; left: 5%; overflow: hidden;}
+	.erweima_window{padding: 0.2rem;}
+	.erweima_windowwrap{  text-align: center;    margin-top: 0.5rem;}
+	.erweima_windowtxt{ font-size:20px; padding: 0.3rem; color:#333; text-align:center; }
+
+	.erweima_windower{ padding-top: 0.5rem;}
+	.erweima_foot{ height: 0.5rem; background: #f5f5f5; color: #999; line-height: 0.5rem; }
+
+	.erweima_windowtxm img{ width:300px; height:60px;}
+	.erweima_windower img{ width:200px; height:200px;}
+	
+	.qr_img table{text-align: center;margin:0px auto;}
+</style>
+</head>
+<body style="background:#429056">
+<!-- 头部 -->
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="erweima_windowwrap">
+		<div class="erweima_window01" style="display: none;">
+			<div class="erweima_window">
+			<p class="erweima_windowtxt"></p>
+			<p class="erweima_windowtxm txm_img" style="margin:0 auto;"></p>
+			<p class="erweima_windower qr_img"></p>
+			</div>
+		<div class="erweima_foot">扫码付款，方便快捷</div>
+		</div>
+	</div>
+</div>
+<!-- 二维码弹窗 -->
+
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/jquery.qrcode.js"></script>
+<script type="text/javascript" src="../../script/qrcode.js"></script>
+<script type="text/javascript" src="../../script/jquery-barcode.js"></script>
+<script type="text/javascript">
+
+apiready = function(){
+	//loading('qrcode');
+	openScanner(api.pageParam.cardno);
+	
+	var is_show = api.pageParam.is_show;
+	if(is_show ==1){
+		$("body").hide();
+		api.setFrameAttr({
+	        	name:'qrcode',
+				hidden:true
+			});
+	}else{
+		$("body").show();
+		api.setFrameAttr({
+	        	name:'qrcode',
+				hidden:false
+			});
+	}
+	
+			
+	api.addEventListener({
+	    name:'qrcode'
+    },function(ret,err){
+    	
+    	openScanner(ret.value.cardno);
+    });
+};
+
+
+var bar_img="";
+var qr_img="";
+/**
+ * 二维码 
+ */
+function openScanner(cardno){
+	//return false;
+	$(".erweima_windowtxt").html(cardno);
+	$(".qr_img").html("");
+	$(".qr_img").qrcode({
+		render: "table",
+		text: cardno,
+		width: "180",
+		height: "180",
+
+	});
+	//$(".qr_img").attr('src',qr_img);
+	//$(".txm_img").attr('src',bar_img);
+	var winWidth = api.winWidth;  // 比如： 320
+	$(".txm_img").barcode(cardno, "int25",{barWidth:1.7, barHeight:50,showHRI:false});
+	var txtcwd=2;
+	$(".txtclass").each(function(){
+		var thatwid = $(this).width();
+		var bleft = parseInt( $(this).css('border-left-width'));
+		txtcwd +=bleft+thatwid;
+	});
+	
+	
+	if(winWidth>320  && winWidth !=414  && winWidth!=376){
+	
+		$(".txm_img").width(txtcwd);
+	}else{
+		//优化6s
+		if(winWidth ==376){
+			$(".txm_img").css('margin-left','40px');
+		}
+	}
+	
+	$(".erweima_window01").show();
+	closeloading();
+}
+</script>
+</body>
+</html>

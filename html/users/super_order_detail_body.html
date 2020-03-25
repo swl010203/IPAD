@@ -1,0 +1,303 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<style type="text/css">
+ .aftersale{position: absolute;right: 20px;bottom: 35px; color:#d12a18;border:1px solid #e9e9e9;width:120px;height:50px;line-height:40px;font-size:18px;border-radius:5px;text-align:center;}
+ .huan{position: absolute;right: 160px;bottom: 35px; color:#d12a18;border:1px solid #e9e9e9;width:120px;height:50px;line-height:40px;font-size:18px;border-radius:5px;text-align:center;}
+ 
+ .payDtailinforp{font-size:18px;line-height:2;padding-bottom:0;}
+ .snapUptop{font-size:18px;height:60px;line-height:50px;padding:0 20px;}
+ .payDtailinfor{padding: 0 20px;font-size:18px;}
+ .siteSearchula01lir{font-size:18px;}
+ .siteSearchula01lir span{font-size:18px;}
+ .orderDetail{margin-top:-6px;}
+/* .orderBtn{border:1px solid #e9e9e9;}*/
+</style>
+</head>
+<body>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="siteSearchlist" style="background: #fff;">
+		<ul class="siteSearchul list" >
+<!--		<li style="padding-top: 0.1rem; margin-top: 0;"> 
+				<a href="#" class="siteSearchula01">
+					<div class="siteSearchula01li">
+						<img src="images/site_img01.png">
+						<div class="siteSearchula01lir">
+							<span class="siteSearchulaspan01 mt_10" >牛肉面</span>
+							<span class="siteSearchulaspan02 mt_10" ><em>￥</em>18.00</span>
+							<span class="siteSearchulaspan02 mt_10" style="color: #1f2228;  font-size: 0.24rem;">数量：x2</span>
+						</div>
+					</div>
+				</a>
+
+					<a href="javascript:void(0);" class="aftersale"  class="orderBtn ">退单</a>
+					<a href="javascript:void(0);" class="huan"  class="orderBtn ">换货</a>
+			</li>
+					<li style="padding-top: 0.1rem; margin-top: 0;"> 
+				<a href="#" class="siteSearchula01">
+					<div class="siteSearchula01li">
+						<img src="images/site_img01.png">
+						<div class="siteSearchula01lir">
+							<span class="siteSearchulaspan01 mt_10" >牛肉面</span>
+							<span class="siteSearchulaspan02 mt_10" ><em>￥</em>18.00</span>
+							<span class="siteSearchulaspan02 mt_10" style="color: #1f2228;  font-size: 0.24rem;">数量：x2</span>
+						</div>
+					</div>
+				</a>
+				<span class="payNum" style="color: #999; font-size: 0.26rem; top: 0.2rem;"></span>
+					
+			</li>-->
+			
+			
+		</ul>
+	</div>
+	<div class="orderDtailprice">
+		<div class="payDtailinfor">
+		<p class="payDtailinforp">商品金额：<span class="payDtailinforpr goods_amount"></span></p>
+		<p class="payDtailinforp">运费：<span class="payDtailinforpr shipping"></span></p>
+		<p class="payDtailinforp">优惠券:<span class="payDtailinforpr coupons"></span></p>
+
+		
+	</div>
+	<a href="#" class="snapUptop" style="background: #fff;border-top: 1px solid #ebebeb; line-height: 50px;">支付金额：<span class="detialPrice"></span></a>
+	</div>
+</div>
+<div class="wp_100">
+	<div class="orderDetail">
+		<a href="#" class="snapUptop" style="background: #fff;line-height: 50px;font-size:18px;"><!--<i class="imgIcon"></i>-->订单详情：</a>
+		<div class="payDtailinfor" style="padding-bottom: 0.2rem;">
+		<p class="payDtailinforp ">订单号：<span class="order_sn"></span></p>
+		<p class="payDtailinforp">下单时间：<span class="add_time"></span></p>
+		<p class="payDtailinforp">支付方式：<span class="pay_name"></span></p>
+		<div id="useraddress" style="display:none;">
+			<p class="payDtailinforp">收货人姓名：<span class="consignee"></span></p>
+			<p class="payDtailinforp">收货人电话：<span class="mobile"></span></p>
+			<p class="payDtailinforp">收货人地址：<span class="address"></span></p>
+		</div>
+		<div id="shopaddress" style="display:none;">
+			<p class="payDtailinforp">店铺名称：<span id="shopname"></span></p>
+			<p class="payDtailinforp">店铺地址：<span id="shopaddr"></span></p>
+			<p class="payDtailinforp">自提码：<span id="extract_code"></span></p>
+			<p class="payDtailinforp">自提时间：<span id="take_time"></span></p>
+		</div>
+		<div id="peisong" style="display:none;">
+			<p class="payDtailinforp">配送员：<span id="peisongyuan"></span></p>
+			<p class="payDtailinforp">配送员电话：<span id="pmobile"></span></p>			
+		</div>
+		<p class="payDtailinforp">订单备注：<span class="remark">无</span></p>
+	</div>
+	</div>
+
+</div>
+<script type="text/javascript">
+var  order_id=0;
+ apiready=function(){
+ //监听再次打开时 执行动画效果
+	api.addEventListener({
+		name : 'super_order_detail'
+	}, function(ret, err) {
+		ready();
+	});
+  order_id=api.pageParam['id'];
+ ready();
+ };
+ function ready(){
+  	 	api.ajax({
+				url : ajax_url + 'Index/UserSuperOrder/orderdetail',
+				method : 'post',
+				data : {
+					values : {
+					id:order_id,
+					},
+				}
+			}, function(ret, err) {
+			 if(ret){
+			  if(ret.code){
+			   var data=ret.data;
+			   var ordergoods=ret.ordergoods;
+			   var goodsHtml='';
+			    if(ordergoods!=null && ordergoods.length>0){
+			      for(var i in ordergoods){
+			      goodsHtml+='<li style="padding-top: 0.1rem; margin-top: 0;">'+ 
+							'<a href="#" class="siteSearchula01">'+
+								'<div class="siteSearchula01li">'+
+									'<img src="'+ordergoods[i]['pic']+'">'+
+									'<div class="siteSearchula01lir">'+
+										'<span class="siteSearchulaspan01 mt_10" style="width:60%;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" >'+ordergoods[i]['goods_name']+'</span>'+
+										'<span class="siteSearchulaspan02 mt_10" ><em>￥</em>'+ordergoods[i]['goods_price']+'</span>'+
+										'<span class="siteSearchulaspan02 mt_10" style="color: #1f2228;  font-size: 18px;">数量：x'+ordergoods[i]['goods_number']+'</span>'+
+									'</div>'+
+								'</div>'+
+							'</a>'+
+							'<span class="payNum" style="color: #999; font-size: 18px; top: 0.2rem;">';
+							if(ordergoods[i]['aftersale']==null ){
+//							 goodsHtml+=data['status_name']['msg'];
+							}else{
+							 goodsHtml+=ordergoods[i]['aftersale']['msg'];
+							}
+							 goodsHtml+='</span>';
+							 if(ordergoods[i]['aftersale']==null){
+							 	 if(ordergoods[i]['is_tuihuan']==0 && ordergoods[i]['aftersale']==null && data['status_name']['type']==3){
+								  	goodsHtml+='<a  href="javascript:void(0);" class="aftersale"  onclick=refund("'+ordergoods[i]['rec_id']+'",2) class="orderBtn">退款</a>';
+								 }
+							 	
+							 	if(data['is_comments']==0 && (ordergoods[i]['is_tuihuan']==0 && (data['status_name']['type']==5 || data['status_name']['type']==6))){
+							  		goodsHtml+='<a  href="javascript:void(0);" class="aftersale"  class="orderBtn " onclick=tui("'+ordergoods[i]['rec_id']+'",2)>退货</a>';
+							  		goodsHtml+='<a  href="javascript:void(0);" class="huan"  class="orderBtn " onclick=huan("'+ordergoods[i]['rec_id']+'",2)>换货</a>';
+							 	}
+							 }else{
+							 
+							 	if(data['is_comments']==0 && ordergoods[i]['is_tuihuan']==1  &&  ordergoods[i]['aftersale']['type'] ==7 ){
+							 		if( data['status_name']['type']==5 || data['status_name']['type']==6){
+							 			goodsHtml+='<a  href="javascript:void(0);" class="aftersale"  class="orderBtn " onclick=tui("'+ordergoods[i]['rec_id']+'",2)>退货</a>';
+							  			goodsHtml+='<a  href="javascript:void(0);" class="huan"  class="orderBtn " onclick=huan("'+ordergoods[i]['rec_id']+'",2)>换货</a>';
+							 		}
+							 		
+							 	
+							 	}
+							 	  //退货发货
+							  	if(ordergoods[i]['is_tuihuan']==2 && ordergoods[i]['aftersale']['type']==2){
+							  		goodsHtml+='<a href="javascript:void(0);" class="aftersale"  onclick=fahuo("'+ordergoods[i]['rec_id']+'",2,2) class="orderBtn ">发货</a>';
+							 	}
+							    //换货发货
+								 if(ordergoods[i]['is_tuihuan']==3 && ordergoods[i]['aftersale']['type']==2){
+								  		goodsHtml+='<a href="javascript:void(0);" class="aftersale"  class="orderBtn " onclick=fahuo("'+ordergoods[i]['rec_id']+'",2,3)>发货</a>';
+								 }
+							 
+							  //换货发货
+							  if(ordergoods[i]['is_tuihuan']==3 && ordergoods[i]['aftersale']['type']==5){
+							  		goodsHtml+='<a href="javascript:void(0);" class="aftersale"  class="orderBtn " onclick=finish("'+ordergoods[i]['rec_id']+'",2)>确认收货</a>';
+							  }
+							 
+							 }
+						
+							 
+						goodsHtml+='</li>';
+			      }
+			    }
+			    $(".list").html(goodsHtml);
+			    $(".goods_amount").html('￥'+data['goods_amount']);//商品金额
+			     if(data['shipping_type']==0){
+			     	$(".shipping").html('￥'+data['shipping_fee']);//运费价格
+			     }else{
+			     	$(".shipping").html('￥0.00');//运费价格
+			     }
+			     $(".coupons").html('-￥'+data['coupons_val']);//优惠价格
+			     $(".order_sn").html(data['order_sn']); //订单编号
+			     $(".add_time").html(data['add_time']);//添加世家
+			     if(data['pay_status'] ==1){
+			     	$(".pay_name").html(data['pay_name']);//支付名称
+			     }
+			     if(data['shipping_type']==0){
+			     	$('#shopaddress').hide();
+			     	$('#useraddress').show();
+			     	$(".consignee").html(data['consignee']); //收货人
+			     	$(".mobile").html(data['mobile']);//手机号
+			     	$(".address").html(data['address']);//地址
+			     	
+			     	$('#peisong').show();
+			     	$("#peisongyuan").html(data['ps_name']);
+			     	$("#pmobile").html(data['ps_mobile']);
+			     }
+			     if(data['shipping_type']==1){
+			     	$('#useraddress').hide();
+			     	$('#peisong').hide();
+			     	$('#shopaddress').show();
+			     	$("#shopname").html(data['shopname']);
+			     	$("#shopaddr").html(data['shopaddress']);
+			     	$("#extract_code").html(data['extract_code']);
+			     	$("#take_time").html(data['take_date'] +" "+ data['take_time']);
+			     }
+			     $(".remark").html(data['postscript']);//备注
+			     $(".detialPrice").html('￥'+data['income']);
+			  }else{
+			   _toast(ret.msg);
+			   return false;
+			  }
+			 }else{
+			   _alert('网络连接失败,请稍后重试');
+			 }
+			})
+ 
+ }
+ /*
+  * 收货
+  */
+ function finish(rec_id,type){
+		  api.confirm({
+		    title: '提示',
+		    msg: '您确认收到货吗',
+		    buttons: ['确定', '取消']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		     if(index==1){
+		         	api.ajax({
+				url : ajax_url + 'Index/Aftersale/finish',
+				method : 'post',
+				data : {
+					values : {
+					rec_id:rec_id,
+					type:type
+					},
+				}
+			}, function(ret, err) {
+			   if(ret){
+			    if(ret.code==1){
+			     _toast(ret.msg,function(){
+			     ready();
+			     })
+			    }
+			   }else{
+			   _alert('网络连接失败,请稍后重试');
+			   }
+			
+			})
+		     }
+		});
+ }
+ 
+  /*
+  * 发货
+  */
+ function fahuo(rec_id,type,tui_type){
+  var name='shipment';
+ var url='shipment';
+ var title='售后';
+  _openWinByUrl(name+'_head','../user/aftersalehead',{'furl':url,'frame':name,'title':title,'rec_id':rec_id,'type':type,'tui_type':tui_type});
+   
+ }
+ 
+ function refund(rec_id,type){
+ var name='refund';
+ var url='refund';
+ var title='退款';
+  _openWinByUrl(name+'_head','../user/aftersalehead',{'furl':url,'frame':name,'title':title,'rec_id':rec_id,'type':type});
+ }
+  function tui(rec_id,type){
+ var name='returnsale';
+ var url='returnsale';
+ var title='退单';
+  _openWinByUrl(name+'_head','../user/aftersalehead',{'furl':url,'frame':name,'title':title,'rec_id':rec_id,'type':type});
+ }
+  function huan(rec_id,type){
+ var name='exchange';
+ var url='exchange';
+ var title='换货';
+  _openWinByUrl(name+'_head','../user/aftersalehead',{'furl':url,'frame':name,'title':title,'rec_id':rec_id,'type':type});
+ }
+</script>
+</body>
+</html>

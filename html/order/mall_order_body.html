@@ -1,0 +1,569 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+				.num_shul{ float: right; font-size: 20px; color: #232323; }
+				.duo_checkbox03 + label {margin-top:0.2rem;}
+				.busi_fenleirrice {
+		
+			padding-top: 0.2rem;
+		}
+		.duo_checkbox03 + label{
+			margin-left:0.2rem;
+		}
+		.duo_checkbox03 + label {
+			margin-top: 0px;
+		}
+		.busi_fenleia {
+			float: left;
+			width: 12%;
+			display: inline-block;
+		}
+			</style>
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+<div class="food_ordertop addressinfo">
+		<div class="food_ordertopbg"></div>
+		<div class="food_ordercon" onclick="_openWinByUrl('address_head','../user/address_head')">
+			<div class="food_ordercontop">
+				<div class="food_ordercontoptxt" id="add_name">暂无地址,请添加地址</div>
+				<div class="food_ordercontoptxt" id="add_phone"></div>
+			</div>
+			<p class="food_orderconaddr txt2" id="add_add">
+				
+			</p>
+		</div>
+		<div class="food_ordertopbg"></div>
+	</div>
+	<div class="pinpai_intr mt15">
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			添加备注
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+			<span onclick="_openWinByUrl('mall_note_head','../window_head',{'furl':'order/note','frame':'mall_note','title':'添加备注','note':note});"  class="checkin_iforrpos01" style="color:#999;"><i class="note">立即添加</i><a class="right_arrowcom"></a></span>
+		</div>
+	</div>
+	</div>
+
+		
+		<div class="pinpai_intr mt15" id="mallinfo">
+			<div class="pinpai_intrtop" style="color: #666;"><i class="shangpin_listicon"></i><span>商城</span></div>
+			<div id="mallList">
+<!--				<div class="cart_topicon"><img src="../../images/cart_pinpaiicon.jpg"/>柏卡姿专卖店</div>
+				<ul class="siteSearchul">
+							<li class="busi_fenleili">
+									<div class="busi_fenlei">
+									<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+									<div class="busi_fenleir">
+										<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+										<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00 <span class="num_shul">数量：X1</span></p>
+									</div>
+								</div>
+								
+							</li>
+							<li class="busi_fenleili">
+									<div class="busi_fenlei">
+									<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+									<div class="busi_fenleir">
+										<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+										<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00 <span class="num_shul">数量：X1</span></p>
+									</div>
+								</div>
+								
+							</li>
+							
+					</ul>
+					<div class="checkin_ifor">
+						<div class="checkin_iforl">
+							优惠券
+						</div>
+						<div class="checkin_iforr checkin_iforrpos">
+							<span class="checkin_iforrpos01">是否使用优惠券<a href="#" class="right_arrowcom" style="vertical-align: top;"></a></span>
+						</div>
+					</div>-->
+			</div>
+		</div>
+		<div class="pinpai_intr mt15" id="superinfo">
+			<div class="pinpai_intrtop" style="color: #666;"><i class="shangpin_listicon"></i><span>超市</span></div>
+			<div id="superList">
+				<!--<div class="cart_topicon"><img src="../../images/cart_pinpaiicon.jpg"/>柏卡姿专卖店</div>
+				<ul class="siteSearchul">
+							<li class="busi_fenleili">
+									<div class="busi_fenlei">
+									<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+									<div class="busi_fenleir">
+										<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+										<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00 <span class="num_shul">数量：X1</span></p>
+									</div>
+								</div>
+								
+							</li>
+							<li class="busi_fenleili">
+									<div class="busi_fenlei">
+									<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+									<div class="busi_fenleir">
+										<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+										<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00 <span class="num_shul">数量：X1</span></p>
+									</div>
+								</div>
+								
+							</li>
+							
+					</ul>
+					<div class="checkin_ifor">
+						<div class="checkin_iforl">
+							优惠券
+						</div>
+						<div class="checkin_iforr checkin_iforrpos">
+							<span class="checkin_iforrpos01">是否使用优惠券<a href="#" class="right_arrowcom" style="vertical-align: top;"></a></span>
+						</div>
+					</div>-->
+			</div>
+		</div>
+		
+	
+			
+				<div class="checkin_ifor mt_15" style="background:#fff">
+					<p style="float: left;" class="" >配送方式：  </p>
+					<div style="line-height: 60px;" style="float: left;" >
+					<input type="radio"  id="pay_type1" value="0" name="shipping_type" checked class="duo_checkbox03">
+					<label for="pay_type1" onclick='swichship(0)' >惠管家配送</label>
+					<input type="radio" id="pay_type2" value="1" name="shipping_type"  class="duo_checkbox03">
+					<label for="pay_type2" onclick='swichship(1)'>线下自提</label>
+					</div>
+				</div>
+				<div class="pinpai_intr mt15 ziti_time" style="display: none;">
+					<div class="checkin_ifor">
+						<div class="checkin_iforl">
+							取件时间
+						</div>
+						<div class="checkin_iforr checkin_iforrpos">
+							<span onclick="_openWinByUrl('time','../laundry/time',{'date':date,'times':times})"  class="checkin_iforrpos01" style="color:#999;"><i class="data_times">请选择时间</i><a class="right_arrowcom"></a></span>
+						</div>
+					</div>
+				</div>
+				<div class="checkin_ifor mt_15" id="zitidiv" style="background:#fff;min-height:1.8rem;display:none;">
+					<p style="float: left;" class="" >自提地址：  </p>
+					<div style="float: left;width:79%;padding-top: 0.1rem;line-height: 0.4rem;word-wrap:break-word;" id="zitiaddress"></div>
+				</div>
+		
+			
+		<div class="mt_15" style="background:#fff">
+			<p class="corfirm_price" style="display: block;">配送费：  ￥<i class="fee_price">0.00</i></p>
+				<p class="corfirm_price">优惠券：-￥<i class="coupons_val">0.00</i></p>
+				<!--<p class="corfirm_price">积分：-￥10.00</p>-->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script>
+	var date        = "";   //取件日期
+		var times       = "";  //取件时间
+	function swichship(type){
+		if(type==0){
+			$(".ziti_time").hide();
+			$('#zitidiv').hide();
+			$(".addressinfo").show();
+			$('.fee_price').text(fee_price);
+			var shipprice = (total_price+fee_price -coupons_val).toFixed(2);
+		}else{
+			$(".ziti_time").show();
+			$('#zitidiv').show();
+			$(".addressinfo").hide();
+			$('.fee_price').text('0.00');
+			var shipprice= (total_price-coupons_val).toFixed(2);
+		}
+				
+		api.sendEvent({
+	        name:'orderPrice',
+	         extra:{
+            	price:shipprice
+            }
+        });
+	}
+	
+	var userinfo ="";
+	var goods_id ="";  //商品id
+	var goods_num="";  //商品数量
+	var goods_attr=""; //商品属性
+	var goods_attr_str =""; //商品熟属性描述
+	var goods_type ="";//商品所属类型  商城 超市
+	var goods_sid  =""; //商品所属店铺id
+	var goods_price=""; //商品属性价格
+	var address_id = 0; //收货地址id
+	var note="";        //备注
+	
+	var fee_price=0.00;  //配送费
+	var coupons_val=0.00;//优惠价格
+	var coupons_id=0;
+	var coupons_sid = "";
+	
+	var coupons_sid_arr = [];
+	var conpons_id_arr = [];
+	var coupons_val_arr = [];
+	
+	var aid = 0; //活动id
+	var activity_id = 0;  //提交下单时活动id
+	
+	var food_type = "";  //餐饮类型
+	apiready = function(){
+		api.parseTapmode();
+		userinfo = $api.getStorage('userinfo');
+		
+		goods_id = api.pageParam.goods_id;
+		goods_num = api.pageParam.goods_num;
+		goods_attr = api.pageParam.goods_attr;
+		goods_attr_str = api.pageParam.goods_attr_str;
+		goods_type = api.pageParam.goods_type;
+		goods_sid = api.pageParam.goods_sid;
+		goods_price = api.pageParam.goods_price;
+		food_type   = api.pageParam.food_type;
+		
+		aid =api.pageParam.aid;
+		
+		//加载状态
+		loading('mall_order_body');
+		
+		//监听更新登陆信息
+		api.addEventListener({
+		    name: 'refresh_userinfo'
+		}, function(ret, err) {
+		    userinfo = ret.value.userinfo;
+		});
+		
+		//取件日期
+        api.addEventListener({
+            name:'laundry_time'
+        },function(ret,err){
+        	//coding...
+        	times = ret.value.times;
+        	date = ret.value.date;
+        	date_info = ret.value.date_info;
+        	
+        	$(".data_times").text(date_info+" "+times);
+        });
+        
+		//监听收获地址
+		api.addEventListener({
+		    name: 'sureaddress'
+		}, function(ret, err) {
+			address_id = ret.value.address_id;
+		    //重新加载订单
+			cartConfirmOrder();
+		});
+		
+		//监听使用优惠券
+		api.addEventListener({
+		    name: 'order_coupons_event'
+		}, function(ret, err) {
+		
+			coupons_val = 0;
+			var param_coupons_id = ret.value.coupons_id;
+			var param_coupons_val = ret.value.coupons_val;
+			var param_coupons_sid = +ret.value.shop_id;
+			
+			//判断当前店铺是否使用过优惠券  使用过则替换新的优惠券
+			var is_key = $.inArray(param_coupons_sid,coupons_sid_arr);
+			if(is_key == -1){
+				coupons_sid_arr.push(param_coupons_sid);
+			 	conpons_id_arr.push(param_coupons_id);
+			 	coupons_val_arr.push(param_coupons_val);
+			 	
+			 	
+			}else{
+				coupons_sid_arr[is_key] = param_coupons_sid;
+				conpons_id_arr[is_key]  = param_coupons_id;
+				coupons_val_arr[is_key] = param_coupons_val;
+			}
+		
+			$(".shop_cou_id_"+ret.value.shop_id).html('更换优惠券');
+			//计算优惠券总和
+			for(var i=0; i< coupons_val_arr.length; i++){
+			   coupons_val  += +coupons_val_arr[i];
+			}
+			
+			//分割 优惠券id  逗号分隔
+			coupons_id  = conpons_id_arr.join(',');
+			coupons_sid = coupons_sid_arr.join(',');
+			
+			$(".coupons_val").html(coupons_val);
+			
+		    calcOrderPrice();
+		});
+		
+		//监听提交订单
+		api.addEventListener({
+		    name: 'order_note'
+		}, function(ret, err) {
+		    note = ret.value.note;
+		    $(".note").html('查看备注');
+		});
+		
+		//去结算
+		api.addEventListener({
+	        name:'suborder'
+        },function(ret,err){
+        	order();
+        });
+		
+		//获取订单信息
+		cartConfirmOrder();
+	};
+	
+	var total_price = 0.00;
+	//获取订单信息
+	function cartConfirmOrder(){
+	
+//		alert("获取订单信息:"+address_id);
+		_ajax(ajax_url + "Index/ConfirmOrder/cartConfirmOrder",{
+			'uid':userinfo.uid,
+			'address_id':address_id,
+			'attribute':goods_attr,
+			'a_name'   :goods_attr_str,
+			'a_price'  :goods_price,
+			'num'      :goods_num,
+			'gid'      :goods_id,
+			'sid'      :goods_sid,
+			'type'     :goods_type,
+			'ac_id'    :aid,
+			
+		},'post',function(ret){
+			if(ret.status ==1){
+				token = ret.token;
+				fee_price = 0.00;  //运费清0
+				//address
+				if(ret.useraddress != -1){
+					$("#add_name").html(ret.useraddress.consignee);
+					$("#add_phone").html(ret.useraddress.mobile);
+					$("#add_add").html(ret.useraddress.address);
+					address_id = ret.useraddress.address_id;
+				}
+				
+				//活动id信息
+				activity_id = ret.ac_id;
+				
+				total_price = 0;
+				//判断是否有餐饮商品
+		
+				var zitiaddress='';
+				//判断是否有商城商品
+				if(ret.mallgood  !=  -1){
+					total_price+=ret.mallgood.total;
+					var strVar = "";
+					$.each(ret.mallgood.shop,function(k,v){
+						fee_price += v['yun'];
+						zitiaddress+=v['shopname']+'：'+v['ziti_address']+'<br/>';
+						
+						strVar += "<div class=\"cart_topicon\">";
+					    strVar += "	<img src=\""+v['logo']+"\"/>"+v['shopname'];
+					    strVar += "<\/div>";
+					    strVar += "<ul class=\"siteSearchul\">";
+					    //遍历商品信息
+					    $.each(v['good'],function(key,val){
+					    	strVar += "	<li class=\"busi_fenleili\">";
+						    strVar += "	<div class=\"busi_fenlei\">";
+						    strVar += "		<a href=\"javascript:void(0)\"class=\"busi_fenleia\"><img src=\""+val['goods_img']+"\"><\/a>";
+						    strVar += "		<div class=\"busi_fenleir\">";
+						    strVar += "			<p class=\"busi_fenleirtxt\">";
+						    strVar += "				<a href=\"javascript:void(0)\" class=\"busi_fenleirtxta dy_dd\">"+val['goods_name']+"<\/a>";
+						    strVar += "				<a href=\"javascript:void(0)\"  style='color:#999;margin-top:5px;' class=\"busi_fenleirtxta dy_dd\">规格:"+val['attribute_name']+"<\/a>";
+						    
+						    strVar += "			<\/p>";
+						    strVar += "			<p class=\"busi_fenleirrice\">";
+						    strVar += "				<b class=\"busi_fenleirpriceb\">￥<\/b>"+val['price']+" <span class=\"num_shul\">数量：x"+val['num']+"<\/span>";
+						    strVar += "			<\/p>";
+						    strVar += "		<\/div>";
+						    strVar += "	<\/div>";
+						    strVar += "	<\/li>";
+					    });
+					    strVar += "<\/ul>";
+					    
+					    //判断是否可以使用优惠券
+					    if(ret.cou_play != -1){
+					    	strVar += "<div class=\"checkin_ifor\">";
+						    strVar += "	<div class=\"checkin_iforl\">";
+						    strVar += "							优惠券";
+						    strVar += "	<\/div>";
+						    strVar += "	<div class=\"checkin_iforr checkin_iforrpos\">";
+						    strVar += "		<span  onclick=\"getCoupons("+v['sid']+","+v['total']+")\" class=\"checkin_iforrpos01\"><i class='shop_cou_id_"+v['sid']+"'>查看优惠券</i><a href=\"javascirpt:void(0);\"  class=\"right_arrowcom\"><\/a><\/span>";
+						    strVar += "	<\/div>";
+						    strVar += "<\/div>";
+						    /*
+						    strVar += "<div class=\"checkin_ifor\">";
+						    strVar += "	<div class=\"checkin_iforl\">";
+						    strVar += "							优惠券";
+						    strVar += "	<\/div>";
+						    strVar += "	<div class=\"checkin_iforr checkin_iforrpos\">";
+						    strVar += "		<span class=\"checkin_iforrpos01\"><i class='shop_cou_id_"+v['sid']+"'>查看优惠券</i><a href=\"javascirpt:void(0);\"  onclick=\"getCoupons("+v['sid']+","+v['total']+")\" class=\"right_arrowcom\"<\/a><\/span>";
+						    strVar += "	<\/div>";
+						    strVar += "<\/div>";*/
+					    }
+					});
+					
+					
+					$("#mallList").html(strVar);
+					$("#mallinfo").show();
+				}else{
+					$("#mallinfo").hide();
+				}
+				//判断是否有超市商品
+				if(ret.supergood  !=  -1){
+					total_price+=ret.supergood.total;
+					
+					var strVar = "";
+					$.each(ret.supergood.shop,function(k,v){
+						zitiaddress+=v['shopname']+'：'+v['ziti_address']+'<br/>';
+						fee_price += v['yun'];
+						strVar += "<div class=\"cart_topicon\">";
+					    strVar += "	<img src=\""+v['logo']+"\" />"+v['shopname'];
+					    strVar += "<\/div>";
+					    strVar += "<ul class=\"siteSearchul\">";
+					    //遍历商品信息
+					    $.each(v['good'],function(key,val){
+					    	strVar += "	<li class=\"busi_fenleili\">";
+						    strVar += "	<div class=\"busi_fenlei\">";
+						    strVar += "		<a href=\"javascript:void(0)\"class=\"busi_fenleia\"><img src=\""+val['goods_img']+"\"><\/a>";
+						    strVar += "		<div class=\"busi_fenleir\">";
+						    strVar += "			<p class=\"busi_fenleirtxt\">";
+						    strVar += "				<a href=\"javascript:void(0)\" class=\"busi_fenleirtxta dy_dd\">"+val['goods_name']+"<\/a>";
+						    strVar += "				<a href=\"javascript:void(0)\"  style='color:#999;margin-top:5px;' class=\"busi_fenleirtxta dy_dd\">规格:"+val['attribute_name']+"<\/a>";
+						    strVar += "			<\/p>";
+						    strVar += "			<p class=\"busi_fenleirrice\">";
+						    strVar += "				<b class=\"busi_fenleirpriceb\">￥<\/b>"+val['price']+" <span class=\"num_shul\">数量：X"+val['num']+"<\/span>";
+						    strVar += "			<\/p>";
+						    strVar += "		<\/div>";
+						    strVar += "	<\/div>";
+						    strVar += "	<\/li>";
+					    });
+					    strVar += "<\/ul>";
+					    
+					    //判断是否可以使用优惠券
+					    if(ret.cou_play != -1){
+						    strVar += "<div class=\"checkin_ifor\">";
+						    strVar += "	<div class=\"checkin_iforl\">";
+						    strVar += "							优惠券";
+						    strVar += "	<\/div>";
+						    strVar += "	<div class=\"checkin_iforr checkin_iforrpos\">";
+						    strVar += "		<span  onclick=\"getCoupons("+v['sid']+","+v['total']+")\" class=\"checkin_iforrpos01\"><i class='shop_cou_id_"+v['sid']+"'>查看优惠券</i><a href=\"javascirpt:void(0);\"  class=\"right_arrowcom\"><\/a><\/span>";
+						    strVar += "	<\/div>";
+						    strVar += "<\/div>";
+					    }
+					});
+					$("#superList").html(strVar);
+					$("#superinfo").show();
+				}else{
+					$("#superinfo").hide();
+				}
+				
+				$('#zitiaddress').html(zitiaddress);
+				$(".fee_price").html(fee_price.toFixed(2));
+				
+				swichship(0);
+				
+				
+			}else{
+			
+			}
+			closeloading();
+		});
+	}
+	
+	/**
+	 * 选择优惠券
+	 * @param sid  店铺id 
+	 * @param shop_price  店铺总价
+	 */
+	function getCoupons(sid,shop_price){
+		_openWinByUrl('coupons_window_head','../window_head',{'furl':'users/coupons','frame':'coupons','title':'优惠券','sid':sid,'shop_price':shop_price});
+//		_openWinByUrl('coupons_head','../users/coupons_head',{'sid':sid,'shop_price':shop_price});
+	}
+	
+	
+	/**
+	 * 计算价格 
+	 */
+	function calcOrderPrice(){
+		var shipping_type = $("input[name='shipping_type']:checked").val();
+		if(shipping_type ==1){
+			var price =total_price - coupons_val ;
+		}else{
+			var price =total_price - coupons_val + fee_price;
+		}
+		
+		if(price < 0){
+			price =0.00;
+		}
+		api.sendEvent({
+	        name:'orderPrice',
+	         extra:{
+            	price:price.toFixed(2)
+            }
+        });
+	}
+	
+	/**
+	 * 提交订单信息
+	 */
+	function order(){
+		if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+			_openWinByUrl('login','../login');
+			return false;
+		}
+		
+		var shipping_type = $("input[name='shipping_type']:checked").val();
+		
+//		alert("提交订单信息:"+address_id);
+		_ajax(ajax_url +"Index/PlaceAnOrder/placeAnOrder",{
+			'uid' :userinfo.uid,
+			'address_id':address_id,   //收货地址
+			'postscript':note,         //备注
+			
+			'attribute':goods_attr,    //属性代码xx_xx(每个值用','分割)0-1,0-2,0-3,0-4
+			'a_name'   :goods_attr_str,//属性名称
+			'a_price'  :goods_price,   //属性价格
+			'num'      :goods_num,
+			'gid'      :goods_id,
+			'sid'      :goods_sid,
+			'type'     :goods_type,//订单类型1商城商品 2超市商品
+			'cc_id'    :coupons_id,     //优惠券id
+			'cc_sid'    :coupons_sid,     //优惠券id
+			'ac_id'    :activity_id,
+			'shipping_type'  :shipping_type,
+			'token'    :token,
+			'take_time'     :times, //自提取件时间
+			'take_date'     :date, //自提取件日期
+			
+		},'post',function(ret){
+			if(ret.status ==1){
+				_openWinByUrl('pay_head','pay_head',{'order_sn':ret.order_sn,'pay_notify_type':5});
+//				_toast(ret.msg,function(){
+//					
+//				});
+				
+			}else{
+				_toast(ret.msg);
+			}
+		});
+	}
+	
+	
+</script>
+</body>
+</html>

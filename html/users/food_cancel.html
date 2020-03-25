@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style type="text/css">
+ .addImgbtn01 {width: 1.4rem;height: 1.4rem;position: relative;float: left;margin: 0px 5px;}
+ .upload_cancel{ width: 0.35rem; height: 0.35rem; background: url(../../images/sc.png) no-repeat; background-size: 0.3rem 0.3rem; position: absolute; right: -0.2rem; top: -0.1rem; display: block; }
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+<!-- 登录内容 -->
+<div class="wp_100">
+
+	
+	
+</div>
+
+<div class="selReasontext">
+	<textarea class="selReasontxt" placeholder="请输入取消原因" id="content"></textarea>
+</div>
+
+
+<div >
+		<div class="bqt_hallorder">
+			<a href="javascript:void(0)" onclick="submit();" class="bot_btna bot_btnapay order_btnapay" style="border-radius: 5px;">确 认</a>
+		</div>
+</div>
+<!-- 底部 -->
+
+<script type="text/javascript">
+	
+	var id = "";
+	apiready=function(){
+		id = api.pageParam.id;
+
+	};
+	
+	
+	function submit(){
+		var content=$("#content").val();
+		if(!content){
+		  	_toast('请输入原因');
+		  	return false;
+		}
+		
+		var queryUrl = 'Index/UserFoodOrder/cancelFoodAppointOrder';
+		_ajax(ajax_url +queryUrl,{'order_id':id,'content':content},'post',function(ret){
+		    		if(ret.status ==1){
+		    			api.sendEvent({
+	                        name:'refe_order_list'
+                        });
+		    			_toast(ret.msg,function(){
+		    				api.closeWin();
+		    			})
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+	 
+	}
+</script>
+</body>
+</html>

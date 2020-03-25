@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">新增地址</h1>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">三居室</button>-->
+			<a class="mui-icon mui-icon-back colorRed"></a>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">新增地址</button>-->
+		</header>
+		<div class="mui-content">
+			<div class="bgwhite mt20 wsdd_inp">
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">收件人：</span>
+					<input type="text" name="" id="" value="" placeholder="请输入收件人名称"/>
+				</div>
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">联系电话：</span>
+					<input type="text" name="" id="" value="" placeholder="请输入联系电话"/>
+				</div>
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">所在地区：</span>
+					<span class="fl addr_song"></span>
+					<span class="iconfont icon-arrow-right fr"></span>
+				</div>
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">详细地址：</span>
+					<input type="text" name="" id="" value="" placeholder="请输入联详细地址"/>
+				</div>
+			</div>
+			<div class="xzdz_ul_bbottom colorHui999 bgwhite pl20 pr20 box_s">
+				<div class="checkbox_div_outer clearfloat">
+					<div class="checkbox_div active fl">
+						<i class="mui-icon mui-icon-checkmarkempty"></i>
+					</div>
+					<span class="fl ml20 fs28">设为默认地址</span>
+				</div>
+			</div>
+			<div style="height: 100px;"></div>
+			<div class="pl20 pr20 box_s mt30">
+				<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined btn_allQuanping mt30">保存</button>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/jquery-1.12.2.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$(".checkbox_div").on("tap",function(){
+			if($(this).hasClass("active")){
+				$(this).removeClass("active");
+			}else{
+				$(this).addClass("active");
+			}
+		})
+	</script>
+</html>

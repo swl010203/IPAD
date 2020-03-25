@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+<style>
+	html,body{background: rgba(0,0,0,0);}
+	.share_li{ width:50%;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+
+	<!-- 规格弹窗 -->
+	<div class="maskBg maskBg01" style="display: none; margin-top: 0rem;"></div>
+	<div class="etc_pay share_window" style="display: none;">
+		<div class="etc_paytitle">分享</div>
+		<div class="payList mt_15">
+			<ul class="share_ul">
+				<li class="share_li">
+					<a href="javascript:void(0);" onclick="sharetype(3,'session')" class="share_lia"><img src="../images/weixin_icon.png">
+					<p class="share_lip01">微信好友</p>
+					</a>
+				</li>
+				<li class="share_li">
+					<a href="javascript:void(0);" onclick="sharetype(4,'timeline')" class="share_lia"><img src="../images/frind_icon.png">
+					<p class="share_lip01">朋友圈</p>
+					</a>
+				</li>
+				<!--<li class="share_li">
+					<a href="javascript:void(0);" onclick="sharetype()" class="share_lia"><img src="../images/qq_icon.png">
+					<p class="share_lip01">QQ空间</p>
+					</a>
+				</li>
+				<li class="share_li">
+					<a href="javascript:void(0);" onclick="sharetype(2)" class="share_lia"><img src="../images/sina_icon.png">
+					<p class="share_lip01">微博</p>
+					</a>
+				</li>-->
+			</ul>
+		
+		</div>
+	
+	</div>
+	
+<script type="text/javascript">
+
+	// 分享
+	//var flag=true;
+	function share_window(flag){
+		if (flag) {
+			$('.maskBg01').show();
+			$('.share_window').stop().slideDown(1000);
+			//flag=false;
+		}else{
+			$('.maskBg01').hide();
+			$('.share_window').stop().slideUp(1000);
+			//flag=true;
+		}
+    }
+    $(".maskBg").click(function(){
+		share_window(0);
+		setTimeout(function(){
+			api.closeFrame({
+				name:'share'
+	        });
+		},1000); 
+		
+	});
+	share_window(1);
+	
+	var share_shop_name="惠管家";  //分享名称
+	var share_shop_thumb="../images/logo.png"; //图片缩略图
+	var fnssfdurl="www.hguanjia.cn/huidownload/download.html";        //分享链接
+	apiready = function(){
+		api.parseTapmode();
+		//fnssfdurl = api.pageParam.url;  //分享内容链接
+		share_shop_name = api.pageParam.share_name;  //分享名称
+		share_shop_thumb = api.pageParam.share_thumb;  //分享图片缩略图
+		
+			
+	};
+
+
+
+	function sharetype(type,scene){
+		if(type==1){
+
+			//检测QQ
+			var obj = api.require('qq');
+			obj.installed(function(ret,err){
+			    if(ret.status){
+			    	shareQQ(share_shop_name,share_shop_thumb,fnssfdurl,scene);
+				}else{
+			       _toast('请先安装QQ客户端');
+			    }
+			});
+			
+		}
+		
+		if(type==2){
+		
+			var weibo = api.require('weibo');
+			weibo.isInstalled(
+			    function(ret) {
+			        if (ret.status) {
+			            shareWb(share_shop_name,share_shop_thumb,fnssfdurl,scene);
+			        } else {
+			            _toast('请先安装微博客户端');
+			        }
+			    }
+			);
+			
+			
+			
+		}
+		if(type==3 || type==4){
+			var wx = api.require('wx');
+			wx.isInstalled(function(ret, err) {
+			    if (ret.installed) {
+			        shareWx(share_shop_name,share_shop_thumb,fnssfdurl,scene);
+			    } else {
+			        _toast('请先安装微信客户端');
+			    }
+			});
+
+
+		}
+	}
+
+
+	/**、
+	 * QQ分享 
+	 */
+	function shareQQ(title,thumb,url,scene){
+		var title= ( typeof arguments[0] == "undefined" || arguments[0] == null) ? '中国校园公益网'  : arguments[0];
+		var scene= ( typeof arguments[3] == "undefined" || arguments[3] == null) ? 'timeline'  : arguments[3];
+		
+		var qq = api.require('qq');
+		qq.shareNews({
+		    url: url,
+		    title: title,
+		    description: title,
+		    imgUrl: thumb,
+		    type:'QFriend'
+		}, function(ret, err) {
+		    if (ret.status) {
+		    	_toast('分享成功');
+		   	}else{
+		   		_toast("分享失败");
+		   	}
+		});
+
+
+	}
+	
+	
+	
+	
+	/**、
+	 * 微信分享 
+	 */
+	function shareWx(title,thumb,url,scene){
+
+		var title= ( typeof arguments[0] == "undefined" || arguments[0] == null) ? '惠管家'  : arguments[0];
+		var scene= ( typeof arguments[3] == "undefined" || arguments[3] == null) ? 'timeline'  : arguments[3];
+		var wx = api.require('wx');
+		wx.shareWebpage({
+		    apiKey: 'wx967c2d25800a08ae',
+		    scene: scene,
+		    title: title,
+		    description: title,
+		    thumb: '../images/logo.png',
+		    contentUrl: url
+		}, function(ret, err) {
+		    if (ret.status) {
+		        _toast('分享成功');
+		    } else {
+		    	if(ret.status==-1){
+		    		_toast("未知错误");
+		    	}else if(ret.status==2){
+		    		_toast("取消分享");
+		    	}else if(ret.status==3){
+		    		_toast("分享失败");
+		    	}else{
+		    		_toast("分享失败");
+		    	}
+		        
+		    }
+		});
+
+	}
+
+
+
+	/**、
+	 * 微博分享 
+	 */
+	function shareWb(title,thumb,url,scene){
+
+		var title= ( typeof arguments[0] == "undefined" || arguments[0] == null) ? '惠管家'  : arguments[0];
+		var scene= ( typeof arguments[3] == "undefined" || arguments[3] == null) ? 'timeline'  : arguments[3];
+		
+		var weibo = api.require('weibo');
+		weibo.shareWebPage({
+		    text: title,
+		    title: title,
+		    description: title,
+		    thumb: '../images/logo.png',
+		    contentUrl: url
+		}, function(ret, err) {
+		    if (ret.status) {
+		        _toast('分享成功');
+		    }else{
+		    	if(ret.status==-1){
+		    		_toast("未知错误");
+		    	}else if(ret.status==1){
+		    		_toast("取消分享");
+		    	}else{
+		    		_toast("分享失败");
+		    	}
+		    }
+		});
+
+
+	}
+	
+	
+	
+	
+	
+	/**
+	 * 检测是否安装了qq 
+	 */
+	function _isInstallQQ(){
+		
+	}
+	
+	/**
+	 * 检测是否安装了微信
+	 */
+	function _isInstallWeiXin(){
+		api.appInstalled({
+		    appBundle: 'weixin://'
+		},function( ret, err ){
+			
+		    if( ret.installed ){
+		        return 1;
+		    }else{
+		        return 0;
+		    }
+		});
+	}
+	
+	/**
+	 * 检测是否安装了微信
+	 */
+	function _isInstallWeiBo(){
+		api.appInstalled({
+		    appBundle: 'weibo://'
+		},function( ret, err ){
+		    if( ret.installed ){
+		        return true;
+		    }else{
+		        return false;
+		    }
+		});
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+				.num_shul{ float: right; font-size: 0.22rem; color: #232323; }
+			</style>
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+		
+			<a href="javascript:void(0)" onclick="closeRoot();" class="headerLeft" id="">
+				<span class="backBefor"></span>
+			</a>
+				<h1 class="header_h1">支付订单</h1>
+		</div>
+	</header>
+
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+
+	function closeRoot(){
+		//刷新成功 执行发送监听事件  所有需要刷新的页面  name 统一 paysuccess_refresh
+		api.sendEvent({
+	        name:'paysuccess_refresh'
+        });
+        
+        if(back_root ==1){
+
+	//      //支付成功退到首页
+	      api.closeWin();
+        }else{
+        	api.openWin({
+	            name: 'chakanjilu',
+	            url: 'chakanjilu.html',
+	            reload:false,
+	            animation:{
+	            	subType:'from_left'
+	            }
+            });
+        	// _openWinByUrl('chakanjilu','chakanjilu');
+        }
+        
+      
+
+	}
+	/**
+	 * 个人中心判断是否登陆 跳转页面 
+	 */
+	function openWinOrderList(name,url,param){
+	
+		_openWinByUrl(name,url,param);
+
+	}
+	
+	var back_root = "";
+var userinfo="";
+	apiready = function(){
+
+		back_root = api.pageParam.back_root;
+		api.parseTapmode();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+        api.openFrame({
+            name: 'pay_body',
+            url: 'pay_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: body_h-headerPos.h
+            },
+			pageParam:api.pageParam,
+			reload:true
+        });
+        
+
+	};
+	
+
+</script>
+</body>
+</html>

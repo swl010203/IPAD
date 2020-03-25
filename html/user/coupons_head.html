@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body class="bg_fff" >
+<!-- 头部 -->
+
+<div id="header" style="background:#fff;">
+	<header>
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">优惠券</h1>
+			<a href="javascript:void(0)" onclick="_openWinByUrl('coupons_info_window_head','../window_head',{'furl':'user/coupons_info','frame':'coupons_info','title':'优惠券使用说明',});" class="headerRight">
+				<span class="headerRighttxt">使用说明</span>
+			</a>
+		</div>
+	</header>
+	
+	<div class="eval_maintop yhq_list" style="background: #fff;">
+			<ul class="eval_topul">
+				<li class="eval_topli eval_toplicur"><a href="javascript:void(0);" onclick="selectType(1,this)" class="eval_toplia">未使用(<i class="count">0</i>)</a><span class="eval_line"></span></li>
+				<li class="eval_topli"><a href="javascript:void(0);" onclick="selectType(2,this)" class="eval_toplia">已失效(<i class="wucount">0</i>)</a></li>	
+			</ul>
+		</div>
+</div>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$('.yhq01').click(function(){
+		
+		$(this).addClass('yhqcur').siblings().removeClass('yhqcur');
+	})
+});
+
+	
+	apiready = function(){
+		api.parseTapmode();
+		var title = api.pageParam.title;
+		$(".header_h1").html(title);
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		
+        api.openFrame({
+            name: 'coupons_body',
+            url: 'coupons_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+3,
+                w: headerPos.w,
+                h: body_h-headerPos.h
+            },
+			pageParam:api.pageParam
+        });
+        
+        api.addEventListener({
+	        name:'coupons_count'
+        },function(ret,err){
+        	$(".count").html(ret.value.count);
+        	$(".wucount").html(ret.value.wucount);
+        	//coding...
+        });
+		
+	};
+	
+	//切换查询类型
+	function selectType(type,el){
+		$(".yhq_list li ").removeClass('eval_toplicur');
+		$(el).parent("li").addClass('eval_toplicur');
+		api.sendEvent({
+	        name:'coupons_type',
+	    	extra: {
+		        type: type
+		    }
+        });
+	}
+</script>
+</body>
+</html>

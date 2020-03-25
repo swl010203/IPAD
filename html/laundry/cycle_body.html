@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+	<title>洗护周期</title>
+
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/002_care.css"/>
+    <script src="../../script/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+    
+    <style>
+    	.swiper-wrapper {
+		    position: relative;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 1;
+		    display: -webkit-box;
+		    display: -moz-box;
+		    display: -ms-flexbox;
+		   
+		    -webkit-transition-property: -webkit-transform;
+		    -moz-transition-property: -moz-transform;
+		    -o-transition-property: -o-transform;
+		    -ms-transition-property: -ms-transform;
+		    transition-property: transform;
+		    -webkit-box-sizing: content-box;
+		    -moz-box-sizing: content-box;
+		    box-sizing: content-box;
+    }
+	.swiper-slide {
+	    padding: 0 5px;
+	    letter-spacing: 2px;
+	    max-width: 3rem;
+	    text-align: center;
+	}
+    </style>
+</head>
+<body>
+
+
+	<div class="main">
+		<div class="head ">
+			<ul class="clearfloat swiper-container swiper1 " >
+				<div class="swiper-wrapper" id="fristCate">
+					<!--<div class="swiper-slide active"><li onclick="selectGetCate();" class=" active">洗衣</li></div>
+			    	<div class="swiper-slide"><li class=" ">洗衣</li></div>-->
+				</div>
+				<!--<li class="active">洗衣</li>
+				<li>洗鞋</li>
+				<li>洗家纺</li>
+				<li>洗窗帘</li>
+				<li>车上用品</li>
+				<li>皮草类</li>-->
+			</ul>
+		</div>
+		<!--标体-->
+		<div class="case-list">
+			<div id="list" class="list clearfloat">
+				<!--<ul>
+					<li class="tit"><p class="fl">洗衣</p><p class="fr">洗护周期</p><span class="line"></span></li>
+					<li><p class="fl">单衬衫</p><p class="fr">2天</p></li>
+
+				</ul>
+				<ul>
+					<li class="tit"><p class="fl">洗鞋</p><p class="fr">洗护周期</p><span class="line"></span></li>
+					<li><p class="fl">运动鞋（普通面料）</p><p class="fr">2天</p></li>
+					<li><p class="fl">运动鞋</p><p class="fr">2天</p></li>
+					<li><p class="fl">运动鞋</p><p class="fr">2天</p></li>
+					<li><p class="fl">帆布鞋</p><p class="fr">2天</p></li>
+				</ul>
+				<ul>
+					<li class="tit"><p class="fl">洗衣</p><p class="fr">洗护周期</p><span class="line"></span></li>
+					<li><p class="fl">单衬衫</p><p class="fr">2天</p></li>
+					<li><p class="fl">保暖衬衫</p><p class="fr">2天</p></li>
+					<li><p class="fl">真丝衬衫</p><p class="fr">2天</p></li>
+					<li><p class="fl">西服上衣</p><p class="fr">2天</p></li>
+				</ul>-->
+			</div>
+		
+		</div>
+		<!--列表-->
+	</div>
+	
+	
+	<script src="../../script/laundry/style.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	
+	
+	<script src="../../script/swiper.min.js"></script>
+	
+	<script>
+		
+		
+		function resizeSwiper(){
+			var mySwiper = new Swiper('.swiper1', {
+					freeMode: true,
+					freeModeMomentumRatio: 0.5,
+					slidesPerView: 'auto',
+				
+				});
+
+		}
+		
+		function selectGetCate(el,id){
+			$("#fristCate a li").removeClass('active');
+			$(el).addClass('active');
+			getCategoryInfo(id);
+		}
+
+		apiready = function(){
+			loading('cycle_body');
+			//获取一级分类
+			getFristCate();
+		};
+		
+		function getFristCate(){
+			_ajax(ajax_url+"Index/Laundry/index",{},'get',function(ret){
+				var strVar = "";
+				if(ret.code==1){
+					var n = 1;
+					$(ret.data).each(function(k,v){
+						if(n ==1){
+							getCategoryInfo(v['id']);
+							strVar += "<div class=\"swiper-slide\"  ><a href='javascript:;' ><li onclick=\"selectGetCate(this,"+v['id']+")\"   class=\"fristCateli active\">"+v['name']+"</li></a></div>";
+						}else{
+							strVar += "<div class=\"swiper-slide\"  ><a href='javascript:;' ><li onclick=\"selectGetCate(this,"+v['id']+")\"   class=\"fristCateli\" >"+v['name']+"</li></a></div>";
+						}
+						
+						n++;
+					});
+					
+					$("#fristCate").html(strVar);
+					resizeSwiper();
+					
+				}
+			});
+		}
+		
+		
+		
+		function getCategoryInfo(id){
+			_ajax(ajax_url+"Index/Laundry/getTwoCate",{'pid':id},'get',function(ret){
+				var strVar = "";
+				closeloading();
+				if(ret.code==1){
+				
+					$(ret.data).each(function(k,v){
+
+					    strVar += "<ul>\n";
+					    strVar += "	<li class=\"tit\">\n";
+					    strVar += "	<p class=\"fl\">\n";
+					    strVar += v['name'];
+					    strVar += "	<\/p>\n";
+					    strVar += "	<p class=\"fr\">\n";
+					    strVar += "		洗护周期\n";
+					    strVar += "	<\/p>\n";
+					    strVar += "	<span class=\"line\"><\/span><\/li>\n";
+					    
+					    $(v['parent_list']).each(function(key,val){
+					    	strVar += "	<li>\n";
+						    strVar += "	<p class=\"fl\">\n";
+						    strVar += val['name'];
+						    strVar += "	<\/p>\n";
+						    strVar += "	<p class=\"fr\">\n";
+						    strVar += val['cycle']+"天\n";
+						    strVar += "	<\/p>\n";
+						    strVar += "	<\/li>\n";
+					    });
+					    
+			    		strVar += "<\/ul>\n";		
+
+					});
+					
+					//$("#lastCate").html(strVar);
+				}
+				
+				$("#list").html(strVar);
+				
+			});
+		}
+	</script>
+</body>
+</html>

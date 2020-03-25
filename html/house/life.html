@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html style="height:100%;">
+	<head >
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+        <title>华海地产</title>
+        <link rel="stylesheet" href="../../script/house/css/style.css" />
+        <link rel="stylesheet" href="../../script/house/css/index.css" />
+        <script src="../../script/jquery_2_1_4.js"></script>
+        <script src="../../script/house/js/common.js"></script>
+        <script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+	</head>
+	<body style="height:100%;">
+		<div class="w_100bfb clearfloat house" id="header">
+			<div class="top">
+				<ul class="fl back">
+					<a href="javascript:bank();">
+						<img src="../../script/house/img/back.png" alt="返回">
+					</a>
+				</ul>
+				<ul class="fl word" id="title"></ul>
+			</div>						
+		</div>
+    </body>
+</html>
+<script>
+	apiready = function(){
+		api.parseTapmode();
+		
+		//获取div元素的高
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		
+		//引入iframe页面
+        api.openFrame({
+            name: 'life_body',
+            url: 'life_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: body_h-headerPos.h-1
+            },
+            reload:true,
+			pageParam:api.pageParam
+        });
+        
+        api.addEventListener({
+            name:'service_title'
+        },function(ret,err){
+            var title = ret.value.service_title;
+            $('#title').html( title );
+        });
+	};
+	
+	//返回上一页
+	function bank(){
+		api.closeWin();
+	}
+</script>

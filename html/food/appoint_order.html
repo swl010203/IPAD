@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/zaixianyuding.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/common.css"/>
+		<style>
+		
+		</style>
+	</head>
+	<body>
+		<!--头部-->
+		<header>
+			<ul class="fl back" onclick="bank();">
+				<a href="javascript:"><img src="../../images/food/break.png"/></a>
+			</ul>
+			<ul class="fl word">在线预订</ul>
+		</header>
+
+		<div id="datePlugin"></div>
+		<footer>
+				<div class="leftFoot">
+					<div class="cart">
+						<div class="cartInner">
+							押金
+						</div>
+						<span class="red pricePosi price">￥0</span>
+					</div>
+				</div>
+				<div class="rightFoot" onclick="appointOrder();">立即预订</div>
+		</footer>
+	</body>
+	<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/food/index.js"></script>
+	
+	
+	<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+
+
+
+		apiready = function(){
+			api.parseTapmode();
+			
+			//获取div元素的高
+			var header = $api.dom('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			var footer_h = $api.offset($api.dom('footer')).h;
+			//引入iframe页面
+	        api.openFrame({
+	            name: 'appoint_order_body',
+	            url: 'appoint_order_body.html',
+	            bounces: false,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+1,
+	                w: headerPos.w,
+	                h: body_h-headerPos.h-footer_h-1
+	            },
+	            reload:true,
+				pageParam:api.pageParam
+	        });
+	        
+	        
+	        api.addEventListener({
+	            name:'getAppointOrderPrice'
+            },function(ret,err){
+            	$(".price").html("￥"+ret.value.price);
+            	//coding...
+            });
+	      
+		};
+		
+		//返回上一页
+		function bank(){
+			api.closeWin();
+		}
+		
+		
+		function appointOrder(){
+			api.sendEvent({
+	            name:'appointOrder'
+            });
+		}
+	</script>
+</html>

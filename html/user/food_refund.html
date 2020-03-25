@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style type="text/css">
+ .addImgbtn01 {width: 1.4rem;height: 1.4rem;position: relative;float: left;margin: 0px 5px;}
+ .upload_cancel{ width: 0.35rem; height: 0.35rem; background: url(../../images/sc.png) no-repeat; background-size: 0.3rem 0.3rem; position: absolute; right: -0.2rem; top: -0.1rem; display: block; }
+.selReasontxt{height:1.5rem;}
+.selReasontext{padding: 0.2rem 0.2rem 0.2rem;}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="siteSearchlist" style="background: #fff;">
+		<ul class="siteSearchul list">
+	<!--		<li style="padding-top: 0.1rem; margin-top: 0;"> 
+				<a href="#" class="siteSearchula01">
+					<div class="siteSearchula01li">
+						<img src="" class="goods_img">
+						<div class="siteSearchula01lir">
+							<span class="siteSearchulaspan01 mt_10 goods_name"></span>
+							<span class="siteSearchulaspan02 mt_10"><em>￥</em><span class="goods_price"></span></span>
+							<span class="siteSearchulaspan02 mt_10" style="color: #1f2228;  font-size: 0.24rem;">数量：x<span class="goods_num"></span></span>
+						</div>
+					</div>
+				</a>
+				
+			</li>-->
+			
+			
+		</ul>
+	</div>
+	
+	
+</div>
+
+<div class="selReasontext">
+	<textarea class="selReasontxt" placeholder="请输入退款原因" id="content"></textarea>
+</div>
+<div class="addImgbtn" style="display:none">
+   <div id="img">
+
+
+   </div>
+	<div class="addImgbtn01 addpic">
+		<img src="../../images/addimg_icon.png"  onclick="picker();">
+	</div>
+</div>
+<input type="hidden" name="pic" value="" id="pic" />
+<!-- 底部 -->
+
+<script type="text/javascript">
+var order_id=0;//商品rec_id
+apiready=function(){
+ order_id=api.pageParam['order_id'];
+  getinfo();
+};
+  
+  function getinfo(){
+   api.ajax({
+				    url: ajax_url+'Index/UserFoodOrder/showRefund',
+				    dataType: "json",
+				    method: 'get',
+						 data: {
+				         values: { 
+				          order_id:order_id,
+				        },       
+		             }
+				},function(ret, err){
+				  if(ret){
+				   if(ret.code==1){
+				       var good=ret.good;//商品信息
+				       var html='';
+				       if(good!=null && good.length>0){
+				        for(var i in good){
+				         html+='<li style="padding-top: 0.1rem; margin-top: 0;"> '+
+								'<a href="#" class="siteSearchula01">'+
+									'<div class="siteSearchula01li">'+
+										'<img src="'+good[i]['goods_img']+'" class="goods_img">'+
+										'<div class="siteSearchula01lir">'+
+											'<span class="siteSearchulaspan01 mt_10 goods_name">'+good[i]['goods_name']+'</span>'+
+											'<span class="siteSearchulaspan02 mt_10"><em>￥</em><span class="goods_price">'+good[i]['goods_price']+'</span></span>'+
+											'<span class="siteSearchulaspan02 mt_10" style="color: #1f2228;  font-size: 0.24rem;">数量：x<span class="goods_num">'+good[i]['goods_num']+'</span></span>'+
+										'</div>'+
+									'</div>'+
+								'</a>'+								
+							'</li>';
+				        }
+				       }
+				       $(".list").html(html);
+			
+				   }else{
+				   _toast(ret.msg);
+				   }
+				  }else{
+				  _alert('网络连接失败,请稍后重试');
+				  }
+				})
+  }
+     
+      function picker(){		
+		api.confirm({ 
+                title: "请选择方式",
+                msg: "", 
+                buttons:[ "相机", "相册"]
+        },function(ret,err){
+            if(ret.buttonIndex==1){
+            	var sourceType='camera';
+            }else{
+            	var sourceType='album';
+            }
+
+			api.getPicture({
+			    sourceType: sourceType,
+			    targetWidth:800,
+                targetHeight:800,
+			},function(ret, err){
+				if(ret){          
+					if(ret.data !=''){
+					api.ajax({
+				    url: ajax_url+'Index/File/uploadPicture',
+				    dataType: "json",
+				    method: 'post',
+						 data: {
+				      files:{photo:ret.data}     
+		             }
+				},function(res, err){
+									if(res){						
+										if(res.code==1){
+										var html='  <div class="addImgbtn01">'+
+														'<img src="'+ret.data+'">'+
+														'<span class="upload_cancel" onclick="removePic(this)"></span>'+
+													'</div>';
+										$("#img").append(html);
+										if($("#pic").val()){
+										var pic=$("#pic").val();
+										var str=pic+','+res.data.photo['id'];
+										$("#pic").val(str);
+										}else{
+										$("#pic").val(res.data.photo['id']);
+										}										
+										}else{
+											api.toast({
+												msg: res.msg,
+												duration:2000
+											});
+										}
+			
+									}
+							})
+		
+						
+						}
+					}
+							
+			});
+		});
+
+}
+var start=1;
+function submit(){
+ 
+ var content=$("#content").val();
+ if(!content){
+  _toast('请输入退款原因');
+  return false;
+ }
+ if(start==2){
+ 	return;
+ }else{
+ 	start=2;
+ }
+api.ajax({
+	    url: ajax_url+'Index/UserFoodOrder/refund',
+	    dataType: "json",
+	    method: 'get',
+			 data: {
+	         values: { 
+	          order_id:order_id,
+	          content:content	          
+	        }      
+         }
+	},function(ret, err){
+	  if(ret){
+	   if(ret.code){
+			api.sendEvent({
+                name:'refe_order_list'
+            });
+	     _toast(ret.msg,function(){	     
+	           	api.sendEvent({
+					name : 'food_refund',
+					extra : {
+						key1 : 'success',
+					}
+				});
+				api.closeWin({
+                });
+	     })
+	   }else{
+	    _toast(ret.msg);
+	   }
+	  }else{
+	  _alert('网络连接失败,请稍后重试');
+	  }
+	})
+ 
+}
+</script>
+</body>
+</html>

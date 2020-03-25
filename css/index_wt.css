@@ -1,0 +1,167 @@
+.banner_wt{
+	width: 100%;
+	height: 280px;
+	position: relative;
+}
+.banner_wt img,.mui-slider{
+	width: 100%;
+	height: 100%;
+}
+.mui-slider-indicator .mui-indicator{
+	width: 20px;
+	height: 20px;
+	background: rgba(255,255,255,0.5);
+	-webkit-box-shadow: inherit;
+	box-shadow: inherit;
+}
+.banner_pos{
+	position: absolute;
+	top: 40px;
+	z-index: 1000;
+	width: 96%;
+	margin-left: 2%;
+	color: #FFFFFF;
+	text-align: center;
+}
+.time_index_wt{
+	width: 85px;
+	height: 95px;
+	overflow: hidden;
+	background: url(../images/index_wt2.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+}
+.banner_pos_time{
+	height: 120px;
+}
+.banner_pos_time div{
+	line-height: 84px;
+	font-weight: bold;
+	font-size: 50px;
+}
+.banner_pos_time div:nth-child(3){
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.banner_pos_can{
+	text-align: left;
+	font-size: 30px;
+	font-weight: bold;
+}
+.banner_pos_can span:last-child{
+	margin-left: 20px;
+}
+.banner_pos_sunner{
+	width: 112px;
+	height: 110px;
+}
+.banner_pos_sunner img{
+	width: 100%;
+	height: 100%;
+}
+.banner_pos_add{
+	margin-left: 20px;
+}
+.banner_pos_add p{
+	color: #FFFFFF;
+	margin-top: 10px;
+    margin-bottom: 50px;
+}
+.banner_pos_add p:first-child{
+	font-size: 50px;
+	font-weight: bold;
+}
+.banner_pos_add p:last-child{
+	font-size: 30px;
+}
+.banner_pos_wendu{
+	margin-left: 20px;
+}
+.index_con{
+	padding-left: 20px;
+	padding-right: 20px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.index_con_left,.index_con_right{
+	background: #FFFFFF;
+	height: 100%;
+}
+.index_con_left{
+	width: 270px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.index_con_right{
+	width: calc(100% - 290px);
+}
+.index_con_left_tit{
+	color: #E63C25;
+	font-weight: bold;
+	font-size: 30px;
+	height: 60px;
+	line-height: 60px;
+	margin-top: 20px;
+}
+.index_con_left_tit span.iconfont{
+	font-size: 30px;
+	margin-right: 10px;
+}
+.index_con_left_riqi{
+	color: #E63C25;
+	font-size: 24px;
+	margin-top: 10px;
+}
+.colorRed{
+	color: #E63C25;
+}
+.index_con_left_riqidan{
+	font-size: 24px;
+	height: 50px;
+	line-height: 50px;
+}
+.mui-slider .mui-slider-group.mui-slider-loop{
+	height: 100%;
+}
+.index_con_right_gonggao{
+	width: 100%;
+	height: 60px;
+	padding-left: 20px;
+	padding-right: 20px;
+	box-sizing: border-box;
+}
+.index_con_right_gonggao span.iconfont{
+	font-size: 30px;
+	line-height: 60px;
+}
+.index_con_right_gonggao marquee{
+	height: 44px;
+	margin-left: 40px;
+	margin-top: 10px;
+}
+.index_con_right_gonggao marquee p{
+	font-size: 24px;
+	color: #282828;
+}
+.index_icon{
+	width: 100%;
+	height: 60px;
+	text-align: center;
+	line-height: 60px;
+}
+.index_icon img{
+	max-width: 100%;
+	max-height: 60px;
+}
+.index_iconP{
+	font-size: 24px;
+	text-align: center;
+	color: #282828;
+}
+.index_con_right_bottom{
+	margin-top: 30px;
+	position: relative;
+	height: calc(100% - 60px);
+}
+.index_con_right_bottom div.mui-col-sm-2,.index_con_right_bottom div.mui-col-xs-2{
+	margin-bottom: 30px;
+}

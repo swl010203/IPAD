@@ -1,0 +1,66 @@
+<!doctype html>
+<html class="bgBlack">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+		<style>
+            img{
+                width: 100%;
+            }
+        </style>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title"></h1>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">三居室</button>-->
+			<div class="mui-pull-left iconfontDiv fanhui_btn" style="background-color: #fff;">
+				<span class="iconfont icon-fanhui colorRed"></span>
+			</div>
+			<!--<a class="mui-icon mui-icon-back colorRed fanhui_btn"></a>-->
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="pl20 pr20 box_s mt20">
+				<p class="xiaoqukaikuang_tit border_b pt20 pb20 fs32" style="font-size:14px"></p>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/common.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/app.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		
+		$('.fanhui_btn').on('tap',function(){
+			api.closeWin();
+		});
+		var id = 0;
+		apiready = function(){
+			id = api.pageParam.id;
+			xqdescribe(id);
+		};
+		function xqdescribe(id){
+			_ajax(ajax_url+'Index/House/houseQualityDetail',{'id':id},'post',function(ret){
+				if(ret.status == 1){
+						$('.mui-title').html(ret.data.name);
+						// console.log(ret.data.desc);
+						// desc = $.parseHTML( ret.data.desc, true );
+						// console.log(desc);return false;
+						$('.xiaoqukaikuang_tit').html(ret.data.desc);
+				}else{
+					_toast('网络连接失败');
+					return false;
+				}
+			});
+		}
+	</script>
+</html>

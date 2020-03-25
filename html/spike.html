@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../css/common.css" />
+		<style>
+			.djs_div span {
+				width:26px;
+				height: 26px;
+				font-size: 16px;
+				line-height: 26px;
+			}
+			.skill-des {
+				font-size: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgRed">
+			<h1 class="mui-title">限时秒杀</h1>
+			<a class="mui-icon mui-icon-back" id="fanhui_btn"></a>
+		</header>
+		<div class="mui-content">
+			<div class="bgRed mui-row time_ms" id="top_seckill_activity">
+				<!--<div class="mui-col-sm-4 mui-col-xs-4 mui-text-center">
+					<p class="fs36">10:00</p>
+					<p class="fs24">11月29日 正在进行</p>
+				</div>
+				<div class="mui-col-sm-4 mui-col-xs-4 mui-text-center active">
+					<p class="fs36">10:00</p>
+					<p class="fs24">11月29日 正在进行</p>
+				</div>
+				<div class="mui-col-sm-4 mui-col-xs-4 mui-text-center">
+					<p class="fs36">10:00</p>
+					<p class="fs24">11月29日 正在进行</p>
+				</div>-->
+			</div>
+			<div class="bgwhite">
+				<div class="jjkq_div pt20 pb20 pl20 pr20 box-s">
+					<p id="seckill_title_four" class="skill-des"></p>
+					<div class="djs_div pt10">
+                        <span id="skill_ing_hours">00</span> :
+                        <span id="skill_ing_minutes">00</span> :
+                        <span id="skill_ing_seconds">00</span>
+                    </div>
+				</div>
+				<ul class="ms_conList" id="seckill_goods_list">
+					<!--<li class="pl20 pr20 box-s pt40 pb40 clearfloat border_t">
+						<div class="fl ms_img">
+							<img src="../../images/jfsc6.jpg"/>
+						</div>
+						<div class="fl ms_con">
+							<p class="mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<div class="mt20 ms_con_contents">
+								<p class="colorRed pt20">
+									<span class="fs24">￥</span>
+									<span class="fs36">29</span> 
+									<span class="fs32">.99</span>
+									<span class="fs24 oldPrice">￥35</span>
+								</p>
+								<div class="clearfloat jdt_ms pt20">
+									<div id="demo1" class="mui-progressbar fl progress_div">
+										<span></span>
+									</div>
+									<span class="colorHui999 fs24 ml10">已售100%</span>
+								</div>
+								<button type="button" class="mui-btn mui-btn-danger ms_con_btn" style="bottom: -12px;">提醒我</button>
+							</div>
+						</div>
+					</li>
+					<li class="pl20 pr20 box-s pt40 pb40 clearfloat border_t">
+						<div class="fl ms_img">
+							<img src="../images/jfsc6.jpg"/>
+						</div>
+						<div class="fl ms_con">
+							<p class="mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<div class="mt20 ms_con_contents">
+								<p class="colorRed">
+									<span class="fs24">￥</span>
+									<span class="fs36">29</span> 
+									<span class="fs32">.99</span>
+									<span class="fs24 oldPrice">￥35</span>
+								</p>
+								<div class="clearfloat jdt_ms">
+									<div id="demo1" class="mui-progressbar fl progress_div">
+										<span></span>
+									</div>
+									<span class="colorHui999 fs24 ml10">已售0%</span>
+								</div>
+								<button type="button" class="mui-btn mui-btn-warning ms_con_btn">取消提醒</button>
+							</div>
+						</div>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../script/mui.min.js"></script>
+	<script src="../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../script/common.js"></script>
+	<script type="text/javascript" src="../script/api.js"></script>
+	<script type="text/javascript" src="../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+//		$(function(){
+//			mui("#demo1").progressbar({progress:20}).show();
+//		})
+
+		var targetDate = '';
+        var dingshiqi  = '';
+        var uid = 0;
+        
+		apiready = function(){
+			addEventUserInfo();
+            uid = localStorage.getItem('uid');
+            api.addEventListener({
+                name: 'viewappear'
+            }, function (ret, err) {
+                //每次进入页面的时候
+                //获取秒杀列表
+                seckill_list();
+            });
+        };
+
+		/**
+         * 限时秒杀
+         */
+        function seckill_list() {
+            _ajax(ajax_url + "Index/Seckill/seckillList", {uid:uid}, 'post', function(ret) {
+                if( ret.status == 1 ) {
+                    var seckill_html = '';
+                    var seckill_title_four = '';
+                    var timeIng = 0;
+                    var is_ing  = 0;
+                    $.each(ret.data, function(key, val) {
+                        var active_class = '';
+                        if( key == 0 ) {
+                            active_class = 'active';
+                            seckill_title_four = val.title_four;
+                            timeIng = val.is_ing == 1 ? val.end_time : val.start_time;
+                            is_ing  = val.is_ing;
+                        }
+                        
+                        seckill_html += '<div class="mui-col-sm-4 mui-col-xs-4 mui-text-center '+active_class+'" data-id="'+val.id+'" data-title-four="'+val.title_four+'" data-is-ing="'+val.is_ing+'" data-start="'+val.start_time+'" data-end="'+val.end_time+'" onclick="seckill_top(this);">';
+						seckill_html += '	<p class="fs36">'+val.title_one+'</p>';
+						seckill_html += '	<p class="fs24">'+val.title_two+' '+val.title_three+'</p>';
+						seckill_html += '</div>';
+                        
+                    });
+                    $('#top_seckill_activity').html( seckill_html );
+                    $('#seckill_title_four').html( seckill_title_four );
+                    targetDate = timeIng*1000;
+                    dingshiqi  = setInterval(update_time, 1000);
+
+                    //拼接商品
+                    goods_html(ret.list, is_ing);
+                }
+            });
+        }
+        
+        //点击场次
+        function seckill_top(obj) {
+            var id         = $(obj).attr( 'data-id' );//活动id
+            var start_time = $(obj).attr( 'data-start' );//开始时间
+            var end_time   = $(obj).attr( 'data-end' );//结束时间
+            var is_ing     = $(obj).attr( 'data-is-ing' );//是否正在进行
+            $('.top_div_'+id).addClass( 'active' ).siblings().removeClass( 'active' );
+            $('#seckill_goods_list').html( '' );
+            _ajax(ajax_url + "Index/Seckill/getSeckillGoods", {id:id, uid:uid}, 'post', function(ret) {
+                if( ret.status == 1 ) {
+                    window.clearInterval(dingshiqi);//先停止计时器
+                    $('#skill_ing_hours').html( '00' );
+                    $('#skill_ing_minutes').html( '00' );
+                    $('#skill_ing_seconds').html( '00' );
+                    var timeIng = is_ing == 1 ? end_time : start_time;
+                    targetDate  = timeIng*1000;
+                    dingshiqi   = setInterval(update_time, 1000);
+                    $('#seckill_title_four').html( $(obj).attr( 'data-title-four' ) );
+
+                    //拼接商品
+                    goods_html(ret.data, is_ing);
+                }
+            });
+        }
+        
+        //拼接商品
+        function goods_html(data, is_ing) {
+            var goods_html = '';
+            $.each(data, function(key, val) {
+                var percent = is_ing == 0 ? 0 : val.percent;
+                
+                goods_html += '<li class="pl20 pr20 box-s pt40 pb40 clearfloat border_t"  data-is-ing="'+is_ing+'" data-aid="'+val.activity_id+'" data-gid="'+val.goods_id+'" onclick="seckill_detail(this);" data-id="'+val.id+'">';
+				goods_html += '	<div class="fl ms_img" data-is-ing="'+is_ing+'" data-aid="'+val.activity_id+'" data-gid="'+val.goods_id+'">';
+				goods_html += '		<img src="'+val.goods_img+'"/>';
+				goods_html += '	</div>';
+				goods_html += '	<div class="fl ms_con">';
+				goods_html += '		<p class="mui-ellipsis-2" data-is-ing="'+is_ing+'" data-aid="'+val.activity_id+'" data-gid="'+val.goods_id+'">'+val.goods_name+'</p>';
+				goods_html += '		<div class="mt20 ms_con_contents">';
+				goods_html += '			<p class="colorRed pt20">';
+				goods_html += '				<span class="fs24">￥</span>';
+				goods_html += '				<span class="fs36">'+val.shop_price+'</span> ';
+				goods_html += '				<span class="fs24 oldPrice">￥'+val.market_price+'</span>';
+				goods_html += '			</p>';
+				goods_html += '			<div class="clearfloat jdt_ms pt20">';
+				goods_html += '				<div id="demo_'+key+'" class="mui-progressbar fl progress_div">';
+				goods_html += '					<span></span>';
+				goods_html += '				</div>';
+				goods_html += '				<span class="colorHui999 fs24 ml10">已售'+percent+'%</span>';
+				goods_html += '			</div>';
+				
+                var btn_name = '去抢购';
+                if( val.goods_number <= 0 ) {
+                //没库存
+                btn_name = '已抢光';
+                goods_html += '            <button type="button" class="mui-btn mui-btn-danger ms_con_btn btn_hui" style="bottom: -12px;" data-aid="'+val.activity_id+'" data-gid="'+val.goods_id+'" >'+btn_name+'</button>';
+                } else if( is_ing == 1 ) {
+                //正在进行 抢购
+                btn_name = '去抢购';
+                goods_html += '            <button type="button" class="mui-btn mui-btn-danger ms_con_btn" style="bottom: -12px;" data-is-ing="'+is_ing+'" data-aid="'+val.activity_id+'" data-gid="'+val.goods_id+'" onclick="seckill_detail(this);">'+btn_name+'</button>';
+                } else if( is_ing == 0 ) {
+                //即将开始  提醒
+                if( val.is_remind == 1 ) {
+                    btn_name = '取消提醒';
+                } else {
+                    btn_name = '提醒我';
+                }
+                goods_html += '            <button type="button" class="mui-btn mui-btn-danger ms_con_btn" style="bottom: -12px;" data-is-ing="'+is_ing+'" data-aid="'+val.activity_id+'" data-gid="'+val.goods_id+'" onclick="seckill_remind(this);">'+btn_name+'</button>';
+                }
+
+                goods_html += '        </div>';
+                goods_html += '    </div>';
+                goods_html += '</li>';
+
+            });
+
+            $('#seckill_goods_list').html( goods_html );
+
+            //循环添加百分比样式
+            $.each(data, function(key, val) {
+                var percent = is_ing == 0 ? 0 : val.percent;
+                mui("#demo_"+key).progressbar({progress:percent}).show();
+            });
+        }
+        
+        //跳转详情页
+        function seckill_detail(obj) {
+            var aid = $(obj).attr( 'data-aid' );
+            var gid = $(obj).attr( 'data-gid' );
+            _openWinByUrl( 'spike_det', './spike_det', {aid:aid, gid:gid} );
+        }
+
+        //跳转详情页
+        function seckill_remind(obj) {
+            var aid = $(obj).attr( 'data-aid' );
+            var gid = $(obj).attr( 'data-gid' );
+            var ing = $(obj).attr( 'data-is-ing' );
+            if( ing == 1 ) {
+                _openWinByUrl( 'spike_det', './spike_det', {aid:aid, gid:gid} );
+            } else {
+                //判断用户登录
+                if( typeof uid == 'undefined' || uid == 0 || uid == '' ) {
+                    api.openWin({
+                        name : 'login',
+                        url : '../login.html',
+                        reload : true
+                    });
+                    return false;
+                }
+                var remind = $(obj).text();
+                if( remind == '提醒我' || remind == '取消提醒' ) {
+                    var type = remind == '提醒我' ? 1 : 2;
+                    //提醒
+                    _ajax(ajax_url + "Index/Seckill/remindSeckill", {aid:aid, gid:gid, type:type, uid:uid}, 'post', function(ret) {
+                        if( ret.status == 1 ) {
+                            if( remind == '提醒我' ) {
+                                $(obj).text( '取消提醒' );
+                            } else {
+                                $(obj).text( '提醒我' );
+                            }
+                        } else {
+                            _toast( ret.msg );
+                        }
+                    });
+                }
+            }
+        }
+
+        //更新时间的主函数,这是最常见的函数命名方式
+        function update_time() {
+            //双十一的时间
+            //var targetDate = new Date(2018, 18, 12, 0, 0, 0);
+            //var targetDate = 1545112143*1000;
+            //获取当前时间
+            var nowDate = new Date();
+            //获取据目标时间的    秒数
+            //console.log(targetDate);
+            var edge_millisecond = parseInt((targetDate - nowDate)/1000);
+            // 获取天数
+            var edge_days = parseInt(edge_millisecond/(24*60*60));
+            //获取小时数
+            var edge_hours = parseInt(edge_millisecond%(24*60*60)/3600);
+            //获取分钟数
+            var edge_minutes = parseInt(edge_millisecond%(24*60*60)%(60*60)/60);
+            //获取秒数
+            var edge_seconds = parseInt(edge_millisecond%(24*60*60)%(60*60)%60);
+            // 为了美观,使显示的数字一直保持两位
+            if (edge_seconds<=9){
+                edge_seconds = "0" + edge_seconds;
+            }
+            if (edge_minutes <=9){
+                edge_minutes = "0" + edge_minutes;
+            }
+            if (edge_hours <=9){
+                edge_hours = "0" + edge_hours;
+            }
+            if (edge_days <=9){
+                edge_days = "0" + edge_days;
+            }
+
+            // 为了避免出现负值,时间全部归零
+            if (nowDate >= targetDate){
+                edge_days = "00";
+                edge_hours = "00";
+                edge_minutes = "00";
+                edge_seconds = "00";
+                window.clearInterval(dingshiqi);
+            }
+
+            $('#skill_ing_hours').html( edge_hours );
+            $('#skill_ing_minutes').html( edge_minutes );
+            $('#skill_ing_seconds').html( edge_seconds );
+        }
+	</script>
+</html>

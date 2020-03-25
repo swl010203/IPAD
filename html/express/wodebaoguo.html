@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>050我的包裹</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" id="back">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon topCon_1">
+				我的包裹
+			</div>
+			<input class="sousuokuang hide_" id="logistics_sn" placeholder="请输入运单号"></input>
+			<div class="fr">
+				<span class="sousuo_1" onclick="searchLogistics()"></span>
+			</div>
+		</header>
+		
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".sousuo_1").on("click",function(){
+				$(".sousuokuang").removeClass("hide_");
+				$(".topCon_1").addClass("hide_");
+			})
+		});
+		
+		//查询物流信息
+		function searchLogistics(){
+			var logistics_sn = $("#logistics_sn").val();
+			if(!logistics_sn){
+				_toast('请输入物流单号');
+				return false;
+			}
+			_openWinByUrl('wuliuzhuangtai','wuliuzhuangtai',{'logistics_sn':logistics_sn})
+		}
+		
+		apiready = function(){
+
+			api.parseTapmode();
+					
+			var header = $api.dom('header');
+	        //$api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+	
+	
+	        api.openFrame({
+	            name: 'wodebaoguo_body',
+	            url: 'wodebaoguo_body.html',
+	            bounces: false,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h,
+	                w: headerPos.w,
+	                h: 'auto'
+	            },
+				pageParam:api.pageParam
+	        });
+			
+		}
+	</script>
+</html>

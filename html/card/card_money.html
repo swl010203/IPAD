@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+    <title>充值</title>
+    <link rel="stylesheet" type="text/css" href="../../css/user/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/user/index.css"/>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script src="../../script/user/index.js"></script>
+    <script src="../../script/user/gindex.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+
+	<script type="text/javascript" src="../../script/app.js"></script>
+</head>
+<body style="height:100%;">
+<div style="height:100%;">
+    <!--头部-->
+        <!--<header>
+            <ul class="fl back">
+                <a href="javascript:;"><img src="img/bank_03.png"/></a>
+            </ul>
+            <ul class="fl word">充值</ul>
+        </header>-->
+<!--顶部结束-->
+<!-- 内容开始 -->
+
+   <div class="gbalance">
+        <span class="fl">余额：</span>
+        <span class="fr order_amount">￥0</span>
+   </div>
+   <div class="gway">
+        <div class="gway_top">
+            <i></i>
+            <span>选择支付方式</span>
+
+        </div>
+        <ul class="gway_list">
+                <li>
+                    <a href="javascript:void(0);" class="glist-color">
+                        <img src="../../images/user/app_123.png" alt="" class="gway-list0">支付宝
+                     <i class="glist glist-yes" data-src="1"></i>
+                    </a>
+                </li>
+
+                <li><a href="javascript:void(0);">
+                        <img src="../../images/user/app_124.png" alt="" class="gway-list0">微信
+                    <i class="glist" data-src="2"></i>
+                    </a>
+                </li>
+         </ul>
+    </div>
+    <div class="gproject">
+        <div class="gproject_top">
+            <i></i>
+            <span>选择充值方案</span>
+        </div>
+        <div class="falist">
+        	<!--<p class="glist-color"><i class="gproject_pic1 cur"></i>惠通卡充值（含老卡充值）无优惠</p> -->       	
+        </div>
+
+        <div class="gproject_top">
+            <i></i>
+            <span>选择赠送方案</span>
+        </div>
+        <div class="zslist">
+          <!--<p><i class="gproject_pic1"></i>惠通卡充值（含老卡充值）无优惠</p>-->
+        </div>
+    </div>
+
+    <div class="gjine">
+         <div class="gjine_top">
+            <i></i>
+            <span>充值金额</span>
+        </div>
+        <div class="gjine_btn">
+            <a href="javascript:moneypay(100);">100元</a>
+            <a href="javascript:moneypay(500);" class="gjine_color">500元</a>
+            <a href="javascript:moneypay(1000);">1000元</a>
+            <input type="money" id="price" value="500" placeholder="输入金额">
+        </div>
+    </div>
+<!-- 内容结束 -->
+
+
+<!--底部按钮开始 -->
+    <div class="gset-button">
+         <input type="button" onclick="pay();" value="立即充值">
+    </div>
+
+<!--底部按钮结束 -->
+</div>
+
+</body>
+<script>
+	//选择充值金额
+	function moneypay(money){
+		$('#price').val(money);
+	}
+	
+	var notify_url='';
+	var pay_notify_type = 0;  //回调类型
+	var price=0.00;
+	var paybody='惠通卡充值';
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		cardno = api.pageParam.cardno;  //卡号
+		
+		//notify_url = ajax_url+"Index/Pay/rechargeNotify?cardno="+cardno+"&uid="+userinfo.uid;
+	
+		getOrderInfo();
+		rechargePlan();			
+	};
+	
+	var is_card = false;
+	var is_card_msg="";
+	/**
+	 * 获取订单信息 
+	 */
+	function getOrderInfo(){
+		_ajax(ajax_url+"Index/User/getUserCardMoney",{'cardno':cardno,'token':userinfo.token,'uid':userinfo.uid},'post',function(ret){
+			if(ret.status==1){
+				$(".order_amount").html('￥'+ret.data);
+				is_card = true;
+			}else{
+				is_card = false;
+				
+				_toast(ret.msg);
+			}
+			is_card_msg = ret.msg;
+			
+		});
+	}
+	
+	/**
+	 * 获取充值方案 
+	 */
+	function rechargePlan(){
+		_ajax(ajax_url+"Index/Pay/rechargePlan",{'cardno':cardno},'post',function(ret){
+			if(ret.status==1){
+				var strVar = "";
+				var strVar2 = "";
+				var key = 1;
+				$.each(ret.data,function(k,v){
+					strVar +='<p class="glist-color"><i class="gproject_pic1 cur" data-src="'+v['no']+'"></i>'+v['name']+'</p>';
+					
+					//判断赠送方案
+					if(v['zsJfFlag'] ==1){
+					    strVar2 +='<p><i class="gproject_pic1" id="a_pl2_'+key+'" data-src="积分"></i>赠送积分</p>';
+					}
+					
+					if(v['zsLpFlag'] ==1){
+					    strVar2 +='<p><i class="gproject_pic1" id="a_pl2_'+key+'" data-src="礼品"></i>赠送礼品</p>';
+					}
+					
+					if(v['zsDzqFlag'] ==1){
+					    strVar2 +='<p><i class="gproject_pic1" id="a_pl2_'+key+'" data-src="电子券"></i>赠送电子券</p>';
+					}
+					key ++;
+				});
+				$(".falist").html(strVar);			    
+			   
+				$(".zslist").html(strVar2);
+				//$(".zslist").show();
+			  //  $(".zengsong").show();
+			  
+			  	//getzengsong(1);
+			}else{
+				//$(".fangan").hide();
+				//$(".zengsong").hide();
+				_toast(ret.msg);
+			}
+		    setTimeout(function(){
+				closeloading();
+			},1000); 
+			
+	
+			
+		});
+	}
+		
+	//支付
+	function pay(){
+		if(is_card ==false){
+			_toast(is_card_msg);
+			return false;
+		}
+		var pay_type = $(".glist-yes").attr('data-src');
+		if(pay_type ==undefined  ||  pay_type ==''){
+			_toast('请选择支付方式');
+			return false;
+		}
+		
+		price = $("#price").val();
+		if(price ==''){
+			_toast('请选择充值金额');
+			return false;
+		}
+		
+		var fano = $(".falist").find('.cur').attr('data-src');
+		if(typeof(fano) =='undefined'  ||  fano ==undefined){
+			fano = 0;
+		}
+		
+		var zslx = $(".zslist").find('.cur').attr('data-src');
+		if(typeof(zslx) =='undefined'  ||  zslx ==undefined){
+			zslx = 0;
+		}
+	
+		_ajax(ajax_url+"Index/Pay/cardRecharge",{'zslx':zslx,'fano':fano,'pay_id':pay_type,'price':price,'cardno':cardno,'token':userinfo.token,'uid':userinfo.uid},'post',function(ret){
+			if(ret.status==1){
+				notify_url = ajax_url+"Index/Pay/cardRechargeNotify/cardno/"+cardno+"/uid/"+userinfo.uid+"/order_sn/"+ret.data.order_sn+"/fano/"+fano;
+				paybody = ret.data.paybody;
+				
+				if(pay_type ==1){
+					aliPay();
+				}
+				
+				if(pay_type ==2){
+					wxPay();
+				}
+				
+			}else{
+				_toast(ret.msg);
+			}
+			
+		});
+		
+		
+	}
+	
+
+/**
+ * 支付成功回掉地址 
+ * *@param trade_np  流水号
+ */
+function paySuccess(){
+	
+	//刷新成功 执行发送监听事件  所有需要刷新的页面  name 统一 paysuccess_refresh
+	api.sendEvent({
+        name:'cardpaysuccess_refresh'
+    });
+    //支付成功
+    api.closeWin();
+	
+}
+	
+
+ //支付宝支付
+ function aliPay() {
+ 	api.setFrameAttr({
+		 name: 'cart_body',
+		 hidden:true
+	});
+	var pay_id = $(".glist-yes").attr('data-src');
+
+	var random =parseInt(Math.random()*10000)+10000;
+ 	var timestamp = new Date().getTime();
+ 	var tradeNO = timestamp +"" +random ;
+ 	var subject = paybody;
+ 	var body = subject;
+ 	var aliPay = api.require('aliPay');
+
+ 	aliPay.config({
+ 		partner: '2088521528292839',
+ 		seller: 'hangjia_sye@163.com',
+ 		rsaPriKey: 'MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANoHjuChISF8YtR/5c/LiWXS1OmiGdiJMXmSfLzNUu+R4llGv8bD0b/dZHMEfLhQmZ4MGStdX6FT0+0dEB5DZ+SEkJQkzFeKcCy1y6mNW56fqHFvkAoNx7+y0ueOP48D+fObZbmkivLgAfg7lWEsioXnkjbbskS8mTtJXW1g/UDDAgMBAAECgYEAjj98ImY9/WDwAgBn6Yi73ekN7FhMUJBB7TV7mJrFT3R4nxKfsIi14l4JWVlGHeLINuthyH8lE1Zj4EGj8Hq93o+YKq9EbNj0FGE6343uDMDg0T2A5R+WGlFGvpfNdiOpgfDkkIE4lglxyQL8jry/nzd+T9nJAMBCIywHUgfPFUECQQDyCMETiF/egCgaPmOMAgRTWCbZU67Zxq7X6t51a0qtptAlb1c3uqv98H9ZohNL/0OUI3srkrSG5oBgttyeYpPxAkEA5pw3FKvqkDw9JIsHkOzPvwG3ADhXUhCAWibRY5Kl02YuHZatTVORe7NQpOVLvOTmP5Hk0cESBC3IOSnQ758D8wJBAMJ8UlmVviOWq6La+zbn7/3g2ebMnbYVNy39ZyDHREzhvGQ4YcdAUzBM7qhh2ku5JN6G3FSZIEM+OW59wi3rXKECQQDUGffbLme2M4F0+96AoB5PKo+bRzahBwZWZH+PmpCkR8XAdxZ8GZGkeX+BuleXq9xNua0AcxhT+Zu/X8OIsPObAkAizPg9SqtBwH/70lqsFaBoztH5WRUyUr2R9K6dz3YgobyFeRn5RncqSEKuS+1TPfe+gHUU19guB3SrQDyOwnW7',
+ 		rsaPubKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDaB47goSEhfGLUf+XPy4ll0tTpohnYiTF5kny8zVLvkeJZRr/Gw9G/3WRzBHy4UJmeDBkrXV+hU9PtHRAeQ2fkhJCUJMxXinAstcupjVuen6hxb5AKDce/stLnjj+PA/nzm2W5pIry4AH4O5VhLIqF55I227JEvJk7SV1tYP1AwwIDAQAB',
+ 		notifyURL: notify_url
+ 	}, function(ret, err) {
+ 		if (ret) {
+ 			if (ret.status) { //进行支付
+ 				aliPay.pay({
+ 					subject: subject,
+ 					body: body,
+ 					amount: price,
+ 					tradeNO: tradeNO
+ 				}, function(ret, err) {
+ 				
+ 					if (ret.statusCode == 9000 || ret.code == 9000) { //支付成功，保存到数据库
+ 						_toast('支付成功',function(){
+ 							paySuccess(tradeNO);
+ 						},1500);
+ 					} else {
+ 						if (ret.code == 4000) {
+ 							_toast('订单支付失败');
+ 						} else if (ret.code == 6001) {
+ 							_toast('取消支付');		
+ 						} else if (ret.code == 4006) {
+ 							_toast('订单支付失败');
+ 						} else {
+ 							_toast('订单支付失败');
+ 						}
+ 					}
+
+ 				});
+ 			}
+ 		} else {
+ 			_toast("配置错误");
+ 		}
+
+ 	});
+ }
+
+
+ /**
+  * 微信支付 wxPay()
+  */
+ function wxPay() {
+
+	api.setFrameAttr({
+		 name: 'cart_body',
+		 hidden:true
+	});
+	
+	var pay_id = $(".glist-yes").attr('data-src');
+	//var notify_url = ajax_url+"Index/Pay/orderPayNotify?order_sn="+order_sn+"&uid="+userinfo.uid+"&pay_type="+pay_notify_type+"&pay_id="+pay_id;
+	
+	
+	
+ 	var random =parseInt(Math.random()*10000)+10000;
+ 	var timestamp = new Date().getTime();
+ 	var tradeNO = timestamp +"" +random ;
+ 	var subject = paybody;
+ 	var body = subject;
+ 	var wxPay = api.require('wxPay');
+ 	wxPay.config({
+ 		apiKey: 'wx967c2d25800a08ae',
+ 		mchId: '1430124402',
+ 		partnerKey: 'b36a5b2f763c76ef2af4ea389eb39f8e',
+ 		notifyUrl: notify_url
+ 	}, function(info, err) {
+ 		if (info.status) {
+ 			var order_amount = parseFloat(price) * 100;
+ 			wxPay.pay({
+ 				description: body,
+ 				totalFee: 1,//order_amount,
+ 				tradeNo: timestamp,
+ 				detail: body,
+ 				attach: timestamp,
+ 				feeType: 'CNY'
+ 			}, function(ret, err) {
+ 				
+ 				if (ret.status) {
+ 					paySuccess();
+ 					_toast('支付成功');
+ 				} else {
+ 					_toast('支付失败');
+ 				}
+ 			});
+ 		} else {
+ 			_toast( err.msg);
+ 		}
+ 	});
+
+ }
+</script>
+</html>

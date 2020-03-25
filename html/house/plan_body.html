@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--苹果专有的,头部bar的样式-->
+	<title>区域规划</title>
+	<link rel="stylesheet" type="text/css" href="../../script/house/css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../script/house/css/014_list.css"/>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/house/js/common.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<style>
+		.main-list{
+			width: 96%;
+			margin-top: 10px;
+			background-color: #fff;
+			border-top: 1px solid #E0E0E0;
+			padding: 0 20px;
+		}
+	</style>
+</head>
+<body>
+	<!--顶部结束-->
+	<div style="width:100%;background-color: #fff;">
+		<div class="main-list w_100bfb">
+			<div class="box">
+				<ul class="tit">
+					<!--区际规划-->
+				</ul>
+				<div id="list">
+					<!--<ul class="desc">
+						区域规划是为实现一定地区范围的开发和建设目标而进行的总体部署，为城市规划提供有关城市发展方向和生产力布局的重要依据.
+					</ul>
+					<ul class="pic">
+						<img src="img/ad0.png"/>
+					</ul>-->
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	//默认加载部分
+	var id='';	
+	apiready = function(){
+		id=api.pageParam.id;
+		
+		//默认加载
+		planDetial();
+	};
+	
+	//加载规划详情
+	function planDetial(){
+		//加载状态
+		loading('index_body');
+		_ajax(ajax_url+"Index/House/plan",{id:id},'post',function(ret){
+			//关闭加载状态
+			closeloading();
+			
+			if(ret.status==1){
+				//规划标题
+				$('.tit').html(ret.title);
+				
+				//规划详情
+				var html='';
+				for(var i in ret.data){
+					var piclist=ret.data[i].pic_list;
+					html+='<ul class="desc">'+ret.data[i].desc+'</ul>';
+					html+='<ul class="pic" onclick="photoBrowser1(\''+piclist+'\');" style="height:auto;">';
+					if(ret.data[i].pic_list){
+						for(var j in ret.data[i].pic_list){
+							html+='<img src="'+ret.data[i].pic_list[j]+'"/>';
+						}
+					}
+					html+='</ul>';
+				}
+				$('#list').html(html);
+			}
+			
+		});
+	}
+	
+	//打开图片浏览器
+	function photoBrowser1(data){
+		var pic_list=data.split(",");
+		photoBrowser(pic_list);
+	}
+</script>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+    <title>转账</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style_pay.css"/>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script src="../../script/pay.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+    <style>
+    body{ -webkit-tap-highlight-color:rgba(0,0,0,0); }
+    a,button,input{-webkit-tap-highlight-color:rgba(0,0,0,0);
+                tap-highlight-color: rgba(0,0,0,0);
+                focus-ring-color: rgba(0, 0, 0, 0);
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-focus-ring-color: rgba(0, 0, 0, 0);
+                -moz-tap-highlight-color: rgba(0,0,0,0);
+                -moz-focus-ring-color: rgba(0, 0, 0, 0);
+                border:none;
+                -webkit-tap-highlight-color: rgba(0,0,0,0);
+                -webkit-tap-highlight-color:transparent;
+                outline:none;}
+    .gMoney{background-color: #fff;margin:10px 20px;}
+    .gMoney-dv{background: #fbfbfb;}
+    .gMoney-img{width: 0.6rem;height: 0.6rem;margin: 0 auto;padding-top: 0.1rem;}
+    .gMoney-img>img{width: 100%;height: 100%;}
+    .gMoney-dv>p{width:100%;text-align:center;padding: 0.1rem 0;}
+    .gMoney-jine{padding:0.15rem;}
+    .gMoney-jine>p{color:#000;font-size: 18px;}
+    .gMoney-jine-i{color:#000;height: 1rem;margin-bottom: 0.2rem;border-bottom:1px solid #e0e0e0;}
+    .gMoney-jine-i>i{font-size: 0.6rem;vertical-align: top;}
+    .gMoney-jine-i>input{width: 93%;height:0.8rem;line-height:0.8rem;font-size: 0.8rem;}
+    .gMoney-txt>input{width: 100%;height: 0.25rem;line-height: 0.25rem;color:#6c738d;font-size: 18px;margin-bottom: 10px;padding-bottom:20px;}
+    .gMoney-btn{width: 100%;height: 100%;display: inline-block;}
+    .gMoney-btn1{border:1px solid #e0e0e0;border-radius:5px;width: 5rem;height: 0.5rem;line-height:0.5rem;background: url(../../images/pay/0001.png) no-repeat center;background-size: cover;margin: 0 auto;color:#fff;font-size:18px;text-align: center;margin-bottom: 0.25rem;display: block;}
+
+    </style>
+</head>
+<body style="height:100%;">
+<div style="height:100%;">
+	<!-- 内容开始 -->
+    <div class="gMoney">
+        <div class="gMoney-dv">
+            <div class="gMoney-img">
+                <img id="shopimg" src="" alt="">
+            </div>
+            <p>向商户“<span id="shopname"></span>”转账</p>
+        </div>
+        <div class="gMoney-jine">
+            <p>金额</p>
+            <div class="gMoney-jine-i">
+                <i>¥</i><input type="number" id="money" placeholder="0.00">
+            </div>
+            <div class="gMoney-txt">
+                <input type="text" id="desc" placeholder="添加留言">
+            </div>
+        </div>
+        <div class="gMoney-btn">
+            <a href="javascript:pay();" class="gMoney-btn1">支付</a>
+        </div>
+    </div>
+	<!-- 内容结束 -->
+</div>
+
+
+<!--浮动层-->
+
+<div class="ftc_wzsf">
+  <div class="srzfmm_box">
+    <div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>
+    <div class="zfmmxx_shop">
+      <div class="mz ordername"></div>
+      <div class="wxzf_price order_amount">￥0.00</div>
+    </div>
+    
+    <ul class="mm_box">
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+    </ul>
+  </div>
+  <div class="numb_box">
+    <div class="xiaq_tb" style="margin-left: 45%;"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+    <ul class="nub_ggg">
+      <li><a href="javascript:void(0);">1</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+      <li><a href="javascript:void(0);">3</a></li>
+      <li><a href="javascript:void(0);">4</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+      <li><a href="javascript:void(0);">6</a></li>
+      <li><a href="javascript:void(0);">7</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+      <li><a href="javascript:void(0);">9</a></li>
+      <li><span></span></li>
+      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+      <li><span  class="del" > <img style="width: 52%;padding-top: 5%;padding-left: 20%;" src="../../images/jftc_18.jpg"   ></span></li>
+    </ul>
+  </div>
+  <div class="hbbj"></div>
+</div>
+
+</body>
+<script>
+	/**
+	 * 清除支付密码 
+	 */
+	function clearPayPwd(){
+		paypassword="";
+		$(".mm_box li").attr('pwd','');
+		$(".mm_box li").removeClass("mmdd");
+		
+		i1 = 0;
+		is_pay_status = 1;				
+	}
+	var i1 = 0;
+	
+	$(function(){
+		//出现浮动层
+		$(".ljzf_but").click(function(){
+			$(".ftc_wzsf").show();
+		});
+		//关闭浮动  清除支付密码
+		$(".close").click(function(){
+			$(".ftc_wzsf").hide();
+			i = 0;
+			
+			clearPayPwd();
+		});
+		//数字显示隐藏
+		$(".xiaq_tb").click(function(){
+		//$(".numb_box").slideUp(500);
+		});
+		$(".mm_box").click(function(){
+			//$(".numb_box").slideDown(500);
+		});
+		//----
+		var i = 0;
+		$(document).on('touchstart',".nub_ggg li", function(){
+			$(this).css('background','#e0e0e0');
+		});
+	
+		$(document).on('touchend',".nub_ggg li a", function(){
+			$(this).css('background','#f5f5f5');
+		});
+		$(document).on('touchend',".nub_ggg li a", function(){
+			i1++;
+			var pwd =$(this).parent("li").index()+1;
+			if(pwd ==11){
+				pwd =0 ;
+			}
+		
+			if(i1<6){
+				$(".mm_box li").eq(i1-1).addClass("mmdd");
+				$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+				}else{
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+					if(i1>6){
+						i1=6;
+					}
+					setTimeout(function(){
+						//验证支付密码 并支付
+						var paypassword="";
+						$(".mm_box li").each(function(){
+							paypassword+=$(this).attr('pwd');
+						});
+						
+						//付款
+						point(paypassword);						
+					},10);
+			 	} 
+		});
+		$(document).on('touchend',".nub_ggg li .del", function(){
+		//$(".nub_ggg li .del").click(function(){
+			if(i1>0){
+				i1--;
+				$(".mm_box li").eq(i1).removeClass("mmdd");
+				$(".mm_box li").eq(i1).attr("pwd","");
+				i1==0;
+				}
+			//alert(i);
+		}); 
+	});
+	
+	
+	var uid='';
+	var sid='';
+	var type='';
+	var card_default_pwd=0; 
+	apiready = function(){
+		type=api.pageParam.type;
+		sid=api.pageParam.sid;
+		uid=localStorage.getItem("uid");
+		
+		if(!uid){
+			_toast('您还没有登录！');
+			_openWinByUrl('login','../login');return;
+		}
+		
+		if(type!='shop' || !sid){
+			_toast('支付参数错误，请核对后再试！');return;
+		}
+		
+		//获取商户信息
+		getshopname();
+	};
+	
+	//获取商户信息
+	function getshopname(){
+		_ajax(ajax_url+"Index/Pay/getshopname",{'sid':sid,'uid':uid},'post',function(ret){
+			if(ret.status==1){
+				$('#shopname').text(ret.data.name);
+				$('#shopimg').attr('src',ret.data.logo);
+				card_default_pwd=ret.card_default_pwd;
+
+			}else{
+				_toast(ret.msg);
+				api.closeWin();
+
+			}
+		});
+	}
+	
+	//支付
+	function pay(){
+		if(card_default_pwd ==1){
+			_toast('请先前往一开通修改默认密码',function(){
+				
+				_openWinByUrl('card_window_head','../window_head',{'furl':'./card/card','frame':'card','title':'惠通卡'});
+			},1500);
+			return false;
+		}
+		var money=$('#money').val();
+		var desc=$('#desc').val();
+
+		if(!money){
+			_toast('请填写金额！');return;
+		}
+		if(!_isznumber(money)){
+			_toast('请填写正确的金额！');return;
+		}
+		
+		$('.order_amount').text('￥'+money);
+		$(".ftc_wzsf").show();
+	}
+	
+	//付款
+	function point(pwd){
+		var money=$('#money').val();
+		var desc=$('#desc').val();
+		if(!uid){
+			_toast('您还没有登录！');
+			_openWinByUrl('login','../login');return;
+		}
+		if(!money){
+			_toast('请填写金额！');return;
+		}
+		if(!_isznumber(money)){
+			_toast('请填写正确的金额！');return;
+		}
+		_ajax(ajax_url+"Index/Pay/scanpayment",{'uid':uid,'sid':sid,'password':pwd,'money':money,'desc':desc},'post',function(ret){
+			if(ret.status==1){
+				$(".ftc_wzsf").hide();
+				i = 0;
+				clearPayPwd();
+				
+				_openWinByUrl('pay_success','pay_success',{'type':'scan'});
+
+			}else{
+				_toast(ret.msg);
+			}
+		});
+	}
+	
+</script>
+
+</html>

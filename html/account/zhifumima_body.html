@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>014支付密码</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+
+		<!--中间内容-->
+		<!--<div class="jtzh_banner clearfloat">
+			<span class="fl">家庭账户余额：<span id="money_all">0元</span></span>
+			<span class="fr">可用积分：<span id="integral">0分</span></span>
+			<div class="jtzhTouxiang">
+				<div class="touxiang">
+					<img id="portrait" src="../../images/account/shouye01.jpg"/>
+				</div>
+			</div>
+			<p class="jtzhAddr" id="address"></p>
+			<ul class="dibuliebiao clearfloat">
+				<li class="click after">家庭账户</li>
+				<li class="after">家庭账户</li>
+				<li>家庭账户</li>
+			</ul>
+		</div>-->
+		<div class="wanshanxinxi">
+			<div class="jtzhTit quMr_20 clearfloat">
+				<div>
+					<i class="xian"></i>
+					<span>支付密码<span class="shezhimima">&nbsp;（为保证您的账户安全，请设置您的支付密码）</span></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="chongzhiMoney xiugaimiamDiv">
+			<div class="topchongzhi clearfloat fristpwd">
+				<div class="fl">
+					<span>支付密码：</span>
+					<input id="paypassword" type="password" maxlength="6" placeholder="请输入支付密码" />
+				</div>
+				<span class=" xiugaimima " style="display: none;"><a href="javascript:">修改密码</a></span>
+			</div>
+			<div class=" xiugaimimaDiv hide_">
+				<!--<div class="topchongzhi clearfloat">
+					<div class="fl">
+						<span>原密码：</span>
+						<input id="oldpaypassword" type="password" maxlength="6"  placeholder="请输入原密码" />
+					</div>
+					
+				</div>-->
+				<div class="topchongzhi clearfloat">
+					<div class="fl">
+						<span>手机号：</span>
+						<input id="phone" type="text" maxlength="11"  placeholder="请输入业主手机号" />
+					</div>
+					<!--<span class="shezhimima styleSpan">*原密码输入错误</span>-->
+				</div>
+				<div class="topchongzhi clearfloat">
+					<div class="fl">
+						<span>验证码：</span>
+						<input id="smscode" type="text" maxlength="6"  placeholder="请输入验证码" />
+					</div>
+					<span class=" jtzhAllanniu"><button class="gainCode" onclick="sendCode();">发送验证码</button></span>
+				</div>
+				
+				<div class="topchongzhi clearfloat">
+					<div class="fl">
+						<span>新密码：</span>
+						<input id="newpaypassword" type="password" maxlength="6"  placeholder="请输入新密码" />
+					</div>
+				</div>
+			</div>
+			<div class="topchongzhi clearfloat">
+				<div class="fl">
+					<span>确认密码：</span>
+					<input id="rpaypassword" type="password" maxlength="6"  placeholder="请输入确认密码"/>
+				</div>
+				<!--<span class="shezhimima styleSpan">*您输入的两次密码不正确</span>-->
+			</div>
+			<div class="topchongzhi clearfloat">
+				<div class="fl">
+					<span>验证码：</span>
+					<input id="code" type="text" placeholder="请输入验证码"/>
+				</div>
+				<span class="yanzhengma"><img onclick="getVerify();" src="../../images/account/1401.jpg"/></span>
+			</div>
+		</div>
+		<div class="outCzanniu">
+			<div class="czBtn">
+				<button onclick="setPayPwd();">保存</button>
+			</div>
+		</div>
+		<!--充值完成-->
+		<div class="mark hide_">
+			<div class="chongzhicg">
+				<div class="bagimg"></div>
+				<p class="czp alerttit">设置成功</p>
+				<div class="czclose">关闭</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".dibuliebiao li").on("click",function(){
+				$(".dibuliebiao li").removeClass("click");
+				$(this).addClass("click");
+			});
+
+			/*点击充值完成按钮*/
+			$(".czBtn").on("click",function(){
+				
+			});
+			/*点击关闭按钮*/
+			$(".czclose").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+				api.closeWin();
+			});
+			/*修改密码*/
+			$(".xiugaimima").on("click",function(){
+				$(".xiugaimimaDiv").removeClass("hide_");
+			})
+		});
+		
+		
+		//初始化用户Id
+		var uid = localStorage.getItem("uid");
+		var relationUids = "";  //当前关联用户
+		apiready = function(){
+
+			//获取验证码
+			getVerify();
+			
+			//获取用户信息
+			getAccountInfo();
+			
+			
+		};
+		
+		
+		function sendCode(){
+			///判断手机号是否输入
+			var phone = $("#phone").val();
+			if(!phone){
+				_toast('请填写手机号');return false;
+			}
+			
+			if(! _isPhone( phone)){
+				_toast('手机号格式不正确');return false;
+			}
+			
+			_ajax(ajax_url + "Index/FamilyActivation/validateCust",{'uid':uid , 'phone':phone},'post',function(ret){
+				if( ret.status == 1){
+					_ajax(ajax_url + "Index/Base/getVerificationCode",{'mobile':phone},'post',function(ret){
+						if(ret.status==1){
+							_toast(ret.msg);
+							time();
+						}else{
+							_toast(ret.msg);
+						}
+					});
+				}else{
+					_toast(ret.msg);
+				}
+			});
+			
+			
+		
+			
+			
+		}
+		
+		//时间倒计时
+	var wait=60;
+	function time(){		
+		 if (wait == 0) {  
+           // o.removeAttribute("disabled");
+            $(".gainCode").attr('onclick','getCode()');
+            $(".gainCode").html('获取验证码');                        
+            wait = 60;  
+        } else {  
+            $(".gainCode").attr('onclick','');  
+            $(".gainCode").html(wait+'秒后重新发送');   
+            wait--;  
+            setTimeout(function(){
+				time();
+			},1000); 
+        }  
+	}
+	
+		
+		function getVerify(){
+			$(".yanzhengma img").attr('src',ajax_url+"Index/Base/getVerify");
+		}
+		
+		
+		
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+				if(ret.status ==1){
+					$("#address").text(ret.user.address);
+					$("#integral").text(ret.user.integral + "分");
+					$("#money_all").text(ret.user.money_all + "元");
+					$("#portrait").attr('src',ret.user.portrait);
+					//监听是否有未读消息
+					api.sendEvent({
+	                    name:'read_msg',
+	                    extra:{
+	                    	read_msg:ret.user.read_msg
+	                    }
+                    });
+					//检测当前用户是否设置过支付密码
+					checkUserPayStatus();
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		var is_pay_pass = 0;  //是否设置过支付密码  0否 1是
+		//检测当前用户是否设置过支付密码
+		function checkUserPayStatus(){
+			_ajax(ajax_url+"Index/Family/checkUserPayStatus" ,{'uid':uid},'get',function(ret){
+				is_pay_pass = ret.status;
+				if(ret.status ==1){
+					api.sendEvent({
+	                    name:'event_title',
+	                    extra:{
+	                    	title:'修改支付密码'
+	                    }
+                    });
+					$(".xiugaimimaDiv").removeClass("hide_");
+					$(".xiugaimima").show();
+					$(".fristpwd").hide();
+				}else{
+					$(".xiugaimima").hide();
+				}
+			});
+		}
+		
+		
+		function setPayPwd(){
+		
+			if(is_pay_pass ==1){
+				var paypassword = $("#oldpaypassword").val();
+				var newpaypassword = $("#newpaypassword").val();
+				var rpaypassword = $("#rpaypassword").val();
+//				if(!paypassword){
+//					_toast('请填写原密码');return false;
+//				}
+
+				///判断手机号是否输入
+				var phone = $("#phone").val();
+				if(!phone){
+					_toast('请填写手机号');return false;
+				}
+				
+				var smscode = $("#smscode").val();
+				if(!smscode){
+					_toast('请填写验证码');return false;
+				}
+				
+				
+				if(! _isPhone( phone)){
+					_toast('手机号格式不正确');return false;
+				}
+				
+				if(!newpaypassword){
+					_toast('请填写新密码');return false;
+				}
+				
+				if( newpaypassword.length != 6){
+					_toast('密码长度必须6位数字');return false;
+				}
+				if(rpaypassword !=newpaypassword){
+					_toast('确认密码不相同');return false;
+				}
+			}else{
+				var paypassword = $("#paypassword").val();
+				var rpaypassword = $("#rpaypassword").val();
+				if(!paypassword){
+					_toast('请填写支付密码');return false;
+				}
+				if( paypassword.length != 6){
+					_toast('密码长度必须6位数字');return false;
+				}
+				if(rpaypassword !=paypassword){
+					_toast('确认密码不相同');return false;
+				}
+				
+				
+			}
+			
+			var code = $("#code").val();
+			if(!code){
+				_toast('请填写验证码');return false;
+			}
+			
+			
+			
+			if(is_pay_pass ==1){
+				_ajax(ajax_url+"Index/Family/upPayPwd" ,{ 'uid':uid,'oldpwd':paypassword,'newpwd':newpaypassword,'cifpwd':rpaypassword,'code':code},'post',function(ret){
+					if(ret.status ==1){
+						$(".mark").removeClass("hide_");
+						$("body").css("overflow-y","hidden");
+						var scroll_ = $(document).scrollTop();
+						$(".mark").css("top",scroll_);
+						$(".alerttit").text(ret.msg);
+						
+						
+					}else{
+						_toast(ret.msg);
+					}
+				});
+			}else{
+				_ajax(ajax_url+"Index/Family/setPayPwd" ,{'uid':uid,'paypassword':paypassword,'code':code},'post',function(ret){
+					if(ret.status ==1){
+						$(".mark").removeClass("hide_");
+						$("body").css("overflow-y","hidden");
+						var scroll_ = $(document).scrollTop();
+						$(".mark").css("top",scroll_);
+						$(".alerttit").text(ret.msg);
+						
+						api.sendEvent({
+	                        name:'setPayPwdSuccess',
+                        });
+					}else{
+						_toast(ret.msg);
+					}
+				});
+			
+			}
+			
+		}
+	</script>
+</html>

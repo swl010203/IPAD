@@ -1,0 +1,160 @@
+.information {
+  margin-top: 10px;
+  background-color: #fff;
+  border-top: 1px solid #E0E0E0;
+}
+.information li {
+  height:60px;
+  line-height:50px;
+  padding: 0 20px;
+  font-size: 18px;
+  color: #282828;
+  overflow: hidden;
+  border-bottom: 1px solid #E0E0E0;
+}
+.information li input {
+  padding-left: 0.05rem;
+  font-size: 18px;
+  background-color: #fff;
+}
+.information li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: #282828;
+  position: relative;
+}
+.information li a i {
+  width: 20px;
+  height: 24px;
+  position: absolute;
+  background: url(../img/arr.png) no-repeat center;
+  right: 0;
+  top: 65%;
+  margin-top: -0.1rem;
+}
+.information .protocol {
+  color: #999;
+}
+.information .protocol span {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #999;
+  margin: 15px 0 0;
+  float: left;
+  border-radius: 50%;
+}
+.information .active span {
+  background: url(../img/true.png) no-repeat;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+/*表单信息*/
+.sub {
+  margin: 1rem 0 0.2rem;
+  /*padding: 0 0.2rem;*/
+  text-align: center;
+  height: 0.3rem;
+  line-height: 0.3rem;
+}
+.sub input {
+  border-radius: 0.1rem;
+  width: 96%;
+  font-size: 18px;
+  color: #fff;
+  height: 100%;
+  letter-spacing: 1em;
+  background: -webkit-gradient(linear, 0 0, 70% 100%, from(#df6711), to(#d12b18));
+}
+/*提交按钮*/
+.time-box,
+.home-box {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 10rem;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+} /*时间盒子*/
+.time-box .box,
+.home-box .box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2rem;
+  border-top: 0.04rem solid #D12A18;
+  background-color: #fff;
+  width: 100%;
+  overflow: hidden;
+}
+#wrapper,#wapper1{
+	position: relative;
+	overflow: scroll;
+	height: 2rem;
+}
+.time-list{
+	position: absolute;
+	height: auto;
+	width: 100%;
+	padding-bottom:0.5rem;
+}
+.home-list{
+	position: absolute;
+	height: auto;
+	width: 100%;
+	padding-bottom:0.5rem;
+}
+.time-box .box .tit,
+.home-box .box .tit {
+  text-align: center;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  color: #282828;
+  font-size: 18px;
+  border-bottom: 1px solid #E0E0E0;
+}
+.time-box .box .tit .fl,
+.home-box .box .tit .fl,
+.time-box .box .tit .fr,
+.home-box .box .tit .fr {
+  font-size: 18px;
+  color: #D12A18;
+  padding: 0 20px;
+}
+.time-box .box .time-list li,
+.home-box .box .time-list li,
+.time-box .box .home-list li,
+.home-box .box .home-list li {
+  height: 0.4rem;
+  border-bottom: 1px solid #E0E0E0;
+  line-height: 0.4rem;
+  font-size: 18px;
+  color: #282828;
+  overflow: hidden;
+}
+.time-box .box .time-list li .fl,
+.home-box .box .time-list li .fl,
+.time-box .box .home-list li .fl,
+.home-box .box .home-list li .fl {
+  padding-left: 20px;
+}
+.time-box .box .time-list li .fr,
+.home-box .box .time-list li .fr,
+.time-box .box .home-list li .fr,
+.home-box .box .home-list li .fr {
+  margin-right: 20px;
+  width: 0.18rem;
+  height: 0.18rem;
+  border-radius: 50%;
+  background: url(../img/noSel.png) no-repeat center;
+  margin-top: 0.1rem;
+}
+.time-box .box .time-list li .active,
+.home-box .box .time-list li .active,
+.time-box .box .home-list li .active,
+.home-box .box .home-list li .active {
+  background: url(../img/true.png) no-repeat;
+  -webkit-background-size: 100% 100%;
+  background-size: 100% 100%;
+}
+/*# sourceMappingURL=015_reservation.css.map */

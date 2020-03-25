@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <!--苹果专有的,头部bar的样式-->
+    <title>会展业务</title>
+    <link rel="stylesheet" type="text/css" href="../../css/user/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/user/index.css"/>
+
+</head>
+<body style="height:100%;">
+<div style="height:100%;">
+
+<!-- 内容开始 -->
+    <div class="gbussiness">
+        <div class="gbussiness_list">
+            <ul id="cate_list">
+                
+            </ul>
+        </div>
+        <div class="gshow" id="hall_list">
+            
+        </div>
+    </div>
+<!-- 内容结束 -->
+
+</div>
+
+<script src="../../script/user/jquery-1.12.2.js"></script>
+    <script src="../../script/user/index.js"></script>
+    <script src="../../script/user/gindex.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+    //默认加载
+    var sid  = 0;
+    apiready = function(){
+        sid  = api.pageParam.sid;
+        getHall( 0 );
+    };
+    
+    $(function(){
+    	$(document).on('click', '.cate_list', function() {
+	        var cate_id = $(this).attr( 'data-id' );
+	        getHall( cate_id );
+	    });
+    });
+    
+    
+    //获取店铺手机号
+    function getHall(cate){
+        //sid=28;
+        _ajax(ajax_url+"Index/Hotel/hall",{type:1, cate:cate, sid:sid},'post',function(ret) {
+            if( ret.status == 1 ) {
+                //分类
+                var cate_ret  = ret.data.cate_ret;//分类
+                var cate_html = '';
+                $.each(cate_ret, function(key, val) {
+                    var first_class = '';
+                    if( val.id == cate ) {
+                        first_class = 'glist-color';
+                    }
+                    cate_html += '<a href="javascript:void(0);" class="cate_list" data-id="'+val.id+'"  ><li class="'+first_class+' ">'+val.name+'</li></a>';
+                });
+                $('#cate_list').html( cate_html );
+                
+                //列表
+                var hall_ret  = ret.data.hall_ret;//列表
+                var hall_html = '';
+                $.each(hall_ret, function(key, val) {
+                    hall_html += '<div class="gshowss">';
+                    hall_html +=    '<div class="gshow_top">';
+                    hall_html +=    '<a class="hall_detail" data-id="'+val.id+'" href="javascript:void(0);"><img src="'+val.pic+'" alt="" ></a>';
+                    hall_html +=    '</div>';
+                    hall_html +=    '<div class="gshow_bottom">';
+                    hall_html +=        '<div class="gshow_bottom_price">';
+                    hall_html +=            '<span style="color:#d12a18">可容纳 '+val.people+'</span>';
+                    hall_html +=                '<ul class="gshow_bottom_shape">';
+                    hall_html +=                    '<li>'+val.cate_name+'</li>';
+                    hall_html +=                '</ul>';
+                    hall_html +=        '</div>';
+                    hall_html +=    '</div>';
+                    hall_html += '</div>';
+                });
+                $('#hall_list').html( hall_html );
+                
+                var shop_tel  = ret.data.shop_tel;//分类
+                api.sendEvent({
+                    name:'hall_shop_tel',
+                    extra: {
+                        tel: shop_tel,
+                    }
+                });
+            }
+        });
+    }
+    
+    $(document).on('click', '.hall_detail', function() {
+        var id = $(this).attr( 'data-id' );
+        _openWinByUrl('detail_head','detail_head',{'id':id, 'type':1, 'sid':sid});
+    });
+</script>
+
+</body>
+</html>

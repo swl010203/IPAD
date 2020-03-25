@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>管家中心</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--中间内容-->
+        <div class="gjzxBanner">
+            <img src="" id="banner" />
+        </div>
+        <div class="gjzxContent clearfloat">
+            <div class="fl">
+                <p class="gjzxPtit" id="title"></p>
+                <p class="gjzxCon" id="description">
+                </p>
+                <p class="gjzxCon">联系电话：<span id="contact"></span></p>
+            </div>
+            <div class="fr clearfloat" id="pic_list">
+                <!-- <div class="fl innerImggjzx"><img src="img/4502.png"/></div> -->
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript" >
+        apiready = function(){
+            getInfo();
+        };
+        
+        function getInfo(){
+            _ajax(ajax_url+"Index/Steward/getInfo" ,{},'get',function(ret){
+                var html  = '';
+                if(ret.status ==1){
+                    $('#banner').attr( 'src', ret.data.banner );
+                    $('#title').html( ret.data.title );
+                    $('#description').html( ret.data.description );
+                    $('#contact').html( ret.data.contact );
+                    $.each(ret.data.pics, function(key, val) {
+                        html += '<div class="fl innerImggjzx"><img src="'+val+'"/></div>';
+                    });
+                }
+                $("#pic_list").html(html);
+            });
+        }
+    </script>
+</html>

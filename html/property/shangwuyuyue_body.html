@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>033立即预约</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <div class="baoxiufuwuOuterDiv mar_t">
+            <div class="clearfloat">
+                <div class="fl leftDiv">您的姓名：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="text" id="real_name" placeholder="您的姓名" />
+                </div>                
+            </div>
+            <div class="clearfloat">
+                <div class="fl leftDiv">联系电话：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="tel" id="mobile" placeholder="您的联系电话" />
+                </div>
+            </div>
+            <div class="clearfloat">
+                <div class="fl leftDiv">预约时间：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="date" id="time" placeholder="预约时间" />
+                </div>
+            </div>
+            <div class="clearfloat">
+                <div class="fl leftDiv">备注：</div>
+                <div class="rightDiv wuxiala">
+                    <textarea id="desc" cols="" placeholder="备注"></textarea>
+                </div>
+            </div>
+         
+        </div>
+        <!--提交-->
+        <div class="btnTijiao" onclick="appointment();">确定</div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>   
+    <script type="text/javascript" >
+	    	function appointment(){
+	    		var real_name = $("#real_name").val();
+	    		var mobile = $("#mobile").val();
+	    		var appointment_time = $("#time").val();
+	    		var desc = $("#desc").val();
+	    	
+	    		if(!real_name){
+	    			_toast('请填写姓名');
+	    			return false;
+	    		}
+	    		if(!mobile){
+	    			_toast('请填写联系电话');
+	    			return false;
+	    		}
+	    		
+	    		
+	    		var uid = localStorage.getItem("uid");
+	    		
+	    		_ajax(ajax_url+"Index/Commerce/order" ,{
+	    			'real_name':real_name,
+	    			'mobile'   :mobile,
+	    			'appointment_time':appointment_time,
+	    			'desc' :desc	
+	    		},'post',function(ret){
+					if(ret.status==1){
+						_toast(ret.msg,function(){
+							api.closeWin();
+						});
+					}else{
+						_toast(ret.msg);
+					}
+				});
+	    	}
+	    	
+	    	
+	    	
+	</script>	    	
+</html>

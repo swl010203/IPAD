@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../css/hotel/common.css">
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/hotel/iscroll.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../css/hotel/swiper.min.css"/>
+    <script src="../../script/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <title>订房</title>
+    <style>
+         #alert-head{z-index: 13;position: absolute;display: none;width: 80%;cursor:pointer;left:10%;top:2rem;}
+         #shaixuanbtn{z-index: 10;position: absolute;display: none;width: 100%;height: 20rem;cursor:pointer;left:0;bottom:3rem;}
+   		 #alert-head {top: 10%;position: fixed;}
+   		 .imgDicv {width:111px;height: 75px;padding-bottom:10px;border-radius:0;}
+    	 .date{z-index:999999999999!important;}
+    	 .gli{position:relative;}
+    	 .gli a{margin-right:22px;font-size:18px}
+    	 .gli .gli-img{position:absolute;top:0.6rem;right:-0.5rem;width:0.7rem;height:0.7rem;}
+    	 .markC{position:relative;}
+    	 .markC .gli-img1{position: absolute;top: 0.3rem;right: -1.1rem;width: 0.7rem;height: 0.7rem;}
+    	.swiper-wrapper img{width:100%;height:100%;display:inline-block;background-size:cover;}
+    	.alert-zx4{float:right;border-radius:0 0 5px 0;display:block;}
+    	.w-fr img{width:20px;height:24px;}
+    	.df-time{border-radius:7px;}
+    	.df-time-zg{height:1.5rem;line-height:1.5rem;top:1.1rem;border-radius:12px;}
+    </style>
+</head>
+<body>
+
+<script> 
+    function bodyScroll(event){
+        event.preventDefault();
+    }
+    $(function(){
+        $(".df-yd").click(function(){
+            $("body,html").css("overflow-y","hidden");
+            document.body.addEventListener('touchmove',bodyScroll,false);
+        });
+        $(".markC").click(function(){
+            $("body,html").css("overflow-y","hidden");
+            document.body.addEventListener('touchmove',bodyScroll,false);
+        });
+        $("#hidebox").click(function(){
+            $("body,html").css("overflow-y","auto");
+            document.removeEventListener('touchmove',bodyScroll,true);
+        });
+        
+    });
+
+    function choose(th){
+	     var is_full = $(th).attr( 'data-is-full' );
+	        if( is_full == 1 ) {
+	            _toast( '该房型客已满，请选择其他房型' );
+	            return false;
+	        }
+       var hideobj=document.getElementById("hidebg"); 
+       hidebg.style.display="block";  //显示隐藏层 
+       hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
+       document.getElementById("alert-head").style.display="block";  //显示弹出层
+       
+       //填充数据
+       $('#mark').html('');
+       $('#privilege').html('');
+       var mark      = $(th).parent().find('.mark').text();//预定须知
+       var privilege = $(th).parent().find('.privilege').text();//优惠信息
+       $('#mark').html(mark);
+       $('#privilege').html(privilege);
+       
+       var alert_money = $(th).parent().find('.alert_money').text();//价格
+       $('#alert_money').html( alert_money );
+       
+       var house_id = $(th).attr( 'data-id' );
+       $('#house_id').val( house_id );
+    }
+    function choose2(){
+         document.getElementById("hidebg").style.display="none"; 
+             document.getElementById("alert-head").style.display="none"; 
+        // $('.cmark').css('display','none');
+        $('#house_id').val( 0 );
+    }
+
+    function demo(){
+       var hideobj=document.getElementById("hidebg"); 
+       hidebg.style.display="block";  //显示隐藏层 
+       hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
+       document.getElementById("shaixuanbtn").style.display="block";  //显示弹出层 
+       var myscroll2 = new IScroll("#wrapper2",{
+        click:iScrollClick()
+       });
+       $(".df-dio-qk").css("display","block");
+       
+       $('.df-dio-big').removeClass('df-dio-big');
+       $('#bed_type').val(0);
+       $('#breakfast').val(0);
+       $('#net').val(0);
+       $('#pay').val(0);
+    }
+    function demo2(){
+        document.body.removeEventListener('touchmove',bodyScroll,false);
+        document.getElementById("hidebg").style.display="none"; 
+        document.getElementById("shaixuanbtn").style.display="none"; 
+        $(".df-dio-qk").css("display","none");
+        $("body").css("overflow-y","auto");
+        
+        $('#house_id').val( 0 );
+    }
+// 点击上下箭头切换样式
+    $(document).ready(function() {
+        $(document).on('click', '.arrow', function(){
+            //$(this).parent().parent().next();
+            var obj = $(this).parents().find('.son_div');
+            var obj = $(this).parent().parent().next();
+            if( obj.css('display') == 'block' ) {
+                obj.css( 'display', 'none' );
+                $(this).removeClass('up2').addClass('down2') ;
+            } else {
+                obj.css( 'display', 'block' );
+                $(this).removeClass('down2').addClass('up2') ;
+            }
+            
+            
+            /*if($(this).parent().parent().next().css('display')=='block'){
+               $(this).parent().parent().next().css('display','none');
+                $(this).removeClass('up2').addClass('down2') ;
+            }else{
+               $(this).parent().parent().next().css('display','block');
+               $(this).removeClass('down2').addClass('up2') ;
+            }*/
+        });
+    });
+</script> 
+<div id="hidebg" class="hidebg wmain">
+            
+</div>
+<div class="gxyhead clearfix" style="margin-bottom:0;">
+    <div class="openshow clearfix">
+        <div style="top:0px;z-index: 9999999;position: absolute;">
+            <i class="openshow-a" onclick="bank();"></i>
+        </div>
+        <!--<span class="openshow-b">高级Big大床房</span>-->
+        <div style="width:100%;height:3.5rem;background-color:rgba(0,0,0,0.3);position:absolute;bottom:0;left:0;z-index:8;">
+        	<span class="openshow-span1">2016年装修</span>
+        	<span class="openshow-span2" id='shopname'>药都国际大酒店</span>
+        	<span class="openshow-span3" id="countpic">25张</span>
+        </div>
+        <div class="swiper-container">
+            <div class="swiper-wrapper" id="hotelPic" style="height:264px;">
+                
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="df-address clearfix">
+        <div class="df-address-top">
+            <img src="../../images/hotel/dingwei.png" class="df-address-pic">
+            <span class="df-address-dz">地址：<i id="address">辽宁打法是否省大连市沙河口区兴工街华业玫瑰东方</i></span>
+            <div class="w-fr"><a href="" id="tel"><img src="../../images/hotel//app_05.png" alt=""></a></div>
+        </div>
+        
+        <div class="df-address-gn">
+            <ul class="w-fl" id="attr_list">
+
+            </ul>
+            <ul class="w-fr"><li class="gli">
+            <a href="javascript:void(0);" id="detail">详情
+            	<img src="../../images/hotel/chexiao.png" alt="" class="gli-img"></a></li></ul>
+        </div>
+    </div>
+    
+    
+    <div class="df-time clearfix select-time" id="time_click">
+        <div class="df-time-rz" id="start">
+        <span >入住</span><br/>
+        <span class="df-time-rz1 entertime"></span>&nbsp;<span class="df-time-rz1"></span>
+        </div>
+        <div class="df-time-zg night">共1晚</div>
+        <div class="df-time-ld" id="end">
+        <span>离店</span><br/>
+        <span class="df-time-rz1 leavetime"></span>&nbsp;<span class="df-time-rz1"></span>
+        </div>
+    </div>
+    
+    <div class="df-shaixuan clearfix" style="height:3rem;">
+    <!-- 头部 -->
+        <div class="df-shaixuan-top">
+            <ul class="w-fl shaixuan-color" id="select_default">
+                <!-- <li class="df-shaixuan-color">到店支付</li> -->
+            </ul>
+            <ul class="w-fr" style="margin-right: 0.7rem;">
+                <li class="markC"><a href="javascript:void(0);" onclick='demo();'>筛选
+                <img src="../../images/hotel/chexiao.png" alt="" class="gli-img1">
+                </a></li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    <!-- toubujieshu  -->   
+    <div id="house_list">
+        
+    </div>  
+    
+    
+    <div class="df-tishi clearfix">
+        <div class="goPay-txt">
+        <i></i>
+        <span>温馨提示</span>
+        </div>
+        <div class="df-tishi1" id="notice" style="margin-left:20px;margin-top:0.2rem;">
+            <!-- <div class="df-tishi-time">
+                <span class="w-fl">入住时间：14：00以后</span>
+                <span class="w-fr">离店时间：15：00以后</span>
+            </div>
+            
+            <span class="df-tishi-dog">宠物：不可携带宠物</span> -->
+        </div>
+    </div>
+</div>  
+
+
+<!-- 预定弹出层开始-->
+<div class="alert-head clearfix" id="alert-head">
+    <div class="scro">
+        <div class="alert_bz">
+            <span>标准价</span>
+            <a href="javascript:void(0);" onclick="choose2();" id="hidebox" style="margin-top:0.15rem;"><img src="../../images/hotel//x.png" alt=""></a>
+        </div>
+        <div id="wrapper">
+            <div id="wrapperIn" style="position:auto;width:100%;">
+                <div class="alert-title" >
+                    <ul id="heightZi" style="width:100%;">
+                        
+                    </ul>
+                    <!--<div class="alert-down"><img src="../../images/hotel//zu3.png" alt=""></div>-->
+                </div>
+        <div class="alert-xz" style="width:100%;">
+            <span class="alert-xz1">预定须知</span>
+            <span class="alert-xz2" id="mark" style="display:block;width:100%;"></span>
+        </div>
+        <div class="alert-yh" style="width:100%;">
+            <span class="alert-xz1">优惠信息</span>
+            <span class="alert-xz2" id="privilege" style="display:block;width:100%;"></span>
+        </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <div class="alert-zx">
+        <div class="alert-zxzf">
+            <span class="alert-zx1">房间价格</span><span class="alert-zx2"> ¥</span><span class="alert-zx3" id="alert_money"></span>
+        </div>
+        <div class="alert-yd">
+            <a href="javascript:void(0);" id="order_ok" class="w-fr alert-zx4">预订</a>
+        </div>
+        
+    </div>
+</div>  
+
+            
+<!--筛选弹出层开始 -->
+<div class="sx-dio clearfix" id="shaixuanbtn" style="position: fixed;">
+    <div class="sx-dio-no">
+        <div class="sx-dio-hobby">
+            <i></i>
+            <span>订房筛选</span>
+            <a href="javascript:void(0);" onclick="demo2();">
+                <img src="../../images/hotel//x.png" alt="">
+            </a>
+        </div>
+        <div id="wrapper2">
+            <div class="df-dio" id="select_list">
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="df-dio-qk">
+    <div class="df-dio-qk4">
+        <a href="javascript:void(0);" class="df-dio-qk1" id="select_off"><img src="../../images/hotel/qingkong.png" alt=""><span class="df-dio-qk2">清空</span></a>
+    </div>
+        
+    <input type="hidden" value="" id="bed_type" />
+    <input type="hidden" value="" id="breakfast" />
+    <input type="hidden" value="" id="net" />
+    <input type="hidden" value="" id="pay" />
+    <input type="hidden" value="" id="house_id">
+    <input type="hidden" value="1" id="night_num">
+    <div class="df-dio-qk3">
+        <a href="javascript:void(0);" id="select_on" >确定</a>
+    </div>
+</div>
+
+
+</body>
+<link href="../../script/hotel/date/css/index.css" rel="stylesheet" />
+<script src="../../script/hotel/date/js/date.js"  ></script>
+<script type="text/javascript">
+
+    $('.select-time').hotelDate();
+    
+    var falg = true;
+    $(".alert-down").click(function(){
+        if(falg){
+            var heig = $("#heightZi li").height();//16
+            var leng = $("#heightZi li").length;//9
+            $("#heightZi").css("height",(heig*leng)/30+"rem");
+            falg = false;
+            var myscroll = new IScroll("#wrapper",{
+                click:iScrollClick()
+            });
+        }else{
+
+            $("#heightZi").css("height","3rem");
+            falg = true;
+        }
+    });
+    
+    $(".shaixuan-color li").click(function(){
+        $(this).addClass("df-shaixuan-color").siblings().removeClass("df-shaixuan-color");
+    });
+    
+    $(".df-dio-cx2 a").click(function(){
+        $(this).addClass("df-dio-big").siblings().removeClass("df-dio-big");
+    });
+        
+    function iScrollClick(){
+        if (/iPhone|iPad|iPod|Macintosh/i.test(navigator.userAgent)) return true;
+        if (/Chrome/i.test(navigator.userAgent)) return (/Android/i.test(navigator.userAgent));
+        if (/Silk/i.test(navigator.userAgent)) return true;
+        if (/Android/i.test(navigator.userAgent)) {
+            var s=navigator.userAgent.substr(navigator.userAgent.indexOf('Android')+8,3);
+            return parseFloat(s[0]+s[3]) < 44 ? true : false;
+        }
+    }
+    
+    //默认加载部分
+    var sid='';
+    apiready = function(){
+        //酒店id 
+        sid=api.pageParam.sid;
+        
+        //获取酒店信息
+        getHotel(sid);
+        getHouse(sid);
+    };
+    
+    //获取酒店信息
+    function getHotel(sid){
+        loading('reservation_body');
+        _ajax(ajax_url+"Index/Hotel/getHotel",{sid:sid},'post',function(ret){
+            api.refreshHeaderLoadDone();
+            closeloading();
+            if(ret.status==1){
+                //酒店相册
+                var html='';
+                for(var i in ret.hotel_pic){
+                    html+='<div class="swiper-slide openshow" style="height:264px;width:100%;">';
+                    html+='<a href="javascript:void(0)" style="height:264px;width:100%;">';
+                    html+='<img  src="'+ret.hotel_pic[i]+'" style="height:264px;width:100%;" alt="">';
+                    html+='</a>';
+                    html+='</div>';
+                }
+                $('#hotelPic').html(html);
+                
+                //轮播执行
+                var swiper = new Swiper('.swiper-container', {
+                    pagination: '.swiper-pagination',
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    paginationClickable: true,
+//                  spaceBetween: 30,
+//                  centeredSlides: true,
+                    autoplay: 2500,
+                    autoplayDisableOnInteraction: false,
+                    loop:true
+                });
+                
+                
+                $('#shopname').text(ret.hotel.name);
+                $('#address').text(ret.hotel.address);
+                $('#tel').attr('href', "javascript:alert('"+ret.hotel.telphone+"');" );
+                $('#countpic').text(ret.hotel_pic.length+'张');
+                
+                $('#notice').html( ret.hotel.notice.replace(/\r\n/g, '<br/>') );
+                
+                //属性
+                var facility  = ret.hotel.facility;
+                var attr_list = '';
+                var heightZi  = '';
+                $.each(facility, function(key, val) {
+                    if( key <= 2 ) {
+                        attr_list += '<li>'+val.title+'</li>';
+                    }
+                    heightZi += '<li><i><img src="../../images/hotel//35.png" alt=""></i>'+val.title+'</li>';
+                });
+                $('#attr_list').html( attr_list );
+                
+                $('#heightZi').html( heightZi );
+                
+                //删选默认
+                var select = ret.select;
+                var select_default = '';
+                //class="df-shaixuan-color"
+                select_default += '<a href="javascript:void(0);"><li data-type="bed_type" data-val="1" class="select_click_default">'+select.bed_type[1]+'</li></a>';
+                select_default += '<a href="javascript:void(0);"><li data-type="breakfast" data-val="1" class="select_click_default">'+select.breakfast[1]+'</li></a>';
+                select_default += '<a href="javascript:void(0);"><li data-type="net" data-val="1" class="select_click_default">'+select.net[1]+'</li></a>';
+                select_default += '<a href="javascript:void(0);"><li data-type="pay" data-val="1" class="select_click_default">'+select.pay[1]+'</li></a>';
+                $('#select_default').html( select_default );
+                
+                //筛选条件
+                var selectType  = {'bed_type':'床型','breakfast':'早餐', 'net':'宽带', 'pay':'支付'};
+                var select_list = '';
+                $.each(select, function(key, val) {
+                    select_list += '<div class="df-dio-cx">';
+                    select_list += '    <span class="df-dio-cx1">'+selectType[key]+'</span>';
+                    select_list += '    <div class="df-dio-cx2">';
+                    $.each(val, function(k, v) {
+                        select_list += '        <a href="javascript:void(0);" style="width:auto;" data-type="'+key+'" data-val="'+k+'" class="select_click">'+v+'</a>';
+                    });
+                    //select_list += '        <a href="javascript:;" class="df-dio-big">含早</a>';
+                    //select_list += '        <a href="javascript:;">单早</a>';
+                    //select_list += '        <a href="javascript:;">双早</a>';
+                    select_list += '    </div>';
+                    select_list += '</div>';
+                });
+                $('#select_list').html( select_list );
+            }
+        });
+    }
+    
+    function getHouse( sid, stype ) {
+        if( stype == 'search' ) {
+            var bed_type  = $('#bed_type').val();
+            var breakfast = $('#breakfast').val();
+            var net = $('#net').val();
+            var pay = $('#pay').val();
+        }
+        if( stype == 'default' ) {
+            $('.df-shaixuan-color').each(function() {
+                var type = $(this).attr('data-type');
+                var val  = $(this).attr('data-val');
+                if( type == 'bed_type' ) {
+                    bed_type = val;
+                } else if( type == 'breakfast' ) {
+                    breakfast = val;
+                } else if( type == 'net' ) {
+                    net = val;
+                } else if( type == 'pay' ) {
+                    pay = val;
+                }
+            });
+        }
+        
+        loading('reservation_body');
+        _ajax(ajax_url+"Index/Hotel/selectHouse",{sid:sid, bed_type:bed_type, breakfast:breakfast, net:net, pay:pay},'post',function(ret){
+            api.refreshHeaderLoadDone();
+            closeloading();
+            if(ret.status==1){
+                //房间信息
+                var house = ret.data.house;
+                var house_html = '';
+                if( house ) {
+                    $.each(house, function(key, val) {
+                        house_html += '<div class="df-shaixuan clearfix" style="height:auto;">';
+                        house_html += '    <div class="df-shaixuan-bot">';
+                        house_html += '            <div class="imgDicv">';
+                        house_html += '                <a href="javascript:void(0);" data-id="'+val.id+'" class="jump_next"><img src="'+val.pic+'" alt="" style="width:105px;height:100%;border-radius:5px"></a>';
+                        house_html += '            </div>';
+                        house_html += '        <div class="df-shaixuan-bot2">';
+                        house_html += '            <span class="df-shaixuan-span1">'+val.name+'</span><br/>';
+                        house_html += '            <div >';
+                        house_html += '                <span class="df-shaixuan-span2">'+val.attr_str+'</span>';
+                        //house_html += '            <span class="df-shaixuan-span2">|</span>';
+                        //house_html += '            <span class="df-shaixuan-span2">1.8m大床</span>';
+                        house_html += '            </div>';
+                        house_html += '            <div>';
+                        house_html += '                <span class="df-shaixuan-span3">￥</span><span class="df-shaixuan-span3 df-shaixuan-span4">'+val.price+'</span><span class="df-shaixuan-span3">起</span>';
+                        house_html += '            </div>';
+                        house_html += '        </div>';
+                        house_html += '        <a href="javascript:void(0);" class="arrow down2"></a>';
+                        house_html += '    </div>';
+                        house_html += '</div>';
+                        var display = key == 0 ? 'display:block;' : 'display:none;';
+                        house_html += '<div class="son_div" style="'+display+'" data-id="'+key+'">';
+                        $.each(val.list, function(k, v) {
+                            house_html += '<div class="df-biaozhun clearfix">';
+                            house_html += '    <div class="df-biaozhun1">'+v.name+'</div>';
+                            house_html += '    <div class="df-biaozhun2">';
+                            house_html += '        <ul class="w-fl">';
+                            $.each(v.select, function(kk, vv) {
+                                house_html += '            <li>'+vv+'</li>';
+                            });
+                            //house_html += '            <li>双早</li>';
+                            //house_html += '            <li class="df-biaozhuncolor">不可取消</li>';
+                            house_html += '        </ul>';
+                            house_html += '    </div>';
+                            house_html += '    <div class="df-biaozhunprice">';
+                            house_html += '        <span>￥'+v.price+'</span>';
+                            house_html += '    </div>';
+                            house_html += '    <div class="df-biaozhunzk">';
+                            //house_html += '    <span>折扣券4元</span>';
+                            house_html += '    </div>';
+                            house_html += '    <div class="df-biaozhunzx">';
+                            house_html += '         <div style="display:none;" class="mark">'+v.mark+'</div>';
+                            house_html += '         <div style="display:none;" class="privilege">'+v.privilege+'</div>';
+                            house_html += '         <div style="display:none;" class="alert_money">'+v.price+'</div>';
+                            house_html += '         <a href="javascript:void(0);" class="house_class house_class_'+v.id+'" data-full-time="'+v.full_time+'" data-full="'+v.full+'" data-is-full="'+v.is_full+'" data-id="'+v.id+'"  onclick="choose(this);dot_click(\'Housing_order\');">';
+                            if( v.is_full == 1 ) {
+                                //当天满客
+                                house_html += '         <span class="df-yd house_class_span_'+v.id+'" style="color:#fff;background-color:#808080;">客满</span>';
+                            } else {
+                                house_html += '         <span class="df-yd house_class_span_'+v.id+'" style="color:#fff;">预定</span>';
+                            }
+                            house_html += '         <span class="df-zxf">在线付</span>';
+                            house_html += '         </a>';
+                            house_html += '    </div>';
+                            house_html += '</div>';
+                        });
+                        house_html += '</div>';
+                    });
+                }
+                $('#house_list').html( house_html );
+                
+                $('#bed_type').val(0);
+                $('#breakfast').val(0);
+                $('#net').val(0);
+                $('#pay').val(0);
+            }
+        });
+    }
+    
+    //返回上一页
+    function bank(){
+        api.closeWin();
+    }
+    
+    $(document).on('click', '.select_click_default', function() {
+        var data_type = $(this).attr( 'data-type' );
+        var data_val  = $(this).attr( 'data-val' );
+        
+        if( $(this).hasClass('df-shaixuan-color') ) {
+            $(this).removeClass('df-shaixuan-color');
+            $('#'+data_type).val(0);
+        } else {
+            $(this).addClass('df-shaixuan-color');
+            $('#'+data_type).val(data_val);
+        }
+        //$(this).addClass('df-shaixuan-color').siblings().removeClass('df-shaixuan-color');
+        
+        getHouse(sid, 'default');
+    });
+    
+    $(document).on('click', '.select_click', function() {
+        $(this).addClass('df-dio-big').siblings().removeClass('df-dio-big');
+        var data_type = $(this).attr( 'data-type' );
+        var data_val  = $(this).attr( 'data-val' );
+        $('#'+data_type).val(data_val);
+    });
+    
+    //清除选择项
+    $(document).on('click', '#select_off', function() {
+        $('.df-dio-big').removeClass('df-dio-big');
+        $('#bed_type').val(0);
+        $('#breakfast').val(0);
+        $('#net').val(0);
+        $('#pay').val(0);
+    });
+    
+    //确定选择项
+    $(document).on('click', '#select_on', function() {
+        $('.df-shaixuan-color').removeClass( 'df-shaixuan-color' );
+        demo2();
+        getHouse(sid, 'search');
+    });
+    
+    $(document).on('click', '#order_ok', function() {
+        var house_id = $('#house_id').val();
+        var entertime = $('.entertime').text();
+        var leavetime = $('.leavetime').text();
+        entertime = Date.parse(new Date( entertime ) );
+        leavetime = Date.parse(new Date( leavetime ));
+        var num = $('#night_num').val();
+        choose2();
+        
+        var uid=localStorage.getItem("uid");
+        if( uid ) {
+            _openWinByUrl('quzhifu','quzhifu', {'sid':sid, 'hid':house_id, 'start':entertime, 'end':leavetime, num:num});
+        } else {
+            _toast('请先登录！');
+            _openWinByUrl('login','../login');
+        }
+    });
+
+    $(document).on('click', '#detail', function() {
+        _openWinByUrl('hotelDetail','hotelDetail',{'sid':sid});
+    });
+    
+    $(document).on('click', '.jump_next', function() {
+        var id = $(this).attr( 'data-id' );
+        _openWinByUrl('diankaifangjian_head','diankaifangjian_head',{'sid':sid, id:id});
+    });
+</script>
+</html>

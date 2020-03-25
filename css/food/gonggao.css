@@ -1,0 +1,52 @@
+header{
+	overflow: hidden;
+	border-bottom: 1px solid #e0e0e0;
+	background: white;
+}
+/* header .back a img{
+	width: 0.21rem;
+	height: 0.38rem;
+	margin-top: 0.05rem;
+}
+header .word{
+	font-size: 0.36rem;
+	color: #d12a18;
+	margin-left: 2.3rem;
+} */
+.content{
+	background-color: white;
+	margin-top: 10px;
+	border-top: 1px solid #e0e0e0;
+	font-size: 18px;
+}
+.content ul li{
+	height: 50px;
+	padding: 0 20px;
+	line-height: 40px;
+	border-bottom: 1px solid #e0e0e0;
+	box-sizing: border-box;
+}
+.content .word{
+	width: 3.8rem;
+}
+.content .title{
+	width: auto;
+	height: 1rem;
+	margin: 0 auto;
+	text-align: center;
+	padding-bottom: 1rem;
+	box-sizing: border-box;
+	border-bottom: 1px solid #e0e0e0;
+	font-size: 18px;
+}
+.content p{
+	line-height: 30px;
+}
+.pad{
+	padding: 20px;
+	height: 100%;
+	font-size: 18px;
+}
+.conWord img{
+	width: 90%;
+}

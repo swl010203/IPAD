@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html style="height:100%">
+	<head>
+		<meta charset="UTF-8">
+		<title>035价格明细</title>
+		<link rel="stylesheet" type="text/css" href="../../css/account/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/account/newAllStyle.css"/>
+	</head>
+	<body style="height:100%">
+		<!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" onclick="bank();">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon">
+				价格明细
+			</div>
+		</header>
+
+		<!--尾部-->
+		<footer>
+			<div class="btnTijiao" onclick="_openWinByUrl('shangwuyuyue','shangwuyuyue');">立即预约</div>
+		</footer>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    
+    <script>
+    	//默认加载
+    	var uid = '';
+    	apiready = function(){
+    		uid=localStorage.getItem("uid");
+    		
+    		var header = $api.dom('header');
+	        //$api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+	        var $footer = $api.dom('footer');
+			var footer_h = $api.offset($footer).h;			
+			
+			api.openFrame({
+	            name: 'jiagemingxi_body',
+	            url: 'jiagemingxi_body.html',
+	            bounces: true,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+1,
+	                w: headerPos.w,
+	                h: body_h-headerPos.h-footer_h
+	            },
+	            reload:true,
+				pageParam:api.pageParam
+	        });
+			
+	    };
+	    
+	    //关闭页面
+	    function bank(){
+	    	api.closeWin();
+	    }
+	</script>
+</html>

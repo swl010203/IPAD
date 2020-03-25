@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body class="bg_fff">
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="siteSearchlist" style="background:#fff;">
+			
+			<ul class="siteSearchul" id="list">
+					
+				<!--	<li class="busi_fenleili">
+							<div class="busi_fenlei">
+							<a href="#"class="busi_fenleia"><img src="../../images/jiudianimg01.jpg"></a>
+							<div class="busi_fenleir">
+								<p class="busi_fenleirtxt "><a href="#" class="busi_fenleirtxta dy_dd" style="width: 75%;">安国国际大酒店</a><span class="fr" style="color: #D12A18;">订单取消</span></p>
+								<p class="busi_fenleirrice jdbusi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00<span class="busi_fenleirpricespan"> 1晚/标间</span></p>
+								<p class="busi_fenleirrice jdbusi_fenleirrice" style="color: #999; font-size: 0.2rem;">入住时间：2016-10-25</p>
+							</div>
+						</div>
+						
+					</li>
+					<div class="orderListBot">
+						<a href="#" class="orderBtn">再来一单</a>
+						<a href="#" class="orderBtn cancel_orderbtn">再来一单</a>
+					</div>-->
+				
+				
+			</ul>
+</div>
+
+	
+</div>
+
+
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script>
+	var userinfo = "";
+	var page = 1;
+	var is_page = true;
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		//加载状态
+		loading('hotel_order_list_body');
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			page=1;
+			is_page = true;
+			ready();
+		});
+
+			api.addEventListener({
+		    name:'hotel_refund'
+		}, function(ret, err){ 
+			page=1;
+			is_page = true;
+			ready();   
+	       
+		});
+		
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		         page++;
+			     ready();
+		     }
+			  
+		});
+		
+					//监听类型选择
+		api.addEventListener({
+		    name:'hotel_pingjia'
+		}, function(ret, err){ 
+			page = 1; 
+			type=1;
+			ready();      
+	       
+		});
+		
+		ready();
+	};
+	
+	function ready(){
+	
+		_ajax(ajax_url +"Index/HotelOrder/getHotelOrderList",{'uid':userinfo.uid,'token':userinfo.token,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status  ==1){
+				//判断是否还有下一页
+				if(ret.hotelOrder.length==0  && page !=1){
+					is_page = false;
+					return false;
+				}
+				$.each(ret.hotelOrder,function(k,v){
+					
+				    strVar += "<li class=\"busi_fenleili\">";
+				    strVar += "<div class=\"busi_fenlei\">";
+				    strVar += "	<a href=\"javascript:void(0)\" onclick=\"orderDetail("+v['id']+")\"  class=\"busi_fenleia\"><img src=\""+v['shopimg']+"\"><\/a>";
+				    strVar += "	<div class=\"busi_fenleir\">";
+				    strVar += "		<p class=\"busi_fenleirtxt \">";
+				    strVar += "			<a href=\"javascript:void(0)\" onclick=\"orderDetail("+v['id']+")\" class=\"busi_fenleirtxta dy_dd\" style=\"width: 75%;\">"+v['shopname']+"<\/a><span class=\"fr\" style=\"color: #D12A18;\">"+v['hotelstatsu']['msg']+"<\/span>";
+				    strVar += "		<\/p>";
+				    strVar += "		<p class=\"busi_fenleirrice jdbusi_fenleirrice\">";
+				    var day = diy_time(v['start_date'],v['end_date']);
+				    strVar += "			<b class=\"busi_fenleirpriceb\">￥<\/b>"+v['order_price']+"<span class=\"busi_fenleirpricespan\"> "+day+"晚/"+v['roomname']+"<\/span>";
+				    strVar += "		<\/p>";
+				    strVar += "		<p class=\"busi_fenleirrice jdbusi_fenleirrice\" style=\"color: #999; font-size: 0.2rem;\">";
+				    strVar += "			入住时间："+v['start_date'] +" - " +v['end_date'];
+				    strVar += "		<\/p>";
+				    strVar += "	<\/div>";
+				    strVar += "<\/div>";
+				    strVar += "<\/li>";
+				    //菜单
+				    strVar +="<div class=\"orderListBot\">";
+						 //取消支付   1.未支付  2.已支付 待接单
+				    if(v['pay_status'] !=1  && v['status'] ==0 ){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"cancel_order("+v['id']+")\" class=\"orderBtn cancel_orderbtn\">取消订单<\/a>";
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"goPay('"+v['order_sn']+"')\" class=\"orderBtn \">去支付<\/a>";
+				    }
+				    //带评价
+				    if(v['pay_status'] ==1  && v['status'] ==1  && v['is_evaluation']==0){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"evaluation("+v['id']+")\" class=\"orderBtn \">去评价<\/a>";
+				    }
+				      //查看评价
+				    if(v['pay_status'] ==1  && v['status'] ==1  && v['is_evaluation']==1){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"pingjia("+v['id']+")\" class=\"orderBtn \">查看评价<\/a>";
+				    }
+				    
+				     //退单
+				     if(v['pay_status'] ==1  && v['status'] ==0){
+				     strVar += "		<a href=\"javascript:void(0);\" onclick=\"tui("+v['id']+")\" class=\"orderBtn \">退单<\/a>";
+				     }
+			
+					strVar += "<\/div>";
+
+				});
+				    
+			}else{
+				is_page = false;
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$("#list").html(strVar);
+		    }else{
+		    	$("#list").append(strVar);
+		    }
+			
+			closeloading();
+			api.refreshHeaderLoadDone();
+			
+		})
+	}
+	
+	/*
+	 * 支付
+	 * @param order_sn 订单编号
+	 */
+	function goPay(order_sn){
+		_openWinByUrl('pay_head','../order/pay_head',{'order_sn':order_sn,'pay_notify_type':3});
+	}
+	
+	
+	 function tui(order_id){
+	 var name='hotel_refund';
+	 var url='hotel_refund';
+	 var title='退单';
+	  _openWinByUrl(name+'_head','aftersalehead',{'furl':url,'frame':name,'title':title,'id':order_id});
+ 	}	
+	
+		function openevaluation(name,url,title,id){
+	 _openWinByUrl(name+'_head','evaluationhead',{'furl':url,'frame':name,'title':title,'order_id':id});
+	}
+	function viewevaluation(name,url,title,id){
+	 _openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title,'order_id':id});
+	}
+	/*
+	 * 查看评价
+	 */
+	function pingjia(order_id){
+	viewevaluation('hotel_pingjia','user/hotel_pingjia','评价',order_id);
+	}
+	/*
+	 * 评价
+	 */
+	function evaluation(order_id){
+	  openevaluation('hotel_pingjia','hotel_pingjia','评价',order_id);
+	}
+	//计算日期
+	function diy_time(time1,time2){
+	    time1 = Date.parse(new Date(time1));
+	    time2 = Date.parse(new Date(time2));
+	    time3 = Math.abs(parseInt((time2 - time1)/1000/3600/24));
+	    return time3 ;
+	}
+	
+	//订单详情
+	function orderDetail(id){
+		_openWinByUrl('hotel_order_detail_window_head','../window_head',{
+			'furl':'user/hotel_order_detail',
+			'frame':'hotel_order_detail',
+			'title':'订单详情',
+			'id'   :id
+		})
+	}
+	
+	
+	/**
+	 * 取消订单
+	 * @param id  订单Id 
+	 */
+	function cancel_order(id ){
+		api.confirm({
+		    title: '取消订单',
+		    msg: '确认取消订单？',
+		    buttons: ['是', '先保留']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +"Index/HotelOrder/cancelHotelOrder",{'token':userinfo.token,'id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			ready();
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	
+</script>
+</body>
+</html>

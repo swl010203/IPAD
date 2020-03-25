@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="bgwhite">
+    <head>
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <title></title>
+        <script src="../../script/mui.min.js"></script>
+        <link href="../../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+       	<style>
+			.border_b10 li{
+				overflow: hidden;
+			}
+		</style>
+    </head>
+    <body class="bgwhite">
+        <header id="header" class="mui-bar mui-bar-nav bgRed">
+            <h1 class="mui-title">确认订单</h1>
+            <!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">购水记录</button>-->
+            <a class="mui-icon mui-icon-back" onclick="api.closeWin();"></a>
+        </header>
+        <div class="mui-content bgwhite">
+            <div class="qrdd_address clearfloat pl20 pr20 box_s mui-row" onclick="_openWinByUrl('address_head', '../user/address_head');dot_click('water_nobarrelsaddress');dot_click('water_bucketsaddress');">
+                <div class="mui-col-xs-11 mui-col-sm-11">
+                    <p class="fs32 font_weightB mt20">
+                        <span>收件人：<span class="consignee"></span></span>
+                        <span class="ml60 mobile"></span>
+                    </p>
+                    <p class="fs26 colorHui999 mt10 address">请选择地址</p>
+                </div>
+                <div class="mui-col-xs-1 mui-col-sm-1 mui-text-right">
+                    <span class="mui-icon mui-icon-arrowright fs36 colorHui666 font_weightB"></span>
+                </div>
+            </div>
+            <div class="qrdd_shopImg mui-row pl20 pr20 box_s border_b10 clearfloat pt30">
+                <div class="mui-pull-left qrdd_shopImg_l">
+                    <img class='goods_img' src="../../images/wy6.jpg"/>
+                </div>
+                <div class="mui-pull-left qrdd_shopImg_c">
+                    <p class="mui-ellipsis fs32 goods_title"></p>
+                    <p class="mui-ellipsis fs32 mt30 is_bucket"></p>
+                </div>
+                <div class="mui-pull-left qrdd_shopImg_r fs32 font_weightB">
+                    <p class="mui-text-right price"></p>
+                    <p class="mui-text-right bucket_price" style="margin-top: 15px;"></p>
+                </div>
+            </div>
+            <div class="qrdd_fangshi fs28">
+                <ul class="border_b10">
+                    <li class="qrdd_fangshi_li clearfloat border_b pl20 pr20 box_s" onclick="opentimes();dot_click('water_nobarrelsarrivaltime');dot_click('water_bucketsarrivaltime');">
+                        <div class="mui-pull-left colorHui999"><span>送达时间</span></div>
+                        <div class="mui-pull-right">
+                            <span name="data_times" id="data_times">请选择时间</span>
+                            <span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>
+                        </div>
+                    </li>
+                    <li class="qrdd_fangshi_li clearfloat border_b10 pl20 pr20 box_s" id="ticketLi">
+                        <div class="mui-pull-left colorHui999"><span>水票</span></div>
+                        <div class="mui-pull-right water_coupons">
+                            <span class="selectTicketInfo">选择水票</span>
+                            <!--<span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>-->
+                        </div>
+                    </li>
+                    <li class="qrdd_fangshi_li clearfloat border_b10 pl20 pr20 box_s cancelCoupons" style="display: none;" onclick="cancelCoupons();dot_click('water_nobarrelscancleticket');dot_click('water_bucketscancleticket');">
+                        <div class="mui-pull-left colorHui999"><span></span></div>
+                        <div class="mui-pull-right cancel_coupons">
+                            <span>取消水票</span>
+                            <!--<span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>-->
+                        </div>
+                    </li>
+                    <li class="qrdd_fangshi_li clearfloat border_b pl20 pr20 box_s">
+                        <div class="mui-pull-left colorHui999"><span>备注</span></div>
+                        <div class="mui-pull-right" style="width: 80%;">
+                            <input class="mui-text-right qrdd_inp" style="width: 100%;" onfocus="dot_click('water_nobarrelsremark');dot_click('water_bucketsremark');" type="text" name="remark" id="remark" value="" placeholder="请输入您的备注要求"/>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div style="height: 80px;background: #FFFFFF;"></div>
+            <footer class="cart_footer clearfloat fs24 mui-row pl20 box_s">
+                <div class="mui-col-sm-9 mui-col-xs-9 tjorder">
+                    <div class="bianjiClick_div">
+                        <p style="line-height: 50px;">
+                            <span>应付金额:</span>
+                            <span class="fs24 colorRed">￥</span>
+                            <span class="fs36 colorRed price1" data-price=""><span class="fs32 price2"><!-- 40 --></span></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="mui-col-sm-3 mui-col-xs-3 tjorder">
+                    <div class="buyNow colorWhite subOrder">提交订单</div>
+                </div>
+                <div class="mui-hidden full_footerFixed ljorder">
+                    <div class="buyNow colorWhite subOrder">立即购买</div>
+                </div>
+            </footer>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript">
+        mui.init();
+        var userinfo = '';
+        var gid = '';
+        var address_id = '';
+        var date       = "";   //取件日期
+        var times      = "";   //取件时间
+        var allPrice   = 0;    //总价
+        var tempAllPrice   = '';    //临时总价
+        var waterPrice = 0;    //水的价格
+        var bucketPrice= 0;    //水桶价格
+        var ticket_id  = '';   // 水票 id
+        var hasBucket  = '';   // 购买类型 0：无桶 1：有桶
+        apiready = function(){
+            userinfo = $api.getStorage('userinfo');
+            gid = api.pageParam['gid'];
+            hasBucket = api.pageParam.hasBucket;
+
+            api.addEventListener({
+	            name:'sureaddress'
+            },function(ret,err){
+            	address_id = ret.value.address_id;
+            	getGoodsInfo();
+            });
+            
+            api.addEventListener({
+	            name:'viewappear'
+            },function(ret,err){
+            	getGoodsInfo();
+            });
+            
+            //取件日期
+            api.addEventListener({
+                name:'laundry_time'
+            },function(ret,err){
+                times = ret.value.times;
+                date = ret.value.date;
+                date_info = ret.value.date_info;
+                $("#data_times").text(date_info+" "+times);
+
+                //数据打点统计点
+                //上门取件时间
+                data_dot( 'Laundry_time', 0, date_info+" "+times );
+            });
+
+            //监听水票
+            api.addEventListener({
+                name:'water_coupons'
+            },function(ret,err){
+                // $('.tjorder').addClass('mui-hidden');
+                // $('.ljorder').removeClass('mui-hidden');
+                var waterHtml = '';
+                ticket_id = ret.value.coupons_id;
+                typeName = ret.value.typeName;
+                if(ticket_id){
+                    waterHtml += '<span>【 '+typeName+' 】<\/span>';
+                }
+                $('.water_coupons').html(waterHtml);
+                allPrice = parseFloat(bucketPrice);   // 重新计算总价格
+                $('.price1').text(parseFloat(allPrice).toFixed(2));
+                $('.cancelCoupons').css('display', 'block');
+            });
+
+            // 获取详情
+            getGoodsInfo();
+
+            // 获取水票剩余
+            getCountTicket();
+        };
+
+        // 获取水票剩余数量
+        function getCountTicket(){
+            var url = ajax_url + 'Index/WaterService/getHasTicket';
+            var data = {
+                'uid': userinfo ? userinfo.uid : '',
+                'type': 1
+            };
+            _ajax(url, data, 'post', function(ret){
+                if(ret.status == 1){
+                    $('#ticketLi').attr('onclick', 'openCoupons();dot_click("water_nobarrelschoiceticke");dot_click("water_bucketschoiceticke");');
+                    $('.selectTicketInfo').text('选择水票');
+                }else{
+                    $('#ticketLi').removeAttr('onclick');
+                    $('.selectTicketInfo').text('没有水票');
+                }
+            });
+        }
+
+        // 取消使用水票
+        function cancelCoupons(){
+            $('.water_coupons span').html('没有水票');
+            $('.cancelCoupons').css('display', 'none');
+            ticket_id = '';
+            getGoodsInfo();
+        }
+
+        // 获取商品详情
+        var has_bucket = '';
+        function getGoodsInfo(){
+            _ajax(ajax_url+"Index/WaterService/goodsInfo" ,{'uid': userinfo.uid, 'id': gid, 'address_id': address_id},'post',function(ret){
+                if(ret.status == 1){
+                    var data = ret.data;
+                    if(typeof data.address !='undefined'){
+                        $('.consignee').text(data.address.consignee);
+                        $('.mobile').text(data.address.mobile);
+                        $('.address').text(data.address.address);
+                       	address_id = data.addressId;
+                    }
+                    $('.goods_img').attr('src', data.img);
+                    $('.goods_title').text(data.title+' / '+data.has_content+' L');
+                    var is_bucket = '';
+                    has_bucket = data.is_bucket;
+                    is_bucket = data.is_bucket == 1 ? '' : '空桶费用';
+                    $('.is_bucket').text(is_bucket);
+                    $('.price').text('￥' + data.price);
+
+                    if(parseFloat(data.bucket_price) != 0){
+                        $('.bucket_price').text(data.bucket_price);
+                    }
+
+                    bucketPrice = data.bucket_price;
+                    waterPrice  = data.price;
+                    allPrice = parseFloat(data.price) + parseFloat(data.bucket_price);
+                    allPrice = allPrice.toFixed(2);
+                    if(tempAllPrice == ''){
+                        tempAllPrice = allPrice;
+                    }
+                    
+                    if(ticket_id != ''){
+                        //$('.price1').text(math.ceil(parseFloat(data.bucket_price)));
+                        var bucket_price = parseFloat(data.bucket_price);
+                        $('.price1').text(bucket_price.toFixed(2));
+                    }else{
+                        $('.price1').text(allPrice);
+                    }
+
+                    // $('.price1').text(allPrice.split('.')[0]+'.');
+                    // $('.price2').text(allPrice.split('.')[1]);
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+
+        function opentimes(){
+            _openWinByUrl('time','time',{'date':date,'times':times} , false);
+        }
+
+        // 获取优惠券
+        function openCoupons(){
+            allPrice = tempAllPrice;   // 重新计算总价格
+            $('.price1').text(allPrice);
+            _openWinByUrl('coupons_window_head','../window_head',{'furl':'water/coupons','frame':'coupons','title':'水票'});
+        }
+
+        $('.subOrder').click(function(){
+            var send_time = $('#data_times').text();
+            if(!address_id){
+                _toast('请选择收货地址');
+                return false;
+            }
+            if(send_time == '' || send_time == '请选择时间'){
+                _toast('请选择送达时间');
+                return false;
+            }
+
+            //点击提交订单
+            dot_click('water_nobarrelssubmit');
+
+            //点击提交订单
+            dot_click('water_bucketssubmit');
+
+            var data = {
+                'uid' : userinfo.uid,
+                'gid' : gid,
+                'send_time' : send_time,
+                'ticket_id' : ticket_id,
+                'address_id': address_id,
+                'price' : allPrice,
+                'is_bucket' : has_bucket,
+                'bucket_price': $('.bucket_price').text(),
+                'remark' : $('#remark').val(),
+            };
+            _ajax(ajax_url+'Index/WaterService/buyBucketWater', data, 'post', function(ret){
+                if(ret.status == 1){
+                    if(hasBucket == 1){
+                        if(ret.data.is_ticket == 1){
+                            _toast('购买成功！');
+                            api.sendEvent({
+                                name: 'paysuccess_refresh'
+                            });
+
+                            api.sendEvent({
+                                name: 'refe_order_list'
+                            });
+
+                            api.sendEvent({
+                                name: 'refresh_order_cartinfo'
+                            });
+
+                            api.setFrameAttr({
+                                name: 'cart_body',
+                                hidden: true
+                            });
+                            _openWinByUrl('pay_success', '../order/pay_success', {
+                                'channel': 16,
+                                'order_sn': ret.data.order_sn,
+                                'goods_type': ''
+                            }, false);
+                        }else{
+                            // _toast(JSON.stringify(ret));return false;
+                            _toast(ret.info, function(){
+                                _openWinByUrl('pay_head','../order/pay_head',{'pay_notify_type':16, 'order_sn':ret.data.order_sn, 'dot_type':'6'})
+                            });
+
+                        }
+                    }else {
+                        _toast(ret.info, function(){
+                            _openWinByUrl('pay_head','../order/pay_head',{'pay_notify_type':16, 'order_sn':ret.data.order_sn, 'dot_type':'6'});
+                        });
+
+                    }
+
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        });
+
+        //点击统计操作
+        function dot_click(type, remark) {
+            if( typeof remark == 'undefined' ) {
+                remark = 0;
+            }
+            if( hasBucket == 1 ) {
+                if( type == 'water_bucketsaddress' ) {
+                    //点击收货地址
+                    data_dot( 'water_bucketsaddress', 0, remark );
+                } else if( type == 'water_bucketsarrivaltime' ) {
+                    //点击送达时间
+                    data_dot( 'water_bucketsarrivaltime', 0, remark );
+                } else if( type == 'water_bucketschoiceticke' ) {
+                    //点击水票
+                    data_dot( 'water_bucketschoiceticke', 0, remark );
+                } else if( type == 'water_bucketscancleticket' ) {
+                    //点击取消水票
+                    data_dot( 'water_bucketscancleticket', 0, remark );
+                } else if( type == 'water_bucketsremark' ) {
+                    //点击备注
+                    data_dot( 'water_bucketsremark', 0, remark );
+                } else if( type == 'water_bucketssubmit' ) {
+                    //点击提交订单
+                    data_dot( 'water_bucketssubmit', 0, remark );
+                }
+            } else {
+                if( type == 'water_nobarrelsaddress' ) {
+                    //点击收货地址
+                    data_dot( 'water_nobarrelsaddress', 0, remark );
+                } else if( type == 'water_nobarrelsarrivaltime' ) {
+                    //点击送达时间
+                    data_dot( 'water_nobarrelsarrivaltime', 0, remark );
+                } else if( type == 'water_nobarrelschoiceticke' ) {
+                    //点击水票
+                    data_dot( 'water_nobarrelschoiceticke', 0, remark );
+                } else if( type == 'water_nobarrelscancleticket' ) {
+                    //点击取消水票
+                    data_dot( 'water_nobarrelscancleticket', 0, remark );
+                } else if( type == 'water_nobarrelsremark' ) {
+                    //点击备注
+                    data_dot( 'water_nobarrelsremark', 0, remark );
+                } else if( type == 'water_nobarrelssubmit' ) {
+                    //点击提交订单
+                    data_dot( 'water_nobarrelssubmit', 0, remark );
+                }
+            }
+        }
+    </script>
+</html>

@@ -1,0 +1,823 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="mui-android mui-android-8 mui-android-8-0">
+		<header id="header" class="mui-bar mui-bar-transparent" style="background-color: rgba(255, 255, 255, 0);">
+			<div class="mui-pull-left iconfontDiv fanhui_btn"><span class="iconfont icon-fanhui"></span></div>
+			<h1 class="mui-title headerTit">地产</h1>
+			<!--icon-wujiaoxingx-->
+			<!--<div class="mui-pull-right iconfontDiv"><span class="iconfont icon-wujiaoxing-copy"></span></div>-->
+		</header>
+		<div class="mui-content">
+			<div class="estate_maodianEscli ztcs_lunbo">
+				<div class="mui-slider mui_slider mui_slider_fwxq bgwhite">
+					<div class="mui-slider-group mui-slider-loop">
+						<!--第四个内容区-->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<img src="../../images/fwxq1.jpg" />
+						</div>
+						<!--第一个内容区容器-->
+						<div class="mui-slider-item">
+							<img src="../../images/fwxq1.jpg" />
+						</div>
+						<!--第二个内容区-->
+						<div class="mui-slider-item">
+							<img src="../../images/fwxq1.jpg" />
+						</div>
+						<!--第三个内容区-->
+						<div class="mui-slider-item">
+							<img src="../../images/fwxq1.jpg" />
+						</div>
+						<!--第四个内容区-->
+						<div class="mui-slider-item">
+							<img src="../../images/fwxq1.jpg" />
+						</div>
+						<!--第一个内容区容器-->
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<img src="../../images/fwxq1.jpg" />
+						</div>
+					</div>
+					<div class="slide_pageNum">
+						<span id="info" class="colorWhite">1</span>/
+						<span id="sumPage"></span>
+					</div>
+				</div>
+				<div class="tab_click mui-row bgwhite border_b">
+					<div class="mui-col-sm-6 mui-col-xs-6 before active">楼盘详情</div>
+					<div class="mui-col-sm-6 mui-col-xs-6 before">智慧社区</div>
+				</div>
+				<div class="estate_janjie pl20 pr20 box_s bgwhite">
+					<p class="pt20 clearfloat"><span class="estateSpan_lineH fs32 font_weightB">药都新城</span><a class="telphone" onclick="openAppointment()"><span class="mui-pull-right buyNow yuanjiao_btnSpan">电话咨询</span></a></p>
+					<p class="fujinRightCon pb20 mt10"><span class="dingweiLan_icon"></span><span class="colorHui999 fs24 ml10">河北省安国市药都新城金融路188号</span></p>
+				</div>
+			</div>
+			<div class="dichan_divBottom">
+				<!--锚点头部-->
+				<div class="dichan_divBottom_maodian bgwhite border_b mui-hidden">
+					<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					    <div class="mui-scroll">
+					        <a href="javascript:void(0);" data-url = "a01" class="mui-control-item mui-active">
+					            楼盘详情
+					        </a>
+					        <a href="javascript:void(0);" data-url = "a02" class="mui-control-item">
+					            小区户型
+					        </a>
+					        <a href="javascript:void(0);" data-url = "a03" class="mui-control-item">
+					            周边配套
+					        </a>
+					        <a href="javascript:void(0);" data-url = "a04" class="mui-control-item">
+					            小区品质
+					        </a>
+					    </div>
+					</div>
+				</div>
+				<div class="tab_divEstate">
+					<div id="a01" class="pl20 pr20 box_s bgwhite mt20">
+						<div class="estate_tit">
+							<p class="pt20 clearfloat">
+								<span class="estateSpan_lineH fs32 font_weightB">楼盘详情</span>
+								<span class="mui-pull-right colorHui999 estateSpan_lineH loupanInfoClick">更多<span class="iconfont icon-arrow-right"></span></span>
+							</p>
+						</div>
+						<div class="fs28 pb20 houseDetail">
+							<p class="mt10">
+								<span class="colorHui999">项目名称：</span>
+								<span>华海-药都新城</span>
+							</p>
+							<p class="mt10">
+								<span class="colorHui999">装修标准：</span>
+								<span>毛坯房</span>
+							</p>
+							<p class="mt10">
+								<span class="colorHui999">物流公司：</span>
+								<span>河北省安国市华海物业有限公司</span>
+							</p>
+						</div>
+					</div>
+					<div id="a02" class="pl20 pr20 box_s bgwhite mt20">
+						<div class="estate_tit">
+							<p class="pt20 clearfloat">
+								<span class="estateSpan_lineH fs32 font_weightB">小区户型</span>
+								<span class="mui-pull-right colorHui999 estateSpan_lineH houseAllType">全部<span class="iconfont icon-arrow-right"></span></span>
+							</p>
+						</div>
+						<div class="fs28 pb20 xiaoquhuxing_div">
+							<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+							    <div class="mui-scroll">
+							       <ul class="xiaoquhuxing_div_ul clearfloat mt10 houseType">
+							       		<li class="mui-control-item">
+							       			<div class="xiaoquhuxing_div_ulImg"><img src="../../images/dc1.jpg"/></div>
+							       			<p class="fs28 pt10 mui-text-left mui-ellipsis">3室2厅 / 120㎡ / 南北通透</p>
+							       		</li>
+							       		<li class="mui-control-item">
+							       			<div class="xiaoquhuxing_div_ulImg"><img src="../../images/dc1.jpg"/></div>
+							       			<p class="fs28 pt10 mui-text-left mui-ellipsis">3室2厅 / 120㎡ / 南北通透</p>
+							       		</li>
+							       		<li class="mui-control-item">
+							       			<div class="xiaoquhuxing_div_ulImg"><img src="../../images/dc1.jpg"/></div>
+							       			<p class="fs28 pt10 mui-text-left mui-ellipsis">3室2厅 / 120㎡ / 南北通透3室2厅 / 120㎡ / 南北通透3室2厅 / 120㎡ / 南北通透</p>
+							       		</li>
+							       </ul>
+							    </div>
+							</div>
+						</div>
+					</div>
+					<div id="a03" class="pl20 pr20 box_s bgwhite mt20">
+						<div class="estate_tit">
+							<p class="pt20 clearfloat">
+								<span class="estateSpan_lineH fs32 font_weightB">周边配套</span>
+								<!--<span class="mui-pull-right colorHui999 estateSpan_lineH">全部<span class="iconfont icon-arrow-right"></span></span>-->
+							</p>
+						</div>
+						<div class="fs28 pb20 zhoubianpeitao_div">
+							<div class="zhoubianpeitao_div_span clearfloat mt10">
+								<span class="click">学校</span>
+								<span>医疗</span>
+								<span>生活</span>
+								<span>休闲</span>
+								<span>门店</span>
+							</div>
+							<div class="zhoubianpeitao_div_con">
+								<div class="map_div">
+									<img src="../../images/map.jpg"/>
+								</div>
+								<p class="clearfloat pt10 moreMatch">
+									<span class="estateSpan_lineH xiaoquname">安国市红玉小区</span>
+									<span class="mui-pull-right colorHui999 estateSpan_lineH">更多<span class="iconfont icon-arrow-right"></span></span>
+								</p>
+								<p class="colorHui999">0km</p>
+							</div>
+						</div>
+					</div>
+					<div id="a04" class="pl20 pr20 box_s bgwhite mt20">
+						<div class="estate_tit">
+							<p class="pt20 clearfloat">
+								<span class="estateSpan_lineH fs32 font_weightB">小区品质</span>
+								<!--<span class="mui-pull-right colorHui999 estateSpan_lineH">全部<span class="iconfont icon-arrow-right"></span></span>-->
+							</p>
+						</div>
+						<div class="fs28 pb20 xiaoqupinzhi_div">
+							<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+							    <div class="mui-scroll">
+							       <ul class="xiaoquhuxing_div_ul clearfloat mt10 xuqudescribe">
+							       		<li class="mui-control-item">
+							       			<p class="clearfloat mui-text-left border_b fs28 pl20">
+												<span class="estateSpan_lineH">小区概况</span>
+												<span class="mui-pull-right colorHui999"><span class="iconfont icon-arrow-right"></span></span>
+											</p>
+											<p class="colorHui999 mui-ellipsis-2 mt20 fs24 mui-text-left pl20 pb10">它是以住宅楼房为主体并配有商业网点、文化教育、娱乐、绿化、公用</p>
+							       		</li>
+										<li class="mui-control-item">
+							       			<p class="clearfloat mui-text-left border_b fs28 pl20">
+												<span class="estateSpan_lineH">小区概况</span>
+												<span class="mui-pull-right colorHui999"><span class="iconfont icon-arrow-right"></span></span>
+											</p>
+											<p class="colorHui999 mui-ellipsis-2 mt20 fs24 mui-text-left pl20 pb10">它是以住宅楼房为主体并配有商业网点、文化教育、娱乐、绿化、公用</p>
+							       		</li>
+							       		<li class="mui-control-item">
+							       			<p class="clearfloat mui-text-left border_b fs28 pl20">
+												<span class="estateSpan_lineH">小区概况</span>
+												<span class="mui-pull-right colorHui999"><span class="iconfont icon-arrow-right"></span></span>
+											</p>
+											<p class="colorHui999 mui-ellipsis-2 mt20 fs24 mui-text-left pl20 pb10">它是以住宅楼房为主体并配有商业网点、文化教育、娱乐、绿化、公用</p>
+							       		</li>
+							       		<li class="mui-control-item">
+							       			<p class="clearfloat mui-text-left border_b fs28 pl20">
+												<span class="estateSpan_lineH">小区概况</span>
+												<span class="mui-pull-right colorHui999"><span class="iconfont icon-arrow-right"></span></span>
+											</p>
+											<p class="colorHui999 mui-ellipsis-2 mt20 fs24 mui-text-left pl20 pb10">它是以住宅楼房为主体并配有商业网点、文化教育、娱乐、绿化、公用</p>
+							       		</li>
+							       </ul>
+							    </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab_divEstate mui-hidden wisdomCommunity">
+					<div id="a01" class="pl20 pr20 box_s bgwhite mt20">
+						<div class="estate_tit">
+							<p class="pt20 clearfloat">
+								<span class="estateSpan_lineH fs32 font_weightB">智慧终端</span>
+								<span class="mui-pull-right colorHui999 estateSpan_lineH">更多<span class="iconfont icon-arrow-right"></span></span>
+							</p>
+						</div>
+						<ul class="zhihuishequ_ul clearfloat mt10">
+							<li>
+								<div class="zhihuishequ_ul_img">
+									<img src="../../images/zhsq1.jpg"/>
+								</div>
+								<p class="fs28 mui-ellipsis mui-text-center pt20 pb20">惠通卡</p>
+							</li>
+							<li>
+								<div class="zhihuishequ_ul_img">
+									<img src="../../images/zhsq1.jpg"/>
+								</div>
+								<p class="fs28 mui-ellipsis mui-text-center pt20 pb20">惠通卡</p>
+							</li>
+						</ul>
+					</div>
+					<div id="a02" class="pl20 pr20 box_s bgwhite mt20">
+						<div class="estate_tit">
+							<p class="pt20 clearfloat">
+								<span class="estateSpan_lineH fs32 font_weightB">智慧楼宇</span>
+								<span class="mui-pull-right colorHui999 estateSpan_lineH">更多<span class="iconfont icon-arrow-right"></span></span>
+							</p>
+						</div>
+						<ul class="zhihuishequ_ul clearfloat mt10">
+							<li>
+								<div class="zhihuishequ_ul_img">
+									<img src="../../images/zhsq1.jpg"/>
+								</div>
+								<p class="fs28 mui-ellipsis mui-text-center pt20 pb20">惠通卡</p>
+							</li>
+							<li>
+								<div class="zhihuishequ_ul_img">
+									<img src="../../images/zhsq1.jpg"/>
+								</div>
+								<p class="fs28 mui-ellipsis mui-text-center pt20 pb20">惠通卡</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div style="height: 50px;"></div>
+			<div style="bottom: 0; z-index: 99999;" class="footer_twoFixed mui-row">
+				<!--<div class="mui-col-sm-6 mui-col-xs-6 addCart fenxiang_click">推荐好友</div>-->
+				<div class="mui-col-sm-6 mui-col-xs-6 buyNow" style="width: 100%;" onclick="openAppointment()">预约看房</div>
+			</div>
+		</div>
+		<div class="mark_common mui-hidden">
+			<div class="loupanxiangqing_divMark pl20 pr20 box_s">
+				<div class="loupanxiangqing_divMark_logo"></div>
+				<div class="loupanxiangqing_divMark_con fs28">
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">项目名称：</span>
+						<span class="mui-pull-left">华海-药都新城</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">装修标准：</span>
+						<span class="mui-pull-left">毛坯房</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">物业公司：</span>
+						<span class="mui-pull-left">河北省安国市华海物业有限公司</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">物业费：</span>
+						<span class="mui-pull-left">3.1元/平方米*月</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">产权年限：</span>
+						<span class="mui-pull-left">100年</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">规划户数：</span>
+						<span class="mui-pull-left">7000户</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">车位配比：</span>
+						<span class="mui-pull-left">1：1：1</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">容积率：</span>
+						<span class="mui-pull-left">2.0</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">绿化率：</span>
+						<span class="mui-pull-left">30%</span>
+					</p>
+					<p class="clearfloat">
+						<span class="colorHui999 mui-pull-left">占地面积：</span>
+						<span class="mui-pull-left">10000平方米</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/common.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/app.js"></script>
+	<script>
+		var kword = '学校';
+
+		//周边配套地图
+		$('.map_div').on('tap',function(){
+			getUserLocation();
+			_openWinByUrl('new_map','new_map',{'kword':kword});
+		});
+
+
+		//返回按钮
+		$('.fanhui_btn').on('tap',function(){
+			api.closeWin();
+		});
+
+		//更多配套
+		$('.moreMatch').on('tap',function(){
+			_openWinByUrl('more_match','more_match',{'kword':kword});//*************************************************************************
+		});
+		var hid = 0;
+		var sid = 0;
+
+		var map = '';
+	    var lon = '';
+	    var lat = '';
+	    var isSetInterVal = false;
+	    var interval = '';
+		var zhoubian = '';
+		var telphone = '';
+		
+		apiready = function(){
+			sid = api.pageParam.sid;
+
+			map = api.require('bMap');
+			houseDetail();
+			getUserLocation();
+			api.addEventListener({
+			    name: 'wisdomCommunity'
+			}, function(ret, err){
+			    if( ret.value.status == 1 ){
+			        hid = ret.value.hid;
+					sid = ret.value.sid;
+					houseType();
+					houseQuality();
+					wisdomCommunity();
+			    }
+			});
+
+            getHouseBanner();
+
+		};
+		
+		function getHouseBanner(){
+            var url = ajax_url + 'Index/House/getHouseBanner';
+            var data = {
+                'uid' : '',
+				'sid' : sid
+            };
+            _ajax(url, data, 'get', function(ret){
+                if(ret.status == 1){
+                    var dataBanner  = ret.data;
+                    var banner_Html = '';
+                    var lenBanner   = ret.data.length;
+
+                    banner_Html += '<div class="mui-slider-item mui-slider-item-duplicate">';
+                    // banner_Html +=     '<div class="ztcs_topImg bgwhite">';
+                    banner_Html +=         '<img src="'+dataBanner[Number(lenBanner)-1]+'"/>';
+                    // banner_Html +=     '</div>';
+                    banner_Html += '</div>';
+
+                    $.each(dataBanner, function(k, v){
+                        banner_Html += '<div class="mui-slider-item">';
+                        // banner_Html +=     '<div class="ztcs_topImg bgwhite">';
+                        banner_Html +=         '<img src="'+v+'"/>';
+                        // banner_Html +=     '</div>';
+                        banner_Html += '</div>';
+                    });
+
+                    banner_Html += '<div class="mui-slider-item mui-slider-item-duplicate">';
+                    // banner_Html +=     '<div class="ztcs_topImg bgwhite">';
+                    banner_Html +=         '<img src="'+dataBanner[0]+'"/>';
+                    // banner_Html +=     '</div>';
+                    banner_Html += '</div>';
+
+                    console.log(JSON.stringify(banner_Html));
+
+                    // $('.shopBanner').html(banner_Html);
+                    $('.mui-slider-loop').html(banner_Html);
+                    setTimeout(function(){
+                        var gallery = mui('.ztcs_lunbo');
+                        gallery.slider({
+                            interval:1800//自动轮播周期，若为0则不自动播放，默认为0；
+                        });
+                    },300);
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+		
+		function houseDetail(){
+			_ajax(ajax_url+'Index/House/houseDetail',{'sid':sid},'post',function(ret){
+				if(ret.status == 1){
+					if(ret.data){
+						var houseDetail = '';
+						var loupanxiangqing = '';
+						houseDetail +='<p class="mt10">';
+						houseDetail +='	<span class="colorHui999">装修标准：</span>';
+						houseDetail +='	<span>'+ret.data.decoration_standard+'</span>';
+						houseDetail +='</p>';
+						houseDetail +='<p class="mt10">';
+						houseDetail +='	<span class="colorHui999">产权年限：</span>';
+						houseDetail +='	<span>'+ret.data.property_right+'年</span>';
+						houseDetail +='</p>';
+						houseDetail +='<p class="mt10">';
+						houseDetail +='	<span class="colorHui999">绿化面积：</span>';
+						houseDetail +='	<span>'+ret.data.green_area+'%</span>';
+						houseDetail +='</p>';
+						$('.houseDetail').html(houseDetail);
+
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">项目名称：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">华海-药都新城</span>';
+						loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">装修标准：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">'+ret.data.decoration_standard+'</span>';
+						loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">物业公司：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">'+ret.data.property_company+'</span>';
+						loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">物业费：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">暂无</span>';
+						loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">产权年限：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">'+ret.data.property_right+'年</span>';
+						loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">规划户数：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">'+ret.data.plan_house+'户</span>';
+						loupanxiangqing +='</p>';
+						// loupanxiangqing +='<p class="clearfloat">';
+						// loupanxiangqing +='	<span class="colorHui999 mui-pull-left">车位配比：</span>';
+						// loupanxiangqing +='	<span class="mui-pull-left">1：1：1</span>';
+						// loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">容积率：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">4.0</span>';
+						loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">绿化率：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">'+ret.data.green_area+'%</span>';
+						loupanxiangqing +='</p>';
+						loupanxiangqing +='<p class="clearfloat">';
+						loupanxiangqing +='	<span class="colorHui999 mui-pull-left">占地面积：</span>';
+						loupanxiangqing +='	<span class="mui-pull-left">'+ret.data.area_cover+'平方米</span>';
+						loupanxiangqing +='</p>';
+
+						$('.loupanxiangqing_divMark_con').html(loupanxiangqing);
+//						$('.telphone').attr('href','tel:'+ret.data.telphone);
+						telphone = ret.data.telphone;
+						$('.houseAddress').html(ret.data.address);
+						api.sendEvent({
+						    name: 'wisdomCommunity',
+						    extra: {
+								status:1,
+						        hid: ret.data.id,
+						        sid: ret.data.sid
+						    }
+						});
+
+					}
+				}
+			});
+		}
+		function wisdomCommunity(){
+			_ajax(ajax_url+'Index/House/wisdomCommunity',{'hid':hid,'sid':sid},'post',function(ret){
+				if(ret.status ==1){
+						var strVar = '';
+						$.each(ret.data.wisdomData,function(k,v){
+							strVar +='<div id="a01" class="pl20 pr20 box_s bgwhite mt20">';
+							strVar +='	<div class="estate_tit">';
+							strVar +='		<p class="pt20 clearfloat">';
+							strVar +='			<span class="estateSpan_lineH fs32 font_weightB">'+v.name+'</span>';
+							// strVar +='			<span class="mui-pull-right colorHui999 estateSpan_lineH">更多<span class="iconfont icon-arrow-right"></span></span>';
+							strVar +='		</p>';
+							strVar +='	</div>';
+							strVar +='	<ul class="zhihuishequ_ul clearfloat mt10">';
+							$.each(ret.data.wisdomDataSon,function(key,val){
+								if(val.pid == v.id){
+									// strVar +='		<li onclick="_openWinByUrl(\'zhihui\',\'zhihui\',{\'title\':\''+v.name+'\',\'id\':'+val.id+'});">';
+									strVar +='			<li>';
+									strVar +='			<div class="zhihuishequ_ul_img">';
+									strVar +='				<img src="'+val.pic+'"/>';
+									strVar +='			</div>';
+									strVar +='			<p class="fs28 mui-ellipsis mui-text-center pt20 pb20">'+val.name+'</p>';
+									strVar +='		</li>';
+								}
+							});
+							strVar +='	</ul>';
+							strVar +='</div>';
+						});
+						$('.wisdomCommunity').html(strVar);
+					}else{
+						_toast('暂无数据');
+						return false;
+					}
+			});
+		}
+		//小区户型
+		function houseType(){
+			_ajax(ajax_url+'Index/House/houseType',{'hid':hid,'sid':sid,'type':1},'post',function(ret){
+				if(ret.status ==1){
+						var houseType = '';
+						$.each(ret.data,function(k,v){
+							houseType += ' <li class="mui-control-item" data-room="'+v.room+'">';
+							houseType += ' 	<div class="xiaoquhuxing_div_ulImg"><img src="'+v.type_pic+'"/></div>';
+							houseType += ' 	<p class="fs28 pt10 mui-text-left mui-ellipsis">'+(v.room ? v.room+'室':'')+''+(v.hall ? v.hall+'厅':'')+'/'+(v.area ? v.area+'㎡':'')+' / 南北通透</p>';
+							houseType += ' </li>';
+						});
+						$('.houseType').html(houseType);
+						// $('.houseType li').on('tap',function(){
+						// 	room = $(this).attr('data-room');
+						// 	_openWinByUrl('house_type','house_type',{'room':room,'hid':hid,'sid':sid});
+						// });
+					}else{
+						_toast('暂无数据');
+						return false;
+					}
+			});
+		}
+		//小区品质
+		function houseQuality(){
+			_ajax(ajax_url+'Index/House/houseQuality',{'hid':hid,'sid':sid},'post',function(ret){
+				if(ret.status ==1){
+					var houseQuality = '';
+						$.each(ret.data,function(k,v){
+							houseQuality += ' <li class="mui-control-item" data-id="'+v.id+'">';
+							houseQuality += ' 	<p class="clearfloat mui-text-left border_b fs28 pl20">';
+							houseQuality += ' 		<span class="estateSpan_lineH">'+v.name+'</span>';
+							houseQuality += ' 		<span class="mui-pull-right colorHui999"><span class="iconfont icon-arrow-right"></span></span>';
+							houseQuality += ' 	</p>';
+							houseQuality += ' 	<p class="colorHui999 mui-ellipsis-2 mt20 fs24 mui-text-left pl20 pb10" style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">'+v.info+'</p>';
+							houseQuality += ' </li>';
+						});
+						$('.xuqudescribe').html(houseQuality);
+						//小区概括
+						$('.xuqudescribe li').on('tap',function(){
+							id = $(this).attr('data-id');
+							_openWinByUrl('xqdescribe','xqdescribe',{'id':id});//*************************************************************************
+						});
+					}else{
+						_toast('网络连接失败');return false;
+					}
+			});
+		}
+		$('.houseAllType').on('tap',function(){
+			_openWinByUrl('house_all_type','house_all_type',{'hid':hid,'sid':sid});//*************************************************************************
+		});
+		//预约看房
+		function openAppointment(){
+			api.alert({
+			    title: '预约电话：',
+			    msg: telphone,
+			}, function(ret, err) {
+			
+			});
+		}
+
+
+
+		// 获取经纬度
+	    function getUserLocation(){
+	        map.getLocationServices(function(ret, err){
+	            // if(!ret.enable){
+	            //     _toast('请检查设备定位功能是否开启');
+	            //     if(!isSetInterVal){
+	            //         isSetInterVal = true;
+	            //         interval = setInterval(getUserLocation, 3000);
+	            //     }
+	            //     map.stopLocation();
+	            // }else{
+	                if(interval!=''){
+	                    clearInterval(interval);    // 清除定时器
+	                }
+	                map.getLocation({
+	                    accuracy: '100m',
+	                    autoStop: true,
+	                    filter: 1
+	                }, function(ret, err) {
+	                    if (ret.status) {
+	                        lon = ret.lon;
+	                        lat = ret.lat;
+	                        getRound();
+	                    } else {
+//	                    	alert(JSON.stringify(err));
+	                    }
+	                });
+	            // }
+	        });
+
+	    }
+
+	    function getRound(){
+	        // 自动定位到用户位置
+	        map.showUserLocation({
+	            isShow: true,
+	            trackingMode: 'none'
+	        });
+
+	        map.setCenter({
+	            coords: {
+	                lon: lon,
+	                lat: lat
+	            },
+	            animation: true
+	        });
+
+	        map.searchNearby({
+	            keyword: kword,
+	            lon: lon,
+	            lat: lat,
+	            radius: 2000
+	        }, function(ret, err) {
+	        	console.log(JSON.stringify(err)+":1111:"+JSON.stringify(err));
+	        	console.log(lon+":2222:"+lat);
+	            if (ret.status) {
+					var strVar1 = [];
+	                $.each(ret.results, function(k, v){
+						map.getDistance({
+						    start: {
+						        lon: lon,
+						        lat: lat
+						    },
+						    end: {
+						        lon: v.lon,
+						        lat: v.lat
+						    }
+						}, function(rets) {
+						    if (rets.status) {
+								var dis = rets.distance;
+								distance = (dis/1000).toFixed(2);
+								var loca = {
+									name:v.name,
+									las:distance
+								};
+								strVar1.push(loca);
+						    }
+							var sidOrder = strVar1.sort(
+			                function(a, b)
+				                {
+				                    if(a.las < b.las) return -1;
+				                    if(a.las > b.las) return 1;
+				                    return 0;
+				                }
+				            );
+				            $.each(sidOrder,
+				                function(index, val)
+				                {
+									if(index == 0){
+										$('.xiaoquname').html(val.name);
+										$('.xiaoqujuli').html(val.las+'km');
+									}
+				                }
+				            );
+						});
+
+	                });
+	            } else {
+					$('.xiaoquname').html('未找到数据');
+					$('.xiaoqujuli').html('0km');
+	            }
+	        });
+	    }
+	    
+	    var share_shop_name="惠管家";  //分享名称
+        var share_shop_title="惠管家";  //分享名称
+        var share_shop_thumb="../../image/logo.png"; //图片缩略图
+        var fnssfdurl="www.hguanjia.cn/huidownload/download.html";        //分享链接
+        function sharetype(type, scene) {
+            if (type == 3 || type == 4) {
+                var wx = api.require('wx');
+                wx.isInstalled(function (ret, err) {
+                    if (ret.installed) {
+                        shareWx(share_shop_name, share_shop_thumb, fnssfdurl, scene);
+                    } else {
+                        _toast('请先安装微信客户端');
+                    }
+                });
+            }
+        }
+
+        /**、
+         * 微信分享
+         */
+
+        function shareWx(title,thumb,url,scene){
+            var title= ( typeof arguments[0] == "undefined" || arguments[0] == null) ? '惠管家'  : arguments[0];
+            var scene= ( typeof arguments[3] == "undefined" || arguments[3] == null) ? 'timeline'  : arguments[3];
+            var wx = api.require('wx');
+            wx.shareWebpage({
+                apiKey: 'wx967c2d25800a08ae',
+                scene: scene,
+                title: title,
+                description: '',
+                thumb: 'widget://images/logo.png',
+                contentUrl: url
+            }, function(ret, err) {
+                if (ret.status) {
+                    // addIntegral();
+                    _toast('分享成功');
+                } else {
+                    if(ret.status==-1){
+                        _toast("未知错误");
+                    }else if(ret.status==2){
+                        _toast("取消分享");
+                    }else if(ret.status==3){
+                        _toast("分享失败");
+                    }else{
+                        _toast("分享失败");
+                    }
+                }
+            });
+
+        }
+	</script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		setTimeout(function(){
+		    var gallery = mui('.mui-slider');
+		    gallery.slider({
+		         interval:1800//自动轮播周期，若为0则不自动播放，默认为0；
+		    });
+		},300);
+		//获取轮播总页数以及当前第几页
+		document.getElementById("sumPage").innerText = $(".mui_slider_fwxq div.mui-slider-item").length - 2;
+		document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+		  //注意slideNumber是从0开始的；
+		  document.getElementById("info").innerText = event.detail.slideNumber+1;
+		});
+		//锚点的滑动
+//		mui('.dichan_divBottom_maodian .mui-scroll-wrapper').scroll({
+//			 indicators: true, //是否显示滚动条
+//			 deceleration:0.0006, //阻尼系数,系数越小滑动越灵敏
+//			 bounce: true //是否启用回弹
+//		});
+		$(".zhoubianpeitao_div_span>span").on("tap",function(){
+			$(this).addClass("click").siblings().removeClass("click");
+		});
+		//锚点效果
+		$(".dichan_divBottom_maodian a").on("tap",function(){
+			var thisUrl = $(this).attr("data-url");
+			location.href = "#"+thisUrl+"";
+			var dScroll = $(document).scrollTop();
+			$(document).scrollTop(dScroll - 80);
+		});
+		//切换楼盘和智慧社区效果
+		$(".tab_click>div").on("tap",function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			$(".tab_divEstate").addClass("mui-hidden");
+			var index_ = $(this).index();
+			$(".tab_divEstate").eq(index_).removeClass("mui-hidden");
+		});
+		//点击分享出来弹层
+		$(".fenxiang_click").on("tap",function(){
+			share();
+			$(".mark_common").removeClass("mui-hidden");
+			$(".mark_share").slideDown();
+			show_mark();
+		});
+		//点击关闭
+		$(".click_close").on("tap",function(){
+			hidden_mark();
+			$(".mark_common").addClass("mui-hidden");
+		});
+		//点击楼盘详情更多
+		$(".loupanInfoClick").on("tap",function(){
+			$(".mark_common").removeClass("mui-hidden");
+			show_mark();
+		});
+		$(".mark_common").on("tap",function(){
+			hidden_mark();
+			$(this).addClass("mui-hidden");
+		});
+		
+	     window.onscroll = window.ontouchmove = function() {
+	        var scrollY = $(document).scrollTop();// 获取垂直滚动的距离，即滚动了多少
+	        if (scrollY > 1){ //如果滚动距离大于550px则隐藏，否则删除隐藏类
+	            $("header").find(".headerTit").css("opacity",1);
+	            $("header").css("border-bottom","1px solid #ececec");
+	            $("header .iconfontDiv").css({"background":"rgba(170,171,173,0)","color":"#e63c25"});
+	        } 
+	        else{
+	        		$("header").find(".headerTit").css("opacity",0);
+	        		$("header").css("border-bottom","none");
+				$("header .iconfontDiv").css({"background":"rgba(170,171,173,1)","color":"#ffffff"});
+	        }
+	       //锚点
+	       var scrollTop_maodian = $(".estate_maodianEscli").height();
+	       if(scrollY > scrollTop_maodian - 80){
+	       		$(".dichan_divBottom_maodian").removeClass("mui-hidden");
+	       }else{
+	       		$(".dichan_divBottom_maodian").addClass("mui-hidden");
+	       }
+	    };
+	</script>
+</html>

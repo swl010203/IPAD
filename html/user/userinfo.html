@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<style>
+	body{overflow-y: hidden;}
+	/*入住时间*/
+.ruzhu_timeinpt{ width:100%; position:absolute; left:0; top:0;opacity:0; line-height:0.8rem;z-index: 999;}
+.inpt_pos{ position: absolute; width: 100%; left: 0; top: 0; height: 0.8rem; z-index: 2;opacity: 0;}
+.sel_sex{ width: 100%; left: 0; top: 0; height: 0.8rem;opacity: 0;}
+#USER_AGE{border: none;
+text-align: right;
+width: 70%;
+float: right;
+position: absolute;
+top: 10px;
+right: 25px;}
+.geren_infor img {
+width: 0.3rem;
+height: 0.3rem;
+vertical-align: middle;
+border-radius: 50%;
+}
+.checkin_ifor{line-height:44px;padding-top:2px;}
+/*.checkin_ifor{ border-bottom: 1px solid #eee;}*/
+.mingcheng{  display:block;margin-right: 0.5rem; text-align:right;}
+</style>
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="pinpai_intr mt15">
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			头像
+		</div>
+		<div onclick="portrait();" class="checkin_iforr checkin_iforrpos">
+			<span class="checkin_iforrpos01" style="color:#999;"><span class="geren_infor">
+			<img class="portrait" src="../../images/geren_infor.png" /></span><a href="javascript:void(0)" class="right_arrowcom"></a></span>
+		</div>
+	</div>
+	<div class="checkin_ifor" onclick="nickname();" >
+		<div class="checkin_iforl">
+			昵称
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+			<span class="mingcheng dy_dd nickname" style="margin-right: 0.3rem;"></span>
+			<span class="checkin_iforrpos01" style="color:#999;"><i class=""></i><a href="#" class="right_arrowcom"></a></span>
+		</div>
+	</div>
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			性别
+		</div>
+		<div  class="checkin_iforr checkin_iforrpos">
+			<span class="checkin_iforrpos01" style="color:#999;"><i class="sex"></i><a href="#" class="right_arrowcom"></a></span>
+			<select class="sel_sex" id="sex" style="position: absolute;height:0.6rem;" onchange="selsex();"> 
+				<option value="1">男</option>
+				<option value="2">女</option>
+				<option value="3">保密</option>
+			</select>
+		</div>
+	</div>
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			生日
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+		<a href="#" class="right_arrowcom" style="
+		    right: 0;
+		    top:15px;
+		    position: absolute;
+		"></a>
+			<!--<span class="checkin_iforrpos01" style="color:#999;" onclick="birthday()"><i class="birthday">0-0-1</i><a href="#" class="right_arrowcom"></a></span>-->
+			<!--<input type="date"  style="color:#999;opacity: 1;border:none; text-align:right;  float: right; height:0.8rem;" class="" id="birthday"   />-->
+			<input type="text" name="USER_AGE" id="USER_AGE" readonly class="input" placeholder="请填写你的出生日期" />
+		</div>
+	</div>
+	</div>
+	<!--<div class="pinpai_intr mt15">
+	<div class="checkin_ifor">
+		<div class="checkin_iforl" style="width: 2rem;">
+			修改手机号
+		</div>
+		<div onclick="editphone();"  class="checkin_iforr checkin_iforrpos">
+			<span class="checkin_iforrpos01" style="color:#999;"><a href="#" class="right_arrowcom"></a></span>
+		</div>
+	</div>
+	</div>-->
+	
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+
+
+<link rel="stylesheet" href="../../css/date/css/normalize3.0.2.min.css" />
+<link rel="stylesheet" href="../../css/date/css/style.css?v=7" />
+<link href="../../css/date/css/mobiscroll.css" rel="stylesheet" />
+<link href="../../css/date/css/mobiscroll_date.css" rel="stylesheet" />
+<script src="../../css/date/js/mobiscroll_date.js"  ></script> 
+<script src="../../css/date/js/mobiscroll.js"></script> 
+<script type="text/javascript">
+$(document).ready(function(){
+	var mobiscroll_select = function(){
+		var birthday =  $("#USER_AGE").val();
+		if(birthday  !=''){
+			//$(".birthday").html(birthday);
+				//更新用户头像信息
+			_ajax(ajax_url +"Index/User/upBirthday",{'uid':userinfo.uid,'token':userinfo.token,'birthday':birthday},'post',function(ret){
+				if(ret.status ==1){
+					userinfo.birthday =birthday;
+					$api.setStorage('userinfo',userinfo);
+					//广播更新用户信息
+
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+	};
+	var mobiscroll_change = function(){
+		
+	};
+   
+
+	var currYear = (new Date()).getFullYear();	
+	var opt={};
+	opt.date = {preset : 'date',
+		onChange:mobiscroll_change,
+		onSelect:mobiscroll_select
+	};
+	opt.datetime = {preset : 'datetime'};
+	opt.time = {preset : 'time'};
+	opt.default = {
+		theme: 'android-ics light', //皮肤样式
+		display: 'modal', //显示方式 
+		mode: 'scroller', //日期选择模式
+		dateFormat: 'yy-mm-dd',
+		lang: 'zh',
+		showNow: true,
+		nowText: "今天",
+		startYear: currYear - 50, //开始年份
+		endYear: currYear + 10 //结束年份
+	};
+	
+
+	$("#USER_AGE").mobiscroll($.extend(opt['date'], opt['default']));
+
+});
+</script>
+
+<script>
+
+	document.onkeydown=function(event){
+
+          	var e = event || window.event || arguments.callee.caller.arguments[0];
+            //alert(e.keyCode);
+            if(e && e.keyCode==13){ // enter 键
+            	//getGoodsListByKeyword();
+                 //要做的事情
+            }
+        }; 
+        
+        
+	var userinfo ="";
+	apiready = function(){
+		api.parseTapmode();
+		userinfo = $api.getStorage('userinfo');
+		ready();
+		
+		//监听更新登陆信息
+		api.addEventListener({
+		    name: 'refresh_userinfo'
+		}, function(ret, err) {
+		    userinfo = ret.value.userinfo;
+		    ready();
+		});
+	};
+	
+	function ready(){
+		$(".portrait").attr('src',userinfo.portrait);
+		
+		$(".nickname").html(userinfo.nickname);
+		
+		var sex = userinfo.sex;
+		if(sex ==1){
+			$(".sex").html('男');
+			$("#sex option[value='1']").prop('selected',true);
+		}else if(sex ==2){
+			$(".sex").html('女');
+			$("#sex option[value='2']").prop('selected',true);
+		}else{
+			$(".sex").html('保密');
+			$("#sex option[value='0']").prop('selected',true);
+		}
+		
+		
+		var birthday = userinfo.birthday;
+		$(".birthday").html(birthday);
+		$("#USER_AGE").val(birthday);
+		
+	}
+	
+	/**
+	 * 修改昵称 
+	 */
+	function nickname(){
+		_openWinByUrl('user_nickname_head','../window_head',{'furl':'user/nickname','frame':'nickname','title':'修改昵称'});
+	}
+	
+	/**
+	 * 修改手机号 
+	 */
+	function editphone(){
+		_openWinByUrl('user_editphone_head','../window_head',{'furl':'user/editphone','frame':'editphone','title':'验证手机号'});
+	}
+	
+	/**
+	 * 修改性别 
+	 */
+	function selsex(){
+		var sex = $("#sex option:selected").val();
+		//更新用户头像信息
+		_ajax(ajax_url +"Index/User/upSex",{'uid':userinfo.uid,'token':userinfo.token,'sex':sex},'post',function(ret){
+			if(ret.status ==1){
+				userinfo.sex =sex;
+				$api.setStorage('userinfo',userinfo);
+				//广播更新用户信息
+				api.sendEvent({
+				    name: 'refresh_userinfo',
+				    extra: {
+				        userinfo:userinfo
+				    }
+				});
+					
+				$('.sex').html($("#sex option:selected").html());
+			}else{
+				_toast(ret.msg);
+			}
+		});
+    }
+    $("#birthday").on("change",function(){
+	    	var birthday =  $("#birthday").val();
+			if(birthday  !=''){
+				$(".birthday").html(birthday);
+					//更新用户头像信息
+				_ajax(ajax_url +"Index/User/upBirthday",{'uid':userinfo.uid,'token':userinfo.token,'birthday':birthday},'post',function(ret){
+					if(ret.status ==1){
+						userinfo.birthday =birthday;
+						$api.setStorage('userinfo',userinfo);
+						//广播更新用户信息
+						api.sendEvent({
+						    name: 'refresh_userinfo',
+						    extra: {
+						        userinfo:userinfo
+						    }
+						});
+	
+					}else{
+						_toast(ret.msg);
+					}
+				});
+			}
+	   });
+	
+
+	/**
+	 * 修改生日 
+	 */
+	function birthday(){
+		//alert(1);
+		$("#birthday").click();
+	}
+	
+	/**
+	 * 修改头像 
+	 */
+	function portrait(){
+		
+		_actionSheet('请选择类型',['推荐','相机','相册'],function(ret,index){
+			if(index ==4){
+				return true;
+			}
+			if(index ==1){
+				_openWinByUrl('headimg','headimg');return;
+			}
+			if(index ==2){
+				var sourceType = 'camera';
+			}
+			if(index ==3){
+				var sourceType = 'album  ';
+			}
+			
+			api.getPicture({
+				sourceType : sourceType,
+				encodingType : 'jpg',
+				destinationType : 'url',
+				targetWidth : 300,
+				targetHeight : 300,
+				saveToPhotoAlbum: false
+			}, function(ret, err) {
+				if (ret) {
+					if (ret.data != null && ret.data != "unfefined" && ret.data != "") {
+						_ajax(ajax_url +"Index/File/uploadPicture",{},'post',function(data){
+							//api.alert({msg:data});
+							if(data.code ==1){
+								
+								//更新用户头像信息
+								_ajax(ajax_url +"Index/User/upTouX",{'uid':userinfo.uid,'token':userinfo.token,'pic':data.data.photo.id},'post',function(result){
+									if(result.status ==1){
+										userinfo.portrait = picture_url + data.data.photo.path;
+										$api.setStorage('userinfo',userinfo);
+										//广播更新用户信息
+										api.sendEvent({
+										    name: 'refresh_userinfo',
+										    extra: {
+										        userinfo:userinfo
+										    }
+										});
+										
+										$(".portrait").attr('src',picture_url + data.data.photo.path);
+									}else{
+										_toast(result.msg);
+									}
+								});
+								
+							}else{
+								_toast(data.msg);
+							}
+						},'json',{'photo':ret.data})
+					}
+				} else {
+
+}
+            });
+			
+			
+		});
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+	<style type="text/css">
+
+	.header_h1a a{ width: 50%; display: inline-block; float: left; color: #232323; background: none;padding-right:0;}
+	/*.listBox{ height: 4rem; }*/
+	.header_h1a a.header_h1acur{ color: #d12a18;}
+
+</style>
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">商家</h1>
+			<!--<h1 class="header_h1 header_h1a"><a href="javascript:;" onclick="randomSwitchBtn(0)" id="index_0" class="header_h1acur">商家</a>-->
+			<!--<a id="index_1" onclick="randomSwitchBtn(1)" class="" href="javascript:;">评价</a></h1>-->
+			<a href="javascript:void(0)" onclick="_openWinByUrl('super_category_window_head','../window_head',{'furl':'super/super_category','frame':'super_category','title':'分类列表','bounces':false});" class="headerRight">
+				<span class="busifenlei_icon"></span>
+			</a>
+		</div>
+	</header>
+
+
+<script type="text/javascript">
+	apiready = function(){
+		api.parseTapmode();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+	
+        api.openFrame({
+            name: 'superbody',
+            url: 'superbody.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: 'auto'
+            },
+            reload:true,
+			pageParam:api.pageParam
+        });
+
+
+	};
+	function randomSwitchBtn(index){
+	$(".header_h1 a").removeClass('header_h1acur');
+	$("#index_"+index).addClass('header_h1acur');
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;	
+	if(index==1){
+	    //关闭其他frame
+	    api.closeFrame({
+	     name: 'superbody'
+        });
+        api.openFrame({
+            name: 'supercomment',
+            url: 'super_comment.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: 'auto'
+            },
+            reload:true,
+			pageParam:api.pageParam
+        });
+	}else{ //打开商家页面
+		api.closeFrame({
+	     name: 'supercomment'
+        });
+        api.openFrame({
+            name: 'superbody',
+            url: 'superbody.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: 'auto'
+            },
+            reload:true,
+			pageParam:api.pageParam
+        });
+	}
+	}
+	
+	
+	
+
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="pad_20">
+		<div class="inputContainer">
+			<input class="loginInpt loginInpt01" id="phone" readonly placeholder="请输入手机号" autocomplete="off">
+		</div>
+		
+		<div class="inputContainer">
+
+			<a href="javascript:void(0)" onclick="getCode();" class="gainCode">获取验证码</a>
+			<input type="number" class="loginInpt loginInpt01" id="code" placeholder="请输入验证码" autocomplete="off">
+		</div>
+
+		
+		<div style="padding-top: 1rem;">
+		<a href="javascript:void(0)" onclick="next();" class="btn01">下一步</a>
+		</div>
+	
+	</div>
+	
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script>
+
+	var userinfo = "";
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		$("#phone").val(hidePhone(userinfo.mobile));		
+	};
+	
+	
+	function next(){
+		var code =$("#code").val();	
+		if(code ==''){
+			_toast('请输入验证码');
+			return false;
+		}
+		_ajax(ajax_url + "Index/User/nextMobile",{'mobile':userinfo.mobile,'code':code},'post',function(ret){
+			if(ret.status==1){
+				//_openWinByUrl('user_editphone2_head','../window_head',{'furl':'user/editphone2','frame':'editphone2','title':'修改手机号'});
+				var type = api.pageParam.type;
+				
+				var cardno = api.pageParam.cardno;
+				var redirect_url = api.pageParam.redirect_url;
+				_openWinByUrl('card_pwd_window_head','../window_head',{'redirect_url':redirect_url,'type':type,'cardno':cardno,'furl':'card/card_pwd','frame':'card_pwd','title':'修改支付密码'});
+			}else{
+				_toast(ret.msg);
+			}
+		});
+		
+	}
+	
+	/**
+	 * 获取验证码 
+	 */
+	function getCode(){
+		_ajax(ajax_url + "Index/Base/getVerificationCode",{'mobile':userinfo.mobile},'post',function(ret){
+			if(ret.status==1){
+				_toast(ret.msg);
+				time();
+			}else{
+				_toast(ret.msg);
+			}
+		});
+	}
+	
+	//时间倒计时
+	var wait=60;
+	function time(){		
+		 if (wait == 0) {  
+           // o.removeAttribute("disabled");
+            $(".gainCode").attr('onclick','getCode()');
+            $(".gainCode").html('获取验证码');                        
+            wait = 60;  
+			//time();
+        } else {  
+           // o.setAttribute("disabled", true);  
+            $(".gainCode").attr('onclick','');  
+            $(".gainCode").html(wait+'秒后重新发送');   
+           // o.value="重新发送(" + wait + ")";  
+            wait--;  
+            setTimeout(function(){
+				time();
+			},1000); 
+        }  
+	}
+	
+	
+</script>
+</body>
+</html>

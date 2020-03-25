@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+			
+			<a href="javascript:void(0);" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">标题</h1>
+			<a href="javascript:void(0);" class="headerRight share_iconclick">
+				<span class="share_icon"></span>
+			</a>
+		</div>
+	</header>
+
+
+	<footer class="footer_01 footer_close">
+		<div class="footer_closemain">
+			<a href="#" class="footer_closecart">
+				<i class="footer_closenum">12</i>
+			</a>
+			<a href="购物车.html" class="toSettlebtn">去结算</a>
+			<div class="footer_closecon">
+				<span style="font-size: 0.26rem; padding-top: 0.3rem;">共计：<b class="busi_fenleirpriceb">￥</b>145.00</span>
+				<!-- <span style="color: #666666;">配送费：￥12.00</span> -->
+			</div>
+		</div>
+	</footer>
+
+	<!-- 规格弹窗 -->
+	<div class="maskBg maskBg01" style="display: none; margin-top: 0.89rem;"></div>
+	<div class="etc_pay share_window" style="display: none;">
+		<div class="etc_paytitle">分享</div>
+		<div class="payList mt_15">
+			<ul class="share_ul">
+				<li class="share_li">
+					<a href="#" class="share_lia"><img src="../images/weixin_icon.png">
+					<p class="share_lip01">微信好友</p>
+					</a>
+				</li>
+				<li class="share_li">
+					<a href="#" class="share_lia"><img src="../images/frind_icon.png">
+					<p class="share_lip01">朋友圈</p>
+					</a>
+				</li>
+				<li class="share_li">
+					<a href="#" class="share_lia"><img src="../images/qq_icon.png">
+					<p class="share_lip01">QQ空间</p>
+					</a>
+				</li>
+				<li class="share_li">
+					<a href="#" class="share_lia"><img src="../images/sina_icon.png">
+					<p class="share_lip01">微博</p>
+					</a>
+				</li>
+			</ul>
+		
+		</div>
+	
+	</div>
+	
+<script type="text/javascript">
+	// 分享
+	var flag=true;
+	$('.share_iconclick').click(function(){
+		if (flag) {
+			$('.maskBg01').show();
+			$('.share_window').stop().slideDown(1000);
+			flag=false;
+		}else{
+			$('.maskBg01').hide();
+			$('.share_window').stop().slideUp(1000);
+			flag=true;
+		}
+	});
+	
+	apiready = function(){
+		api.parseTapmode();
+		var title = api.pageParam.title;
+		$(".header_h1").html(title);
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		
+		var frame = api.pageParam.frame;
+        api.openFrame({
+            name: frame,
+            url: frame+'.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: headerPos.w,
+                h: 'auto'
+            },
+			pageParam:api.pageParam
+        });
+		
+	}
+
+
+</script>
+</body>
+</html>

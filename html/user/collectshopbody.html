@@ -1,0 +1,231 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+<div class="wp_100">
+	
+	<div class="siteSearchlist " style="background:#fff;">
+	<ul class="siteSearchul list">
+			<!--<li class="busi_fenleili">
+					<div class="busi_fenlei">
+					<a href="#"class="busi_fenleia"><img src="images/love_img01.jpg"></a>
+					<div class="busi_fenleir">
+						<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">七匹狼官方旗舰店</a></p>
+						<p class="busi_fenleirrice">点击进入</p>
+					</div>
+				</div>
+				
+				<div class="cartRadio">
+					<input id="a_pl1" type="checkbox" name="test" value="3" class="duo_checkbox03">
+					<label for="a_pl1"></label>
+				</div>
+			</li>-->
+	
+		
+	</ul>
+</div>
+
+	
+</div>
+
+<script type="text/javascript">
+	// 编辑购物车按钮	
+		$('.edit_cartboxrbtncur').click(function(){
+			$('.cart_edit').text('编辑');
+			$('.cart_edit').show();
+			$('.siteSearchul').removeClass('siteSearchuledit');
+			$('.cart_01').show();
+			$('.cart_02').hide();
+			$('.cartClosepos').show();
+			flag=true;
+		});
+		var page=1;//分页
+        var totalpage=0;//总页数
+		apiready=function(){
+		loading('collectshopbody');
+		 api.setRefreshHeaderInfo({ //下拉加载
+					visible : true,
+					loadingImg : 'widget://image/refresh.png',
+					bgColor : '#ccc',
+					textColor : '#fff',
+					textDown : '下拉刷新...',
+					textUp : '松开刷新...',
+					showTime : true
+				}, function(ret, err) {
+				  page=1;
+					ready();
+				});
+				 	api.addEventListener({
+				    name:'scrolltobottom',
+				    extra:{
+				        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+				    }
+					}, function(ret, err){        
+					    if(page<totalpage){
+					     page=page+1;
+					     ready();
+					    }else{
+					     return false;
+					    }
+					});
+					
+							//重新刷新页面
+			api.addEventListener({
+			    name: 'collectshop'
+			}, function(ret, err) {
+			    if(ret && ret.value){
+						if (ret.value.key1 == 'success') {	
+						  //取消收藏操作
+						   $(".list").html('');
+						  page=1;
+						 ready();
+						  											 
+						}
+					}
+			});
+		 ready();
+		};
+		function ready(){
+		 	api.ajax({
+				url : ajax_url + 'Index/Collection/getCollectShopList',
+				method : 'post',
+				data : {
+					values : {
+					uid:localStorage.getItem("uid"),
+				      p:page
+					},
+				}
+			}, function(ret, err) {
+			 if(ret){
+			  if(ret.status==1){
+			   var data=ret.collectShop;
+			   totalpage=ret.totalpage;//总页数
+			   var html='';
+			   if(data!=null && data.length>0){
+			    for(var i in data){
+			     html+='<li class="busi_fenleili">'+
+							'<div class="busi_fenlei">'+
+							'<a href="javascript:void(0);"   class="busi_fenleia">'+
+							'<img src="'+data[i]['shop']['logo']+'"></a>'+
+							'<div class="busi_fenleir" onclick=openshop("'+data[i]['channel_id']+'");>'+
+								'<p class="busi_fenleirtxt"><a href="javascript:void(0);"  class="busi_fenleirtxta dy_dd">'+data[i]['shop']['name']+'</a></p>'+
+								'<p class="busi_fenleirrice" >点击进入</p>'+
+							'</div>'+
+						'</div>'+
+						
+						'<div class="cartRadio">'+
+							'<input id="a_'+data[i]['id']+'" type="checkbox" name="all" value="'+data[i]['id']+'" onclick=getCheckAll(); class="duo_checkbox03">'+
+							'<label for="a_'+data[i]['id']+'"></label>'+
+						'</div>'+
+					'</li>';
+			    }
+			   }
+			   if(page==1){
+			   $(".list").html(html);
+			   }else{
+			   $(".list").append(html);
+			   }
+			   
+			  }else{
+			 
+			  _toast(ret.msg);
+			  }
+			 closeloading();
+			  api.refreshHeaderLoadDone();
+			 }else{
+			  closeloading();
+			  api.refreshHeaderLoadDone();
+			  _alert('网络连接失败,请稍后重试');
+			 }
+			})
+		}
+		/*
+		 * 打开店铺详情,商城和超市随后在加
+		 */
+		function openshop(channel_id){
+		 if(channel_id==6){
+		 _openWinByUrl('laundry','../laundry/laundry');
+		 }
+		}
+		function change_text(flag){
+		 if(flag){
+			$('.siteSearchul').addClass('siteSearchuledit');
+			$('.cart_01').hide();
+			$('.cartClosepos').hide();
+		 }else{
+			$('.cart_edit').show();
+			$('.siteSearchul').removeClass('siteSearchuledit');
+			$('.cart_01').show();
+			$('.cartClosepos').show();
+		 }
+		}
+		/*
+		 * 全选反选
+		 */
+		function check_all(flag){
+		 if(flag){
+		  $("input[type=checkbox]").each(function(){
+		   $(this).prop('checked',true);
+		  })
+		 }else{
+		  $("input[type=checkbox]").each(function(){
+		   $(this).attr('checked',false);
+		  })
+		 }
+		}
+		/*
+		 * 获取所有被选中的店铺值
+		 */
+		function get_select(){
+		 var arr=[];
+		  $("input[type=checkbox]:checked").each(function(){
+		   arr.push($(this).val());
+		  });
+		  //将数组转化为字符串
+		  var arrstr=arr.join(",");
+		  	api.sendEvent({
+				name : 'collectshopbody',
+				extra : {
+					key1 : 'success',
+					idstr : arrstr,
+				}
+			});
+		}
+				/*
+		 * 获取所有被选中的
+		 */
+		function getCheckAll(){
+		var checkFlag=false;
+		 var checkAllLen= $("input[type=checkbox]").length;
+		 var checkAllCheckedLen=$("input[type=checkbox]:checked").length;
+		 if(checkAllLen==checkAllCheckedLen){
+		 checkFlag=true;
+		 }else{
+		  checkFlag=false;
+		 }
+		     	api.sendEvent({
+					name : 'collectshopchecked',
+					extra : {
+						key1 : 'success',
+						checkFlag:checkFlag
+					}
+				});
+		}
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+    <style>
+    	body{
+    		
+    	}
+    		.duo_checkbox05 + label{ height:0.4rem;}
+    		.duo_checkbox05:checked + label:after{height:0.4rem;}
+    </style>
+</head>
+<body>
+	<header id="header">
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">选择商品</h1>
+			<a href="javascript:void(0)" onclick="cartEdit(1)" class="headerRight">
+				<span class="headerRighttxt cart_edit">编辑</span>
+			</a>
+		</div>
+	</header>
+	
+	<footer class="footer_01 footer_close" style="z-index:1; ">
+		<div class="footer_closemain">	
+			<div class="cartTopl" style="padding-top:0.26rem; padding-left: 0.2rem;">
+				<input id="a_pl3" onclick="checkALl(this)" type="checkbox" name="test" value="3" class="duo_checkbox05">
+				<label for="a_pl3" style="color: #1f2228;">全选</label>
+			</div>
+			<a href="javascript:void(0);" onclick="order();" class="toSettlebtn qujiesuan">提交订单</a>
+			<div class="footer_closecon" style="padding-left: 0.2rem;">
+				<span style="font-size: 0.26rem; padding-top: 0.3rem;">共计：<b class="busi_fenleirpriceb">￥</b><i class="price">0.00</i></span>
+				<!-- <span style="color: #666666;">配送费：￥12.00</span> -->
+			</div>
+		</div>
+	</footer>
+	
+	<div class="edit_cartwrap" style="display: none;">
+		<div class="edit_cartbox">
+		<div class="cartTopl" style="padding-top:0.1rem;">
+			<input id="a_pl4" onclick="checkALl_edit(this)" type="checkbox" name="test" value="3" class="duo_checkbox05">
+			<label for="a_pl4" style="color: #1f2228;">全选</label>
+		</div>
+		<div class="edit_cartboxr">
+			<a href="javascript:void(0)" onclick="delsCart()"  class="edit_cartboxrbtn">删 除</a>
+			<a href="javascript:void(0)" onclick="cartEdit(0)" class="edit_cartboxrbtn edit_cartboxrbtncur">取 消</a>
+		</div>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+	var userinfo="";
+	apiready = function(){
+		api.parseTapmode();
+		        
+		var index_open = api.pageParam.is_notback;
+		if(index_open ==1){
+			$(".backBefor").hide();
+		}else{
+			$(".backBefor").show();
+		}
+        
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		var footer_h = $api.offset($api.dom('footer')).h;
+        api.openFrame({
+            name: 'food_cart_body',
+            url: 'food_cart_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: body_h-headerPos.h-footer_h-1
+            },
+			pageParam:api.pageParam,
+			reload:true
+			
+        });
+        
+
+	
+	
+		//总价格 或已选价格
+		api.addEventListener({
+	        name:'foodcartPrice'
+        },function(ret,err){
+        	var price = ret.value.price;
+        	$(".price").html(price);
+        });
+        
+        //总价格 或已选价格
+		api.addEventListener({
+	        name:'foodcartempty'
+        },function(ret,err){
+        	if(ret.value.empty ==true){
+        		$(".footer_close").hide();
+        	}else{
+        		$(".footer_close").show();
+        	}
+        	
+        });
+	};
+	
+	
+	/**
+	 * 去下单 
+	 */
+	function order(){
+		api.sendEvent({
+	        name:'foodcartOrder'
+        });
+	}
+	
+	/**
+	 * 全选 
+	 */
+	function checkALl(el){
+		var sta=$(el).prop('checked');
+		api.sendEvent({
+	        name:'foodCheckAll',
+	        extra:{
+            	type:sta
+            }
+        });
+	}
+	
+	
+	/**
+	 * 全选 
+	 */
+	function checkALl_edit(el){
+		var sta=$(el).prop('checked');
+		api.sendEvent({
+	        name:'foodCheckAllEdit',
+	        extra:{
+            	type:sta
+            }
+        });
+	}
+	
+	
+	/**
+	 * 是否显示全选编辑 
+	 */
+	function cartEdit(type){
+		if(type ==1){
+			$(".edit_cartwrap").show();
+		}else{
+			$(".edit_cartwrap").hide();
+		}
+		
+		api.sendEvent({
+	        name:'foodedit_cart',
+	        extra:{
+	        	'type':type
+	        }
+        });
+	}
+	
+	
+	/**
+	 * 删除购物车商品 
+	 */
+	function delsCart(){
+		api.sendEvent({
+	        name:'fooddelsCart'
+	        
+        });
+	}
+
+	
+
+</script>
+</html>

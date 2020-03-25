@@ -1,0 +1,132 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<style>
+	.xg_img{
+		height:265px;
+		width:100%;
+	}
+	.xg_img img{
+		width:100%;
+		height:100%;
+	}
+</style>
+
+</head>
+<body>
+<!-- 头部 -->
+
+<!-- 内容 -->
+<div class="wp_100" id="list">
+	<!--<div class="xg_img">
+		<img src="../images/xianguagn_img01.jpg" />
+	</div>-->
+
+</div>
+<div class="wp_100">
+	<!--<div class="botH"></div>-->
+</div>
+
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+//	$(".xg_img ").css({height:$(window).width()*0.44});
+//	$(".xg_img img").css({height:$(window).width()*0.44});
+});
+
+	var page = 1;
+	var is_page = true;
+	//初始化api
+	apiready = function(){
+		loading('hang');
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			page =1;
+			ready();
+		});
+		
+		//听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		        page++;
+			    ready();
+		     }
+			  
+		});
+		
+		ready();
+	};
+	
+	function ready(){
+		_ajax(ajax_url+"Index/Poster/getPosterList" ,{'p':page},'get',function(ret){
+		
+			if(ret.status !=1){
+				is_page = false;
+				closeloading();
+				api.refreshHeaderLoadDone();
+				return false;
+			}
+
+			var strVar = "";
+			$.each(ret.info,function(k,v){
+				strVar += "<div class=\"xg_img\">";
+		    	if(v['connect'] !=''  && v['connect']  !=null){
+					strVar += "    <img onclick=\"_openUrl('"+v['connect']+"')\" src=\""+v['pic']+"\" />";
+				}else{
+					strVar += "    <img onclick=\"_openWinByUrl('hang_head','window_head',{'furl':'hang_detail','frame':'hang_detail','title':'详情','id':"+v['id']+"})\" src=\""+v['pic']+"\" />";
+				}
+		   		strVar += "<\/div>";
+			});
+		    
+		    if(page==1){
+		    	$("#list").html(strVar);
+		    }else{
+		    	$("#list").append(strVar);
+		    }
+//		    $(".xg_img ").css({height:$(window).width()*0.44});
+//			$(".xg_img img").css({height:$(window).width()*0.44});
+		    
+		    closeloading();
+		    api.refreshHeaderLoadDone();
+		});
+	}
+	
+	//打开外链
+	function _openUrl(url){
+		//_openWinByUrl('url',url);
+		if(url.substr(0,7).toLowerCase()=="http://"  || url.substr(0,8).toLowerCase()=="https://" ){
+			url=url;
+		}else{
+			url ="http://"+url;
+		}
+		
+		_openWinByUrl('hang_head_url','window_head_url',{'furl':url,'frame':'hang_url','title':'详情'});
+	}
+
+</script>
+</body>
+</html>

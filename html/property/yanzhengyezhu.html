@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>037验证业主</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--头部-->
+        <header class="clearfloat header">
+            <div class="fl" onclick="bank();">
+                <i class="back"></i>
+                <span>返回</span>
+            </div>
+            <div class="topCon">
+                验证业主
+            </div>
+            <!--<div class="fr">
+                报修记录
+            </div>-->
+             <div class="fr" onclick="_openWinByUrl('baoxiujilu','baoxiujilu')">
+                报修记录
+            </div>
+        </header>
+        <!--中间内容-->
+        <div class="baoxiufuwuOuterDiv">
+            <div>
+                <div class="fl leftDiv">社区名称：</div>
+                <div class="rightDiv">
+                    药都新城
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">业主信息：</div>
+                <div class="rightDiv">
+                    <span id="address"></span>
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">房间位置：</div>
+                <div class="rightDiv">
+                    <div class="xialaxiaoguo heig">
+                        <input id="build_id" class="input_select" type="text" value="" placeholder="请选择楼号" readonly/> 
+                        <ul id="build" style="max-height:150px;overflow-y: scroll;">
+                           <!--  <li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></ li> 
+                            <li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></ li> 
+                            <li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></ li> 
+                            <li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li>
+                             <li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li>  
+                              <li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li> -->   
+                        </ul>
+                        <span class="styleSpan colorRed">&nbsp;&nbsp;*请必须选择楼号</span>
+                    </div>
+                    <div class="xialaxiaoguo2 heig mar_t">
+                        <input id="unit_id" class="input_select2" type="text" value="" placeholder="请选择单元" readonly/> 
+                        <ul id="unit" style="max-height:150px;overflow-y: scroll;">
+                            <!-- <li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></ li> 
+                            <li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></ li> 
+                            <li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></ li> 
+                            <li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li> --> 
+                        </ul>
+                        <!--<span class="styleSpan colorRed">&nbsp;&nbsp;*请必须选择一样报修种类才能提交报修服务</span>-->
+                    </div>
+                    <div class="xialaxiaoguo3 heig mar_t">
+                        <input id="room_id" class="input_select3" type="text" data-value="" value="" placeholder="请选择房号" readonly/> 
+                        <ul id="room" style="max-height:150px;overflow-y: scroll;">
+                            <li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></ li> 
+                            <li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></ li> 
+                            <li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></ li> 
+                            <li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li> 
+                        </ul>
+                        <!--<span class="styleSpan colorRed">&nbsp;&nbsp;*请必须选择一样报修种类才能提交报修服务</span>-->
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">手机号码：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="text" name="" id="phone" value="" placeholder="请输入手机号" />
+                </div>
+            </div>
+        </div>
+        <!--提交-->
+        <div class="btnTijiao" id="check_repair">验证</div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript">
+        /*点击button*/
+        $(".baoxiufuwuOuterDiv>div>div.rightDiv span").on("click",function(){
+            var index_ = $(this).index();
+            $(".baoxiufuwuOuterDiv>div>div.rightDiv span").children(".sel").removeClass("yessel");
+            $(".baoxiufuwuOuterDiv>div>div.rightDiv span").children(".sel").addClass("nosel");
+            $(this).children(".sel").addClass("yessel");
+        });
+        /*下拉列表效果*/
+        $(".input_select").click(function(event){ 
+    		event.stopPropagation();
+            var ul = $(".xialaxiaoguo ul"); 
+            if(ul.css("display")=="none"){ 
+                ul.slideDown("fast"); 
+            }else{ 
+                ul.slideUp("fast"); 
+            } 
+        });
+        $(document).click(function(){
+			var ul = $(".xialaxiaoguo ul"); 
+			ul.slideUp("fast"); 
+		});
+        //获取数据
+        $(document).on('click', '.xialaxiaoguo ul li a', function() {
+            //$('#build').html('');
+            $('#unit').html('');
+            $('#room').html('');
+            //$('.input_select').val('');
+            $('.input_select2').val('');
+            $('.input_select3').val('');
+            $(".input_select3").attr( 'data-value', '' );
+            
+            var txt = $(this).text(); 
+            $(".input_select").val(txt); 
+            var value = $(this).attr("rel"); 
+            $(".xialaxiaoguo ul").hide(); 
+            $("#result").html("您选择了"+txt+"，值为："+value);
+            getUnitDetail( value );
+        });
+        /*下拉列表效果*/
+        $(".input_select2").click(function(event){ 
+        	event.stopPropagation();
+            var ul = $(".xialaxiaoguo2 ul"); 
+            if(ul.css("display")=="none"){ 
+                ul.slideDown("fast"); 
+            }else{ 
+                ul.slideUp("fast"); 
+            } 
+         });
+         $(document).click(function(){
+			var ul = $(".xialaxiaoguo2 ul"); 
+			ul.slideUp("fast"); 
+		});
+        //获取数据
+        $(document).on('click', '.xialaxiaoguo2 ul li a', function() {
+        //$(".xialaxiaoguo2 ul li a").click(function(){ 
+            $('#room').html('');
+            //$('.input_select2').val('');
+            $('.input_select3').val('');
+            $(".input_select3").attr( 'data-value', '' );
+            
+            var txt = $(this).text(); 
+            $(".input_select2").val(txt); 
+            var value = $(this).attr("rel"); 
+            $(".xialaxiaoguo2 ul").hide(); 
+            $("#result").html("您选择了"+txt+"，值为："+value); 
+            getRoomDetail( value );
+        }); 
+        /*下拉列表效果*/
+        $(".input_select3").click(function(event){ 
+        	event.stopPropagation();
+            var ul = $(".xialaxiaoguo3 ul"); 
+            if(ul.css("display")=="none"){ 
+                ul.slideDown("fast"); 
+            }else{ 
+                ul.slideUp("fast"); 
+            } 
+        });
+        $(document).click(function(){
+			var ul = $(".xialaxiaoguo3 ul"); 
+			ul.slideUp("fast"); 
+		});
+        //获取数据
+        $(document).on('click', '.xialaxiaoguo3 ul li a', function() {
+//          $('#room').html('');
+            $('.input_select3').val('');
+            $(".input_select3").attr( 'data-value', '' );
+            var txt = $(this).text(); 
+            $(".input_select3").val(txt);
+            var value = $(this).attr("rel");
+            $(".input_select3").attr( 'data-value', value ); 
+            $(".xialaxiaoguo3 ul").hide(); 
+            $("#result").html("您选择了"+txt+"，值为："+value); 
+        }); 
+        
+    </script>
+    
+    <script type="text/javascript" >
+        //初始化用户Id
+        var uid = localStorage.getItem("uid");
+        var jump_type = '';
+        apiready = function(){
+        	var hide = api.pageParam.hide;
+    		if( hide == true){
+    			$(".fr").hide();
+    		}
+    		
+            //跳转页面
+            jump_type = api.pageParam.jump_type;
+            //业主信息
+            getAccountInfo();
+            getBuildingDetail();
+        };
+        
+        //获取业主信息
+        function getAccountInfo(){
+            _ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+                if(ret.status ==1){
+                    var address = ret.user.address +'   '+ret.user.real_name;
+                    $("#address").text(address);
+                }else{
+                    _toast(ret.msg);
+                }
+            });
+        }
+        
+        //通用_通过项目 楼栋下拉选项
+        function getBuildingDetail(){
+            _ajax(ajax_url+"Index/Repair/getBuildingDetail" ,{},'get',function(ret){
+                if(ret.status ==1){
+                    var build = '';
+                    $.each(ret.data, function(key, val) {
+                        build += '<li><a href="#none" rel="'+val.buildingid+'">'+val.buildingno+'</a></ li>';
+                    });
+                    $('#build').html( build );
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+        
+        //通用_通过楼栋选择单元
+        function getUnitDetail( buildId ){
+            _ajax(ajax_url+"Index/Repair/getUnitDetail" ,{buildId:buildId},'get',function(ret){
+                if(ret.status ==1){
+                    var unit = '';
+                    $.each(ret.data, function(key, val) {
+                        unit += '<li><a href="#none" rel="'+val.UnitID+'">'+val.UnitCode+'</a></ li>';
+                    });
+                    $('#unit').html( unit );
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+        
+        //通用_通过单元房间下拉选项
+        function getRoomDetail( unitId ){
+            _ajax(ajax_url+"Index/Repair/getRoomDetail" ,{unitId:unitId},'get',function(ret){
+                if(ret.status ==1){
+                    var room = '';
+                    $.each(ret.data, function(key, val) {
+                        room += '<li><a href="#none" rel="'+val.RmID+'">'+val.RmNo+'</a></ li>';
+                    });
+                    $('#room').html( room );
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+        
+        $(document).on('click', '#check_repair', function() {
+            var RmID  = $('.input_select3').attr( 'data-value' );
+            var phone = $('#phone').val();
+            if( !RmID || RmID == '' ) {
+                _toast( '请选择房间' );
+                return false;
+            }
+            if( !phone || phone == '' ) {
+                _toast( '请填写手机号' );
+                return false;
+            }
+            
+            if(!_isPhone(phone)){
+            	_toast( '手机号格式错误' );
+                return false;
+            }
+            _ajax(ajax_url+"Index/Repair/validateCust" ,{rmid:RmID, phone:phone, uid:uid},'get',function(ret){
+                if(ret.status ==1){
+                    var RmID = ret.data.RmID;
+                    var CustID = ret.data.CustID;
+                    _toast( '验证成功' );
+                    setTimeout(function() {
+                        if( jump_type == 'repair' ) {
+                            _openWinByUrl('baoxiufuwu','baoxiufuwu', {rm_id:RmID, cust_id:CustID});
+                        } else if( jump_type == 'pay_cost' ) {
+                            //监听刷新物业费页面
+                            api.sendEvent({
+                                name:'property_check_room_ok',
+                                extra:{
+                                    msg:'ok'
+                                }
+                            });
+                            api.closeWin();
+                            //_openWinByUrl('baoxiufuwu','baoxiufuwu', {rm_id:RmID, cust_id:CustID});
+                        }
+                    }, 2000);
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        });
+        
+        //关闭页面
+        function bank(){
+            api.closeWin();
+        }
+    </script>
+</html>

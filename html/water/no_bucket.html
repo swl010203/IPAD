@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html class="bgwhite">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="../../script/mui.min.js"></script>
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style>
+        .bgcart_icon {
+            width: 30px;
+            background-size: 30px 30px;
+        }
+    </style>
+</head>
+<body class="bgwhite">
+<header id="header" class="mui-bar mui-bar-nav bgRed">
+    <h1 class="mui-title">无桶购水</h1>
+    <!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">购水记录</button>-->
+    <a class="mui-icon mui-icon-back" onclick="api.closeWin();"></a>
+</header>
+<div class="mui-content bgwhite">
+    <div class="wutongBuyshui_top">
+        <img src="../../images/wy4.jpg"/>
+    </div>
+    <ul class="wutongBuyshui_ul goodsContainer">
+        <!--<li class="clearfloat pl20 pr20 box_s border_b pt30 pb20">
+           <div class="mui-pull-left wutongBuyshui_ul_img">
+               <img src="../../image/wy5.jpg"/>
+           </div>
+           <div class="mui-pull-left wutongBuyshui_ul_con">
+               <p class="fs32 mui-ellipsis">娃哈哈矿物质优质矿泉水/18.9L</p>
+               <p class='fs24 mt10 fujinRightCon'><span class="pl20 pr20 pt10 pb10 bgFen labelSpan">娃哈哈</span></p>
+               <div class="shopDiv_infoPrice mui-row mt10">
+                   <div class="mui-col-sm-10 mui-col-xs-10">
+                       <p class="colorHui999 fs24 mui-ellipsis"><span class="laba_icon"></span>最快30分钟内送达/免运费</p>
+                       <p class="colorRed">
+                           <span class="fs24">￥</span>
+                           <span class="fs36">29</span><span class="fs32">.99</span>
+                           <span class="fs24 oldPrice">￥35</span>
+                       </p>
+
+                   </div>
+                   <div class="mui-col-sm-2 mui-col-xs-2">
+                       <div class="bgcart_icon"></div>
+                   </div>
+               </div>
+           </div>
+       </li>
+       <li class="clearfloat pl20 pr20 box_s border_b pt30 pb20">
+           <div class="mui-pull-left wutongBuyshui_ul_img">
+               <img src="../../image/wy5.jpg"/>
+           </div>
+           <div class="mui-pull-left wutongBuyshui_ul_con">
+               <p class="fs32 mui-ellipsis">娃哈哈矿物质优质矿泉水/18.9L</p>
+               <p class='fs24 mt10 fujinRightCon'><span class="pl20 pr20 pt10 pb10 bgFen labelSpan">娃哈哈</span></p>
+               <div class="shopDiv_infoPrice mui-row mt10">
+                   <div class="mui-col-sm-10 mui-col-xs-10">
+                       <p class="colorHui999 fs24 mui-ellipsis"><span class="laba_icon"></span>最快30分钟内送达/免运费</p>
+                       <p class="colorRed">
+                           <span class="fs24">￥</span>
+                           <span class="fs36">29</span><span class="fs32">.99</span>
+                           <span class="fs24 oldPrice">￥35</span>
+                       </p>
+
+                   </div>
+                   <div class="mui-col-sm-2 mui-col-xs-2">
+                       <div class="bgcart_icon"></div>
+                   </div>
+               </div>
+           </div>
+       </li>
+       <li class="clearfloat pl20 pr20 box_s border_b pt30 pb20">
+           <div class="mui-pull-left wutongBuyshui_ul_img">
+               <img src="../../image/wy5.jpg"/>
+           </div>
+           <div class="mui-pull-left wutongBuyshui_ul_con">
+               <p class="fs32 mui-ellipsis">娃哈哈矿物质优质矿泉水/18.9L</p>
+               <p class='fs24 mt10 fujinRightCon'><span class="pl20 pr20 pt10 pb10 bgFen labelSpan">娃哈哈</span></p>
+               <div class="shopDiv_infoPrice mui-row mt10">
+                   <div class="mui-col-sm-10 mui-col-xs-10">
+                       <p class="colorHui999 fs24 mui-ellipsis"><span class="laba_icon"></span>最快30分钟内送达/免运费</p>
+                       <p class="colorRed">
+                           <span class="fs24">￥</span>
+                           <span class="fs36">29</span><span class="fs32">.99</span>
+                           <span class="fs24 oldPrice">￥35</span>
+                       </p>
+
+                   </div>
+                   <div class="mui-col-sm-2 mui-col-xs-2">
+                       <div class="bgcart_icon"></div>
+                   </div>
+               </div>
+           </div>
+       </li>
+       <li class="clearfloat pl20 pr20 box_s border_b pt30 pb20">
+           <div class="mui-pull-left wutongBuyshui_ul_img">
+               <img src="../../image/wy5.jpg"/>
+           </div>
+           <div class="mui-pull-left wutongBuyshui_ul_con">
+               <p class="fs32 mui-ellipsis">娃哈哈矿物质优质矿泉水/18.9L</p>
+               <p class='fs24 mt10 fujinRightCon'><span class="pl20 pr20 pt10 pb10 bgFen labelSpan">娃哈哈</span></p>
+               <div class="shopDiv_infoPrice mui-row mt10">
+                   <div class="mui-col-sm-10 mui-col-xs-10">
+                       <p class="colorHui999 fs24 mui-ellipsis"><span class="laba_icon"></span>最快30分钟内送达/免运费</p>
+                       <p class="colorRed">
+                           <span class="fs24">￥</span>
+                           <span class="fs36">29</span><span class="fs32">.99</span>
+                           <span class="fs24 oldPrice">￥35</span>
+                       </p>
+
+                   </div>
+                   <div class="mui-col-sm-2 mui-col-xs-2">
+                       <div class="bgcart_icon"></div>
+                   </div>
+               </div>
+           </div>
+       </li>-->
+    </ul>
+</div>
+</body>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+    mui.init();
+
+    var userinfo = '';
+    apiready = function () {
+        userinfo = $api.getStorage('userinfo');
+
+        // 监听登录状态
+        api.addEventListener({
+            name: 'refresh_userinfo'
+        }, function (ret, err) {
+            userinfo = ret.value.userinfo;
+        });
+
+        getNoBucketGoods();
+    };
+
+    // 获取商品
+    function getNoBucketGoods() {
+        var data = {
+            'uid': userinfo ? userinfo.uid : '',
+            'type': 2
+        };
+        _ajax(ajax_url + "Index/WaterService/goodList", data, 'post', function (ret) {
+            if (ret.status == 1) {
+                var inner_html = '';
+                $.each(ret.data, function (k, v) {
+                    inner_html += '<li class="clearfloat pl20 pr20 box_s border_b pt30 pb20">';
+                    inner_html += '<div class="mui-pull-left wutongBuyshui_ul_img">';
+                    inner_html += '<img src="' + v['img'] + '"/>';
+                    inner_html += '</div>';
+                    inner_html += '<div class="mui-pull-left wutongBuyshui_ul_con">';
+                    inner_html += '<p class="fs32 mui-ellipsis">' + v['title'] + '/' + v['has_content'] + 'L</p>';
+                    inner_html += '<p class="fs24 mt10 fujinRightCon"><span class="pl20 pr20 pt10 pb10 bgFen labelSpan">' + v['brand'] + '</span></p>';
+                    inner_html += '<div class="shopDiv_infoPrice mui-row mt10">';
+                    inner_html += '<div class="mui-col-sm-10 mui-col-xs-10">';
+//                  inner_html += '<p class="colorHui999 fs24 mui-ellipsis"><span class="laba_icon"></span>' + v['activity'] + '</p>'
+                    inner_html += '<p class="colorRed">';
+                    inner_html += '<span class="fs24">￥</span>';
+                    inner_html += '<span class="fs36">' + v['price'].split('.')[0] + '</span><span class="fs32">.' + v['price'].split('.')[1] + '</span>';
+                    inner_html += '<span class="fs24 oldPrice">￥' + v['original_price'] + '</span>';
+                    inner_html += '</p>';
+                    inner_html += '</div>';
+                    inner_html += '<div class="mui-col-sm-2 mui-col-xs-2 clearfloat">';
+                    inner_html += '<div style="float:right;" onclick="sureOrder(' + v['id'] + ')" class="bgcart_icon"></div>';
+                    inner_html += '</div>';
+                    inner_html += '</div>';
+                    inner_html += '</div>';
+                    inner_html += '</li>'
+                });
+                $('.goodsContainer').html(inner_html);
+            }
+        });
+    }
+
+    //点击购买
+    function sureOrder(gid) {
+        //点击购物车图标
+        data_dot( 'water_cart_nobarrelsbuy', 0, 0 );
+
+        _openWinByUrl('water', 'sureOrder', {
+            'gid': gid,
+            'hasBucket': 0
+        });
+    }
+</script>
+</html>

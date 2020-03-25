@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<style>
+	tr{border-bottom: 1px dashed #dedede;}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="">
+		<table cellspacing="0" cellpadding="0" class="card_tab">
+		<thead class="type_1" style="display: none;">
+			<th>时间</th>
+			<th>类型</th>
+			<th style="width: 13%">门店名称</th>
+			<th >金额</th>
+		</thead>
+		<thead class="type_2" style="display: none;">
+			<th>时间</th>
+			<th>类型</th>
+			<th style="width: 13%">门店名称</th>
+			<th >金额</th>
+			<th>支付类型</th>
+		</thead>
+		<thead class="type_3" style="display: none;">
+			<th>时间</th>
+			<th>类型</th>
+			<th style="width: 13%">门店名称</th>
+			<th>金额</th>
+		</thead>
+			
+		<tbody class="list">
+			<!--<tr>
+				<td>2016.06.07 17:30:30</td>
+				<td>充值</td>
+				<td>账户余额</td>
+				<td>饮水</td>
+				<td>-10.00</td>
+				<td>未圈存</td>
+			</tr>-->
+			
+		</tbody>
+		</table>
+	
+	</div>
+	
+</div>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script>
+	var page=1;//分页
+	var is_page=true;//总页数
+	var userinfo ="";
+	var cardno="";
+	var type=1;  //查询类型  1消费记录 2金额变动  3积分
+	apiready = function(){
+		loading('card_log');
+	
+	
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+			is_page = true;
+			page=1;
+			ready();
+		});
+		
+		cardno = api.pageParam.cardno;
+		type   = api.pageParam.type;
+		userinfo = $api.getStorage('userinfo');
+		$(".type_"+type).show();
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+			}, function(ret, err){ 
+			     
+			    if(is_page){
+			     page=page+1;
+			     ready();
+			    }
+		});
+		
+		ready();
+	};
+	
+	function ready(){
+		_ajax(ajax_url +"Index/User/getUserCardMoneyHistory",{'uid':userinfo.uid,'token':userinfo.token,'type':type,'p':page,'cardno':cardno},'post',function(ret){
+			var strVar = "";
+			api.refreshHeaderLoadDone();
+			if(ret.status  ==1){
+				if(ret.data.pageNumber >= ret.data.pageCount){
+					is_page =false;
+				}
+				$.each(ret.data.list,function(k,v){
+					if(type ==1){
+					    strVar += "<tr>";
+					    strVar += "<td>"+v['date']+"<\/td>";
+					    strVar += "<td>"+v['type']+"<\/td>";
+					    strVar += "<td>"+v['shopName']+"<\/td>";
+					    strVar += "<td>"+v['money']+"<\/td>";
+					    strVar += "<\/tr>";
+					}
+					if(type ==2 ){
+					    strVar += "<tr>";
+					    strVar += "<td>"+v['date']+"<\/td>";
+					    strVar += "<td>"+v['type']+"<\/td>";
+					    strVar += "<td>"+v['shopName']+"<\/td>";
+					    strVar += "<td>"+v['money']+"<\/td>";
+					    strVar += "<td>"+v['payType']+"<\/td>";
+					    strVar += "<\/tr>";
+					}
+					if(type ==3 ){
+					    strVar += "<tr>";
+					    strVar += "<td>"+v['date']+"<\/td>";
+					    strVar += "<td>"+v['type']+"<\/td>";
+					    strVar += "<td>"+v['shopName']+"<\/td>";
+					    strVar += "<td>"+v['score']+"<\/td>";
+					    strVar += "<\/tr>";
+					}
+					
+				})
+			}else{
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$(".list").html(strVar);
+		    }else{
+		    	$(".list").append(strVar);
+		    }
+		    
+		    closeloading();
+			
+		});
+	}
+</script>
+</body>
+</html>

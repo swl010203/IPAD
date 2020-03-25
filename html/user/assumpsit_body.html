@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="my_yuyuewrap " style="background: #fff;">
+
+		<ul class="my_yuyuelist" id="list">
+			<li>
+				<p class="my_yuyuelistp01">刘德华</p>
+				<p class="my_yuyuelistp02">预约时间：2016-10-28</p>
+			</li>
+			<li>
+				<p class="my_yuyuelistp01">刘德华</p>
+				<p class="my_yuyuelistp02">预约时间：2016-10-28</p>
+			</li>
+			<li>
+				<p class="my_yuyuelistp01">刘德华</p>
+				<p class="my_yuyuelistp02">预约时间：2016-10-28</p>
+			</li>
+			<li>
+				<p class="my_yuyuelistp01">刘德华</p>
+				<p class="my_yuyuelistp02">预约时间：2016-10-28</p>
+			</li>
+			
+		</ul>
+	</div>
+	
+</div>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+	$(function(){
+		// 点菜切换
+		$('.eval_topul .eval_topli').click(function(){
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			$('.tabBoxwrap .tabBox01').show().eq($(this).index()).siblings().hide();
+		});
+		});
+		
+	var userinfo = "";
+	var page = 1;
+	var is_page = true;
+	var type =1;
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		//加载状态
+		loading('assumpsit_body');
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			page=1;
+			is_page = true;
+			ready();
+		});
+
+		//监听类型选择
+		api.addEventListener({
+		    name:'assumpsit_type'
+		}, function(ret, err){        
+	     	param_type = ret.value.type;
+	     	//判断是否与当前相同，不相同则进行查询
+	     	if(type != param_type){
+	     		loading('assumpsit_body');
+	     		type = param_type;
+	     		page = 1;
+	     		is_page = true;
+		   		ready();
+	     	} 
+		});
+		
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		         page++;
+			     ready();
+		     }
+			  
+		});
+		
+	
+		
+		ready();
+	};
+	
+	
+	
+	
+	
+	function ready(){
+	   
+		_ajax(ajax_url +"Index/BookingOrder/bookingList",{'uid':userinfo.uid,'token':userinfo.token,'p':page,'type':type},'post',function(ret){
+			var strVar = "";
+			if(ret.status  ==1){
+				//判断是否还有下一页
+				if(ret.book.length==0  && page !=1){
+					is_page = false;
+					return false;
+				}
+
+				$.each(ret.book,function(k,v){
+				    strVar += "<li>";
+				    strVar += "<p class=\"my_yuyuelistp01\">";
+				    strVar += v['name'];
+				    strVar += "<\/p>";
+				    strVar += "<p class=\"my_yuyuelistp02\">";
+				    strVar += "	预约时间："+v['add_time'];
+				    strVar += "<\/p>";
+				    strVar += "<\/li>";
+				});
+				    
+			}else{
+				is_page = false;
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$("#list").html(strVar);
+		    }else{
+		    	$("#list").append(strVar);
+		    }
+			
+			closeloading();
+			api.refreshHeaderLoadDone();
+			
+		})
+	}
+</script>
+</body>
+</html>

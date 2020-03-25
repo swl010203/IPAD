@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">完善订单</h1>
+			<a class="mui-icon mui-icon-back colorRed" id="fanhui_btn"></a>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">查看明细</button>
+		</header>
+		<div class="mui-content">
+			<div class="pl20 pr20 box-s bgwhite pt20 pb20">
+				<div class="border_b wsdd_label pb10" id="tuijian">
+					<!-- <span class="click">牛奶巧克力</span>
+					<span>牛奶巧克力</span>
+					<span>巧克力</span>
+					<span>牛奶</span>
+					<span>牛奶</span>
+					<span>牛奶巧克力</span> -->
+				</div>
+				<textarea class="wsdd_textarea" name="buycontent" id="buycontent" rows="" cols="" placeholder="请输入："></textarea>
+			</div>
+			<div class="bgwhite mt20 wsdd_inp">
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">买地址：</span>
+					<input type="text" name="buy_address" id="buy_address" value="" placeholder="请输入购买详细地址"/>
+				</div>
+				<div class="clearfloat pl20 pr20 box_s border_b pb20">
+					<span class="fl">送地址：</span>
+					<input type="text" class="fl addr_song" readonly="readonly" id="get_address" onclick="_openWinByUrl('addressHead','../user/address_head');" value="" placeholder="请选择收货地址"/>
+					<!--<span class="iconfont icon-bianji colorRed fr"></span>-->
+				</div>
+			</div>
+			<div class="bgwhite mt20 wsdd_inp">
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">商品估计：</span>
+					<input class="dy_inp" type="text" name="assess_price" id="assess_price" value="" placeholder="请输入商品估价"/>
+					<span class="fr">元</span>
+				</div>
+				<p class="pt20 pb20 box_s pl20 pr20 bgqianOrange colorBlack">注：填写总价金额，为了让骑士了解价格，以带够充足的金钱为您购买</p>
+			</div>
+			<div class="bgwhite mt20 wsdd_inp">
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">添加小费：</span>
+					<input class="dy_inp" type="text" name="tip_price" id="tip_price" value="" placeholder="请输入小费金额"/>
+					<span class="fr">元</span>
+				</div>
+				<!--<div class="clearfloat pl20 pr20 box_s border_b">
+					<span class="fl">运费：</span>
+					<span class="fr">￥5.00</span>
+				</div>-->
+			</div>
+			<div style="height: 100px;"></div>
+			<footer class="cart_footer clearfloat fs24 mui-row pl20 box_s">
+				<div class="mui-col-sm-9 mui-col-xs-9">
+					<div class="bianjiClick_div">
+						<p style="line-height: 50px;">
+							<span>应付金额:</span>
+							<span class="fs24 colorRed">￥</span>
+							<span class="fs36 colorRed" id="allprice">0</span>
+						</p>
+					</div>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<div class="buyNow colorWhite">提交订单</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		
+		var searchgoods = '';
+		var addressid = '';
+		var uid = '';
+		apiready = function(){
+			//接收输入框输入的商品
+			searchgoods = api.pageParam.searchgoods;
+			uid = localStorage.getItem('uid');
+			//收货地址监听
+			api.addEventListener({
+			    name: 'sureaddress'
+			}, function(ret, err){
+			    addressid = ret.value.address_id;
+				getaddress();
+			});
+
+			$('#buycontent').val(searchgoods);
+			goods();
+		};
+		$('#fanhui_btn').on('tap',function(){
+			api.closeWin();
+		});
+
+		//商品分类
+		function goods(){
+			_ajax(ajax_url+'Index/CityRun/recommend',{},'get',function(ret){
+				if(ret.status == 1){
+					var strVar ='';
+					$.each(ret.data,function(k,v){
+						strVar +='<span style="margin-left:2px">'+v.title+'</span>';
+					});
+					$('#tuijian').html(strVar);
+					$('#tuijian span').on('tap',function(){
+							var newHtml = $('#buycontent').val()+'   '+$(this).html();
+							$('#buycontent').val(newHtml);
+					});
+				}
+			});
+		}
+
+		$('.buyNow').on('tap',function(){
+			gopay();
+		});
+		//下单
+		function gopay(){
+			var buycontent = $('#buycontent').val();//购买商品
+			if(!buycontent){
+				_toast('购买商品不能为空');
+				return false;
+			}
+			var buy_address = $('#buy_address').val();//购买商品地址
+			if(!buy_address){
+				_toast('请输入购买商品地址');
+				return false;
+			}
+			var get_address = $('#get_address').val(); //收货地址
+			if(!get_address){
+				_toast('请选择收货地址');
+				return false;
+			}
+			var assess_price = $('#assess_price').val();//商品股价
+			if(!assess_price){
+				_toast('请输入商品估价');
+				return false;
+			}
+			if(assess_price != '' && assess_price !='undefined' && assess_price !=null){
+				if(isNaN(assess_price)){
+					_toast('请填写数字');
+					return false;
+				}
+			}
+			var tip_price = $('#tip_price').val();//小费
+			if(tip_price !='' && tip_price != 'undefined' && tip_price != null){
+				if(isNaN(tip_price)){
+					_toast('请填写数字');
+					return false;
+				}
+			}
+			var pay_price = $('#allprice').html();
+			var data = {
+				'buy_content' : buycontent,
+				'buy_address' : buy_address,
+				'get_address' : addressid,
+				'assess_price' : assess_price,
+				'tip_price' : tip_price,
+				'uid' :uid,
+				'pay_price' : pay_price
+			};
+			_ajax(ajax_url+'Index/CityRun/goorder',data,'post',function(ret){
+				if(ret.status){
+					_toast(ret.msg,function(){
+
+					});
+				}else{
+					_toast('网络连接失败');
+					return false;
+				}
+			});
+		}
+
+		//获取地址
+		function getaddress(){
+			_ajax(ajax_url+"Index/User/upAddress",{'id':addressid},'get',function(ret){
+				if(ret.status==1){
+					var add_info = ret.info.alladdress;
+					$("#get_address").val(add_info);
+				}
+			});
+		}
+
+		$('#assess_price').blur(function(){
+			jisuanprice();
+		});
+
+		$('#tip_price').blur(function(){
+			jisuanprice();
+		});
+
+
+		//计算订单价格
+		function jisuanprice(){
+			var assessPrice = $('#assess_price').val();
+			var tipPrice = $('#tip_price').val();
+			var allprice = 0;
+			if(assessPrice && tipPrice){
+				allprice = Number(parseFloat(assessPrice).toFixed(2)) + Number(parseFloat(tipPrice).toFixed(2));
+			}else if(assessPrice){
+				allprice = Number(parseFloat(assessPrice).toFixed(2));
+			}else if(tipPrice){
+				allprice = Number(parseFloat(tipPrice).toFixed(2));
+			}else{
+				allprice = 0;
+			}
+			$('#allprice').html(allprice);
+		}
+
+	</script>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+<body>
+<!-- 头部 -->
+
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="siteSearchlist" style="background:#fff;">
+		<div class="orderListBot" style="background: #F5F5F5;">
+			<i class="order_status_str"></i>
+			<!--<a href="javascript:void(0);" class="orderBtn">立即付款</a>
+			<a href="#" class="orderBtn cancel_orderbtn">取消订单</a>-->
+		</div>
+		<ul class="siteSearchul" id="list">
+				<!--<li class="busi_fenleili">
+						<div class="busi_fenlei">
+						<a href="#"class="busi_fenleia"><img src="../../images/jiudianimg01.jpg"></a>
+						<div class="busi_fenleir">
+							<p class="busi_fenleirtxt "><a href="#" class="busi_fenleirtxta dy_dd" style="width: 75%;">安国国际大酒店</a><span class="fr" style="color: #D12A18;">待付款</span></p>
+							<p class="busi_fenleirrice jdbusi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00<span class="busi_fenleirpricespan"> 1晚/标间</span></p>
+							<p class="busi_fenleirrice jdbusi_fenleirrice" style="color: #999; font-size: 0.2rem;">入住时间：2016-10-25</p>
+						</div>
+					</div>
+				</li>-->
+			</ul>
+	</div>
+				<!-- 联系 -->
+
+
+	<div class="hpay_order">
+		<div class="hpay_ordertop">
+			<p class="jdpay_ordertop01 ">订单号码：<i class="order_sn"></i></p>
+			<p class="jdpay_ordertop01 ">下单时间：<i class="add_time">2016-10-25</i></p>
+			<!--<p class="jdpay_ordertop01">购买手机号：<i class="mobile"></i></p>-->
+			<p class="jdpay_ordertop01">优惠券：-￥<i class="coupons_val">0.00</i></p>
+			<p class="jdpay_ordertop01">总价：￥<i class="price">0.00</i></p>
+		
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+	var id = 0;
+	apiready = function(){
+		api.parseTapmode();
+		id=api.pageParam.id;
+		
+		ready();
+	};
+	
+	function ready(){
+		_ajax(ajax_url +"Index/UserFoodOrder/foodEvaluate" ,{'id':id},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				$(".order_status_str").html(ret.foodOrder.status_wz.msg);
+				
+				$(".order_sn").html(ret.foodOrder.order_sn);
+				
+				var add_time =+ret.foodOrder.add_time *1000;
+			
+				$(".add_time").html(_formatDate(add_time,false));
+				
+				$(".mobile").html(ret.foodOrder.consignee_mobile);
+				
+				$(".price").html(ret.foodOrder.price);
+				
+				$.each(ret.foodOrder.goods,function(k,v){
+					strVar += "<li class=\"busi_fenleili\">";
+				    strVar += "<div class=\"busi_fenlei\">";
+				    strVar += "	<a href=\"#\" class=\"busi_fenleia\"><img src=\""+v['goods_img']+"\"><\/a>";
+				    strVar += "	<div class=\"busi_fenleir\">";
+				    strVar += "		<p class=\"busi_fenleirtxt \">";
+				    strVar += "			<a href=\"#\" class=\"busi_fenleirtxta dy_dd\" style=\"width: 75%;\">"+v['goods_name']+"<\/a>";
+				    strVar += "		<\/p>";
+				    strVar += "		<p class=\"busi_fenleirrice jdbusi_fenleirrice\">";
+				    strVar += "			<b class=\"busi_fenleirpriceb\">￥<\/b>"+v['goods_price'];
+				    strVar += "		<\/p>";
+				    strVar += "	<\/div>";
+				    strVar += "<\/div>";
+				    strVar += "<\/li>";
+				});
+			    
+				$("#list").html(strVar);
+			}else{
+				_toast(ret.msg);
+			}
+		})
+	}
+</script>
+</body>
+</html>

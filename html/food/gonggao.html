@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/gonggao.css"/>
+	</head>
+	<body>
+		<!--头部-->
+
+		<div class="content">
+			<ul id="list">
+				
+				<!--<li>
+					<a href="javascript:;">
+						<div class="fl word huanhang">今日新用户可享受八折优惠哦</div>
+						<div class="fr time">2017-04-20</div>
+					</a>
+				</li>-->
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../../script/food/index.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(".content ul li").click(function(){
+			$(this).children("a").css("color","red").parent(".content ul li").siblings().children("a").css("color","black");
+		});
+		
+		var page = 1;
+		var is_page =true;
+		var sid = "";
+		apiready = function(){
+			api.setRefreshHeaderInfo({
+			    visible: true,
+			    loadingImg: 'widget://image/refresh.png',
+			    bgColor: '#ccc',
+			    textColor: '#fff',
+			    textDown: '下拉刷新...',
+			    textUp: '松开刷新...',
+			    showTime: true
+			}, function(ret, err) {
+			    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+				page =1;
+				is_page=true;
+				getShopXg();
+			});
+
+			//听滚动条是否到底部
+			api.addEventListener({
+			    name:'scrolltobottom',
+			    extra:{
+			        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+			    }
+			}, function(ret, err){        
+			     if(is_page){
+			        page++;
+				    getShopXg();
+			     }
+				  
+			});
+			
+			//店铺id 
+			sid=api.pageParam.sid;
+			getShopXg();
+		};
+		
+		function getShopXg(){
+			_ajax(ajax_url+"Index/Food/getShopXg",{'sid':sid,'p':page},'post',function(ret){
+				var strVar = "";
+				if(ret.status==1){
+					$(ret.data).each(function(k,v){
+						strVar += "<li onclick=\"shopXgInfo("+v['id']+")\">\n";
+					    strVar += "<a href=\"javascript:;\">\n";
+					    strVar += "<div class=\"fl word huanhang\">\n";
+					    strVar += v['title'];
+					    strVar += "<\/div>\n";
+					    strVar += "<div class=\"fr time\">\n";
+					    strVar += _formatDate(v['addtime']*1000);
+					    strVar += "<\/div>\n";
+					    strVar += "<\/a>\n";
+					    strVar += "<\/li>\n";
+					   
+					});
+				    if(page ==1){
+				    	$("#list").html(strVar);
+				    }else{
+				    	$("#list").append(strVar);
+				    }
+				}else{
+					_toast(ret.msg);
+					is_page = false;
+				}
+			});
+		}
+		
+		
+		function shopXgInfo(id){
+			_openWinByUrl('food_gonggaoinfo_winhead','../window_head',{'furl':'food/gonggaoinfo','frame':'food_gonggaoinfo','id':id,'title':'公告详情'});
+		}
+	</script>
+</html>

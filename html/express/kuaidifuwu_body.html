@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>049快递服务</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		
+		<!--中间内容-->
+		<div class="baoxiufuwuOuterDiv">
+			<div>
+				<div class="fl leftDiv">快递公司：</div>
+				<div class="rightDiv">
+					<div class="xialaxiaoguo heig">
+						<input id="" class="input_select" type="text" value="" placeholder="请选择快递公司" readonly/> 
+						<ul id="courier" style="max-height: 150px;overflow-y: scroll;"> 
+							<!--<li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></ li> 
+							<li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></ li> 
+							<li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></ li> 
+							<li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li> -->
+						</ul>
+						<span class="styleSpan colorRed">&nbsp;&nbsp;*请选择一家快递公司再提交服务</span>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">发件人：</div>
+				<div class="rightDiv wuxiala">
+					<!--<span id="username"></span>-->
+					<input type="text" name="username" id="username" value="" placeholder="请输入发件人姓名"/>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">联系电话：</div>
+				<div class="rightDiv wuxiala">
+					<input type="text" id="mobile" placeholder="请填写联系电话"/>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">发件人地址：</div>
+				<div class="rightDiv wuxiala">
+					<input type="text" id="address" placeholder="请填写发件人地址"/>
+				</div>
+			</div>
+			
+			<div>
+				<div class="fl leftDiv">收件人姓名：</div>
+				<div class="rightDiv wuxiala">
+					<!--<span id="username"></span>-->
+					<input type="text" name="receive_name" id="receive_name" value="" placeholder="请输入收件人姓名"/>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">收件人电话：</div>
+				<div class="rightDiv wuxiala">
+					<input type="text" id="receive_phone" placeholder="请填写收件人电话"/>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">收件地址：</div>
+				<div class="rightDiv wuxiala">
+					<input type="text" id="receive_address" placeholder="请输入收件人详细的收件地址"/>
+				</div>
+			</div>
+
+			<div>
+				<div class="fl leftDiv">快递件数：</div>
+				<div class="rightDiv wuxiala">
+					<input type="text" id="num" placeholder="请填写快递件数"/>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">送往方式：</div>
+				<div class="rightDiv" >
+					<span onclick="tishi(1);" ><i class="yessel sel weixuan" id="guanlianzhanghu"></i><label for="guanlianzhanghu">上门取件</label></span>
+					<span onclick="tishi(2);" ><i class="nosel sel weixuan" id="zhifubao"></i><label for="zhifubao">送往站点</label></span>
+				</div>
+			</div>
+			<div class=" leftDiv tishiadd" style="margin-bottom: 20px;display: none;"><p class="lanTishi" style=" color: red;">地点：物业楼一层管家中心</p></div>
+			<div>
+				<div class="fl leftDiv">物品信息：</div>
+				<div class="rightDiv wuxiala">
+					<textarea type="text" id="desc" placeholder="请描述您的物品信息"></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="btnTijiao" onclick="orderLogistics();">提交</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		function tishi(info){
+			if(info==1){
+				$(".tishiadd").hide();
+			}else{
+				$(".tishiadd").show();
+			}
+		}
+		
+		$(function(){
+			/*下拉列表效果*/
+			$(".input_select").click(function(event){ 
+				event.stopPropagation();
+				var ul = $(".xialaxiaoguo ul"); 
+				if(ul.css("display")=="none"){ 
+					ul.slideDown("fast"); 
+				}else{ 
+					ul.slideUp("fast"); 
+				} 
+			});
+			$(document).click(function(){
+				var ul = $(".xialaxiaoguo ul"); 
+				ul.slideUp("fast"); 
+			});
+			//获取数据
+			$(document).on('click',".xialaxiaoguo ul li a",function(){ 
+				var txt = $(this).text(); 
+				$(".input_select").val(txt); 
+				var value = $(this).attr("rel"); 
+				$(".xialaxiaoguo ul").hide(); 
+				courier_id = value;
+				
+				$("#result").html("您选择了"+txt+"，值为："+value); 
+			}); 
+			/*下拉列表效果*/
+			$(".input_select1").click(function(){ 
+					var ul = $(".xialaxiaoguo1 ul"); 
+					if(ul.css("display")=="none"){ 
+						ul.slideDown("fast"); 
+					}else{ 
+						ul.slideUp("fast"); 
+					} 
+				});
+			//获取数据
+			$(".xialaxiaoguo1 ul li a").click(function(){ 
+				var txt = $(this).text(); 
+				$(".input_select1").val(txt); 
+				var value = $(this).attr("rel"); 
+				$(".xialaxiaoguo1 ul").hide(); 
+				
+				$("#result").html("您选择了"+txt+"，值为："+value); 
+			}); 
+			/*点击button*/
+			$(".rightDiv span").on("click",function(){
+				var index_ = $(this).index();
+				$(".rightDiv span").children(".sel").removeClass("yessel");
+				$(".rightDiv span").children(".sel").addClass("nosel");
+				$(this).children(".sel").addClass("yessel");
+			})
+		});
+		
+		
+		
+		var uid = localStorage.getItem("uid");
+		var courier_id = "";
+		var type = 1;
+		apiready = function(){
+			//获取个人账户信息
+			//获取用户信息
+			getAccountInfo();
+			//获取快递公司
+			
+			
+		};
+		
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+				if(ret.status ==1){
+					$("#address").val(ret.user.address);
+					$("#username").val(ret.user.address);
+					$("#mobile").val(ret.user.mobile);
+					
+					//获取快递公司
+					getCourier();
+				}
+			});
+		}
+		
+		function getCourier(){
+			_ajax(ajax_url+"Index/Family/getCourier" ,{},'get',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(ret.data).each(function(k,v){
+						strVar += "<li><a href=\"#none\" rel=\""+v['id']+"\">"+v['name']+"<\/a><\/ li> \n";
+					})
+    				
+				}
+				
+				$("#courier").html(strVar);
+			});
+		}
+		
+		
+		function orderLogistics(){
+		
+			var name  = $("#username").val();
+			var phone = $("#mobile").val();
+			var address = $("#address").val();
+			var desc = $("#desc").val();
+			var num  = $("#num").val();
+			
+			var receive_name  = $("#receive_name").val();
+			var receive_phone  = $("#receive_phone").val();
+			var receive_address  = $("#receive_address").val();
+			
+			if(!courier_id){
+				_toast('请选择快递公司');
+				return false;
+			}
+			
+			if(!phone){
+				_toast('请填写联系方式');
+				return false;
+			}
+			
+			if(!_isPhone(phone)){
+				_toast('发件人联系方式不正确');
+				return false;
+			}
+			
+			if(!name){
+				_toast('请填写联系人');
+				return false;
+			}
+			
+			
+			if(!address){
+				_toast('请填写联系地址');
+				return false;
+			}
+			
+			if(!receive_name){
+				_toast('请填写收件人');
+				return false;
+			}
+			
+			if(!receive_phone){
+				_toast('请填写收件人联系方式');
+				return false;
+			}
+			
+			if(!_isPhone(receive_phone)){
+				_toast('收件人联系方式不正确');
+				return false;
+			}
+			
+			if(!receive_address){
+				_toast('请填写收件人联系地址');
+				return false;
+			}
+			
+			if(!num){
+				_toast('请填写物品数量');
+				return false;
+			}
+			if(!desc){
+				_toast('请填写物品描述');
+				return false;
+			}
+			
+			_ajax(ajax_url+"Index/Family/orderLogistics" ,{
+				'uid':uid,'name':name,
+				'phone':phone,'courier_id':courier_id,
+				'address':address,'desc':desc,
+				'num':num,
+				'receive_name':receive_name,
+				'receive_phone':receive_phone,
+				'receive_address':receive_address
+				},'post',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+    				_toast(ret.info,function(){
+    					_openWinByUrl('wodebaoguo','wodebaoguo');
+    				});
+				}else{
+					_toast(ret.info);
+				}
+				
+				
+			});
+		}
+	</script>
+</html>

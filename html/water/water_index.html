@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html class="bgwhite">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+		<style>
+			.htk_botDiv_ul li{
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgRed">
+			<h1 class="mui-title">送水服务</h1>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" onclick="_openWinByUrl('water_pay_log','water_pay_log');dot_click('water_purchase_record');">购水记录</button>
+			<a class="mui-icon mui-icon-back"></a>
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="bgwhite">
+				<ul class="htk_botDiv_ul fs28">
+					<li class="clearfloat pl20 pr20 box_s border_t" onclick="_openWinByUrl('no_bucket', 'no_bucket');dot_click('water_nobarrels');">
+						<div class="mui-pull-left">
+							<span>无桶购水</span>
+						</div>
+						<div class="mui-pull-right"><span class="mui-icon mui-icon-arrowright fs32"></span></div>
+					</li>
+					<li class="clearfloat pl20 pr20 box_s border_t border_b10" onclick="_openWinByUrl('has_bucket', 'has_bucket');dot_click('water_buckets');">
+						<div class="mui-pull-left">
+							<span>有桶购水</span>
+						</div>
+						<div class="mui-pull-right">
+							<span class="mui-icon mui-icon-arrowright fs32"></span>
+						</div>
+					</li>
+					<li class="clearfloat pl20 pr20 box_s border_t" onclick="_openWinByUrl('buy_ticket', 'buyWaterTicket');dot_click('water_ticket');">
+						<div class="mui-pull-left">
+							<span>购买水票</span>
+						</div>
+						<div class="mui-pull-right clearfloat"><span class="mui-icon mui-icon-arrowright fs32"></span></div>
+					</li>
+					<li class="clearfloat pl20 pr20 box_s border_t border_b10" onclick="myTicket();dot_click('water_myticket');">
+						<div class="mui-pull-left">
+							<span>我的水票</span>
+						</div>
+						<div class="mui-pull-right">
+							<span class="colorHui999"></span>
+							<span class="mui-icon mui-icon-arrowright fs32"></span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript">
+		mui.init();
+
+		$('.mui-icon-back').click(function(){
+			api.closeWin();
+		});
+
+		var userinfo = '';
+		apiready = function(){
+			addEventUserInfo();
+			userinfo = $api.getStorage('userinfo');
+
+			// 监听登录状态
+			api.addEventListener({
+	            name:'refresh_userinfo'
+            },function(ret,err){
+            	userinfo = ret.value.userinfo;
+            });
+			getCountTicket();
+		};
+
+		function myTicket(){
+			userinfo = $api.getStorage('userinfo');
+			if(typeof userinfo == 'undefined' || userinfo == ''){
+				_toast('请先登录', function(){
+					_openWinByUrl('login', '../login');
+					return false;
+				});
+			}else{
+				_openWinByUrl('my_ticket', 'my_ticket');
+			}
+		}
+		// 获取水票剩余数量
+		function getCountTicket(){
+			userinfo = $api.getStorage('userinfo');
+			var url = ajax_url + 'Index/WaterService/getHasTicket';
+			var data = {
+				'uid': userinfo ? userinfo.uid : '',
+				'type': 1
+			};
+			_ajax(url, data, 'post', function(ret){
+				if(ret.status == 1){
+					$('.colorHui999').text('剩余'+ret.data+'张');
+				}else{
+					$('.colorHui999').text(0);
+				}
+			});
+		}
+
+        //点击统计操作
+        function dot_click(type, remark) {
+            if( typeof remark == 'undefined' ) {
+                remark = 0;
+            }
+            if( type == 'water_purchase_record' ) {
+                //点击购水记录
+                data_dot( 'water_purchase_record', 0, remark );
+            } else if( type == 'water_nobarrels' ) {
+                //点击无桶购水
+                data_dot( 'water_nobarrels', 0, remark );
+            } else if( type == 'water_buckets' ) {
+                //点击有桶购水
+                data_dot( 'water_buckets', 0, remark );
+            } else if( type == 'water_ticket' ) {
+                //点击购买水票
+                data_dot( 'water_ticket', 0, remark );
+            } else if( type == 'water_myticket' ) {
+                //点击我的水票
+                data_dot( 'water_myticket', 0, remark );
+            }
+        }
+	</script>
+</html>

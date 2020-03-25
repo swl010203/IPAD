@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/shangjiaxiangqing.css"/>
+	</head>
+	<body>
+
+		<div class="banner">
+		<div style="border-radius: 50%;overflow: hidden;" class="tuImg" ><img style="height: 100%;" id="shopimg"  src="../../images/food/headPor.png"/></div>
+			<div>
+				<p id="shopname"></p>
+				<p>销量：<span id="sales_volume"></span>单</p>
+				<p>营业时间：<em id="office_hours"></em></p>
+			</div>
+		</div>
+		<ul class="list">
+			<li class="clearfloat">
+				<p class="fl">商家公告：</p>
+				<p id="shop_xg">手机打开撒娇的翻开历史手机打开撒娇的翻开历史手机打开撒娇的翻开历史手机打开撒娇的翻开历史手机打开撒娇的翻开历史手机打开撒娇的翻开历史</p>
+			</li>
+			<li class="clearfloat">
+				<p class="fl">商家地址：</p>
+				<p id="address">手机打开撒娇的翻开历史手机打开撒娇的翻开历史手机打开撒娇的翻开历史</p>
+			</li>
+			<li class="clearfloat">
+				<p class="fl">营业资质：</p>
+				<p class="fr iconP" onclick="license();">查看</p>
+			</li>
+			<li class="clearfloat">
+				<p class="fl">商家环境：</p>
+				<p class="fr iconP" onclick="list_logo();">查看</p>
+			</li>
+		</ul>
+		<ul class="list">
+			<li class="zhuTit">
+				<i></i>
+				商家简介
+			</li>
+			<li class="noHeight">
+				<p id="detail"></p>
+			</li>
+		</ul>
+		<!--<ul class="list">
+			<li class="zhuTit">经营范围</li>
+			<li class="noHeight">
+				<p>附近的看法房价快速大幅解放螺丝钉解放发送旅客的肌肤的深刻理解方式；龙卷风坷拉三季稻啦开始觉得打开文件啊打开链接大家阿历克斯大家阿喀琉斯卡拉手机打开了我觉得</p>
+			</li>
+		</ul>-->
+	</body>
+	<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/food/index.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+		
+	<script>
+	
+	var is_back = 0;
+		//默认加载
+	var sid='';
+	var license_pic=[];
+	var list_logp_path=[];
+	apiready = function(){
+		api.addEventListener({
+		    name: 'keyback'
+		}, function(ret, err) {
+			if(is_back ==1){
+				is_back = 0;
+				closephotoBrowser();
+			}else{
+				api.closeWin();
+			}
+		    
+		});
+
+		//店铺id 
+		sid=api.pageParam.sid;
+		
+		//获取店铺详情
+		getShop(sid);
+		
+	};
+	
+	//获取店铺详情
+	function getShop(sid){
+		_ajax(ajax_url+"Index/Food/index",{sid:sid},'post',function(ret){
+			if(ret.status==1){
+				$('#shopimg').attr('src',ret.data.logo);
+				$('#shopname').text(ret.data.name);
+				$('#shop_xg').text(ret.data.xg);   //公告
+				$("#office_hours").text(ret.data.office_hours);  //营业时间
+				$("#address").text(ret.data.address);  //营业地址	
+				
+				$("#detail").text(ret.data.detail);  //介绍
+				$("#sales_volume").text(ret.data.sales_volume);  //介绍
+				//店铺资质
+				license_pic.push(ret.data.license_pic);
+				//店铺环境
+				$(ret.data.list_logp_path).each(function(k,v){
+					list_logp_path.push(v);
+				});
+				
+				
+			}
+		});
+	}
+	
+	function list_logo(){
+		is_back =1;
+		photoBrowser(list_logp_path);
+	}
+	
+	function license(){
+		is_back =1;
+		photoBrowser(license_pic);
+	}
+	</script>
+</html>

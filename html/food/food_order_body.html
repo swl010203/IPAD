@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/tijiaodingdan.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/common.css"/>
+		<style>
+				#appoint_time{
+				background: #fff;
+				border:none;
+				background-image: none !important;
+				width:0px;
+				height:0px;
+			}
+			
+			.posP{
+				position: relative;
+				
+			}
+			.posP span{
+				position: absolute;
+				top:0;
+				right:40px;
+				display:inline-block;
+				min-width:250px;
+				text-align:right;
+			}
+			
+			.icon-right{
+				background: url(../../images/food/chexiao.png) 12px center no-repeat;
+				background-size: 12px;
+				box-sizing: border-box;
+				display: inline-block;
+				width: 37px;
+				height: 55px;
+				right: 10px;
+				position: absolute;
+				
+			}
+		</style> 
+	</head>
+	<body>
+		
+		<ul class="list">
+			<li class="clearfloat">
+				<p class="fl">就餐人数：</p>
+				<p class="fr selectP getPeo" data-src="1" id="number">请选择</p>
+			</li>
+			
+			<li class="clearfloat">
+				<p class="fl">就餐时间：</p>
+				<p class="fr posP"><span class='span_time' onclick="$('#appoint_time').click();">请选择</span>
+					<i class="icon-right"></i>
+				<input type="datetime-local" class="" onchange="changeTime();" id="appoint_time" value=""></p>
+			</li>
+		</ul>
+		<ul class="list">
+			<li class="clearfloat">
+				<p class="fl">姓名</p>
+				<p class="fr">
+					<input type="text"  id="name" class="userName" placeholder="请输入姓名">
+				</p>
+			</li>
+			<li class="clearfloat">
+				<p class="fl">性别</p>
+				<p class="fr">
+					<label><input type="radio" class="sel"  value="1"  checked name="sex">男士</label> 
+					<label><input type="radio" class="sel"  value="2"  name="sex">女士</label> 
+				</p>
+			</li>
+			<li class="clearfloat">
+				<p class="fl">电话</p>
+				<p class="fr">
+					<input type="text" class="userName" id="phone" placeholder="请输入电话">
+				</p>
+			</li>
+		</ul>
+		<ul class="list clearfloat" id="goodList">
+<!--			<li class="noHeight">
+				<div class="fl imgDiv">
+					<img src="../../images/food/eatImg02.png" alt="" />
+				</div>
+				<div class="fl word">
+					<p>德国先之手 味道好吃 肥而不腻</p>
+					<p>
+						<span class="shuliang">x1</span>
+						<span class="prise">￥398</span>
+					</p>
+				</div>
+			</li>
+			<li class="noHeight">
+				<div class="fl imgDiv">
+					<img src="../../images/food/eatImg02.png" alt="" />
+				</div>
+				<div class="fl word">
+					<p>德国先之手 味道好吃 肥而不腻</p>
+					<p>
+						<span class="shuliang">x1</span>
+						<span class="prise">￥398</span>
+					</p>
+				</div>
+			</li>
+			<li class="noHeight">
+				<div class="fl imgDiv">
+					<img src="../../images/food/eatImg02.png" alt="" />
+				</div>
+				<div class="fl word">
+					<p>德国先之手 味道好吃 肥而不腻</p>
+					<p>
+						<span class="shuliang">x1</span>
+						<span class="prise">￥398</span>
+					</p>
+				</div>
+			</li>
+			<li class="noHeight">
+				<div class="fl imgDiv">
+					<img src="../../images/food/eatImg02.png" alt="" />
+				</div>
+				<div class="fl word">
+					<p>德国先之手 味道好吃 肥而不腻</p>
+					<p>
+						<span class="shuliang">x1</span>
+						<span class="prise">￥398</span>
+					</p>
+				</div>
+			</li>
+			-->
+		</ul>
+		<ul class="list clearfloat">
+		<li class="red tr" style="padding-left:20px;">
+				商品总金额：<span class="total_price">￥0</span>
+			</li>
+			</ul>
+		<ul class="list">
+			<li class="clearfloat">
+				<p class="fl">备注：</p>
+				<p class="fr">
+					<input type="text" id="note" placeholder="请输入备注信息" class="userName" value="">
+				</p>
+			</li>
+		</ul>
+		<div id="datePlugin"></div>
+		
+		
+		<footer>
+				<!--<div class="leftFoot">
+					<div class="cart">
+						<div class="cartInner">
+							押金
+						</div>
+						<span class="red pricePosi">￥100</span>
+					</div>
+				</div>-->
+				<div onclick="order();" class="btnTijiao">
+					<div>提交订单</div> 
+				</div>
+				<div style="height:0.2rem;"></div>
+			</footer>
+	</body>
+	<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/food/index.js"></script>
+	<script src="../../script/food/iscroll2.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../script/food/date.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../script/food/datepeo.js" type="text/javascript" charset="utf-8"></script>
+	
+	<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$('.userName').focus(function(){
+			if($(this).val()=="请输入"){
+				$(this).val("");
+			}
+		});
+		$('.userName').blur(function(){
+			if($(this).val()==""){
+				$(this).val("请输入");
+			}
+		});
+		$('.getTime').date({theme:"datetime"});
+		$('.getPeo').datepeo();
+//		$(".list li .selectP").click(function(){
+//			$(this).css("background","none");
+//		})
+
+		function changeTime(){
+			var thatVal = $("#appoint_time").val();
+			if(thatVal ==''){
+				$('.span_time').html('请选择');
+			}else{
+				$('.span_time').html(thatVal);
+			}
+			
+		}
+
+		
+		var userinfo = "";
+		var goods_id = "";
+		var goods_num= "";
+		var goods_sid= "";
+		var food_type= "";
+		
+		var order_token = "";
+		apiready = function (){
+			
+			goods_id = api.pageParam.goods_id;
+			goods_num = api.pageParam.goods_num;
+			food_type = api.pageParam.food_type;
+			
+			goods_sid = api.pageParam.goods_sid;
+			userinfo = $api.getStorage('userinfo');
+			
+			//获取订单信息
+			getOrderInfo();
+			
+		};
+		
+		function getOrderInfo(){
+			_ajax(ajax_url + "Index/FoodOrder/getOrderInfo",{'token':userinfo.token,'uid':userinfo.uid,'goods_id':goods_id,'goods_num':goods_num,'food_type':food_type},'post',function(ret){
+				var strVar ="";
+				if(ret.status ==1){
+					$(ret.data).each(function(k,v){
+						strVar += "<li class=\"noHeight\" style='width: 100%;'>\n";
+					    strVar += "<div class=\"fl imgDiv\">\n";
+					    strVar += "	<img src=\""+v['pic_path']+"\" alt=\"\"/>\n";
+					    strVar += "<\/div>\n";
+					    strVar += "<div class=\"fl word\">\n";
+					    strVar += "	<p>\n";
+					    strVar += "		"+v['name']+"\n";
+					    strVar += "	<\/p>\n";
+					    strVar += "	<p>\n";
+					    strVar += "		<span class=\"shuliang\">x"+v['num']+"<\/span>\n";
+					    strVar += "		<span class=\"prise\">￥"+v['price']+"<\/span>\n";
+					    strVar += "	<\/p>\n";
+					    strVar += "<\/div>\n";
+					    strVar += "<\/li>\n";				
+					});
+					
+					$("#goodList").html(strVar);
+					
+					$(".total_price").html("￥"+ret.total);
+					order_token = ret.token;
+				}else{
+					_toast(ret.msg,function(){
+						api.closeToWin({
+	                        name: 'page1'
+                        });
+					})
+				}
+			});
+		}
+		
+		
+		var start=1;
+		function order(){
+			userinfo = $api.getStorage('userinfo');
+			
+			var name = $("#name").val();
+			var sex = $("input[name='sex']:checked").val();
+			
+			var number = $("#number").html();
+			var phone = $("#phone").val();
+			var note = $("#note").val();
+			var appoint_time = $("#appoint_time").val();
+			
+			if(number =='请选择'  ){
+				_toast('请选择人数');
+				return false;
+			}
+			var number = parseInt($("#number").html());
+			
+			if(appoint_time ==''){
+				_toast('请选择时间');
+				return false;
+			}
+			
+			
+			if(!name){
+				_toast('请输入姓名');
+				return false;
+			}
+			
+			if(!phone){
+				_toast('请输入手机号');
+				return false;
+			}else{
+				if(!_isPhone(phone)){
+					_toast('手机号不正确');
+				return false;
+				}
+			}
+			
+			if(start==2){
+				return;		
+			}else{
+				start=2;
+			}
+			_ajax(ajax_url + "Index/FoodOrder/foodOrder",{
+				'name':name,
+				'sex' :sex,
+				'number':number,
+				'appoint_time':appoint_time,
+				'phone':phone,
+				'note':note,
+				'token':userinfo.token,
+				'uid'  :userinfo.uid,
+				
+				'goods_id':goods_id,
+				'goods_num':goods_num,
+				'food_type':food_type,
+				'order_token':order_token
+			},'post',function(ret){
+				if(ret.status==1){
+					_toast(ret.msg,function(){
+						//刷新购物车
+						api.sendEvent({
+	                        name:'refresh_food_cartinfo'
+                        });
+                        api.sendEvent({
+		                    name:'getCartInfo'
+	                    });
+                        
+                        _openWinByUrl('pay_head','../order/pay_head',{'pay_notify_type':4,'order_sn':ret.data.order_sn})
+                        
+					});
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		$(function(){
+			//出现弹出层时禁止滑动
+			$("#number").click(function(){
+				$("html,body").css("overflow-y","hidden");
+			});
+//			$("#appoint_time").click(function(){
+//				$("html,body").css("overflow-y","hidden");
+//			})
+			$('#datePlugin').on('click','#datecancle',function(){
+				$("html,body").css("overflow-y","auto");
+			});
+			$('#datePlugin').on('click','#dateconfirm',function(){
+				$("html,body").css("overflow-y","auto");
+			})
+		})
+	</script>
+</html>

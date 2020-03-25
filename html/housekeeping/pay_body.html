@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+
+</head>
+<style>
+	.checkin_ifor{line-height:46px;}
+	.mm_box li.mmdd {
+    	
+    	background-size: 20%;
+    }
+</style>
+<body>
+
+<div class="wp_100">
+	<div class="hpay_order ">
+		<div class="hpay_ordertop">
+			<p class="hpay_ordertop01">订单号码：<i class="order_sn"></i></p>
+		<!--	<p class="hpay_ordertop01">优惠券：   -￥10.00</p>
+			<p class="hpay_ordertop01">订单总价：￥198.00</p>-->
+			<p class="hpay_ordertop01">还需支付：￥<i class="order_amount">0.00</i></p>
+		</div>
+	</div>
+	<div class="pinpai_intr mb15">
+		<div class="checkin_ifor">
+			<div class="checkin_iforl hpay_orderl">
+				<i class="order_cardicon"></i>余额支付
+				<span class="hpay_ordertuijian"></span>
+			</div>
+			<div class="checkin_iforr checkin_iforrpos">
+			<!-- <p style="color: #999;">您有10积分可用，可抵10元</p> -->
+				<span class="checkin_iforrpos01" style="">
+					<input id="pay04" type="radio" name="pay" value="4" class="duo_checkbox03" >
+				<label for="pay04"></label></span>
+			</div>
+		</div>
+		<div class="checkin_ifor">
+				<div class="checkin_iforl hpay_orderl">
+					<i class="order_zfbicon" style="background: none"><img src="../../images/user/app_123.png" ></i>支付宝支付
+					
+				</div>
+				<div class="checkin_iforr checkin_iforrpos">
+				<!-- <p style="color: #999;">您有10积分可用，可抵10元</p> -->
+					<span class="checkin_iforrpos01" style="">
+					<input id="pay02" type="radio" name="pay" value="1" class="duo_checkbox03" onclick="change();">
+						<label for="pay02"></label></span>
+				</div>
+		</div>
+		<div class="checkin_ifor">
+				<div class="checkin_iforl hpay_orderl">
+					<i class="order_wxicon"  style="background: none"><img src="../../images/user/app_124.png" ></i>微信支付
+					
+				</div>
+				<div class="checkin_iforr checkin_iforrpos">
+				<!-- <p style="color: #999;">您有10积分可用，可抵10元</p> -->
+					<span class="checkin_iforrpos01" style="">
+					<input id="pay03" type="radio" name="pay" value="2" class="duo_checkbox03" onclick="change();">
+						<label for="pay03"></label></span>
+				</div>
+		</div>
+		
+		
+	</div>
+</div>
+<div class="bqt_hallorderwrap">
+		<div class="bqt_hallorder">
+			<a href="javascript:void(0)" onclick="pay();" class="bot_btna bot_btnapay order_btnapay" style="border-radius: 5px;">确认支付</a>
+		</div>
+</div>
+<style>
+	.ftc_wzsf2{
+		display: none;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		z-index: 999;
+		top: 0;
+		left: 0;
+		background: #f8f8f8;
+	}
+	.srzfmm_box2{
+		position: absolute;
+		z-index: 10;
+		background: #f8f8f8;
+		top: 25px;
+		width: 100%;
+		text-align: center;
+
+	}
+	.cancel_btn{
+		position: absolute;
+		z-index: 10;
+		text-align: center;
+		width: 100%;
+		bottom: 50px;
+	}
+	.cancel_btn img{
+		width: 50px;
+		height: 50px;
+		z-index: 10;
+		background: #333;
+		border-radius: 50px;
+	}
+</style>
+<!--浮动层-->
+<div class="ftc_wzsf2">
+	<div class="srzfmm_box2">
+		<img class="pay_code" src="http://123.57.36.72:8103//Uploads//Qrcode//z201707300953302411.png" style="width:300px;height:300px; z-index: 10;" >
+	</div>
+	<div class="cancel_btn">
+		<img src="../../images/guanbi.png" >
+	</div>
+	
+</div>
+<div class="ftc_wzsf">
+  <div class="srzfmm_box">
+    <div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>
+    <div class="zfmmxx_shop">
+      <div class="mz ordername">商品</div>
+      <div class="wxzf_price order_amount">￥0.00</div>
+    </div>
+    
+    <ul class="mm_box">
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+    </ul>
+  </div>
+  <div class="numb_box">
+    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+    <ul class="nub_ggg">
+      <li><a href="javascript:void(0);">1</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+      <li><a href="javascript:void(0);">3</a></li>
+      <li><a href="javascript:void(0);">4</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+      <li><a href="javascript:void(0);">6</a></li>
+      <li><a href="javascript:void(0);">7</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+      <li><a href="javascript:void(0);">9</a></li>
+      <li><span></span></li>
+      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+    </ul>
+  </div>
+  <div class="hbbj"></div>
+</div>
+<input type="hidden" id="card_default_pwd" value="0"/>
+
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script>
+
+	$(".cancel_btn").click(function(){
+		$('.ftc_wzsf2').hide();
+		paySuccess();
+	});
+/**
+	 * 清除支付密码 
+	 */
+	function clearPayPwd(){
+		paypassword="";
+		$(".mm_box li").attr('pwd','');
+		$(".mm_box li").removeClass("mmdd");
+		
+		i1 = 0;
+		is_pay_status = 1;
+		
+		
+	}
+	var i1 = 0;
+	
+$(function(){
+	//出现浮动层
+	$(".ljzf_but").click(function(){
+		$(".ftc_wzsf").show();
+	});
+	//关闭浮动  清除支付密码
+	$(".close").click(function(){
+		$(".ftc_wzsf").hide();
+		i = 0;
+		
+		clearPayPwd();
+	});
+		//数字显示隐藏
+		$(".xiaq_tb").click(function(){
+		//$(".numb_box").slideUp(500);
+		});
+		$(".mm_box").click(function(){
+			//$(".numb_box").slideDown(500);
+		});
+		//----
+		var i = 0;
+		$(document).on('touchstart',".nub_ggg li", function(){
+			$(this).css('background','#e0e0e0');
+		});
+
+		$(document).on('touchend',".nub_ggg li a", function(){
+			$(this).css('background','#f5f5f5');
+		});
+		$(document).on('touchend',".nub_ggg li a", function(){
+		//$(".nub_ggg li a").change(function(){
+			i1++;
+			var pwd =$(this).parent("li").index()+1;
+			if(pwd ==11){
+				pwd =0 ;
+			}
+		
+			if(i1<6){
+				$(".mm_box li").eq(i1-1).addClass("mmdd");
+				$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+				}else{
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+					if(i1>6){
+						i1=6;
+					}
+					setTimeout(function(){
+						//验证支付密码 并支付
+						var paypassword="";
+						$(".mm_box li").each(function(){
+							paypassword+=$(this).attr('pwd');
+						});
+						moneyPay(paypassword);
+						
+					},10);
+					//window.document.location="cg.html"
+			 	} 
+		});
+ 		$(document).on('touchend',".nub_ggg li .del", function(){
+		//$(".nub_ggg li .del").click(function(){
+			if(i1>0){
+				i1--;
+				$(".mm_box li").eq(i1).removeClass("mmdd");
+				$(".mm_box li").eq(i1).attr("pwd","");
+				i1==0;
+				}
+			//alert(i);
+		}); 
+});
+
+	var userinfo ="";  //用户信息
+	var pay_id="";
+	
+	//初始化用户Id
+	var uid = localStorage.getItem("uid");
+
+	apiready = function(){
+		
+		userinfo = $api.getStorage('userinfo');
+		
+		order_sn = api.pageParam.order_sn;  //订单编号
+		
+		getOrderInfo(order_sn);
+
+
+		//更新下单平台
+		updateOrderMethod(order_sn , 'housekeeping' , 4);
+			
+	};
+	/*
+	 * 选择
+	 */
+	function change(){
+	
+	var pay_type = $("input[name='pay']:checked").val();
+		if(pay_type==3){
+			if(cart_num>1){
+			$(".payList").show();
+			}		
+		}else{
+		 $(".payList").hide();
+		}
+	}
+	
+	
+	//支付
+	function pay(){
+	
+		
+		
+		var pay_id = $("input[name='pay']:checked").val();
+		
+		if(typeof(pay_id) ==undefined  ||  pay_id ==''){
+			_toast('请选择支付方式');
+			return false;
+		}
+		
+		if(pay_id ==4){
+			$(".ftc_wzsf").show();
+		}
+		
+		if(pay_id ==1){
+			aliPay();
+		}
+		
+		if(pay_id ==2){
+			wxPay();
+		}
+	}
+	
+	
+	function paySuccess(){
+		api.sendEvent({
+	        name:'housekeepingorder'
+        });
+		_openWinByUrl('chakanjilu','chakanjilu');
+	}
+	
+	/**
+	 * 获取订单信息 
+	 */
+	function getOrderInfo(order_sn){
+		_ajax(ajax_url+"Index/Housekeeping/getOrderPayInfo",{'order_sn':order_sn},'post',function(ret){
+			$(".order_sn").html(ret.data.order_sn);
+			order_amount = ret.data.price;  //订单价格
+			paybody = ret.data.body;
+			$('.ordername').html('家政预约');
+			$(".order_amount").html(ret.data.price);
+		});
+	}
+	
+
+	function moneyPay(password){
+		_ajax(ajax_url+"Index/Housekeeping/moneyPay" ,{
+			'uid':uid,'order_sn':order_sn,'password':password
+		},'post',function(ret){
+            if(ret.status ==1){
+                paySuccess();
+            }else{
+            	_toast(ret.msg);
+            }
+        });
+	}
+		
+		
+	function wxPay(){
+		_ajax(ajax_url+"Index/Housekeeping/wxPay" ,{
+			'uid':uid,'order_sn':order_sn
+		},'post',function(ret){
+            if(ret.status ==1){
+                pay_code = ret.pay_code;  //支付二维码
+				$(".pay_code").attr('src',pay_code);
+				$(".ftc_wzsf2").show();
+            }else{
+            	_toast(ret.msg);
+            }
+        });
+	}
+	
+	
+	function aliPay(){
+		_ajax(ajax_url+"Index/Housekeeping/aliPay" ,{
+			'uid':uid,'order_sn':order_sn
+		},'post',function(ret){
+            if(ret.status ==1){
+                pay_code = ret.pay_code;  //支付二维码
+				$(".pay_code").attr('src',pay_code);
+				$(".ftc_wzsf2").show();
+            }else{
+            	_toast(ret.msg);
+            }
+        });
+	}
+</script>
+</body>
+</html>

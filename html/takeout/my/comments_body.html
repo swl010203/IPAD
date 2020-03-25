@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>评价</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    </head>
+
+    <body>
+        <div class="whiteValuation_div mt_20">
+            <div class="expression_div clearfloat bgWhite">
+                <div class="fl top_mark" data-satisfaction="1">
+                    <p style="color: #ff9000;" class="expression_div_p">很好</p>
+                    <div class="expression_div_img expression_div_img_noClick0 expression_div_img_yesClick0"></div>
+                </div>
+                <div class="fl" data-satisfaction="2">
+                    <p class="expression_div_p">满意</p>
+                    <div class="expression_div_img expression_div_img_noClick1"></div>
+                </div>
+                <div class="fl" data-satisfaction="3">
+                    <p class="expression_div_p">非常满意</p>
+                    <div class="expression_div_img expression_div_img_noClick2"></div>
+                </div>
+                <div class="fl" data-satisfaction="4">
+                    <p class="expression_div_p">不满意</p>
+                    <div class="expression_div_img expression_div_img_noClick3"></div>
+                </div>
+            </div>
+            <div class="textarea_div pl_20 pr_20 box-s pt_10">
+                <textarea name="" rows="" cols="" id="content" placeholder="你觉得我们的服务怎么样？（写购15字才是好同志）"></textarea>
+            </div>
+            <div class="phote_div clearfloat">
+                <ul id="img">
+                    <li class="phote_div_img" onclick="picker();"><img src="../../../images/takeout/1901.jpg" alt="" /></li>
+                </ul>
+                <input type="hidden" id="pic" value="" />
+                <p class="position_p">3张图片就有机会赢取<span class="red">100</span>积分哦</p>
+            </div>
+            <div class="mt_20 pl_20 pr_20 box-s xing_divClick">
+                <div class="clearfloat logistics_star">
+                    <span class="fl">物流服务</span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                </div>
+                <div class="clearfloat goods_star">
+                    <span class="fl">商品质量</span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                    <span class="icon_xingnoClick fl"></span>
+                </div>
+            </div>
+            <div class="textarea_div pl_20 pr_20 box-s pt_10">
+                <textarea name="" rows="" cols="" id="rider_content" placeholder="您对骑手小哥的服务态度有何评价？"></textarea>
+            </div>
+            <div class="exceptional_div pl_20 pr_20 box-s bgWhite clearfloat">
+                <span class="fl">打赏小哥</span>
+                <span class="btn_whiteSpan btn_span fl">5元</span>
+                <span class="btn_whiteSpan fl">10元</span>
+                <input class="inp_exceptional" type="text" name="" id="" value="" placeholder="输入金额"/> 元
+            </div>
+            <div class="niming_div pl_20 pr_20 box-s mt_20" >
+                <i class="fl outer_icon_select icon_selectN icon_selectY" id="anonymous"></i>
+                <span class="niming_span">&nbsp;匿名</span>
+                <span class="fr">您的评价可以帮助到小伙伴哦</span>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //评分满意度效果
+            $(".expression_div>div").click(function(){
+                var index_ = $(this).index();
+                for (var i = 0;i<$(".expression_div>div").length;i++) {
+                    $(".expression_div>div").find("div.expression_div_img").removeClass("expression_div_img_yesClick"+i);
+                }
+                $(this).find("div.expression_div_img").addClass("expression_div_img_yesClick"+index_);
+                $(this).find(".expression_div_p").css("color","#ff9000").parent(".expression_div>div").siblings().find(".expression_div_p").css("color","#666666");
+                $(this).addClass( 'top_mark' ).siblings().removeClass( 'top_mark' );
+            });
+            //评分五角星效果
+            $(".xing_divClick>div span.icon_xingnoClick").click(function(){
+                var index_ = $(this).index();
+                var indexP_ = $(this).parent().index()+1;
+                for(i = 1; i<$(".xing_divClick>div span.icon_xingnoClick").length;i++){
+                    if(i<=index_){
+                        if(i == index_ && this.classList.contains("icon_xing")){
+                            $(this).removeClass("icon_xing");
+                        }else{
+                            $(".xing_divClick>div:nth-child("+(indexP_)+") span").eq(i).addClass("icon_xing");
+                        }
+                    }else{
+                        $(".xing_divClick>div:nth-child("+(indexP_)+") span").eq(i).removeClass("icon_xing");
+                    }
+                }
+                
+            });
+            //打赏点击效果
+            $(".exceptional_div span.btn_whiteSpan").click(function(){
+                $(this).addClass("btn_span").siblings().removeClass("btn_span");
+            });
+            //是否勾选匿名评价
+            var flag = true;
+            $(".niming_div>i,.niming_div span.niming_span").click(function(){
+                if(flag){
+                    if(this.classList.contains("icon_selectN")){
+                        $(this).removeClass("icon_selectY");
+                    }else{
+                        $(this).prev("i").removeClass("icon_selectY");
+                    }
+                    flag = false;
+                }else{
+                    if(this.classList.contains("icon_selectN")){
+                        $(this).addClass("icon_selectY");
+                    }else{
+                        $(this).prev("i").addClass("icon_selectY");
+                    }
+                    flag = true;
+                }
+            })
+        })
+    </script>
+    <script>
+    var uid = localStorage.getItem( "uid" );
+    var oid = 0;
+    apiready = function() {
+        uid  = localStorage.getItem( "uid" );
+        oid  = api.pageParam.oid;
+    };
+    //写评论
+    function submit(){
+        var satisfaction = $('.top_mark').attr( 'data-satisfaction' );
+        var pic = $('#pic').val();
+        var content = $.trim( $('#content').val() );
+        var rider_content = $.trim( $('#rider_content').val() );
+        var logistics_star = $('.logistics_star').find('.icon_xing').length;
+        var goods_star = $('.goods_star').find('.icon_xing').length;
+        var anonymous = 1;
+        if( $('#anonymous').hasClass( 'icon_selectY' ) ) {
+            anonymous = 2;
+        }
+        if( content == '' || typeof content == 'undefined' ) {
+            _toast('请填写评价内容！');return;
+        }
+        if( logistics_star == 0 ) {
+            _toast('请评星物流服务！');return;
+        }
+        if( goods_star == 0 ) {
+            _toast('请评星商品质量！');return;
+        }
+        var data = {uid:uid,
+            oid:oid,
+            pic:pic,
+            content       :content,
+            rider_content :rider_content,
+            logistics_star:logistics_star,
+            goods_star    :goods_star,
+            satisfaction  :satisfaction,
+            anonymous     :anonymous,
+        };
+        _ajax(ajax_url+"Index/TakeoutComments/writeComments" ,data,'post',function(ret) {
+            if(ret.status ==1){
+                //评价成功发送监听
+                api.sendEvent({
+                    name: 'comments_body_over',
+                    extra: {
+                        result: true,
+                    }
+                });
+                _toast(ret.msg, function() {
+                    api.closeWin();
+                });
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //上传图片
+    function picker(){
+        api.confirm({ 
+                title: "请选择方式",
+                msg: "", 
+                buttons:[ "相机", "相册"]
+        },function(ret,err){
+            if(ret.buttonIndex==1){
+                var sourceType='camera';
+            }else{
+                var sourceType='album';
+            }
+
+            api.getPicture({
+                sourceType: sourceType,
+                targetWidth:200,
+                targetHeight:200,
+            },function(ret, err){
+                if(ret){          
+                    if(ret.data !=''){
+                        api.ajax({
+                            url: ajax_url+'Index/File/uploadPicture',
+                            dataType: "json",
+                            method: 'post',
+                                 data: {
+                              files:{photo:ret.data}
+                             }
+                        },function(res, err){
+                            if(res){
+                                if(res.code==1){
+                                    var html='';
+                                    html+='<li class="phote_div_img">';
+                                    html+='<img src="'+ret.data+'" alt="" style="width:100%;height:100%;" />';
+                                    html+='</li>';
+                                            
+                                    $("#img").prepend(html);
+                                    
+                                    if($("#pic").val()){
+                                        var pic=$("#pic").val();
+                                        var str=pic+','+res.data.photo['id'];
+                                        $("#pic").val(str);
+                                    }else{
+                                        $("#pic").val(res.data.photo['id']);
+                                    }
+                                }else{
+                                    api.toast({
+                                        msg: res.msg,
+                                        duration:2000
+                                    });
+                                }
+        
+                            }
+                        })
+                    }
+                }
+            });
+        });
+
+    }
+    </script>
+</html>

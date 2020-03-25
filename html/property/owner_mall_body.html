@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+
+		<link rel="stylesheet" type="text/css" href="../../css/food/home.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/swiper.min.css"/>
+		
+		 
+		<style>
+			.talk{font-size:0.2rem;}
+			.imgYy,.imgY{width:100%;height:100%;margin-top:0px;}
+			.imgYy img ,.imgY img{
+				width: 100%;
+				height: 100%;
+			}
+			.tishidian{
+				position: absolute;
+				top: 0.05rem;
+				right: 20px;
+				display: inline-block;
+			}
+			.goodslist:nth-child(3n+1){
+				border-right:none;
+			}
+			li.zhuTit{
+				border-bottom:1px solid #e0e0e0;
+				height:60px;
+				line-height:60px;
+				font-size:20px;
+			}
+			.divR a{
+				font-size:20px;
+			}
+/*			.list li{
+				border-bottom:1px solid #e0e0e0;
+			}*/
+			.frameheight{
+				position:fixed;
+				top: 0;
+				z-index:100;
+				width:100%;
+			}
+			.bx-wrapper{
+				/*margin-top:94px;*/
+				margin-top: 1.98rem;
+			}
+			.swiper-container1{
+				height:0.8rem;
+				overflow: hidden;
+			}
+			.frameheight .header a{
+				width:2.05rem;height:1.08rem;
+			}
+			.list li{
+				width:27%;
+			}
+			.list li.zhuTit{
+				width:100%;
+			}
+			.list li.border-r{
+				width:27%;
+			}
+			.divL{
+				width:100%;
+			}
+			.divR a{
+				width:100%;
+			}
+			li.zhuTit{
+				line-height:50px;
+			}
+		</style>
+	</head>
+	<body>
+	
+	    
+		<div class="header adv">
+
+			
+			<div class="swiper-container ">
+				<div class="swiper-wrapper advlist">
+					  <!--<div class="swiper-slide">
+					 						<img src="http://123.57.36.72:8094/Uploads/Picture/Picture/2017-01-20/710_280_588172a759a49.jpg" />
+					 	</div>-->
+					 			<!--		<div class="swiper-slide">
+					 						<img src="http://123.57.36.72:8094/Uploads/Picture/Picture/2017-01-20/710_280_588172a759a49.jpg" />
+					 					</div>
+					 					<div class="swiper-slide">
+					 						<img src="http://123.57.36.72:8094/Uploads/Picture/Picture/2017-01-20/710_280_588172a759a49.jpg" />
+					 					</div> -->
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+			
+		</div>
+
+		
+		
+		
+		<div class="module">
+			
+
+			
+			
+
+		</div>
+		
+
+
+	</body>
+	<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/food/index.js"></script>
+	<script src="../../script/food/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../../script/food/home.js" type="text/javascript" charset="utf-8"></script>
+
+	
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+	
+		
+		
+		var winWidth = 0;
+		var imgheight = 0;
+
+		var banner_is_frist = true;  //是否首次加载
+		apiready = function() {
+			api.setStatusBarStyle({
+			    style: 'light'
+			});
+		
+			winWidth = api.winWidth;
+			imgheight = winWidth * 0.44;
+			
+
+			//加载首页广告位
+			getOwnerAdv();
+			
+			
+			getIndexModule();
+		};
+		
+		function getOwnerAdv(){
+			_ajax(ajax_url+"Index/Owner/getActivity" ,{},'post',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					//$(ret.data).each(function(k,v){
+						strVar += "<div class=\"swiper-slide\"><img onclick=\"advlink()\" src=\""+ret.data+"\"/><\/div>\n";
+					//})
+				}
+				$(".advlist").html(strVar);
+//				 var swiper = new Swiper('.swiper-container', {
+//			        pagination: '.swiper-pagination',
+//			        paginationClickable: true,
+//			        autoplay: 2500,
+//			        loop:true
+//			    });
+			});
+		}
+		
+		/**
+	 * 获取首页模块信息 
+	 */
+	function getIndexModule(){
+	
+		_ajax(ajax_url+"Index/Owner/ownerGoods" ,{},'get',function(ret){
+			if(ret.status ==1){
+					var strVar = "";
+					$.each(ret.data,function(k,v){
+						
+							//判断当前模块下是否有商品
+							if(v['goods'].length >0){
+								
+
+							    strVar += "<ul class=\"firstul list mt_20 pl_10 pr_10 box-s clearfloat border-b sizeCo\">\n";
+							    strVar += "	<li  class=\"zhuTit clearfloat\">\n";
+							    strVar += "	<span class=\"fl\">"+v['name']+"<\/span>\n";
+							    strVar += "	<span class=\"fr\"><a onclick=\"openGoodsList("+v['id']+")\" href=\"javascript:;\">更多<\/a><\/span>\n";
+							    strVar += "	<\/li>\n";
+
+							    var len = v['goods'].length;
+								
+							    //循环商品
+							    $.each(v['goods'],function(key,val){
+							    	if(len>3&& (key==0  || key ==1 || key ==2)){
+										strVar += "	<li  onclick=\"openGoodsDetail("+val['goods_id']+","+val['channel_id']+")\" class=\" goodslist fl border-r bor_b\">\n";
+									}else{
+										strVar += "	<li  onclick=\"openGoodsDetail("+val['goods_id']+","+val['channel_id']+")\" class=\" goodslist fl border-r isBorder\">\n";
+									}
+								    strVar += "	<div class=\"divL mt_10\">\n";
+								    strVar += "		<img src=\""+val['goods_img']+"\" style=''  />\n";
+								    strVar += "	<\/div>\n";
+								    strVar += "	<p class=\"divM huanhang\">\n";
+								    strVar += val['goods_name'];
+								    strVar += "	<\/p>\n";
+								    strVar += "	<div class=\"divR\">\n";
+								    strVar += "		<a style='font-size:20px;' calss='icon-jifen huanhang'><i>￥"+ val['shop_price']+"<\/i><\/a>\n";
+
+								    strVar += "	<\/div>\n";
+								    strVar += "	<\/li>\n";
+
+							    });
+							    console.log(strVar);
+							    strVar += "<\/ul>\n";
+
+							}
+						
+					});
+				    
+				  
+				    $(".module").html(strVar);
+//					console.log($(".module").html())
+			}else{
+			
+			}
+		});
+	
+
+
+	}
+		
+		
+		
+	
+	
+	
+	//频道信息
+var channel = [];
+	channel[1] = 'mall';
+	channel[2] = 'super';
+	channel[3] = 'mall';
+	channel[4] = 'food';
+	channel[5] = 'house';
+
+
+/**
+ * 跳转对应商品详情 
+ * @param goods_id  商品id
+ * @param type_id   频道Id   对应表示在  变量 channel中
+ */
+function openGoodsDetail(goods_id ,type_id){
+	var flag = channel[type_id];
+	_openWinByUrl(flag+"_goodsdetail","../"+flag+"/"+flag+"_goodsdetail",{'goods_id':goods_id})
+}
+
+
+
+//频道信息
+var channel_shop = [];
+	channel_shop[1] = 'mall';
+	channel_shop[2] = 'super';
+	channel_shop[3] = 'hotel';
+	channel_shop[4] = 'food';
+	channel_shop[5] = 'house';
+	channel_shop[6] = 'laundry';
+/**
+ * 跳转对应商品详情 
+ * @param sid  店铺id
+ * @param channel   频道Id   对应表示在  变量 channel_shop
+ */
+function openShopDetail(sid ,channel_id){
+	var flag = channel_shop[channel_id];
+	
+	if(channel_id ==1){
+		_openWinByUrl(flag,flag+"/"+flag+"_shop",{'id':sid})
+	}else{
+		_openWinByUrl(flag,flag+"/"+flag,{'id':sid})
+	}
+	
+}
+	
+/**
+ * 跳转对应商品列表 
+ */	
+function openGoodsList(type_id){
+	
+	_openWinByUrl("mall_goods_list","mall_goods_list",{'type_id':type_id})
+	
+}
+
+function gonggaoinfo(id){
+	_openWinByUrl('gonggaoinfo_window_head','window_head',{'frame':'gonggaoinfo','furl':'food/gonggaoinfo','id':id,'title':'公告详情'});
+}
+
+
+
+
+//跳转链接
+	function advlink(type,ids){
+	
+		if(type=='food'){
+			_openWinByUrl('food','./food/food',{'sid':ids});return;
+		}
+		if(type=='mall'){
+			_openWinByUrl('mall_shop','./mall/mall_shop',{'id':ids});return;
+		}
+		if(type=='super'){
+			_openWinByUrl('super','./super/super',{'sid':ids});return;
+		}
+		if(type=='hotel'){
+			_openWinByUrl('hotel','./hotel/hotel',{'sid':ids});return;
+		}
+		if(type=='house'){
+			_openWinByUrl('house','./house/house',{'sid':ids});return;
+		}
+		if(type=='laundry'){
+			_openWinByUrl('laundry','./laundry/laundry',{'sid':ids});return;
+		}
+		if(type=='foodpackage'){
+			_openWinByUrl('packag_detail_body','./food/packag_detail_body',{'id':ids});return;
+		}
+		if(type=='mallgoods'){
+			_openWinByUrl('mall_goodsdetail','./mall/mall_goodsdetail',{'goods_id':ids});return;
+		}
+		if(type=='supergoods'){
+			_openWinByUrl('super_goodsdetail','./super/super_goodsdetail',{'goods_id':ids});
+		}
+	}
+	
+	//扫一扫
+	function shaoyishao(){
+		userinfo  =$api.getStorage('userinfo');
+		if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+			_openWinByUrl('login','login');
+			return false;
+		}
+		var scanner = api.require('scanner');
+		scanner.open(
+		{
+		    size: 200            //（可选项）生成的图片(正方形)的边长，数字，默认200
+		},
+		function(ret, err) {
+		    if (ret.eventType=='success') {
+		    	//alert(ret.msg);return;
+		    	var arr=[];
+		    	arr=ret.msg.split(",");
+		    	var arrsid=[];
+		    	var arrid=[];
+		    	var arrchannel=[];
+
+	    		arrsid=arr[0].split(":");
+	    		if(arr[1]){
+	    			arrid=arr[1].split(":");
+	    		}
+	    		if(arr[2]){
+	    			arrchannel=arr[2].split(":");
+		    	}
+		    	
+		    	
+		    	if(arrsid[0]=='shop' && !arrchannel[0]){
+		    		_ajax(ajax_url+"Index/Pay/getshopname",{'sid':arrsid[1]},'post',function(ret){
+						if(ret.status==1){
+							_openWinByUrl('scan_payment','./order/scan_payment',{'type':'shop','sid':arr[1]});return;
+
+						}else{
+							_toast('商家不存在！');
+
+						}
+					});		
+		    	}else{
+		    		_ajax(ajax_url+"Index/Pay/checkorder",{'id':arrid[1],'channel':arrchannel[1]},'post',function(ret){
+						if(ret.status==1){
+							_openWinByUrl('scan_payment_pay','./order/scan_payment_pay',{'id':arrid[1],'channel':arrchannel[1]});
+						}else{
+							_toast(ret.msg);
+
+						}
+					});
+		    		
+		    		
+		    	}
+
+		    } else if(ret.eventType=='fail'){
+		        _toast('没有获取到信息！');
+		    }
+		});	
+	}
+	
+	
+	function busqrcode(){
+		userinfo  =$api.getStorage('userinfo');
+		//判断是否登陆
+		if(userinfo  =='undefined' ||  userinfo =='' || userinfo ==null){
+			_openWinByUrl('login','login');
+			return false;
+		}
+		
+		if(cardTotalMoney < 10){
+			_toast('惠通卡余额不足');return;
+		}
+		
+		_openWinByUrl('busqrcode_window_head','window_head',{'furl':'card/busqrcode','frame':'busqrcode','title':'公交卡','cardno':cardno});
+	}
+
+
+	</script>
+</html>

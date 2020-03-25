@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>快递查询</title>
+		<link rel="stylesheet" type="text/css" href="../../css/property/style.css"/>
+
+		<link rel="stylesheet" type="text/css" href="../../css/property/allStyle.css"/>
+	</head>
+	<body>
+		
+		<ul class="mt_20 videoView videoView_1">
+			<li class="careCenterLi" style="overflow: hidden;">
+				<div class="titDiv_xian"><i class="xian"></i>快递查询</div>
+				<input class="expressInp" type="text" name="express_sn" id="express_sn" value="" placeholder="请输入运单编号"/>
+			</li>
+		</ul>
+		<div class="btnBig" onclick="express();">立即查询</div>
+	</body>
+	<script type="text/javascript" src="../../script/property/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/property/index.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	
+	<script>
+		/**
+		 * 物流查询 
+		 */
+		function express(){
+			var logistics_sn = $("#express_sn").val();
+			if(logistics_sn ==''){
+				_toast('请输入物流单号');
+				return false;
+			}else{
+				_openWinByUrl('expressResult','expressResult',{'logistics_sn':logistics_sn});
+			}
+		}
+	</script>
+</html>

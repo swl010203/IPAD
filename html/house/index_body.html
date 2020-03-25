@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+        <title>华海地产</title>
+        <link rel="stylesheet" href="../../script/house/css/style.css" />
+        <link rel="stylesheet" href="../../script/house/css/index.css" /> 
+        <script src="../../script/jquery_2_1_4.js"></script>
+        <script src="../../script/house/js/common.js"></script>
+        <script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+		<style>
+			.main{margin-bottom:0;}
+			.main .cont-box .assort{margin-bottom:56px;}
+			.main .community{padding-bottom:0;}
+		</style>
+		
+	</head>
+	<body>
+		<div class="w_100bfb clearfloat house">
+			<div class="video">
+				<video src="" style="width: 100%;height:1.6rem;" poster="img/video.jpg" controls="controls" preload="preload" id="video">
+					您的浏览器不支持 video 标签。
+				</video>
+			</div>
+    	</div>
+		<div class="w_100bfb clearfloat main">
+			<div class="tab">
+				<ul class="active btn">
+					<a href="javascript:" class="line">楼盘信息</a>
+					<span></span>
+				</ul>
+				<ul class="btn"><a id="openWisdom" href="javascript:">智慧社区</a></ul>
+			</div>
+			<div class="box">
+			<div class="cont-box">
+				<div class="content">
+					<div class="top" id="name"></div>
+					<div class="inform">
+						<ul class="open">
+							<span class="fl build"></span>
+							<p id="openTime">开盘：</p>
+							<span class="fr sell" id="sale_status"></span>
+						</ul>
+						<ul class="open" id="price_ul" style="display:none;">
+							<span class="fl build"></span>
+							<p id="sale_price"></p>
+							<!-- <span class="fr sell" id="sale_price"></span> -->
+						</ul>
+						<ul class="address">
+							<span class="fl add"></span>
+							<p class="fl" id="address">地址：</p>
+						</ul>
+					</div>
+					<div class="specialty" id="tag">
+						
+						
+					</div>
+				</div>
+				
+				<ul class="bg"></ul>
+				<div class="assort" id="peitao">
+					<div class="title">
+						<ul>配套设施</ul>
+						<span></span>
+					</div>
+					<div class="map"  style="width:100%;height:2rem;">
+						<img id="map" src="" alt="地图" />
+					</div>
+				</div>
+				<div class="line2"></div>
+				<div class="edu">
+					<a href="javascripe:;" id="nearA">
+						<ul class="zi fl" id="near"></ul>
+						<ul class="big fr"><img src="../../images/washing/price-arr.png" alt="" /></ul>
+					</a>
+				</div>
+				<ul class="bg"></ul>
+				<div class="intro" id="plan">
+							
+				</div>
+				<ul class="bg"></ul>
+				<div class="assort">
+					<div class="title">
+						<ul>业务专属服务</ul>
+						<span></span>
+					</div>
+					<input type="hidden" id="house_id" value="0" />
+					<div class="box">
+						<ul><a href="javascript:" class="service_click" data-type="life"><img src="../../script/house/img/life.png"/></a></ul>
+						<ul><a href="javascript:" class="service_click" data-type="video" id="video_href"><img src="../../script/house/img/movie.png"/></a></ul>
+						<ul><a href="javascript:" class="service_click" data-type="party"><img src="../../script/house/img/juhui.png"/></a></ul>
+						<ul><a href="javascript:" class="service_click" data-type="live" id="live_href"><img src="../../script/house/img/zhibo.png"/></a></ul>
+					</div>
+				</div>
+				<div class="btn-box">
+					<ul><a id="openAppointment" href="javascript:" style="line-height: 52px;">预约看房</a></ul>
+					<ul><a id="openPhone" href="javascript:" style="line-height: 52px;">我要咨询</a></ul>
+				</div>
+			</div>
+			<div class="community"  style="display: none;">
+				<div class="intro" id="wisdom">
+					
+				</div>
+			</div>
+			</div>
+		</div>
+		
+		<style>
+		.mark{
+		  width:100%;
+		  height:100%;
+		  position: absolute;
+		  top:0;
+		  left:0;
+		  background: rgba(0,0,0,0.8);
+		}
+		.video_div{
+		  height:240px;
+		  width:100%;
+		  position: absolute;
+		  top:50%;
+		  margin-top:-120px;
+		}
+		.close{
+		  width:40px;
+		  height:40px;
+		  color:white;
+		  font-size: 40px;
+		  position: absolute;
+		  right:10px;
+		  top:10px;
+		  text-align:center;
+		  line-height: 40px;
+		  cursor:pointer;
+		}
+		</style>
+		<div class="mark" style="display: none;" id="video_mark">
+		  <div class="video_div" id="video_iframe">
+
+		  </div>
+		</div>
+	</body>
+</html>
+<script>
+	$(".tab .btn").on("click",function(){
+		var thisIndex = $(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$(".box>div").css("display","none");
+		$(".box>div").eq(thisIndex).css("display","block");		
+	});
+	var sid='';
+	var type_tab = '';
+	apiready = function(){
+	
+	    type_tab = api.pageParam.type_tab;//跳转区分
+		//加载房产首页
+		sid=api.pageParam.sid;
+		//加载状态
+		loading('index_body');
+		houseInfo();				
+	}
+</script>
+<!--<script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&ak=LhUmzgoEWQGV6sz57ZivXSFE&services=&t=20170511202040"></script>-->
+<script>
+	//加载房产信息
+	function houseInfo(){
+		
+		_ajax(ajax_url+"Index/House/index",{id:sid},'post',function(ret){
+			//关闭加载状态			
+			if(ret.status==1){
+			    $('#house_id').val( ret.data.id );
+			    $('#live_href').attr( 'data-href', ret.data.live );
+			    $('#video_href').attr( 'data-video', ret.data.video_href );
+				//预约
+				var url="javascript:openAppointment("+ret.data.id+");";
+				$('#openAppointment').attr('href',url);
+				//咨询
+				var url="alert("+ret.data.phone+")";
+				$('#openPhone').attr('onclick',url);
+				
+				//智慧社区
+				var url="javascript:wisdom("+ret.data.id+");";
+				$('#openWisdom').attr('href',url);
+				
+				
+				//视频
+				$('#video').attr('src',ret.data.video);
+				$('#video').attr('poster',ret.data.video);
+				
+				//楼盘名称
+				$('#name').html(ret.data.name);
+				
+				//开盘时间
+				$('#openTime').html('开盘：'+ret.data.open_time);
+				
+				//地图
+				var mapdesc="_openWinByUrl('map','map',{'id':"+sid+"});";
+				$('#map').attr('onclick',mapdesc);
+				
+				//楼盘地址
+				$('#address').html('地址：'+ret.data.address);
+				
+				//销售状态
+				if(ret.data.sale_status==1){
+					$('#sale_status').attr('style','background:rgba(0, 0, 0, 0) url("../../script/house/img/daishou.png") no-repeat scroll 0 0 / 0.35rem 0.14rem')
+				}
+				if(ret.data.sale_status==2){
+					$('#sale_status').attr('style','background:rgba(0, 0, 0, 0) url("../../script/house/img/zaishou.png") no-repeat scroll 0 0 / 0.35rem 0.14rem')
+				}
+				if(ret.data.sale_status==3){
+					$('#sale_status').attr('style','background:rgba(0, 0, 0, 0) url("../../script/house/img/shouwan.png") no-repeat scroll 0 0 / 0.35rem 0.14rem')
+				}
+				
+				//物业二手房
+				$("#sale_price").html('价格：'+ret.data.price);
+				if( type_tab == 'property' ) {
+				    $('#price_ul').show();
+				} else {
+				    $('#price_ul').hide();
+				}
+				
+				//标签
+				var html='';
+				for(var i in ret.data.tag){
+					html+='<ul><span></span><p>'+ret.data.tag[i]+'</p></ul>';
+				}
+				$('#tag').html(html);
+				
+				//周边链接
+				var url='javascript:openNear('+ret.data.id+');';
+				$('#nearA').attr('href',url);
+				//周边
+				$('#near').html(ret.data.near);
+				
+				//规划
+				var html='';
+				for(var j in ret.data.plan){
+					html+='<div class="area"><ul class="words fl">';
+					html+='<h1>'+ret.data.plan[j].name+'：</h1>';
+					html+='<p onclick="openPlanDesc('+ret.data.plan[j].id+');">'+ret.data.plan[j].info+'<span><a style="color:#d12a18;">查看详情</a></span></p>';
+					html+='</ul><ul class="fr pic">'; 
+					html+='<a href="javascript:openPlanDesc('+ret.data.plan[j].id+');"><img src="'+ret.data.plan[j].img+'"></a>';
+					html+='</ul></div>';			
+				}
+				$('#plan').html(html);
+				
+				//地图
+				var adds=[];
+				var mapstyle=[];
+				for (var l in ret.data.map_info) {
+                    adds[l]=ret.data.map_info[l].x+","+ret.data.map_info[l].y;                      
+                	mapstyle[l]="s,,orange";
+                }
+                var mapadds=adds.join("|");
+                mapadds=mapadds.replace(',|','');               
+                var mapstyles=mapstyle.join("|");
+				var urlmap="http://api.map.baidu.com/staticimage?width=400&height=300&center="+ret.data.x+","+ret.data.y+"&zoom=12&markers="+ret.data.x+","+ret.data.y+"|"+mapadds+"&markerStyles=s,0,red|"+mapstyles;
+				$('#map').attr('src',urlmap);				
+			}
+			closeloading();			    
+		});
+	}
+	
+	//智慧社区
+	function wisdom(id){
+		
+		_ajax(ajax_url+"Index/House/wisdom",{id:id},'post',function(ret){
+			//关闭加载状态
+			closeloading();
+			if(ret.status==1){				
+				var html="";
+				for(var i in ret.data){
+					html+='<div class="whiteDiv"><div class="area"><ul class="words fl">';
+					html+='<h1>'+ret.data[i].name+'：</h1>';
+					html+='<p onclick="getwisdomdesc('+ret.data[i].id+');">'+ret.data[i].desc+'<span><a style="color:#d12a18;" >查看详情</a></span></p>';
+					html+='</ul><ul class="fr pic">';
+					var piclist=ret.data[i].pic_list;
+					
+					html+='<a href="javascript:photoBrowser1(\''+piclist+'\');"><img src="'+ret.data[i].pic_first+'"></a>';
+					html+='</ul></div></div>';
+				}
+				$('#wisdom').html(html);
+			}
+		});
+	}
+	
+	//打开图片浏览器
+	function photoBrowser1(data){
+		var pic_list=data.split(",");
+		photoBrowser(pic_list);
+	}
+	
+	//打开规划详情
+	function openPlan(id){
+		_openWinByUrl('plan','plan',{id:id});
+	}
+	
+	//规划介绍
+	function openPlanDesc(id){
+		_openWinByUrl('plandesc','plandesc',{id:id});
+	}
+	
+	//社区介绍
+	function getwisdomdesc(id){
+		_openWinByUrl('wisdomdesc','wisdomdesc',{id:id});
+	}
+	
+	//打开周边两边
+	function openNear(id){
+		_openWinByUrl('near','near',{id:id});
+	}
+	
+	//预约看房
+	function openAppointment(id){
+		var uid=localStorage.getItem("uid");
+		if(uid){
+			_openWinByUrl('appointment','appointment',{hid:id});
+		}else{
+			_toast('您尚未登录！');
+		}
+	}
+	
+	$(document).on('click', '.service_click', function() {
+	   var type = $(this).attr( 'data-type' );
+	   var hid  = $('#house_id').val();
+	   if( type == 'video' ) {
+	       var video = $(this).attr( 'data-video' );
+	       _openWinByUrl('video','video',{video:video});return false;
+	   } else if( type == 'live' ) {
+	       var data_href = $(this).attr( 'data-href' );
+	       _openWinByUrl('live','live',{data_href:data_href});return false;
+	   }
+	   _openWinByUrl('life','life',{id:hid, type:type});
+	});
+	/*
+	function video(hid, type) {
+        _ajax(ajax_url+"Index/House/getService",{id:hid, type:type},'post',function(ret){
+            if(ret.status==1){
+                var scroTop = document.documentElement.scrollTop||document.body.scrollTop;
+                var html = "";
+                html += "<div class=\"mark\" id=\"video_mark\"><div class=\"close\">X</div>";
+                html += "<div class=\"video_div\" id=\"video_iframe\">";
+                //html += "<iframe width=\"100%\" height=\"100%\" src='http://player.youku.com/embed/XMjg2NTAzNDI5Ng==' frameborder=0 'allowfullscreen'></iframe>";
+                html += ret.data.content;
+                html += "</div>";
+                html += "</div>";
+                $("body").append( html );
+                $('.mark').css({"top":scroTop});
+                $('.mark').find('iframe').css({"height":'100%', "width":'100%'});
+                document.body.addEventListener('touchmove', bodyScrool, true);
+            }
+            
+        });
+	}
+	
+	function bodyScrool( event ) {
+	   event.preventDefault();
+	}
+	
+	$(document).on('click', '.close', function() {
+	   $('.mark').remove();
+       document.body.removeEventListener('touchmove', bodyScrool, true);
+	});
+	*/
+</script>

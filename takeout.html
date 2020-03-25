@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css"/>
+    <!--<link rel="stylesheet" type="text/css" href="css/takeout/style.css" />-->
+    <link rel="stylesheet" type="text/css" href="css/takeout/takeOutCommon.css" />
+
+
+    <script type="text/javascript" src="script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="script/takeout/index.js"></script>
+    <script type="text/javascript" src="script/app.js"></script>
+    <script type="text/javascript" src="script/SHA1.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        header.takeOutHeader .word {
+		    color: #d12a18;
+		    position: absolute;
+		    left: 50%;
+		    width: 840px;
+		    margin-left: -420px;
+		    text-align: center;
+		    line-height: 40px;
+		}
+		header .bianji{
+			font-size: 20px;
+			margin-top:0px;
+		}
+    </style>
+    
+</head>
+<body id="mybody">
+    <header class="takeOutHeader topbar" id="cloud">
+        <ul class="fl back" onclick="api.closeWin();";>
+            <a href="javascript:"><img src="images/takeout/break.png" /></a>
+        </ul>
+        <ul class="fl word">
+            <span style="font-weight: 400;font-size: 30px;" class="red fl">北京</span>
+            <i class="arrow down_arrow"></i>
+            <input class="search_index" type="text" name="" onclick="search();" readonly="readonly" id="" value="" placeholder="请输入商家名称" />
+        </ul>
+        <ul class="fr bianji">
+            <i class="cart cart_null" onclick="click_cart();"></i>
+        </ul>
+    </header>
+    
+    <header id="order_head" class="topbar" style="display: none;">
+        <ul class="fl word details_tit">订单</ul>
+    </header>
+    
+    <header id="my_head" class="topbar" style="display: none;">
+        <ul class="fl word details_tit">我的</ul>
+    </header>
+
+    <!--尾部-->
+    <footer class="footer_index" id="footer">
+        <ul class="footer_index_ul clearfloat">
+            <li class="after" onclick="randomSwitchBtn(this,'cloud',0)">
+                <div class="house_div commenDiv commenDiv0"></div>
+                <p class="footer_index_ul_p red">首页</p>
+            </li>
+            <li class="after" onclick="randomSwitchBtn(this,'order_head',1)">
+                <div class="order_div commenDiv"></div>
+                <p class="footer_index_ul_p">订单</p>
+            </li>
+            <li onclick="randomSwitchBtn(this,'my_head',2)">
+                <div class="my_div commenDiv"></div>
+                <p class="footer_index_ul_p">我的</p>
+            </li>
+        </ul>
+    </footer>
+</body>
+
+<script type="text/javascript" src="script/api.js"></script>
+<script>
+    apiready = function () {
+        var $header = $api.byId('cloud');
+        $api.fixStatusBar($header);
+        var $body = $api.dom('body');
+        var $footer = $api.byId('footer');
+        var header_h = $api.offset($header).h;
+        var body_h = $api.offset($body).h;
+        var footer_h = $api.offset($footer).h;
+        var rect_h = body_h - header_h - footer_h;
+        
+        
+        api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {x: 0, y: header_h, w: 'auto', h: rect_h},
+            index: 0,
+          
+            frames: [
+                {
+                    name: 'takeout_default',
+                    url: 'html/takeout/takeout_default.html'
+                },
+                {
+                    name: 'order_default',
+                    url: 'html/takeout/order_default.html'
+                },
+                {
+                    name: 'my_default',
+                    url: 'html/takeout/my_default.html'
+                }
+            ]
+        }, function (ret, err) {
+        
+        });
+    };
+    
+    // 随意切换按钮
+    function randomSwitchBtn(obj, name, index) {
+        $(".topbar").hide();
+        $("#"+name).show();
+        $(".footer_index_ul li div").removeClass("commenDiv0");
+        $(".footer_index_ul li div").removeClass("commenDiv1");
+        $(".footer_index_ul li div").removeClass("commenDiv2");
+        $(".footer_index_ul li p").removeClass("red");
+        var index_ = $(obj).index();
+        $(obj).find("div").addClass("commenDiv"+index_);
+        $(obj).find("p").addClass("red");
+        
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+    }
+    
+    //跳转购物车
+    function click_cart() {
+        var uid = localStorage.getItem( "uid" );
+        if( !uid || uid == '' || uid == 0 || typeof uid == 'undefined' ) {
+            _toast( '请登录!' );
+            return false;
+        }
+        _openWinByUrl('./html/takeout/order/cart_head','./html/takeout/order/cart_head');
+    }
+    
+    //搜索跳转
+    function search() {
+        _openWinByUrl('./html/takeout/shop/shop_search_head','./html/takeout/shop/shop_search_head');
+    }
+</script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+        <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+        <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+        <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+            头部bar的样式-->
+        <title>店铺详情</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+         <style>
+        	.icon_top_shoucangN.active {
+				background: url(../../../images/takeout/603_1.png) center center no-repeat;
+				background-size: 0.42rem 0.38rem;
+			}
+        </style>
+    </head>
+    <body>
+        <header>
+            <ul class="fl back" onclick="api.closeWin();";>
+                <a href="javascript:"><img src="../../../images/takeout/break.png" /></a>
+            </ul>
+            <!-- <ul class="fl word details_tit shopDetails">
+                <div id="head_title"></div>
+            </ul> -->
+            <ul class="fl word" id="head_title"></ul>
+            <ul class="fr bianji">
+                <a class="icon_top icon_top_shoucangN " onclick="collectShop();" href="javascript:"></a>
+                <!-- <a class="icon_top icon_top_fenxiang" href="javascript:;"></a> -->
+                <!-- <a class="icon_top icon_top_sousuo" href="javascript:;"></a> -->
+            </ul>
+        </header>
+
+    </body>
+
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script type="text/javascript">
+        var sid = 0;
+        var head_title = '店铺详情';
+        apiready = function(){
+            api.parseTapmode();
+            sid  = api.pageParam.sid;
+            head_title = api.pageParam.title;
+            $('#head_title').text( head_title );
+                    
+            var header = $api.dom('header');
+            $api.fixStatusBar(header); 
+            var headerPos = $api.offset(header);
+            var body_h = $api.offset($api.dom('body')).h;
+            var footer_h = 0;//$api.offset($api.byId('footer')).h;
+            
+            api.openFrame({
+                name: 'shop_detail_body',
+                url: 'shop_detail_body.html',
+                bounces: false,
+                rect: {
+                    x: 0,
+                    y: headerPos.h,
+                    w: headerPos.w,
+                    h: body_h-headerPos.h-footer_h
+                },
+                pageParam:api.pageParam,
+                reload:true
+                
+            });
+            
+            api.addEventListener({
+	            name:'shop_collect'
+            },function(ret,err){
+            	if(ret.value.isCollect == true ){
+            		$(".icon_top").addClass('active');
+            	}
+            });
+            
+        };
+        
+        //收藏店铺
+        function collectShop() {
+            var uid = localStorage.getItem( "uid" );
+            if( uid == 0 || uid == '' || typeof uid == 'undefined' ) {
+                _toast( '请先登录再收藏' );return false;
+            }
+            if( sid == 0 || sid == '' || typeof sid == 'undefined' ) {
+                _toast( '收藏失败' );return false;
+            }
+            _ajax(ajax_url+"Index/TakeoutCollect/collectShop" ,{uid:uid, sid:sid},'post',function(ret) {
+                if(ret.status == 1){
+                	$(".icon_top").addClass('active');
+                    _toast(ret.msg);
+                }if(ret.status == 2){
+                	$(".icon_top").removeClass('active');
+                    _toast(ret.msg);
+                }else{
+                    _toast(ret.msg);
+                }
+            });
+        }
+    </script>
+</html>

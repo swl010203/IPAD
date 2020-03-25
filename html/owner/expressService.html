@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/mobiscroll.custom-3.0.0-beta2.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<style>
+			.inp_div_inner{
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgRed">
+			<h1 class="mui-title">快递服务</h1>
+			<a class="mui-icon mui-icon-back" id="fanhui_btn"></a>
+			<ul class="fr bianji" style="line-height: 47px;" onclick="_openWinByUrl('expressLog','expressLog');">
+				<a href="javascript:">快递记录</a>
+			</ul>
+		</header>
+		<div class="mui-content">
+			<div class="inp_div_outer inp_div_outerKd fs28">
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>发件人姓名：</span>
+					<input type="text" name="username" id="username" value="" placeholder="请输入发件人姓名"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>联系电话：</span>
+					<input type="text" name="mobile" id="mobile" value="" placeholder="请输入发件人联系电话"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>身份证号：</span>
+					<input type="text" name="identity" id="identity" value="" placeholder="请输入发件人身份证号"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>发件地址：</span>
+					<input type="text" name="address" id="address" value="" placeholder="请输入发件人地址"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite mt10">
+					<span>收件人姓名：</span>
+					<input type="text" name="receive_name" id="receive_name" value="" placeholder="请输入收件人姓名"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>收件人电话：</span>
+					<input type="text" name="receive_phone" id="receive_phone" value="" placeholder="请输入收件人联系电话"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>收件地址：</span>
+					<input type="text" name="receive_address" id="receive_address" value="" placeholder="请输入收件人详细的收件地址"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite mt10">
+					<span>快递件数：</span>
+					<input type="text" name="num" id="num" value="" placeholder="请输入件数"/>
+				</div>
+				
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite clearfloat">
+					<span class="mui-pull-left">送往方式：</span>
+					<div class="mui-pull-left clearfloat">
+						<div class="mui-pull-left checkbox_div_click" val="1">
+							<div class="checkbox_div active"><i class="mui-icon mui-icon-checkmarkempty"></i></div>上门取件
+						</div>
+						<div class="mui-pull-left ml20 checkbox_div_click" val="2">
+							<div class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div>送网站点
+						</div>
+					</div>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite mt10 tishiadd" style="display: none;">
+					<p class="lanTishi" style=" color: red;">地点：物业楼一层管家中心</p>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>物品描述：</span>
+					<input type="text" name="desc" id="desc" value="" placeholder="请输入物品描述"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>快递公司：</span>
+					<select name="City" id="demo" style="display: none;">
+		           	</select>
+					<span class="mui-icon mui-icon-forward"></span>
+				</div>
+			</div>
+			<div style="height: 50px;"></div>
+			<footer class="full_footerFixed buyNow" onclick="orderLogistics();">提交</footer>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/mobiscroll.custom-3.0.0-beta2.min.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$("body").on("tap",function(){
+			$(".inp_div_inner").removeClass("click");
+		});
+		$("#fanhui_btn").on("tap",function(){
+			api.closeWin();
+		});
+		$(".inp_div_inner").on("tap",function(e){
+			e.stopPropagation();
+			$(this).addClass("click").siblings().removeClass("click");
+		});
+		$('#demo').mobiscroll().select({
+	        theme: 'ios',
+			lang:'zh'
+	  });
+	  $(".inp_div_inner div.checkbox_div_click").on("tap",function(){
+	  		$(".inp_div_inner div.checkbox_div").removeClass("active");
+			$(this).find("div.checkbox_div").addClass("active");
+			type = $(this).attr('val');
+			if(type==1){
+				$(".tishiadd").hide();
+			}else{
+				$(".tishiadd").show();
+			}
+		});
+		
+		var type = 1;
+		var uid = localStorage.getItem("uid");
+		var courier_id = "";
+		apiready = function(){
+//			addEventUserInfo();
+			//获取快递公司
+			getCourier();
+		};
+		
+		function getCourier(){
+			_ajax(ajax_url+"Index/NewExpress/kuaidiCompany" ,{},'get',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(ret.data).each(function(k,v){
+						strVar += "<option value=\""+v['id']+"\">"+v['com']+"<\/option>";
+					})
+				}
+				$("#demo").html(strVar);
+				$('#demo').mobiscroll().select({
+			        theme: 'ios',
+			        display: 'bottom',
+			        minWidth: 200,
+			        setText: '确定', //确认按钮名称
+					cancelText: '取消'//取消按钮名籍我
+			   });
+			   $('#demo_dummy').attr('placeholder',"请选择快递公司");
+		       $('#demo_dummy').val('');
+			});
+		}
+		
+		function orderLogistics(){
+			var name  = $("#username").val();
+			var phone = $("#mobile").val();
+			var identity = $("#identity").val();
+			var address = $("#address").val();
+			var desc = $("#desc").val();
+			var num  = $("#num").val();
+
+			var receive_name  = $("#receive_name").val();
+			var receive_phone  = $("#receive_phone").val();
+			var receive_address  = $("#receive_address").val();
+
+			var courier_id = $("#demo option:selected").val();
+
+
+			if(!name){
+				_toast('请填写联系人');
+				return false;
+			}
+
+			if(!phone){
+				_toast('请填写联系方式');
+				return false;
+			}
+			if(!identity){
+				_toast('请填写身份证号');
+				return false;
+			}
+			if(!_isPhone(phone)){
+				_toast('联系方式不正确');
+				return false;
+			}
+
+			if(!address){
+				_toast('请填写联系地址');
+				return false;
+			}
+
+			if(!receive_name){
+				_toast('请填写收件人');
+				return false;
+			}
+
+			if(!receive_phone){
+				_toast('请填写收件人联系方式');
+				return false;
+			}
+
+			if(!_isPhone(receive_phone)){
+				_toast('收件人联系方式不正确');
+				return false;
+			}
+
+			if(!receive_address){
+				_toast('请填写收件人联系地址');
+				return false;
+			}
+
+			if(!num){
+				_toast('请填写物品数量');
+				return false;
+			}
+			if(!desc){
+				_toast('请填写物品描述');
+				return false;
+			}
+
+			if(!courier_id){
+				_toast('请选择快递公司');
+				return false;
+			}
+
+			_ajax(ajax_url+"Index/Family/orderLogistics" ,{
+				'type':type,'uid':uid,'name':name,'phone':phone,'identity':identity,'courier_id':courier_id,
+				'address':address,'desc':desc,'num':num,
+				'receive_name':receive_name,
+				'receive_phone':receive_phone,
+				'receive_address':receive_address
+			},'post',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+    				_toast('预约成功',function(){
+    					api.closeWin();
+    				});
+				}else{
+					_toast(ret.info);
+				}
+
+
+			});
+		}
+	</script>
+</html>

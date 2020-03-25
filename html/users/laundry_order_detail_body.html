@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+	<title>全部订单</title>
+	<link rel="stylesheet" href="../../css/user/style.css" />
+	<link rel="stylesheet" href="../../css/user/allStyle.css">
+	<style>.hongxian{width:0px;}</style>
+</head>
+<body>
+
+	<!--洗衣订单-->
+	<ul style="height: 200px;" class="w_listSi xiyiInfo">
+		<ul class="w_listCon pt_20 box-s pl_14 pr_14 border-t">
+			<li>
+				<ul class="w_zhuangtai clearfloat">
+					<li>
+						<div class="progress1 "><p class='newClass'>取件中</p>
+							<div class="tu1"></div>
+						</div>
+					</li>
+					<li >
+						<div class="progress2 "><p class='newClass'>送往加工店</p>
+							<div class="tu2"></div>
+						</div>
+					</li>
+					<li>
+						<div class="progress3"><p class='newClass'>清洗中</p>
+							<div class="tu3"></div>
+						</div>
+					</li>
+					<li>
+						<div class="progress4"><p class='newClass'>送回中</p>
+							<div class="tu4"></div>
+						</div>
+					</li>
+					<li>
+						<div class="progress5"><p class='newClass'>已收货</p>
+							<div class="tu5"></div>
+						</div>
+					</li>
+					<div class="huixian"></div>
+					<div class="hongxian" style="width:0;"></div>
+				</ul>
+			</li>
+		</ul>
+	</ul>
+	<div class="dingdanInfo border-t border-b">
+		<p>订单编号：<span class="order_sn"></span></p>
+		<p>取件时间：<span class="take_date"></span></p>
+	</div>
+	<!--物流信息-->
+	<ul class="zaInfo border-t border-b mt-10 shouyintai">
+		<li class="zaInfoTit pl_14 pr_14">
+			<i></i>物流信息
+		</li>
+		<ul class="wuliu pl_14 pr_14 pt_20 pb_20 box-s" id="order_log">
+			<li class="select">
+				<p>正在送往洗衣服中</p>
+				<p>2014-5-18 &nbsp;12:55</p>
+				<span class="circle"></span>
+				<span class="line"></span>
+			</li>
+			<li class="select">
+				<p>正在送往洗衣服中</p>
+				<p>2014-5-18 &nbsp;12:55</p>
+				<span class="circle"></span>
+				<span class="line"></span>
+			</li>
+			<li>
+				<p>正在送往洗衣服中</p>
+				<p>2014-5-18 &nbsp;12:55</p>
+				<span class="circle"></span>
+				<span class="line"></span>
+			</li>
+			<li>
+				<p>正在送往洗衣服中</p>
+				<p>2014-5-18 &nbsp;12:55</p>
+				<span class="circle"></span>
+			</li>
+		</ul>
+	</ul>
+	<!--商品 信息-->
+	<ul class="zaInfo border-t border-b mt_10 shouyintai">
+		<li class="zaInfoTit pl_14 pr_14">
+			<i></i>物品信息<i></i>
+		</li>
+		<ul class="pl_14 pr_14">
+			<div class="listDiv">
+			
+			</div>
+				<!--<li>
+					<span class="fl">针织毛衣</span>
+					<span>x1</span>
+					<span class="red fr">￥15</span>
+				</li>
+				<li>
+					<span class="fl">运动鞋</span>
+					<span>x1</span>
+					<span class="red fr">￥20</span>
+				</li>-->
+				<li>
+					<span class="red fr tr price">合计：￥0</span>
+				</li>
+		</ul>
+	</ul>
+	<!--用户信息-->
+	<ul class="zaInfo border-t border-b mt_10 shouyintai">
+		<li class="zaInfoTit pl_14 pr_14">
+			<i></i>用户信息
+		</li>
+		<ul class="pl_14 pr_14 pt_20 pb_20 box-s">
+			<p>客户姓名：<span class="consignee"></span></p>
+			<p>联系电话：<span class="mobile"></span></p>
+			<p class="">送货地址：<span class="address"></span></p>
+		</ul>
+	</ul>
+	<!--配送信息-->
+	<ul class="zaInfo border-t border-b mt_10 shouyintai">
+		<li class="zaInfoTit pl_14 pr_14">
+			<i></i>配送信息-到店
+		</li>
+		<ul class="pl_14 pr_14 pt_20 pb_20 box-s">
+			<p>配送员：<span class="psconsignee"></span></p>
+			<p>联系电话：<span class="psmobile"></span></p>
+		</ul>
+	</ul>
+	<!--配送信息-->
+	<ul class="zaInfo border-t border-b mt_10 shouyintai">
+		<li class="zaInfoTit pl_14 pr_14">
+			<i></i>配送信息-送回
+		</li>
+		<ul class="pl_14 pr_14 pt_20 pb_20 box-s">
+			<p>配送员：<span class="phconsignee"></span></p>
+			<p>联系电话：<span class="phmobile"></span></p>
+		</ul>
+	</ul>
+	<!--备注内容-->
+	<ul class="zaInfo border-t border-b mt_10 shouyintai">
+		<li class="zaInfoTit pl_14 pr_14">
+			<i></i>备注
+		</li>
+		<ul class="pl_14 pr_14 pt_20 pb_20 box-s">
+			<p class="remark"></p>
+		</ul>
+	</ul>
+	<!--支付方式-->
+	<ul class="zaInfo border-t border-b mt_10 shouyintai">
+		<li class="zaInfoTit pl_14 pr_14">
+			<i></i>支付方式
+		</li>
+		<ul class="pl_14 pr_14 pt_20 pb_20 box-s">
+			<p class="pay_type"></p>
+		</ul>
+	</ul>
+</body>
+<script type="text/javascript" src="../../script/user/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../../script/user/index.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/*导航点击效果和切换内容部分*/
+		$(".w_list li").click(function(){
+			$(this).addClass("red").siblings().removeClass("red");
+			var index_ = $(this).index();
+			var width_ = $(".w_list li").width();
+			if(index_==4){
+				$(".w_list .w_xian").css("left",width_*index_+4.5);
+			}else{
+				$(".w_list .w_xian").css("left",width_*index_);
+			}
+			var index_ = $(this).index();
+			$(".w_tab").eq(index_).removeClass("hide_").siblings(".w_tab").addClass("hide_");
+		})
+	});
+	
+	
+	
+	var id = 0;
+	apiready = function(){
+		api.parseTapmode();
+		id=api.pageParam.id;
+		
+		loading('laundry_order_detail_body');
+		ready();
+	};
+	
+progress_xian = 30;
+				$(".hongxian").css('width',progress_xian+'%');
+	
+	function ready(){
+		_ajax(ajax_url +"Index/UserOrder/getLaundryOrderDetail" ,{'id':id},'post',function(ret){
+			var strVar = "";
+			var strVar2 = "";
+			closeloading();
+			if(ret.status==1){
+			
+				var progress_xian =0;
+				var progress = ret.data.status_wz.type;
+				if(progress <=2 ){
+					progressFunc(1);
+					progress_xian = 20;
+				}
+				
+				if( progress ==3){
+					progressFunc(2);
+					progress_xian = 40;
+				}
+				if( progress ==4){
+					progressFunc(3);
+					progress_xian = 60;
+				}
+				if( progress ==5){
+					progressFunc(4);
+					progress_xian = 70;
+				}
+				if( progress ==6){
+					progressFunc(5);
+					progress_xian = 80;
+				}
+				
+			
+				$(".hongxian").css('width',progress_xian+'%');
+				//$(".hongxian").css('margin-left',"-"+progress_xian/2+'%');
+			
+				//$(".order_status_str").html(ret.data.status_wz.msg);
+				$(".order_sn").html(ret.data.order_sn);
+				$(".take_date").html(ret.data.take_date + " " +ret.data.take_time );
+				
+				$(".consignee").html(ret.data.consignee);
+				$(".mobile").html(ret.data.mobile);
+				$(".psconsignee").html(ret.data.psconsignee);
+				$(".psmobile").html(ret.data.psmobile);
+				$(".phconsignee").html(ret.data.phconsignee);
+				$(".phmobile").html(ret.data.phmobile);
+				$(".address").html(ret.data.address);
+				$(".remark").html(ret.data.remark);
+				
+				
+				pay_type = ret.data.pay_type;
+				if(pay_type ==1){
+					$(".pay_type").html('在线支付');
+				}
+				if(pay_type ==2){
+					$(".pay_type").html('现金支付');
+				}
+				
+				if(pay_type ==3){
+					$(".pay_type").html('POS机支付');
+				}
+				
+				if(ret.data.status >=1){
+					$(".price").html("合计："+ret.data.price);
+					$.each(ret.data.goods_list,function(k,v){
+					    strVar += "<li>\n";
+					    strVar += "	<span class=\"fl\">"+v['goods_name']+"<\/span>\n";
+					    strVar += "	<span>x"+v['goods_num']+"<\/span>\n";
+					    strVar += "	<span class=\"red fr\">￥"+v['goods_price']+"<\/span>\n";
+					    strVar += "<\/li>\n";
+					
+					});
+					$(".listDiv").html(strVar);
+				}
+				
+				
+				//获取物流信息
+				var orderLogLen = (ret.data.order_log).length;
+				$(ret.data.order_log).each(function(k,v){
+					strVar2 += "<li class=\"select\">\n";
+				    strVar2 += "	<p>"+v['desc']+"<\/p>\n";
+				    strVar2 += "	<p>"+_formatDate(v['add_time']*1000,true)+"<\/p>\n";
+				    strVar2 += "	<span class=\"circle\"><\/span>\n";
+				    if(k < orderLogLen-1){
+				    	 strVar2 += "	<span class=\"line\"><\/span>\n";
+				    }
+				   
+				    strVar2 += "<\/li>\n";
+				});
+				
+				$("#order_log").html(strVar2);
+			    
+				
+			}else{
+				_toast(ret.msg);
+			}
+		})
+	}
+	
+	function progressFunc(n){
+		for(var i =1 ; i<=n ; i++){
+			
+			$(".progress"+i).addClass('red');
+			$(".progress"+i).find("div").addClass('tu'+i+'_1');
+		}
+	}
+	
+</script>
+
+
+</html>

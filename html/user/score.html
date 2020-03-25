@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<style>
+	.trade_title {
+			overflow: hidden;
+	}
+</style>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+
+<!-- 内容 -->
+<div class="my_integralbg my_jifenbg">
+	<p class="my_integralbgp01"></p>
+	<div class="my_integralbgp02">
+		<p class="my_integralbgp03"><img src="../../images/jifen_icontop.png" style="width: 0.54rem; height: 0.62rem;"></p>
+		<p class="my_integralbgp04 score"></p>
+	</div>
+</div>
+<div class="trade_title">
+	<div class="trade_titleline"></div>
+	<div class="trade_titletxt"><span class="trade_titletxt01">交易记录</span></div>
+</div>
+<div class="wp_100 list">
+<!--	<div class="balaWrap">
+		<p class="rechargetxt">超市沸</p>
+		<p class="rechargetime">2016.10.10 13:15</p>
+		<span class="rechargeMoney" style="color: #199908;">+20</span>
+	</div>-->
+	
+
+</div>
+<script type="text/javascript">
+var page=1;//分页
+var totalpage=0;//总页数
+ apiready=function(){
+ 	api.addEventListener({
+    name:'scrolltobottom',
+    extra:{
+        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+    }
+	}, function(ret, err){        
+	    if(page<totalpage){
+	     page=page+1;
+	     ready();
+	    }else{
+	     return false;
+	    }
+	});
+	loading('score');
+   ready();
+   setScore();
+ };
+ 
+ function setScore(){
+		
+		 api.ajax({
+			url : ajax_url+'Index/User/score',
+			method : 'post',
+			data : {
+				values : {
+					uid : localStorage.getItem("uid")
+				}
+			}
+		},function(ret, err) {
+		  if(ret){
+		   if(ret.code==1){
+		    var data=ret.data;
+		    $(".score").html(data);
+		   }
+		  }
+		
+		})
+		
+	
+	
+	}
+	
+ function ready(){
+//   api.setRefreshHeaderInfo({ //下拉加载
+//					visible : true,
+//					loadingImg : 'widget://image/refresh.png',
+//					bgColor : '#fff',
+//					textColor : '#ccc',
+//					textDown : '下拉刷新...',
+//					textUp : '松开刷新...',
+//					showTime : true
+//				}, function(ret, err) {
+//				  page=1;
+//					ready();
+//				});
+   api.ajax({
+		url : ajax_url + 'Index/Points/getPoints',
+		method : 'post',
+		data : {
+			values : {
+				uid:localStorage.getItem("uid"),
+				p:page
+			},
+		}
+	}, function(ret, err) {
+	  if(ret){
+	   if(ret.status==1){
+	     totalpage=ret.totalpage;//总页数
+	     var points=ret.points;//积分
+	     var pointslog=ret.pointslog;//积分记录
+	     var html='';
+	     //if(page==1){
+	     // $(".score").html(points);
+	     //}
+	     if(pointslog!=null && pointslog.length>0){
+	      for(var i in pointslog){
+	       html+='	<div class="balaWrap">'+
+					'<p class="rechargetxt">'+pointslog[i]['remark']+'</p>'+
+					'<p class="rechargetime">'+pointslog[i]['ctime']+'</p>'+
+					'<span class="rechargeMoney" ';
+					if(pointslog[i]['mode']==1){
+						html+=' style="color: #199908;">';
+					//收入
+					html+='+'+pointslog[i]['val'];
+					}else if(pointslog[i]['mode']==2){
+					html+=' style="color: #d12a18;">';
+					html+='-'+pointslog[i]['val'];
+					}
+					html+='</span>'+
+				'</div>';
+	      }
+	     }
+	     if(page==1){
+	     $(".list").html(html);
+	     }else{
+	      $(".list").append(html);
+	     }
+	   }else{
+	   _toast(ret.msg);
+	   }
+	   closeloading();
+	   api.refreshHeaderLoadDone();
+	  }else{
+	  closeloading();
+	  api.refreshHeaderLoadDone();
+	  _alert('网络连接失败,请稍后重试');
+	  }
+	})
+ }
+</script>
+</body>
+</html>

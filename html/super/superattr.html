@@ -1,0 +1,394 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+	html,body{background: rgba(0,0,0,0);}
+	.cartNum_widow{ position: relative;height: 40px;clear: both;}
+	/*.payList2{color: #666;position: relative}*/
+	/*.payListr{top:-0.28rem;position: relative}*/
+	.list{clear:both;}
+	.payListrli01{width:40%;margin: 8px 0px;}
+	.payList201{width: 130px;float: left;height:60px; color: #666;}
+	
+	.duo_checkbox03 + label {
+		height: 30px;
+		margin-bottom: 0px;
+	}
+	.duo_checkbox03:checked + label:after {
+		height: 30px;
+		margin-bottom: 0px;
+	}
+	.payList{ padding-bottom: 10px;}
+</style>
+</head>
+<body>
+
+<!-- 规格弹窗 -->
+<div class="maskBg" style="display: none; top: 0rem;"></div>
+<div class="etc_pay" style="display: none;">
+		<div class="etc_paytitle">请选择规格</div>
+		<div class="payList mt_15" style="">
+        <div class="attr">
+	  			
+        </div>
+		<div class="cartNum_widow">
+				<a href="javascript:" class="cartNum" style="top:5px;">
+					<span class="cartNuml cartNumldis"></span>
+					<span class="cartNumc num"  style="width:40px;">1</span>
+					<span class="cartNumr cartlistadd"></span>
+				</a>
+		</div>
+	</div>
+		
+	<div class="etc_paybtn">
+		<a href="javascript:void(0);" onclick="getAttr()" class="bot_btna bot_btnapay">确定</a>
+	</div>
+</div>
+	
+
+
+<script type="text/javascript">
+	//增加数量
+			$(document).on("touchend",'.cartlistadd',function(){	
+			    var num=$(this).prev(".num").text();		
+				incnumber(num);
+			});
+				//减少数量
+			//减数量
+			$(document).on("touchend",'.cartNumldis',function(){
+				 var num=$(this).next(".num").text();
+				desnumber(num);
+			});
+					/*
+			 * 商品加1
+			 */
+			function incnumber(num) {
+				num = Number(num) + 1;			
+				$('.num').text(num);
+			}
+				/*
+			 * 商品减1
+			 */
+			function desnumber(num) {
+				if (num > 1) {
+					num = num - 1;
+					$('.num').text(num);
+				}
+			}
+	
+		
+
+
+	function share_window(flag){
+		if (flag) {
+			$('.maskBg').show();
+			$('.etc_pay').stop().slideDown(500);
+			
+		}else{
+			$('.maskBg').fadeOut(500);
+			$('.etc_pay').stop().slideUp(500);
+			flag=true;
+		}
+    }
+    $(".maskBg").click(function(){
+		share_window(0);
+		setTimeout(function(){
+//			api.setFrameAttr({
+//					 name: 'superattr',
+//					 hidden:true
+//				})
+				api.closeFrame({
+					name:'superattr'
+					});		
+		},500); 
+		
+	});
+	share_window(1);
+	var attr='';//商品属性;
+	var attr_val='';//商品属性值
+	var id='';//商品id
+	var type=0;//操作类型 1.加入购物车2.去结算
+	var sid=0;//店铺shop_id;
+	 var checkattr=''; //属性字符串
+     var attribute_name='';//属性名称
+     
+    var userinfo ="";
+	apiready = function(){
+		api.parseTapmode();
+		userinfo = $api.getStorage('userinfo');
+		//监听返回键 时 不关闭窗口 而是关闭frame
+		api.addEventListener({
+			name : 'keyback'
+		}, function(ret, err) {
+			share_window(0);
+			setTimeout(function(){
+				api.closeFrame({
+					name:'superattr'
+		        });
+			},500); 
+		});
+		
+		
+		//监听更新登陆信息
+		api.addEventListener({
+		    name: 'refresh_userinfo'
+		}, function(ret, err) {
+		    userinfo = ret.value.userinfo;
+		});
+		
+		
+		//监听再次打开时 执行动画效果
+		api.addEventListener({
+			name : 'super_attr_refresh'
+		}, function(ret, err) {
+			share_window(1);
+		});
+		id=api.pageParam['id'];//属性id;
+		type=api.pageParam['type'];//类型判断
+		sid=api.pageParam['sid'];
+		getGoodsKucun(id);
+	};
+/*
+ * 获取商品规格
+ */
+function getGoodsKucun(id){
+	api.ajax({
+				url : ajax_url+'Index/Super/getGoodsKucun',
+				method : 'post',
+				data : {
+					values : {
+					gid:id
+					},
+				}
+			}, function(ret, err) {
+			  if(ret){
+			   if(ret.code){
+			    var data=ret.data;
+			     attr=data.attr;//商品属性
+			    var attrHtml='';
+			     attr_val=data.attrval;//商品属性值
+			    if(attr!=null && attr.length>0){
+			     for(var i in attr){
+			     if(attr[i]['name']!=null){
+			        attrHtml+='	<div class="list">'+
+									'<div class="payList2 payList201">'+attr[i]['name']+'：</div>'+
+								'<div class="payListr">';
+								   for(var  j in attr_val){
+								    if(attr_val[j]['pid']==attr[i]['id']){
+								     attrHtml+='<div class="payListrli01">'+								     	
+										'<input id="'+attr_val[j]['id']+'" type="radio" name="'+attr[i]['ziduan']+'" value="'+attr_val[j]['id']+'" class="duo_checkbox03">';									
+										attrHtml+='<label for="'+attr_val[j]['id']+'">'+attr_val[j]['color_name']+'</label>';
+										if(attr_val[j]['img']){
+								     		//attrHtml+='<img style="width:30px;heihgt:30px;" src='+attr_val[j]['img']+' />';
+								     	}
+									attrHtml+='</div>';
+								    }
+								   }
+																																			
+								attrHtml+='</div>'+
+								'</div>';
+			     }
+			   
+			     }
+			    }
+			    $(".attr").html(attrHtml);
+			   }
+			  }else{
+			  _alert('网络连接失败,请稍后重试');
+			  }
+			})
+}
+/*
+ * 获取属性值
+ */
+function getAttr(){
+//属性判断
+  if(attr!=null && attr.length>0){
+   for(var m in attr){
+    if(!$("input[name="+attr[m]['ziduan']+"]:checked").val()){
+     //_toast("请选择"+attr[m]['name']+'属性');
+     _toast('请选择规格');
+     return false;
+    }
+   }
+  }
+  //获取商品数量
+  var num=$(".num").text();
+  //获取商品的属性
+  $("input[type=radio]:checked").each(function(k){
+     if(k==0){
+     checkattr=$(this).val();
+     attribute_name=$(this).next('label').html();
+     }else{
+     checkattr+='|'+$(this).val();
+     attribute_name+='|'+$(this).next('label').html();
+     }
+  });
+  //根据属性获取商品的价格跟库存
+  getPrice(checkattr);
+  
+}
+function getPrice(checkattr){
+
+		//判断是否登陆
+if(userinfo  =='undefined' ||  userinfo =='' || userinfo ==null){
+	_openWinByUrl('login','../login');
+	return false;
+}
+var aid = api.pageParam.aid;
+ //获取商品数量
+  var num= +$(".num").text();
+api.ajax({
+				url : ajax_url+'Index/Super/findgoodkucun',
+				method : 'post',
+				data : {
+					values : {
+					gid:id,
+					attr_str:checkattr,
+					aid:aid
+					},
+				}
+			}, function(ret, err) {
+			  if(ret){
+			   if(ret.code==1){
+			    var data=ret.data.content;
+			    var price=data.price;//价格
+			    var market_price=data.market_price;//市场价
+			    var stock= +data.num;//库存;//库存
+			    var attr_str=ret.data.attr_str;//属性字符串
+			    //更换详情页面的价格以及市场价，判断用户选择的数量是否超过该属性库存
+			     	api.sendEvent({
+					name : 'superattr',
+					extra : {
+						key1 : 'success',
+						shop_price:price,
+						market_price:market_price
+					}
+				});
+			    if(num>stock){
+			     _toast('库存不足');
+			     return false;
+			    }
+			    //如果用户没有登录直接跳转到登陆页面
+			    share_window(0);
+			    	setTimeout(function(){
+				api.closeFrame({
+					name:'superattr'
+							});		
+				},1000); 
+			    if(!localStorage.getItem("uid")){
+			      _openWinByUrl('login','../login');
+			      return false;
+			    }
+			    //根据选择按钮进行加入购物车或区结算操作
+			    if(type==1){ //加入购物车
+			      add_cart(num,price)
+			    }else if(type==2){ //去结算
+			     //var pram={goods_id:id,goods_num:num,goods_attr:checkattr,goods_attr_str:attribute_name,goods_type:2,goods_sid:sid,goods_price:price}
+			     var pram={aid:aid,goods_id:id,goods_num:num,goods_attr:checkattr,goods_attr_str:attribute_name,goods_type:2,goods_sid:sid,goods_price:price};
+			    
+			      _openWinByUrl('mall_order','../order/mall_order',pram);
+			    }
+			   }
+			  }else{
+			  _alert('网络连接失败,请稍后重试');
+			  }
+			})
+}
+/*
+ * num 数量
+ * price 商品属性所对应的价格
+ */
+function add_cart(num,price){
+
+	//判断是否登陆
+if(userinfo  =='undefined' ||  userinfo =='' || userinfo ==null){
+	_openWinByUrl('login','../login');
+	return false;
+}
+
+api.ajax({
+				url : ajax_url+'Index/UserCart/addCart',
+				method : 'post',
+				data : {
+					values : {
+					uid:localStorage.getItem("uid"),
+					sid:sid,
+					gid:id,
+					num:num,
+					attribute:checkattr,
+					attribute_name:attribute_name,
+					goods_price:price
+					},
+				}
+			}, function(ret, err) {
+			 if(ret){
+			   if(ret.status==1){
+			   		//刷新购物车
+			   		api.sendEvent({
+	                       name:'refresh_cartinfo'
+                    });
+			    _toast(ret.msg);
+			    //刷新购物车
+				getCartNum();
+			    return false;
+			   }else{
+			   _toast(ret.msg);
+			    return false;
+			   }
+			 }else{
+			 _alert('网络连接失败,请稍后重试');
+			 }
+			})
+}
+
+/*
+ * 获取购物车数量
+ */
+function getCartNum(){
+api.ajax({
+		url : ajax_url+'Index/Super/getCartNum',
+		method : 'post',
+		data : {
+			values : {
+			uid:localStorage.getItem("uid"),
+			},
+		}
+	}, function(ret, err) {
+	  if(ret){
+	    if(ret.code){
+	     cart_num=ret.num;
+	        //改变商品购物车数量
+	      api.sendEvent({
+			name : 'super_attr_cart',
+			extra : {
+				key1 : 'success',
+				cart_num:cart_num
+			}
+		});
+	    }
+	  }else{
+	  _alert('网络连接失败,请稍后重试');
+	  }
+	})
+}
+
+
+
+
+
+
+</script>
+</body>
+</html>

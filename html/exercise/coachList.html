@@ -1,0 +1,135 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">教练列表</h1>
+		</header>
+		<div class="mui-content bgwhite">
+			<ul class="pl20 pr20 box_s jlList_ul coachList">
+				<!--<li class="mui-row pt20 pb20 border_b">
+					<div class="mui-col-sm-3 mui-col-xs-3">
+						<div class="jlList_img">
+							<img src="../../images/bwm4.jpg"/>
+						</div>
+					</div>
+					<div class="mui-col-sm-8 mui-col-xs-8">
+						<div class="jlList_con">
+							<p class="font_weightB fs28 colorBlack">刘教练</p>
+							<p class="mui-ellipsis colorHui999 fs24 pt10">擅长：增肌减脂,体能训练,产后恢复,针对肩颈痛针对肩颈痛针对肩颈痛</p>
+						</div>
+					</div>
+					<div class="mui-col-sm-1 mui-col-xs-1 mui-text-right">
+						<span class="iconfont icon-arrow-right"></span>
+					</div>
+				</li>
+				<li class="mui-row pt20 pb20 border_b">
+					<div class="mui-col-sm-3 mui-col-xs-3">
+						<div class="jlList_img">
+							<img src="../../images/bwm4.jpg"/>
+						</div>
+					</div>
+					<div class="mui-col-sm-8 mui-col-xs-8">
+						<div class="jlList_con">
+							<p class="font_weightB fs28 colorBlack">刘教练</p>
+							<p class="mui-ellipsis colorHui999 fs24 pt10">擅长：增肌减脂,体能训练,产后恢复,针对肩颈痛针对肩颈痛针对肩颈痛</p>
+						</div>
+					</div>
+					<div class="mui-col-sm-1 mui-col-xs-1 mui-text-right">
+						<span class="iconfont icon-arrow-right"></span>
+					</div>
+				</li>
+				<li class="mui-row pt20 pb20 border_b">
+					<div class="mui-col-sm-3 mui-col-xs-3">
+						<div class="jlList_img">
+							<img src="../../images/bwm4.jpg"/>
+						</div>
+					</div>
+					<div class="mui-col-sm-8 mui-col-xs-8">
+						<div class="jlList_con">
+							<p class="font_weightB fs28 colorBlack">刘教练</p>
+							<p class="mui-ellipsis colorHui999 fs24 pt10">擅长：增肌减脂,体能训练,产后恢复,针对肩颈痛针对肩颈痛针对肩颈痛</p>
+						</div>
+					</div>
+					<div class="mui-col-sm-1 mui-col-xs-1 mui-text-right">
+						<span class="iconfont icon-arrow-right"></span>
+					</div>
+				</li>-->
+			</ul>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+		
+		var sid = '';
+	    apiready = function(){
+	        sid = api.pageParam.sid;
+	        // 获取教练列表
+	        getCoachList();
+	    };
+	
+	    // 获取教练列表
+	    function getCoachList(){
+	        var url = ajax_url+'Index/Exercise/getCoachList';
+	        var data = {'sid': sid};
+	
+	        _ajax(url, data, 'get', function (ret) {
+	            if(ret.status == 1){
+	                var data = ret.data;
+	                var coach_html = '';
+	                $.each(data, function(k, v){
+	                    coach_html += '';
+	                    coach_html += '<li class="mui-row pt20 pb20 border_b" onclick="coachDetail('+ v.id +')">';
+	                    coach_html +=     '<div class="mui-col-sm-3 mui-col-xs-3">';
+	                    coach_html +=         '<div class="jlList_img">';
+	                    coach_html +=             '<img src="'+ v.head_pic +'"/>';
+	                    coach_html +=         '</div>';
+	                    coach_html +=     '</div>';
+	                    coach_html +=     '<div class="mui-col-sm-8 mui-col-xs-8">';
+	                    coach_html +=         '<div class="jlList_con">';
+	                    coach_html +=             '<p class="font_weightB fs28 colorBlack">'+ v.name +'</p>';
+	                    coach_html +=             '<p class="mui-ellipsis colorHui999 fs24 pt10">擅长：'+ v.skill +'</p>';
+	                    coach_html +=         '</div>';
+	                    coach_html +=     '</div>';
+	                    coach_html +=     '<div class="mui-col-sm-1 mui-col-xs-1 mui-text-right">';
+	                    coach_html +=         '<span class="iconfont icon-arrow-right"></span>';
+	                    coach_html +=     '</div>';
+	                    coach_html += '</li>';
+	                });
+	                $('.coachList').html(coach_html);
+	            }else{
+	                _toast(ret.info);
+	            }
+	        });
+	    }
+	
+	    // 教练详情
+	    function coachDetail(coachId) {
+	        coachId = typeof coachId !== 'undefined' ? coachId : '';
+	        if(coachId == ''){
+	            _toast('没有获取到教练标识');
+	        }else{
+	            _openWinByUrl('coachDetail', 'coachDetail', {'coachId': coachId});
+	        }
+	    }
+	</script>
+</html>

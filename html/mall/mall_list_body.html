@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="busi_searchwrap">
+		<div class="busi_searchcon">
+			<div class="busi_searchbor">
+				<input type="text" id="keyword" placeholder="请输入要搜索的店铺名称" />
+			</div>
+			<a href="javascript:void(0)" onclick="getShopList()" class="busi_searchbtn">搜索</a>
+		</div>
+	</div>
+	<div class="hbusi_ul" id="list">
+<!--		<li>
+			<div class="hbusi_licon">
+				<a href="#" class="hbusi_lia">
+					<div class="hbusi_lial">
+						<img src="../../images/busi_img01.jpg">
+						<span class="hbusi_renzheng"><b class="hbusi_renzhengtxt">认证</b></span>
+					</div>
+					<div class="hbusi_liar">
+						<p class="hbusi_liarp01 dy_dd">柏卡姿安国大厦店</p>
+						<p class="hbusi_liarp02"><img src="../../images/star02.png"><img src="../../images/star02.png"><img src="../../images/star02.png"><img src="../../images/star01.png"><img src="../../images/star01.png"></p>
+						<p class="hbusi_liarp03">
+							<span class="jp_costumeicon01">券</span>
+							<span class="jp_costumeicon01" style="background: #ee8c00;">积</span>
+							<span class="jp_costumeicon01" style="background: #ee008c">礼</span>
+						</p>
+					</div>
+				</a>
+			</div>
+		</li>
+			<li>
+			<div class="hbusi_licon">
+				<a href="#" class="hbusi_lia">
+					<div class="hbusi_lial">
+						<img src="../../images/busi_img01.jpg">
+					</div>
+					<div class="hbusi_liar">
+						<p class="hbusi_liarp01 dy_dd">茶树化妆水</p>
+						<p class="hbusi_liarp04">暂无评价</p>
+					</div>
+				</a>
+			</div>
+		</li>
+		<li>
+			<div class="hbusi_licon">
+				<a href="#" class="hbusi_lia">
+					<div class="hbusi_lial">
+						<img src="../../images/busi_img01.jpg">
+					</div>
+					<div class="hbusi_liar">
+						<p class="hbusi_liarp01 dy_dd">柏卡姿安国大厦店</p>
+						<p class="hbusi_liarp02"><img src="../../images/star02.png"><img src="../../images/star02.png"><img src="../../images/star02.png"><img src="../../images/star01.png"><img src="../../images/star01.png"></p>	
+					</div>
+				</a>
+			</div>
+		</li>-->
+	</div>
+</div>
+
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+	$(function(){
+		// 选中
+		$('.top_classifylist .top_classifya').click(function(){
+			$(this).addClass('top_classifyaur').siblings().removeClass('top_classifyaur');
+		});
+
+	});
+	
+	var category_id = 0;  //一级分类
+	var page = 1;         //当前分页 第几页
+	var is_page = true;   //是否存在下一页
+	var keyword="";
+	apiready = function(){
+		//优化点击
+		api.parseTapmode();
+		//加载状态
+		loading('mall_list_body');
+
+		category_id = api.pageParam.category_id;
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		         page++;
+			     getShopList();
+		     }
+		});
+		
+		
+		//监听切换分类
+		api.addEventListener({
+		    name:'mall_list_switch'
+		}, function(ret, err){        
+		     category_id  = ret.value.category_id;
+		     page=1;
+			 getShopList();
+		     
+		});
+
+		//获取店铺列表
+		getShopList();
+	};
+	
+	function getShopList(){
+		var keyword= $("#keyword").val();
+		_ajax(ajax_url + "Index/Mall/getShopList",{'cate':category_id,'name':keyword,'p':page},'get',function(ret){
+			var strVar = "";
+			if(ret.status ==1){
+				$.each(ret.shopList,function(k,v){
+					strVar += "<li>";
+				    strVar += "<div class=\"hbusi_licon\">";
+				    strVar += "	<a href=\"javascript:void(0)\" onclick=\"getShopInfo("+v['id']+")\" class=\"hbusi_lia\">";
+				    //店铺认证
+				    strVar += "	<div class=\"hbusi_lial\">";
+				    strVar += "		<img src=\""+v['logo']+"\">";
+//				    strVar += "		<span class=\"hbusi_renzheng\"><b class=\"hbusi_renzhengtxt\">认证<\/b><\/span>";
+				    strVar += "	<\/div>";
+
+				    strVar += "	<div class=\"hbusi_liar\">";
+				    strVar += "		<p class=\"hbusi_liarp01 dy_dd\">";
+				    strVar += v['name'];
+				    strVar += "		<\/p>";
+				    /*
+				    //判断评价
+				    if(v['comments']['num']==0 ){
+				    	strVar+=" <p class=\"hbusi_liarp04\">暂无评价</p>";
+				    }else{
+				    	strVar += "		<p class=\"hbusi_liarp02\">";
+				    	var commnum = v['comments']['num'];
+				    	for(i=1; i<=commnum;i++ ){
+				    		 strVar += "<img src=\"../../images/star02.png\">";
+				    	}
+				    	
+				    	for(i=5; i>commnum;i-- ){
+				    		 strVar += "<img src=\"../../images/star01.png\">";
+				    	}
+					    strVar += "		<\/p>";
+				    }
+				   */
+				    
+//				    strVar += "		<p class=\"hbusi_liarp03\">";
+//				    strVar += "			<span class=\"jp_costumeicon01\">券<\/span>";
+//				    strVar += "			<span class=\"jp_costumeicon01\" style=\"background: #ee8c00;\">积<\/span>";
+//				    strVar += "			<span class=\"jp_costumeicon01\" style=\"background: #ee008c\">礼<\/span>";
+//				    strVar += "		<\/p>";
+				    strVar += "	<\/div>";
+				    strVar += "	<\/a>";
+				    strVar += "<\/div>";
+				    strVar += "<\/li>";
+				});
+			    is_page = true;
+			}else{
+				is_page = false;
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$("#list").html(strVar);
+		    }else{
+		    	$("#list").append(strVar);
+		    }
+			
+			closeloading();
+		})
+	}
+	
+	
+	/**
+	 * 获取店铺信息 
+	 * @param sid 店铺id
+	 */
+	function getShopInfo(sid){
+		_openWinByUrl('mall_shop','mall_shop',{'id':sid});
+	}
+</script>
+</body>
+</html>

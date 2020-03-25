@@ -1,0 +1,319 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">评价会所</h1>
+		</header>
+		<div class="mui-content">
+			<div class="bgwhite border_b10 pb20">
+				<div class="clearfloat pl20 pr20 box_s">
+					<div class="mui-pull-left pjhs_left">
+						<div class="aboutUs_top_touxiang">
+							<img src="../../images/1903_1.png" class="shopLogo"/>
+						</div>
+					</div>
+					<div class="mui-pull-left gybd_right">
+						<p class="fs28 font_weightB mt20 shopName">安国市突魄健身会所</p>
+					</div>
+				</div>
+			</div>
+			<div class="bgwhite pl20 pr20 pt10 pjhs_xing">
+				<div class="mui-row fs28">
+					<div class="mui-col-sm-6 mui-col-xs-6">
+						<span>硬件:</span>
+						<span class="xingxing heardware">
+							<span class="iconfont icon-wujiaoxingx colorRed"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+						</span>
+					</div>
+					<div class="mui-col-sm-6 mui-col-xs-6">
+						<span>环境:</span>
+						<span class="xingxing environment">
+							<span class="iconfont icon-wujiaoxingx colorRed"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+						</span>
+					</div>
+					<div class="mui-col-sm-6 mui-col-xs-6">
+						<span>服务:</span>
+						<span class="xingxing serive">
+							<span class="iconfont icon-wujiaoxingx colorRed"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+						</span>
+					</div>
+					<div class="mui-col-sm-6 mui-col-xs-6">
+						<span>总分:</span>
+						<span class="xingxing score">
+							<span class="iconfont icon-wujiaoxingx colorRed"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+							<span class="iconfont icon-wujiaoxingx"></span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="pl20 pr20 box_s bgwhite pt20">
+				<textarea class="pjhs_textarea" name="" rows="" cols="" placeholder="请写下对Club的感受吧，对他人也有很大帮助哦~"></textarea>
+			</div>
+			<div class="pl20 pr20 box_s bgwhite">
+				<!--<div class="border_b clearfloat pb20">
+					<div class="pjhs_img_inner mui-pull-left">
+						<img src="../../images/bwm4.jpg"/>
+						<span class="iconfont icon-shanchu1 colorRed"></span>
+					</div>
+					<div class="pjhs_img_inner mui-pull-left">
+						<img src="../../images/bwm4.jpg"/>
+						<span class="iconfont icon-shanchu1 colorRed"></span>
+					</div>
+					<div class="pjhs_img_inner mui-pull-left">
+						<img src="../../images/bwm4.jpg"/>
+						<span class="iconfont icon-shanchu1 colorRed"></span>
+					</div>
+					<div class="pjhs_img_inner mui-pull-left">
+						<img src="../../images/pjdp1.jpg"/>
+					</div>
+				</div>-->
+				<div class="clearfloat mt20 redio_pjhs">
+					<div class="fl">
+						<span class="iconfont icon-danxuankuang is_show_name"></span>
+					</div>
+					<span class="fl ml10">匿名评价</span>
+				</div>
+			</div>
+			<div style="height: 50px;" class="bgwhite"></div>
+			<footer class="full_footerFixed buyNow subForm">提交评价</footer>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+		$(".xingxing span").on("tap",function(){
+			var index_ = $(this).index();
+			for(var i = 0;i<= $(".xingxing span").length;i++){
+				if(i <= index_){
+					$(this).parent("span.xingxing").find("span").eq(i).addClass("colorRed");
+				}else{
+					$(this).parent("span.xingxing").find("span").eq(i).removeClass("colorRed");
+				}
+			}
+		});
+		$(".redio_pjhs").on("tap",function(){
+			if($(this).find("span.iconfont").hasClass("icon-danxuankuangyixuan")){
+				$(this).find("span.iconfont").removeClass("icon-danxuankuangyixuan");
+			}else{
+				$(this).find("span.iconfont").addClass("icon-danxuankuangyixuan");
+			}
+		});
+		
+		
+    var sid = '';
+    var userinfo = '';
+    apiready = function(){
+        sid = api.pageParam.sid;
+        userinfo = $api.getStorage('userinfo');
+
+        $('.shopName').text(api.pageParam.shopName);
+        $('.shopLogo').attr('src', api.pageParam.shopLogo);
+        checkUserInfo(userinfo);
+    };
+
+    // 检测 userinfo
+    function checkUserInfo(param){
+        param = typeof param !== 'undefined' ? param : '';
+
+        var checkInfo = true;
+        if(typeof userinfo == 'undefined' || userinfo == ''){
+            if(param == '') {
+                _toast('请先登录');
+            }
+            checkInfo = false;
+        }
+        return checkInfo;
+    }
+
+    // 添加图片
+    var picArr = [];
+    function portrait() {
+        if (Number(picArr.length) == 3) {
+            _toast('最多上传三张图片', function () {
+                return false;
+            });
+            return false;
+        }
+
+        _actionSheet('请选择类型', ['相机', '相册'], function (ret, index) {
+            if (index == 3) {
+                return true;
+            }
+            if (index == 1) {
+                var sourceType = 'camera';
+            }
+            if (index == 2) {
+                var sourceType = 'album  ';
+            }
+            var server_url = 'http://123.57.36.72:8104/delivery.php/';
+
+            api.getPicture({
+                sourceType: sourceType,
+                encodingType: 'jpg',
+                destinationType: 'url',
+                targetWidth: 600,
+                targetHeight: 600,
+                saveToPhotoAlbum: false
+            }, function (ret, err) {
+                if (ret) {
+                    if (ret.data != null && ret.data != "unfefined" && ret.data != "") {
+                        _ajax(server_url + "File/uploadPicture", {}, 'post', function (data) {
+                            picArr.push(data.data.photo.id);    // 将图片 id 存入数组
+                            // alert(data.data.photo.id);
+                            // return false;
+
+                            if (data.code == 1) {
+                                //更新图片信息
+                                var up_pic = '';
+                                _ajax(ajax_url + "Index/Exercise/getImgSrc", {
+                                    // 'uid': localStorage['uid'],
+                                    'img_id': data.data.photo.id
+                                }, 'post', function (result) {
+                                    if (result.status == 1) {
+                                        up_pic = '';
+                                        up_pic += '<div class="pjhs_img_inner mui-pull-left">';
+                                        up_pic += '    <img src="' + ret.data + '"/>';
+                                        // up_pic += '    <span class="iconfont icon-shanchu1 colorRed"></span>';
+                                        up_pic += '</div>';
+                                        // $(".portrait").attr('src', ret.data);
+                                        $('.pic_container').append(up_pic);
+                                    } else {
+                                        _toast(result.msg);
+                                    }
+                                });
+                            } else {
+                                _toast(data.msg);
+                            }
+                        }, 'json', {'photo': ret.data})
+                    }
+                }
+            });
+        });
+    }
+
+    var _actionSheet = function(title, buttons,_call){
+        api.actionSheet({
+            title: title,
+            cancelTitle: '取消',
+
+            buttons:buttons
+        }, function(ret, err) {
+            var index = ret.buttonIndex;
+            if ( typeof _call == "function") {
+                _call(ret,index);
+            }
+        });
+    };
+
+    /**
+     * 统计星星数量
+     * @param param
+     */
+    var objData = {};
+    function counter(param){
+        var star = 0;
+        $.each(param.data, function(k, v){
+            star = 0;
+            $(v.title).each(function(sk, sv){
+                if($(this).hasClass('colorRed')){
+                    star = Number(star) + 1;
+                }
+            });
+            objData[v.param] = star;
+        });
+
+        return param;
+    }
+
+    $('.subForm').on('tap', function(){
+        if(typeof userinfo == 'undefined' || userinfo == '' || userinfo == null){
+                _toast('请先登录');
+                return false;
+        }
+        var countStar = {
+            'data' : [
+                {'title': '.heardware span', 'param': 'heardware',  'count': 0},
+                {'title': '.environment span', 'param': 'environment', 'count': 0},
+                {'title': '.serive span', 'param': 'serive', 'count': 0},
+                {'title': '.score span', 'param': 'score', 'count': 0},
+            ],
+        };
+
+        countStar = counter(countStar); // 统计对应的星星
+
+        objData['content'] = $('.pjhs_textarea').val();
+        if(!objData['content']){
+            _toast('评价内容不能为空');
+            return false;
+        }
+        if($('.is_show_name').hasClass('icon-danxuankuangyixuan')){
+            objData['is_show_name'] = 2;
+        }else{
+            objData['is_show_name'] = 1;
+        }
+
+//      objData['img'] = picArr.join(',');
+//      if(!objData['img']){
+//          _toast('请添加一张评价照片');
+//          return false;
+//      }
+        objData['uid'] = userinfo.uid;
+        objData['sid'] = sid;
+
+        _ajax(ajax_url + 'Index/Exercise/assessShop', objData, 'get', function (ret) {
+            if(ret.status == 1){
+                api.sendEvent({
+                    name: 'pjSuccess',
+                    extra: {
+                        status: 'success'
+                    }
+                });
+
+                _toast(ret.info, function(){
+                    api.closeWin();
+                });
+            }else{
+                _toast(ret.info);
+            }
+        });
+
+
+    });
+
+
+	</script>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+	<link rel="stylesheet" href="../../css/hotel/bootstrap.css"> 
+	<link rel="stylesheet" href="../../css/hotel/wangting/common.css">
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<title>酒店信息</title>
+</head>
+<body>
+	<div class="gxyhead">				
+		<div class="gFacility gFacilitygg clearfix">
+			<div class="goPay-txt">
+			<i></i>
+			<span>酒店设施</span>
+			</div>
+			<div class="gFacility-All" style="height:3.5rem;">
+				<ul class="w-fl" id='facility' style="width:100%;height:auto;">
+					
+					
+				</ul>
+			</div>
+			<div class="arr xiala"></div>
+		</div>
+		<div class="gAdress gFacilitygg">
+			<div class="goPay-txt">
+			<i></i>
+			<span>酒店地址</span>
+			</div>
+			<!--<div class="gAdress-a">
+				<div class="gAdress-aa"><span>地址：辽宁省大连市沙河口区兴工街华业玫瑰东方</span></div>
+				<div><img src="../../images/hotel/phone.png" alt=""></div>
+			</div>-->
+			<div class="gAdress-a">
+				<div class="container">
+					<div class="row">
+						<div class="col-sm-9 col-lg-9 col-md-9 col-xs-9">
+							<div class="gAdress-aa" style="line-height: 2.5rem;"><span id="address" style="font-size:18px">地址：</span></div>
+						</div>
+						<div class="col-sm-3 col-lg-3 col-md-3 col-xs-3">
+							<div><a id="phone" href=""><img src="../../images/hotel/phone.png" alt=""></a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="gJieshao gFacilitygg">
+			<div class="goPay-txt">
+			<i></i>
+			<span>酒店介绍</span>
+			</div>
+			<div class="gJieshao-time" style="height:auto;">
+				<div class="gJieshao-time2" id="detail">
+					
+				</div>
+			</div>
+			<div class="arr2 xiala"></div>
+		</div>
+		<div class="gjiaotong gFacilitygg">
+			<div class="goPay-txt">
+			<i></i>
+			<span>周边交通</span>
+			</div>
+			<div class="gjd">
+			<ul >
+				<li id="zhoubian"></li>				
+			</ul>
+			</div>
+		</div>
+	</div>	
+	<script type="text/javascript">
+		var flag = false;
+		var flag2 = false;
+		$(".arr").click(function(){
+			if(flag){
+				//var height_ = $(".gFacility-All ul li").height();
+				//var leng = $(".gFacility-All ul li").length;
+				$(".gFacility-All ul.w-fl").css("height","auto");
+				$(".arr").removeClass('shangla').addClass('xiala');
+				flag = false;
+			}else{
+				$(".gFacility-All ul.w-fl").css("height","2.2rem");
+				$(".arr").removeClass('xiala').addClass('shangla');
+				flag = true;
+			}
+		});
+		//var oldheight = $(".gJieshao-time").height();
+		//var newheight = $(".gJieshao-time2").height();
+		//console.log(oldheight)
+		//console.log(newheight)
+		$(".arr2").click(function(){
+			if(flag2){
+				$(".gJieshao-time").css("height","auto");
+				$(".arr2").removeClass('shangla').addClass('xiala');
+				flag2 = false;
+			}else{
+				$(".gJieshao-time").css("height","1.7rem");
+				$(".arr2").removeClass('xiala').addClass('shangla');
+				flag2 = true;
+			}
+		})
+	</script>
+	
+	<script>
+		//默认加载
+	var sid='';
+	apiready = function(){
+		//店铺id 
+		sid=api.pageParam.sid;
+		
+		//获取店铺详情
+		getShop(sid);
+	};
+	//获取店铺详情
+	function getShop(sid){
+		_ajax(ajax_url+"Index/Hotel/getHotelInfo",{sid:sid},'post',function(ret){
+			if(ret.status==1){
+				$('#address').text('地址：'+ret.hotel.address);
+				$('#phone').attr('href', "javascript:alert('"+ret.hotel.telphone+"');" );
+				$('#detail').text(ret.hotel.detail);
+				
+				var html='';
+				for(var i in ret.hotel.facility){
+					html+='<li><i style="background:url('+ret.hotel.facility[i].logo+');background-size: 100%;"></i><span>'+ret.hotel.facility[i].title+'</span></li>';
+				}
+				$('#facility').html(html);
+				
+				$('#zhoubian').html(ret.hotel.ad.replace(/\r\n/g, '<br/>'));
+			}
+		});
+	}
+	</script>
+</body>
+</html>

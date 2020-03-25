@@ -1,0 +1,930 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<style>
+	.jifen_liimg img {
+	    width: 2.5rem;
+	    height: 2.5rem;
+	}
+	.duihuan_btn{ width:0.55rem;}
+	.jifen_p01{    width: 2.5rem;
+    margin: 0 auto;
+    padding: 0.1rem 0;
+   }
+   .jifen_p01{ height: 0.18rem;    -webkit-line-clamp: 1;    padding-bottom: 0.1rem; padding-top: 0;    width: 1.35rem;    margin: 0 auto 0.05rem;}
+	.jifen_p02{width: 2.5rem;margin: 0 auto;padding: 0;}
+	/*.shouqing{width: 0.7rem;height: 0.7rem;background: url();position:absolute;top: 0;right: 0; }*/
+    .rush{width: 30%;height: 0.5rem;line-height: 0.5rem;text-align: center;display: inline-block;float: right;background:#ed7e07;color:#fff;margin-top: -0.3rem;border-radius: 5px;font-size: 0.2rem }
+	.rush{ position:absolute;  right: 0.4rem;}
+	.jifen_li{ position:relative;}
+	.hfast_iconp01{ color:#fff;}
+	a.hfast_icona:active{opacity: 0.8}
+	.hfast_iconacur{opacity: 0.8}
+</style>
+<script type="text/javascript" src="../script/api.js"></script>
+</head>
+<body>
+<!-- 头部 -->
+	<!--<header  id="header">
+		<div class="header_top">
+			<div class="index_addr">
+				<div class="index_addrtxt dy_dd">送至：北京昌平区生命科学园珠江摩尔国际生命科学园珠江摩尔国际<i class="indexxl_icon"></i></div>
+
+			</div>
+			<a href="#" class="headerRight">
+				<span class="index_topicon"><b class="index_topiconpoint"></b></span>
+			</a>
+		</div>
+	</header>-->
+	<!--<div class="wp_100">
+		<div class="null_h"></div>
+	</div>-->
+<div class="clear"></div>
+<!-- 快捷图标 -->
+	<div class="hfast_iconwrap" style="margin-top: 0;background:#fd563b;">
+		<ul class="channellist">
+			<li class="hfast_iconli">
+				<a href="javascript:" onclick="erweima();" class="hfast_icona">
+					<img src="../images/fukuan.png" style="height: 0.69rem;margin: 0.1rem 0;">
+				</a>
+				<p class="hfast_iconp01">付款</p>
+			</li>
+
+			<!--<li class="hfast_iconli">
+				<a href="javascript:;" onclick="_openWinByUrl('mall_super_goods_win_head','window_head',{'frame':'mall_super_goods_list','furl':'mall_super_goods_list','title':'商品列表'})"  class="hfast_icona">
+					<img src="../images/fast_icon08.png">
+				</a>
+				<p class="hfast_iconp01">精品</p>
+			</li>-->
+			<li class="hfast_iconli">
+				<a href="javascript:" onclick="card_money();" class="hfast_icona">
+					<img src="../images/chongzhi.png">
+				</a>
+				<p class="hfast_iconp01">充值</p>
+			</li>
+			<li class="hfast_iconli">
+				<a href="javascript:" onclick="_openWinByUrl('jifen_goods_list','jifen/jifen_goods_list')" class="hfast_icona">
+					<img src="../images/jifen.png">
+				</a>
+				<p class="hfast_iconp01">积分商城</p>
+			</li>	
+			
+		</ul>
+	</div>
+<!-- banner -->
+<div class="wp_100">
+<style type="text/css">
+	.banner-wrap{ overflow: hidden; position: relative;}
+	.swiper-container{overflow: hidden;}
+	.swiper-pagination1{ background: #fff; text-align: center;}
+	.swiper-pagination1 span{ margin: 0 5px;}
+	.swiper-wrap{ position: relative; height: 2.3rem; background: #199908;}
+	.swiper-pagination-bullet{ background: rgb(255,255,255); }
+	.swiper-pagination-bullet-active{ background: #fff; }
+	.swiper-pagination2 span{margin: 0 5px;}
+	.swiper-pagination2{ text-align: center; }
+	.swiper-pagination3 span{margin: 0 5px;}
+	.swiper-pagination3{ text-align: center; position: absolute; bottom: 10px; left: 0; width: 100%; z-index: 1; }
+	.swiper-container1{background: #fff;}
+	.fastImga img{    border-radius: 50%;}
+	.jifen_p02 {padding:0.1rem;}
+	/*修改活动部分*/
+	.hyouhui_imgla img{ height: 2.4rem;}
+	.hyouhui_lirr{ width: 100%; }
+	.hyouhui_lir{ height: 1.2rem; overflow: hidden;text-align:center;}
+	.hyouhui_lirra img{ height: 100%; width:100%;}
+	/*.hyouhui_li{ height:2.8rem; }*/
+	.hyouhui_liwrap{ display:block; text-align: center; }
+	.hyouhui_li{ height:2.3rem; overflow: hidden;}
+	.hyouhui_lir{ padding-bottom:0; border-bottom:0;}
+	/*首页修改2017110*/
+	.hfast_iconli{ width: 33.3%;}
+	.noticeMainIcon{ background: none;padding-left:0;}
+	.noticeMainIcon img{ width: 1.13rem; height: 0.24rem; vertical-align: middle;}
+	.noticeMaintxt{padding-left:1.3rem; }
+	.noticeMaintxt a{color: #232323;}
+	.index_baopintxt{ color: #232323;font-size: 0.26rem;}
+	.jifen_icontxt{color: #d12a18;}
+	.headerRight span{ margin-right: 0;}
+	.jifen_icontxt01{ width: 60%; display: inline-block;}
+	.jifen_icontxt{color: #d12a18; width: 50%; display: inline-block;}
+	.duihuan_btn{ font-size: 0.22rem; width: 1rem;    position: absolute;    right: 0;    bottom: 0; }
+	.jifen_lia{    padding-bottom: 0.1rem;}
+	.jifen_p02{ position:relative;}
+</style>
+
+<div class="banner-wrap">
+  <div class="swiper-container1">
+		<div class="swiper-wrapper adv">
+			
+		</div>
+	<!-- 如果需要分页器 -->
+		<div class="swiper-pagination"></div>
+	</div>
+</div>
+</div>
+<div class="clear"></div>
+<div class="wp_100">
+	<!-- 公告 -->
+	<div class="noticeMain">
+		<a href="#" class="noticeMainIcon"><img src="../images/allday_tj.png"></a>
+		<div id="scrollDiv" class="noticeMaintxt" onclick="_openWinByUrl('affiche_window_head','window_head',{'frame':'affiche','furl':'affiche','title':'公告'})">
+			<ul class="noticelist">
+			<li class="dy_dd"><a href="024_优惠公告.html">米尼奥莱火爆入驻药都大酒店购物中心</a></li>
+			<!--<li class="dy_dd"><a href="024_优惠公告.html">米尼奥莱火爆入驻药都大酒店购物中心</a></li>-->
+			</ul>
+		</div>
+	</div>
+	
+<div class="module">
+	<!-- 优惠 -->
+	<!--<div class="jifen_wrap">
+		<div class="index_more">
+			<div class="jifenbg">
+				<span class="jifenbgl">积分商城（积分可兑换商品）</span>
+				<a href="#" class="jifenbgr">更多></a>
+			</div>
+		</div>
+		<div class="jifen_list">
+			<ul class="jifen_ul integralGoodlist">
+				<li class="jifen_li">
+					<span  class="jifen_lia">
+						<a  href="#">
+							<span class="jifen_liimg">
+							<img src="../images/jiefen01.jpg">
+							</span>
+							<p class="jifen_p01">可心柔系列纸抽非
+							常柔软...</p>
+						</a>
+						<p class="jifen_p02">
+							<span class="jifen_icontxt"><i class="jifen_icon"></i>1530</span>
+							<a href="#" class="duihuan_btn">兑换</a>
+						</p>
+					</span>
+				</li>	
+			</ul>
+		</div>
+	</div>-->
+	
+	
+	<!-- 爆品推荐 -->
+</div>
+	<!-- 优惠 -->
+	<!--<div class="hyouhui_wrap activity_html">
+		<ul class="hyouhui_ul">
+			<li class="hyouhui_li">
+				<div class="hyouhui_liwrap">
+					<img class="activity_big" src="../images/ac_default.png" style="height:2.4rem;">
+				</div>
+			</li>
+			<li class="hyouhui_li hyouhui_li01">
+				<div class="hyouhui_lir">
+					<div>
+						<a href="javascript:void(0);" class="hyouhui_lirra"><img class="activity_rtop" src="../images/ac_default.png"></a>
+					</div>
+				</div>
+				<div class="hyouhui_lir" style="padding-bottom: 0; border-bottom: 0;">
+					<div>
+						<a href="javascript:void(0);" class="hyouhui_lirra"><img class="activity_rbottom" src="../images/ac_default.png"></a>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>-->
+	<!-- 品牌推荐 -->
+	<!--<div class="index_brand">
+		<div class="index_more">
+			<div class="index_baopin">
+				<span class="index_baopintxt"><i class="brand_icon"></i>店铺推荐</span>
+				<a  href="#" class="jifenbgr" style="color: #666;">更多 ></a>
+			</div>
+		</div>
+		<div class="brandlist">-->
+		<!--	<div class="index_brandimg">
+			<a href="#"><img src="../images/index_botimg01.jpg"></a>
+		</div>
+		</div>
+	
+
+	</div>-->
+	
+</div>
+
+<!--<div class="wp_100">
+	<div class="botH"></div>
+</div>-->
+<!-- 底部 -->
+
+
+<style type="text/css">
+	.card_imgnum{ top: 1.8rem; left: 0.4rem;}
+	.bound_cardedtabli a{width:1.5rem;}
+	
+	/*添加二维码*/
+.card_img .erweima_click{ width: 0.8rem;height: 0.8rem; position: absolute; right: 0.5rem; top: 0.5rem;}
+.card_img .erweima_click img{width: 0.8rem;height: 0.8rem;}
+.erweima_window{ background: #fff; padding: 0.2rem; text-align: center; }
+.erweima_windowtxm img{ width: 100%; height: 1.2rem; }
+.erweima_windowtxt{ color: #000;     font-family: '宋体';}
+.erweima_windowtxm{ padding: 0 0.2rem;}
+.erweima_windower{ padding:0.2rem;}
+.erweima_windower img{ width: 3rem; height: 3rem;}
+.food_windowwrap{ position: absolute; top: 30%; width: 90%; left: 5%;}
+
+	.layui-m-layercont{ padding: 0;}
+	/*底部抽奖积分一张图片的时候*/
+.hyouhui_li{ height: auto; width: 100%;}
+.hyouhui_li img{width: 100%;}
+.jifen_ul{ width:100%; overflow:hidden; }
+</style>
+<!-- 二维码弹窗 -->
+<div class="maskBg" style=""></div>
+<div class="food_windowwrap" style="display:none">
+	<div class="erweima_window" >
+		<p class="erweima_windowtxt">xxxx &nbsp;xxxx &nbsp;xxxx&nbsp; xxxx</p>
+		<p class="erweima_windowtxm"><img class="txm_img" src="../../images/card.jpg"></p>
+		<p class="erweima_windower" ><img class="qr_img" src="../../images/card.jpg"></p>
+	</div>
+</div>
+
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+
+<!-- banner轮播js -->
+<script src="../script/swiper.min.js"></script>
+
+<!-- 二维码 -->
+<script type="text/javascript" src="__PUBLIC__/Wap/script/jquery.qrcode.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wap/script/qrcode.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Wap/script/jquery-barcode.js"></script>
+
+<script type="text/javascript">
+
+//滚动插件
+(function($){
+	$.fn.textSlider = function(settings){    
+            settings = jQuery.extend({
+                speed : "normal",
+                line : 1,
+                timer : 3000
+            }, settings);
+            return this.each(function() {
+                $.fn.textSlider.scllor( $( this ), settings );
+            });
+        };
+	$.fn.textSlider.scllor = function($this, settings){
+            var ul = $("ul:eq(0)",$this );
+            var timerID;
+            var li = ul.children();
+            var liHight=$(li[0]).height();
+            var upHeight=0-settings.line*liHight;//滚动的高度；
+            var scrollUp=function(){
+                ul.animate({marginTop:upHeight},settings.speed,function(){
+                    for(i=0;i<settings.line;i++){
+                        ul.find("li:first",$this).appendTo(ul);
+                    }
+                    ul.css({marginTop:0});
+                });
+            };
+            var autoPlay=function(){
+                timerID = window.setInterval(scrollUp,settings.timer);
+            };
+            var autoStop = function(){
+                window.clearInterval(timerID);
+            };
+            //事件绑定
+            ul.hover(autoStop,autoPlay).mouseout();
+	};
+})(jQuery);
+
+$(document).ready(function() {
+$("#scrollDiv").textSlider({line:1,speed:600,timer:4000});
+//	$("#scrollDiv").textSlider({line:1,speed:600,timer:4000});
+//	点击状态
+		$(document).on('touchstart','.hfast_iconli',function(){
+		$(this).addClass('hfast_iconacur');
+		});
+		$(document).on('touchend','.hfast_iconli',function(){
+		
+		$(this).removeClass('hfast_iconacur');
+		})
+		
+		
+	});
+
+$(".adv").css({
+	height: $(window).width() * 0.44
+});
+
+var winWidth = 0;
+var imgheight = 0;
+
+
+
+apiready = function() {
+
+	winWidth = api.winWidth;
+	imgheight = winWidth * 0.44;
+
+	api.setRefreshHeaderInfo({
+		visible: true,
+		loadingImg: 'widget://image/refresh.png',
+		bgColor: '#fff',
+		textColor: '#ccc',
+		textDown: '下拉刷新...',
+		textUp: '松开刷新...',
+		showTime: true
+	}, function(ret, err) {
+		if (ret) {
+			ready(1);
+			
+			
+			//获取模块商品
+			getIndexModule();
+			
+			//获取活动信息
+			//getActivity();
+		
+			commodity();
+		}
+
+	});
+	
+	//监听更新登陆信息
+	api.addEventListener({
+	    name: 'refresh_userinfo'
+	}, function(ret, err) {
+	    userinfo = ret.value.userinfo;
+	    //获取用户卡信息
+		getUserCard();
+		
+	});
+	
+	api.addEventListener({
+	    name:'viewappear'
+    },function(ret,err){
+    	//coding...
+    	//获取用户卡信息
+		getUserCard();
+		
+		
+    });
+	
+	//showprogress('正在加载中');
+	loading('default');
+	//获取轮播图 与频道模块
+	ready();
+	
+	//获取模块商品
+	getIndexModule();
+	//获取品牌推荐
+	commodity();
+	//获取用户卡信息
+	getUserCard();
+	//获取活动信息
+	//getActivity();
+	
+};
+
+function ready(is_frist) {
+	api.ajax({
+		url: ajax_url + 'Index/Index/Index',
+		method: 'post',
+		data: {
+			values: {},
+		}
+	}, function(ret, err) {
+		if (ret) {
+			if (ret.code) {
+				var advhtml = '';
+				var adv = ret.adv; //广告位
+				var notice = ret.ad; //公告
+				var noticehtml = '';
+				var channel = ret.channel; //频道
+				var channelhtml = '';
+				
+				//轮播图
+				var scroll =$(".hfast_iconwrap").height() +10;
+			
+				
+				if (adv != null && adv.length > 0) {
+					$(".adv").css('height',api.winWidth *0.44*0.8);
+					detail_swiper_path=[];
+					for (var i in adv) {
+						detail_swiper_path.push(adv[i]['image'] );
+						advhtml += '<div class="swiper-slide" ><img src="' + adv[i]['image'] + '" width="100%"></div>';
+					}
+					
+					var UIScrollPicture = api.require('UIScrollPicture');
+					UIScrollPicture.open({
+					    rect: {
+					        x: 0,
+					        y: scroll,
+					        w: api.winWidth,
+					        h: api.winWidth *0.44*0.8
+					    },
+					    data: {
+					        paths: detail_swiper_path
+					    },
+					    styles: {
+
+					        indicator: {
+					            align: 'center',
+					            color: '#FFFFFF',
+					            activeColor: '#DA70D6'
+					        }
+					    },
+					    placeholderImg: '../images/ac_default.png',
+					    contentMode: 'scaleToFill',
+					    interval: 4,
+					    fixedOn: 'default',
+					    loop: true,
+					    fixed: false
+					}, function(ret, err) {
+					    if (ret) {
+					       // alert(JSON.stringify(ret));
+					    } else {
+					       // alert(JSON.stringify(err));
+					    }
+					});
+					
+					
+				}
+				//$(".adv").html(advhtml); //广告位
+				/*
+					// 顶部banner
+					var swiper = new Swiper('.swiper-container1', {
+						pagination: '.swiper-pagination',
+						paginationClickable: false,
+						autoplay: 5000,
+					autoplayDisableOnInteraction: false,
+						loop: true
+					});
+					$(".swiper-container1 .swiper-slide").css({
+						height: $(window).width() * 0.44
+					});
+					$(".swiper-container1 .swiper-slide img").css({
+						height: $(window).width() * 0.44
+					});
+				*/
+				if (notice != null && notice.length > 0) {
+					for (var j in notice) {
+						noticehtml += ' <li class="dy_dd"><a href="javascript:void(0);">' + notice[j]['content'] + '</a></li>';
+					}
+				}
+				$(".noticelist").html(noticehtml); //广告位
+				
+				
+				if (channel != null && channel.length) {
+					for (var k in channel) {
+						channelhtml += '<li class="hfast_iconli">' +
+
+						'<a href="javascript:void(0);" onclick=_openWinByUrl("' + channel[k]['flag'] + '","./' + channel[k]['flag'] + '/' + channel[k]['flag'] + '") class="hfast_icona">' +
+
+						'<img src="' + channel[k]['logo'] + '">' + '</a>' + '<p class="hfast_iconp01">' + channel[k]['name'] + '</p>' + '</li>';
+					}
+					
+					//保持频道信息
+					$api.setStorage('channel_info',channel);
+
+				}
+				$(".channellist").html(channelhtml);
+				
+
+			} else {
+				_alert('网络连接失败,请稍后重试');
+			}
+			api.refreshHeaderLoadDone();
+			closeloading();
+		} else {
+			api.refreshHeaderLoadDone();
+			closeloading();
+			_alert('网络连接失败,请稍后重试');
+		}
+
+	});
+}
+
+	/**
+	 * 获取首页模块信息 
+	 */
+	function getIndexModule(){
+	
+		_ajax(ajax_url+"Index/Index/indexModule" ,{},'get',function(ret){
+			if(ret.status ==1){
+					var strVar = "";
+					$.each(ret.data,function(k,v){
+						//判断是否是活动模块
+						if(v['type_id'] == 5){
+				
+						    strVar += "<div class=\"hyouhui_wrap activity_html\">";
+						    strVar += "	<ul class=\"hyouhui_ul\">";
+						    strVar += "		<li class=\"hyouhui_li\">";
+						    strVar += "		<div class=\"hyouhui_liwrap\">";
+						    if(typeof (v['goods_list'][0]) !='undefined' && v['goods_list'][0]!=''){
+						    	strVar += "			<img onclick=\"getActiveTemplate("+v['goods_list'][0]['id']+","+v['goods_list'][0]['template']+",'"+v['goods_list'][0]['type']+"')\" class=\"activity_big\" src=\""+v['goods_list'][0]['img_src']+"\" style=\"height:auto;\">";
+						    }else{
+						    	strVar += "			<img class=\"activity_big\" src=\"../images/ac_default.png\" style=\"height:auto;\">";
+						    }
+						    strVar += "		<\/div>";
+						    strVar += "		<\/li>";
+//						    strVar += "		<li class=\"hyouhui_li hyouhui_li01\">";
+//						    strVar += "		<div class=\"hyouhui_lir\">";
+//						    strVar += "			<div>";
+//						    strVar += "				<a href=\"javascript:void(0);\" class=\"hyouhui_lirra\">";
+//						    if(typeof (v['goods_list'][1]) !='undefined' && v['goods_list'][1]!=''){
+//						    	strVar += "			<img onclick=\"getActiveTemplate("+v['goods_list'][1]['id']+","+v['goods_list'][1]['template']+",'"+v['goods_list'][1]['type']+"')\" class=\"activity_rtop\" src=\""+v['goods_list'][1]['img_src']+"\" >";
+//						    }else{
+//						    	strVar += "			<img class=\"activity_rtop\" src=\"../images/ac_default.png\" >";
+//						    }
+//						 
+//						    
+//						    strVar += "			<\/a><\/div>";
+//						    strVar += "		<\/div>";
+//						    strVar += "		<div class=\"hyouhui_lir\" style=\"padding-bottom: 0; border-bottom: 0;\">";
+//						    strVar += "			<div>";
+//						    strVar += "				<a href=\"javascript:void(0);\" class=\"hyouhui_lirra\">";
+//						    
+//						    
+//						    if(typeof (v['goods_list'][2]) !='undefined' && v['goods_list'][2]!=''){
+//						    	strVar += "			<img onclick=\"getActiveTemplate("+v['goods_list'][2]['id']+","+v['goods_list'][2]['template']+",'"+v['goods_list'][2]['type']+"')\" class=\"activity_rbottom\" src=\""+v['goods_list'][2]['img_src']+"\" >";
+//						    }else{
+//						    	strVar += "			<img class=\"activity_rbottom\" src=\"../images/ac_default.png\" style=\"height:2.4rem;\">";
+//						    }
+//						    strVar += "			<\/a><\/div>";
+//						    strVar += "		<\/div>";
+//						    strVar += "		<\/li>";
+						    strVar += "	<\/ul>";
+						    strVar += "<\/div>";
+						
+						}else{
+							//判断当前模块下是否有商品
+							if(v['goods_list'].length >0){
+								strVar += "<div class=\"jifen_wrap\">";
+							    strVar += "	<div class=\"index_more\">";  //
+							    strVar += "		<div class=\"index_baopin\">";  //jifenbg
+							    strVar += "			<span class=\"index_baopintxt\">"+v['module_name']+"<\/span>";  //jifenbgl
+							    strVar += "			<a onclick=\"openGoodsList("+v['type_id']+")\" style=\"color: #232323;\" class=\"jifenbgr\">更多><\/a>";
+							    strVar += "		<\/div>";
+							    strVar += "	<\/div>";
+							    strVar += "	<div class=\"jifen_list\">";
+							    strVar += "		<ul class=\"jifen_ul integralGoodlist\">";
+							    
+							    //循环商品
+							    $.each(v['goods_list'],function(key,val){
+							    	if(val['goods_number'] == 0){
+							    	strVar += "			<li class=\"jifen_li jifen_licur\" style=\"width:49.7%\">";
+							    	}else{
+							    	strVar += "			<li class=\"jifen_li \" style=\"width:49.7%\">";
+							    	}
+							    	
+								    strVar += "			<span class=\"jifen_lia\">";
+								    strVar += "			<a href=\"javascript:void(0)\"  onclick=\"openGoodsDetail("+val['goods_id']+","+v['type_id']+")\">";
+								    strVar += "			<span class=\"jifen_liimg\" style=\"position:relative;\">";
+								     strVar += "         <div class='shouqing'><\/div>";
+								    strVar += "			<img src=\""+val['goods_src']+"\">";
+								    strVar += "			<\/span>";
+								    strVar += "			<p class=\"jifen_p01\" style=\"width: 2.5rem;margin:0 auto 0.05rem;\">";
+								    strVar += val['goods_name'];
+								    strVar += "			<\/p>";
+								    strVar += "			<\/a>";
+								    strVar += "			<p class=\"jifen_p02\" style=\"width:2.5rem;margin:0 auto;padding:0;\">";
+									
+								    //判断是否为积分商品
+								    if(v['type_id']  == 1 ){
+								    	strVar += "	<span onclick=\"openGoodsDetail("+val['goods_id']+","+v['type_id']+")\" class=\"jifen_icontxt jifen_icontxt01 dy_dd\" style=\"overflow: hidden\">"+val['shop_price']+"<span>积分</span><\/span>";
+									    strVar += "	<a href=\"javascript:void(0);\" onclick=\"openGoodsDetail("+val['goods_id']+","+v['type_id']+")\" class=\"duihuan_btn\">立即兑换<\/a>";
+								    }else{
+								    	strVar += "	<span onclick=\"openGoodsDetail("+val['goods_id']+","+v['type_id']+")\" class=\"jifen_icontxt\"><span class=\"baopin_yuan\">￥</span>"+val['shop_price']+"</span>";
+								    	//strVar += " <a href=\"javascript:void(0);\" class=\"duihuan_btn\">购买<\/a>";
+								    }
+								    strVar += "			<\/p>";
+								    strVar += "			<\/span>";
+								    strVar += "			<\/li>";
+							    });
+							   
+							    strVar += "		<\/ul>";
+							    strVar += "	<\/div>";
+							    strVar += "<\/div>";
+							}
+						}
+						
+					});
+				    
+				  
+				    $(".module").html(strVar);
+			}else{
+			
+			}
+		});
+	
+
+
+	}
+	
+	
+	/**
+	 * 获取活动信息 
+	 */
+	function getActivity(){
+		
+		_ajax(ajax_url+'Index/Index/getActivity',{},'get',function(ret){
+			if(ret.status ==1){
+				if(typeof (ret.data[0]) !='undefined' && ret.data[0]!=''){
+					$(".activity_big").attr('src',ret.data[0].img_src);
+					$(".activity_big").attr('onclick','getActiveTemplate('+ret.data[0]['id']+','+ret.data[0]['template']+',"'+ret.data[0]['type']+'")');
+				}
+				if(typeof (ret.data[1]) !='undefined' && ret.data[1]!=''){
+					$(".activity_rtop").attr('src',ret.data[1].img_src);
+					$(".activity_rtop").attr('onclick','getActiveTemplate('+ret.data[1]['id']+','+ret.data[1]['template']+',"'+ret.data[1]['type']+'")');
+				}
+				if(typeof (ret.data[2]) !='undefined' && ret.data[2]!=''){
+					$(".activity_rbottom").attr('src',ret.data[2].img_src);
+					$(".activity_rbottom").attr('onclick','getActiveTemplate('+ret.data[2]['id']+','+ret.data[2]['template']+',"'+ret.data[2]['type']+'")');
+				}
+			}
+		});
+	}
+	
+	//模板页面
+	var template = [];
+	
+	template[0] = 'activity_template_1';
+	template[1] = 'activity_template_1';
+	template[2] = 'activity_template_2';
+	template[3] = 'activity_template_3';
+	/**
+	 * 跳转活动页面
+	 * @param  id 活动id  
+	 * @param  template_id 模板id
+	 */
+	function getActiveTemplate(id,template_id,action){
+		var temp_name = template[template_id];
+		_openWinByUrl('activity_head','activity_head',{'action':action,'frame':temp_name,'furl':temp_name,'id':id,'title':'活动'});
+	}
+	
+	/*
+	 * 积分兑换直接跳转到确认订单页面
+	 */
+	function convert(gid,stock,price){
+	  //获取商品数量
+	  var num=1;
+	    if(num>stock){
+	     _toast('库存不足');
+	     return false;
+	    }
+      userinfo = $api.getStorage('userinfo');	
+     if(!userinfo){
+	      _openWinByUrl('login','login');
+	      return false;
+	    }
+        var pram={goods_id:gid,goods_num:num,goods_price:price};
+	      _openWinByUrl('jifen_order','jifen/jifen_order',pram);
+	   
+	}
+
+/**
+ * 获取品牌推荐 
+ */
+function commodity() {
+	api.ajax({
+		url: ajax_url + 'Index/Index/spaceShop',
+		method: 'post',
+		data: {
+			values: {},
+		}
+	}, function(ret, err) {
+		if (ret) {
+			if (ret.status ==1) {
+				
+				var brandHtml = '';
+				if (ret.data != null && ret.data.length>0) {
+					for (var k in ret.data) {
+						brandHtml += '<div class="index_brandimg">' + '<a onclick="openShopDetail('+ret.data[k]['shop_id']+','+ret.data[k]['channel_id']+')" href="javascript:void(0);"><img style="height:' + imgheight + 'px;" src="' + ret.data[k]['img_src'] + '"></a>' + '</div>';
+					}
+				}
+				$(".brandlist").html(brandHtml);
+			} else {
+				_alert('网络连接失败,请稍后重试');
+			}
+		}else{
+			_alert('网络连接失败,请稍后重试');
+		}
+
+	})
+}
+
+
+//频道信息
+var channel = [];
+	channel[1] = 'jifen';
+	channel[2] = 'super';
+	channel[3] = 'mall';
+	channel[4] = 'food';
+	channel[5] = 'house';
+
+
+
+
+
+/**
+ * 跳转对应商品详情 
+ * @param goods_id  商品id
+ * @param type_id   频道Id   对应表示在  变量 channel中
+ */
+function openGoodsDetail(goods_id ,type_id){
+	var flag = channel[type_id];
+	_openWinByUrl(flag+"_goodsdetail",flag+"/"+flag+"_goodsdetail",{'goods_id':goods_id})
+}
+
+
+
+
+//频道信息
+var channel_shop = [];
+	channel_shop[1] = 'mall';
+	channel_shop[2] = 'super';
+	channel_shop[3] = 'hotel';
+	channel_shop[4] = 'food';
+	channel_shop[5] = 'house';
+/**
+ * 跳转对应商品详情 
+ * @param sid  店铺id
+ * @param channel   频道Id   对应表示在  变量 channel_shop
+ */
+function openShopDetail(sid ,channel_id){
+	var flag = channel_shop[channel_id];
+	if(channel_id ==1){
+		_openWinByUrl(flag,flag+"/"+flag+"_shop",{'id':sid})
+	}else{
+		_openWinByUrl(flag,flag+"/"+flag,{'id':sid})
+	}
+	
+}
+	
+	
+/**
+ * 跳转对应商品列表 
+ * @param channel   频道Id   对应表示在  变量 channel
+ */	
+function openGoodsList(channel_id){
+	
+	var flag = channel[channel_id];
+	if(channel_id ==2){
+		_openWinByUrl(flag,flag+"/"+flag,{'index':1})
+	}else{
+		_openWinByUrl(flag+"_goods_list",flag+"/"+flag+"_goods_list",{'index':1})
+	}
+}
+
+
+
+var cardno = "";
+/**
+ * 获取用户卡信息 - 卡充值
+ */
+function getUserCard(){
+	userinfo  =$api.getStorage('userinfo');
+	if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+		//_openWinByUrl('login','Index/login');
+		return false;
+	}
+	
+	_ajax(ajax_url +"Index/User/getUserCard",{'uid':userinfo.uid,'token':userinfo.token},'post',function(ret){
+		var strVar = "";
+		if(ret.status  ==1){
+			$.each(ret.data,function(k,v){
+					cardno = v['cardNo'];
+			});
+			openScanner(cardno);
+			$(".erweima_windowtxt").html(cardno);
+			api.sendEvent({
+	            name:'qrcode',
+	            extra:{
+	            	cardno:cardno
+	            }
+            });
+//			api.openFrame({
+//		        name: 'qrcode',
+//		        url: 'card/qrcode.html',
+//				pageParam: {
+//			        cardno: cardno
+//			    },
+//	        });
+//	        api.setFrameAttr({
+//	        	name:'qrcode',
+//				hidden:'true'
+//			});
+		}
+		
+		
+		
+	});
+
+}
+
+/**
+ * 二维码 
+ */
+function openScanner(cardno){
+	var FNScanner = api.require('FNScanner');
+	
+	
+	FNScanner.encodeImg({
+	    content: cardno,//'http://www.apicloud.com/',
+	    saveToAlbum: false,
+	    type:'qr_image',
+	    saveImg: {
+	        path: 'fs://qr_image.png',
+	        w: 400,
+	        h: 400
+	    }
+	}, function(res, err) {
+	    if (res.status) {
+	        qr_img = res.imgPath;
+	      	$(".qr_img").attr('src',qr_img);
+	    }
+	});
+	
+	FNScanner.encodeImg({
+	    content: cardno,//'http://www.apicloud.com/',
+	    saveToAlbum: false,
+	    type:'bar_image',
+	    saveImg: {
+	        path: 'fs://bar_image.png',
+	        w: 250,
+	        h: 40
+	    }
+	}, function(ret, err) {
+	    if (ret.status) {
+	        //alert(JSON.stringify(ret));
+			bar_img = ret.imgPath;
+			$(".txm_img").attr('src',bar_img);
+		
+	    }
+	});
+/*
+	$(".qr_img").qrcode({
+		render: "canvas",
+		text: cardno,
+		width: "200",
+		height: "200",
+	});
+	$(".txm_img").empty().barcode(cardno, "int25",{barWidth:1.7, barHeight:40,showHRI:false});*/
+	$('.erweima_window').show();
+	
+
+}
+
+function erweima() {
+	userinfo  =$api.getStorage('userinfo');
+	if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+		_openWinByUrl('login','login');
+		return false;
+	}
+	if(cardno !=''){
+		_openWinByUrl('qrcode_window_head','./window_head',{'cardno':cardno,'furl':'card/qrcode','frame':'qrcode','title':'二维码'});
+	}else{
+		_toast('卡号获取失败');
+	}
+	
+	
+	//$('.maskBg').show();
+	//$('.food_windowwrap').show();
+}
+$('.maskBg').click(function () {
+	$('.maskBg').hide();
+	$('.food_windowwrap').hide();
+});
+var doc_h=$(document).width();
+$('.jifen_ul').width(doc_h);
+
+	
+
+/**
+ * 卡充值
+ */
+function card_money(){
+	userinfo  =$api.getStorage('userinfo');
+	if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+		_openWinByUrl('login','login');
+		return false;
+	}
+	//充值
+	_openWinByUrl('card_money_window_head','./window_head',{'cardno':cardno,'furl':'card/card_money','frame':'card_money','title':'充值'});
+
+}
+
+
+</script>
+</body>
+</html>

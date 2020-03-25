@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+    <title>修改昵称</title>
+    <link rel="stylesheet" type="text/css" href="../../css/user/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/user/index.css"/>
+    <script src="../../script/user/jquery-1.12.2.js"></script>
+    <script src="../../script/user/index.js"></script>
+    <script src="../../script/user/gindex.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <style>
+        /* 创建一个正方形容器 */
+        .img-container{
+            width: 20%;
+			float: left;
+			margin: 0.1rem;
+			padding-bottom: 20%;
+			position: relative;
+        }
+        li img{
+        	top: 0;
+			left: 0; 
+			position: absolute;
+        }
+        
+    </style>    
+</head>
+<body style="height:100%;">   
+    <ul id="list">
+        <li class='img-container'><img src="../../images/user/7702.png" style="width:100%;height:100%;"/></li>
+        <li class='img-container'><img src="../../images/user/7702.png" style="width:100%;height:100%;"/></li>
+        <li class='img-container'><img src="../../images/user/7702.png" style="width:100%;height:100%;"/></li>
+        <li class='img-container'><img src="../../images/user/7702.png" style="width:100%;height:100%;"/></li>
+        <li class='img-container'><img src="../../images/user/7702.png" style="width:100%;height:100%;"/></li>
+    </ul>
+</div>
+<script>   	
+    apiready = function(){
+		//获取默认头像
+		headset();
+	};
+	
+	//获取默认头像
+	function headset(){
+		_ajax(ajax_url+"Index/User/headset",{},'post',function(ret){
+			if(ret.status==1){
+				var html='';
+				for(var i in ret.data){
+					html+='<li class="img-container" onclick="link('+ret.data[i].head_img+',\''+ret.data[i].url+'\');"><img src="'+ret.data[i].url+'" style="width:100%;height:100%;"/></li>';
+				}
+				$('#list').html(html);
+				
+			}
+		});
+	}
+	
+	//选择头像
+	function link(id,url){
+		var uid=localStorage.getItem("uid");
+		if(!uid){
+			_openWinByUrl('login','../login');return;
+		}
+		var userinfo=$api.getStorage('userinfo');
+		//更新用户头像信息
+		_ajax(ajax_url +"Index/User/upTouX",{'uid':uid,'token':userinfo.token,'pic':id},'post',function(result){
+			if(result.status ==1){				
+				userinfo.portrait = url;
+				$api.setStorage('userinfo',userinfo);
+				//广播更新用户信息
+				api.sendEvent({
+				    name: 'refresh_userinfo',
+				    extra: {
+				        userinfo:userinfo
+				    }
+				});	
+				api.sendEvent({
+	                name:'refe_relation'
+                });											
+				api.closeWin();
+			}else{
+				_toast(result.msg);
+			}
+		});
+	}
+	
+</script>
+</body>
+</html>

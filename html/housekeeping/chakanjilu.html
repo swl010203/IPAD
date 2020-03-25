@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>044查看记录</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+        <style>
+        	html,body{height:100%;}
+        </style>
+	</head>
+	<body>
+		<!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" onclick="backroot();">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon">
+				查看记录
+			</div>
+			<!--<div class="fr">
+				查看记录
+			</div>-->
+		</header>
+		<!--中间内容-->
+		<div id="list">
+			
+		</div>
+		
+		<!--<div class="chakanjilu mar_t">
+			<div class="inner_chakanjilu">
+				<p class="inner_chakanjilu_tit bor_b clearfloat">
+					<span class="fl">服务类型：<i>保洁</i></span>
+					<span class="fr colorRed">待支付</span>
+				</p>
+				<div class="inner_chakanjilu_center bor_b">
+					<p>服务地址：<span>珠江摩尔大傻五号楼一单元802室</span></p>
+					<p>上门时间：<span>07-22（周六）<i class="mar_l20">13:00</i></span></p>
+				</div>
+				<div class="inner_chakanjilu_center bor_b clearfloat">
+					<p class="clearfloat"><span class="fl">支付全款</span><span class="fr colorRed">50元</span></p>
+					<div class="zhifuBtn mar_t fr mar_l20">去支付</div>
+					<div class="addBtn mar_t fr">取消订单</div>
+				</div>
+			</div>
+		</div>-->
+		<div class="mark hide_">
+			<div class="qixiaodingdan">
+				<ul>
+					<li class="qixiaodingdan_tit">
+						<i class="xian"></i>
+						<span>订单详情</span>
+						<span class="close fr"></span>
+					</li>
+					<ul class="qixiaodingdan_innerUl">
+						<li class="clearfloat"><a>我不需要服务了</a><span class="fr duigou"></span></li>
+						<li class="clearfloat"><a>信息填写错误</a><span class="fr"></span></li>
+						<li class="clearfloat"><a>没有服务者接单</a><span class="fr"></span></li>
+						<li class="clearfloat"><a>其他原因</a><span class="fr"></span></li>
+					</ul>
+				</ul>
+				<div class="qixiaodingdan_fangqi">放弃取消</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			function bodyScroll(event){
+				event.preventDefault();
+			}
+			/*选中出现对勾*/
+			$(".qixiaodingdan_innerUl li").on("click",function(){
+				sureCancelOrder($(this).children(a).html());
+				$(this).children("span").addClass("duigou").parent(".qixiaodingdan_innerUl li").siblings().children("span").removeClass("duigou");
+			});
+			
+			/*弹出层*/
+			/*点击去完善*/
+//			$(".addBtn").on("click",function(){
+//				
+//			
+//			})
+			/*点击完成*/
+			$(".close").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+				document.body.removeEventListener('touchmove',bodyScroll,true);
+			});
+			$(".qixiaodingdan_fangqi").on("click",function(){
+				that_cancel_order_id = 0;
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+				document.body.removeEventListener('touchmove',bodyScroll,true);
+			})
+		});
+		
+		
+		$(".back").unbind('click');
+		function backroot(){
+
+			api.closeToWin({
+	            name: 'baojiefuwu',
+	            animation:{
+	            	subType:'from_left'
+	            }
+            });
+
+            
+            return false;
+		}
+		
+		apiready  = function(){
+        
+            var header = $api.dom('header');
+            //$api.fixStatusBar(header); 
+            var headerPos = $api.offset(header);
+            var body_h = $api.offset($api.dom('body')).h;
+            //var footer_h = $api.offset($api.dom('footer')).h;
+            api.openFrame({
+                name: 'chakanjilu_body',
+                url: 'chakanjilu_body.html',
+                bounces: false,
+                rect: {
+                    x: 0,
+                    y: headerPos.h,
+                    w: 'auto',
+                    h: body_h-headerPos.h
+                },
+                pageParam:api.pageParam,
+                reload:true
+                
+            });
+        }
+	</script>
+</html>

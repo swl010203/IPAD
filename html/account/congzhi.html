@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>充值</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--头部-->
+        <header class="clearfloat header">
+            <div class="fl" id="back">
+                <i class="back"></i>
+                <span>返回</span>
+            </div>
+            <div class="topCon">
+                账户中心
+            </div>
+            <!--<div class="fr">
+                报修记录
+            </div>-->
+        </header>
+
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    
+     <script>
+    	apiready  = function(){
+    		addEventUserInfo();
+    		var header = $api.dom('header');
+    		$('.topCon').html(api.pageParam.title);
+	        //$api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			
+	        api.openFrame({
+	            name: 'chongzhi_body',
+	            url: 'chongzhi_body.html',
+	            bounces: false,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+2,
+	                w: 'auto',
+	                h: 'auto'
+	            },
+				pageParam:api.pageParam,
+				reload:true
+				
+	        });
+    	}
+    </script>
+</html>

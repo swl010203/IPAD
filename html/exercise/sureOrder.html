@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">确认订单</h1>
+		</header>
+		<div class="mui-content bgwhite">
+			<div>
+				<div class="qrdd_fangshi fs28">
+					<ul class="border_b">
+						<li class="qrdd_fangshi_li clearfloat pl20 pr20 box_s peisong_payClick">
+							<div class="mui-pull-left"><span>交货方式</span></div>
+							<div class="mui-pull-right">
+								<span class="send_things"></span>
+								<span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>
+							</div>
+						</li>
+						<li class="qrdd_fangshi_li clearfloat border_b pl20 pr20 box_s getGoodsContainer" style="display: none;border-top:1.5px solid #eeeeee">
+	                        <div class="mui-pull-left"><span>取件时间</span></div>
+	                        <div class="mui-pull-right">
+	                            <span class="getGoodsTime">请选择取件时间</span>
+	                            <span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>
+	                        </div>
+	                    </li>
+					</ul>
+				</div>
+				<div class="qrdd_address clearfloat pl20 pr20 box_s mui-row" onclick="_openWinByUrl('address_head','../user/address_head')">
+					<div class="mui-col-xs-11 mui-col-sm-11">
+						<p class="fs32 font_weightB mt20">
+							<span id="username"></span>
+							<span class="ml60" id="mobile"></span>
+						</p>
+						<p class="fs26 colorHui999 mt10" id="address">暂无地址,请添加地址</p>
+					</div>
+					<div class="mui-col-xs-1 mui-col-sm-1 mui-text-right">
+						<span class="mui-icon mui-icon-arrowright fs36 colorHui666 font_weightB"></span>
+					</div>
+				</div>
+				<!-- <div class="qrdd_fangshi fs28">
+					<ul class="border_b10">
+						<li class="qrdd_fangshi_li clearfloat pl20 pr20 box_s gmnk_click_inp">
+							<div class="mui-pull-left"><span>支付方式</span></div>
+							<div class="mui-pull-right">
+								<span class="pay_money"></span>
+								<span class="mui-icon mui-icon-arrowright colorHui666 fs36 font_weightB"></span>
+							</div>
+						</li>
+					</ul>
+				</div> -->
+			</div>
+			<div>
+				<div class="js_shop_div pl20 pr20 box_s">
+					<div class="estate_tit border_tXu">
+						<p class="pt20 pb20">
+							<span class="estateSpan_lineH fs28 font_weightB">安国市突魄健身会所</span>
+						</p>
+					</div>
+					<div id="cartInfo">
+						<!-- <div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<div class="jfrd_imgDiv">
+									<img src="../../images/pingguo.jpg"/>
+								</div>
+							</div>
+							<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+								<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+								<p class="clearfloat btn_pLine clearfloat">
+									<span class="fs28 mt10">x 10</span>
+									<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+								</p>
+							</div>
+						</div>
+						<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+							<div class="mui-col-sm-4 mui-col-xs-4">
+								<div class="jfrd_imgDiv">
+									<img src="../../images/pingguo.jpg"/>
+								</div>
+							</div>
+							<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+								<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+								<p class="clearfloat btn_pLine clearfloat">
+									<span class="fs28 mt10">x 10</span>
+									<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+								</p>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<div class="beizhu_div border_t10 pl20 pr20 box_s">
+					<div class="estate_tit border_tXu">
+						<p class="pt20 pb20">
+							<span class="estateSpan_lineH fs28 font_weightB">备注</span>
+						</p>
+					</div>
+					<textarea class="pjhs_textarea mt20" name="" rows="" cols="" placeholder="请输入您的备注要求" id="beizhu"></textarea>
+				</div>
+			</div>
+			<!--尾部-->
+			<div style="height: 80px;"></div>
+			<footer class="cart_footer clearfloat fs24 mui-row pl20 box_s border_t">
+				<div class="mui-col-sm-9 mui-col-xs-9">
+					<div class="bianjiClick_div">
+						<p style="line-height: 50px;">
+							<span>应付金额:</span>
+							<span class="fs24 colorBlack">￥</span>
+							<span class="fs36 colorBlack" id="zprice"></span>
+						</p>
+					</div>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<div class="buyNow colorWhite">提交订单</div>
+				</div>
+			</footer>
+		</div>
+		<div class="mark_common mui-hidden">
+			<!--送货方式弹出层-->
+			<div class="qrdd_markPay bgwhite fs28">
+				<ul>
+					<li class="qrdd_markPay_li_con pl20 pr20 box_s border_b colorRed" data-id="1">惠管家配送</li>
+					<li class="qrdd_markPay_li_con pl20 pr20 box_s border_b" data-id="2">线下自提</li>
+				</ul>
+			</div>
+
+			<!--支付方式弹出层-->
+			<div style="display: none;" class="gmnk_mark bgwhite">
+				<div class="clearfloat colorRed  pl20 pr20 box_s wpzl_tit border_b">
+					<span class="mui-pull-left wpzl_titSpan mui-text-center colorHui999">请选择支付方式</span>
+					<span class="mui-pull-left click_close colorHui999 fs28">取消</span>
+				</div>
+				<ul class="zaixianzhifu_ul">
+					<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+						<div class="mui-col-xs-1 mui-col-sm-1">
+							<div class="pay_icon card_icon"></div>
+						</div>
+						<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">惠通卡余额</div>
+						<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer">
+							<div class="checkbox_div active"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+						</div>
+					</li>
+					<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+						<div class="mui-col-xs-1 mui-col-sm-1">
+							<div class="pay_icon weixinPay_icon"></div>
+						</div>
+						<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">微信支付</div>
+						<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer">
+							<div class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+						</div>
+					</li>
+					<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+						<div class="mui-col-xs-1 mui-col-sm-1">
+							<div class="pay_icon zhifubaoPay_icon"></div>
+						</div>
+						<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">支付宝支付</div>
+						<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer">
+							<div class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		//送货方式弹出层
+		$(".peisong_payClick").on("tap",function(){
+			$(".mark_common").removeClass("mui-hidden");
+			$(".qrdd_markPay").animate({height:"80px"});
+			show_mark();
+		});
+		$(".qrdd_markPay li").on("tap",function(){
+			hidden_mark();
+			$(this).addClass("colorRed").siblings().removeClass("colorRed");
+			var send_things = $(this).text();
+			$(".qrdd_markPay").animate({height:"0px"},function(){
+				$(".mark_common").addClass("mui-hidden");
+				$(".send_things").text(send_things);
+			});
+			peisong = $(this).attr('data-id');
+			if(peisong == 2){
+				$('.getGoodsContainer').css('display','block');
+			}else{
+				$('.getGoodsContainer').css('display','none');
+			}
+		});
+
+		//支付方式弹出层
+		$(".zaixianzhifu_ul .checkbox_div").on("tap",function(){
+			$(".zaixianzhifu_ul .checkbox_div").removeClass("active");
+			$(this).addClass("active");
+			var pay_money = $(this).parents(".zaixianzhifu_liCon").children("div:nth-child(2)").text();
+			hidden_mark();
+			$(".gmnk_mark").slideUp(function(){
+				$(".mark_common").addClass("mui-hidden");
+				$(".pay_money").text(pay_money);
+			});
+		});
+		$(".gmnk_click_inp").on("tap",function(){
+			$(".mark_common").removeClass("mui-hidden");
+			$(".gmnk_mark").slideDown();
+			show_mark();
+		});
+		$(".click_close").on("tap",function(){
+			hidden_mark();
+			$(".gmnk_mark").slideUp(function(){
+				$(".mark_common").addClass("mui-hidden");
+			});
+		});
+		var uid = '';
+		var address_id = '';
+		var peisong = '';
+		var date        = "";   //取件日期
+        var times       = "";  //取件时间
+        var buy_type = '';
+        var buy_goods_num = '';
+        var buy_goods_price = '';
+        var buy_goods_attr_str = '';
+        var buy_goods_img = '';
+		apiready = function(){
+			buy_type = api.pageParam.buy_type;
+			buy_goods_num = api.pageParam.goods_num;
+			buy_goods_price = api.pageParam.goods_price;
+			buy_goods_img = api.pageParam.goods_img;
+			buy_goods_name = api.pageParam.goods_name;
+			if(buy_type == 'once'){
+					var onceVar = ''; 
+					onceVar+='<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">';
+					onceVar+='	<div class="mui-col-sm-4 mui-col-xs-4">';
+					onceVar+='		<div class="jfrd_imgDiv">';
+					onceVar+='			<img src="'+buy_goods_img+'"/>';
+					onceVar+='		</div>';
+					onceVar+='	</div>';
+					onceVar+='	<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">';
+					onceVar+='		<p class="fs32 mui-ellipsis-2">'+buy_goods_name+'</p>';
+					onceVar+='		<p class="clearfloat btn_pLine clearfloat">';
+					onceVar+='			<span class="fs28 mt10">x '+buy_goods_num+'</span>';
+					onceVar+='			<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">'+buy_goods_price+'</span></span>';
+					onceVar+='		</p>';
+					onceVar+='	</div>';
+					onceVar+='</div>';
+					$('#cartInfo').html(onceVar);
+			}
+			//监听收获地址
+			api.addEventListener({
+			    name: 'sureaddress'
+			}, function(ret, err) {
+				address_id = ret.value.address_id;
+			    //重新加载订单
+				getAddress();
+			});
+			
+			//取件日期
+            api.addEventListener({
+                name:'laundry_time'
+            },function(ret,err){
+                times = ret.value.times;
+                date = ret.value.date;
+                date_info = ret.value.date_info;
+                $(".getGoodsTime").text(date_info+" "+times);
+            });
+            
+
+			uid = localStorage.getItem('uid');
+			getCartInfo();
+		};
+		function getCartInfo(){
+			_ajax(ajax_url+'Index/ExerciseShop/getCart',{'uid':uid},'post',function(ret){
+				if(ret.status == 1){
+					var strVar = '';
+					$.each(ret.data,function(k,v){
+						strVar+='<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">';
+						strVar+='	<div class="mui-col-sm-4 mui-col-xs-4">';
+						strVar+='		<div class="jfrd_imgDiv">';
+						strVar+='			<img src="'+v.goods_img+'"/>';
+						strVar+='		</div>';
+						strVar+='	</div>';
+						strVar+='	<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">';
+						strVar+='		<p class="fs32 mui-ellipsis-2">'+v.goods_name+'</p>';
+						strVar+='		<p class="clearfloat btn_pLine clearfloat">';
+						strVar+='			<span class="fs28 mt10">x '+v.num+'</span>';
+						strVar+='			<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">'+v.price+'</span></span>';
+						strVar+='		</p>';
+						strVar+='	</div>';
+						strVar+='</div>';
+					});
+					$('#zprice').html(ret.zprice);
+					$('#cartInfo').html(strVar);
+					goodszprice = buy_goods_num * buy_goods_price;
+					$('#zprice').html(goodszprice);
+				}
+			});
+		}
+		function getAddress(){
+			_ajax(ajax_url+'Index/ExerciseShop/getAddress',{'id':address_id},'post',function(ret){
+				if(ret.status == 1){
+					$('#username').html('收件人：'+ret.data.consignee);
+					$('#mobile').html(ret.data.mobile);
+					$('#address').html(ret.data.addressInfo);
+				}
+			});
+		}
+		$('.buyNow').on('tap',function(){
+			createOrder();
+		});
+		
+		 //  取件时间选择
+        $('.getGoodsTime').parent().on('tap', function(){
+            _openWinByUrl('time', '../water/time', {'date':date,'times':times});
+        });
+        
+        
+
+		/**
+		 * 提交订单信息
+		 */
+		function createOrder(){
+			if(typeof uid ==undefined || uid ==''  || uid ==null){
+				_openWinByUrl('login','../login');
+				return false;
+			}
+				if(!peisong){
+					_toast('请选择配送方式');
+					return false;
+				}
+				if(peisong ==2){
+                if(date ==""  ||  times ==""){
+	                    _toast('请选择取件时间');
+	                    return false;
+	                }
+	            }
+	            
+				if(!address_id){
+					_toast('请选择收货地址');
+					return false;
+				}
+				
+				
+            
+            
+				var beizhu = $('#beizhu').html();
+
+			_ajax(ajax_url +"Index/ExerciseShop/createOrder",{
+				'uid' :uid,
+				'address_id':address_id,   //收货地址
+				'postscript':beizhu,         //备注
+				'shipping_type':peisong,
+				'take_time'     :times, //自提取件时间
+                'take_date'     :date,  //自提取件日期
+                'buy_type':buy_type
+			},'post',function(ret){
+				if(ret.status ==1){
+					_toast('下单成功');
+					setTimeout(function(){
+						//更新下单平台
+						updateOrderMethod(ret.order_sn , 25 , 1);
+						_openWinByUrl('pay_head','../order/pay_head',{'order_sn':ret.order_sn,'pay_notify_type':25});
+					}, 1000);
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+	</script>
+</html>

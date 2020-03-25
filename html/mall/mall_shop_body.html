@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>特惠商城</title> 
+		
+		<link rel="stylesheet" type="text/css" href="../../css/property/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/property/idangerous.swiper.css"/>
+        <link rel="stylesheet" type="text/css" href="../../css/property/slideshow.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/property/mallAllstyle.css"/>
+		
+		<style>
+			.swiper-container{width: 100%;height: 256px;}
+			/*修改内部单元的宽度和高度*/
+			.swiper-slide {width:624px;height: 256px;}
+			.swiper-slide img{width: 100%;height: 100%;}
+			.pagination {position: absolute;z-index: 20;left: 0;right: 0;margin:0 auto;text-align:center;bottom: 10px;}
+			.swiper-pagination-switch {display: inline-block;width: 8px;height: 8px;border-radius: 8px;background: #222;
+			  margin-right: 5px;opacity: 0.8;border: 1px solid #fff;cursor: pointer;}
+			.swiper-active-switch {background: #fff;}
+			/*修改左右遮罩层的宽度*/
+			.shadeLeft{position:absolute;left:0;top:0;width:200px;height:256px;z-index:30;
+				background-color:#000000;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}
+			.shadeRight{position:absolute;right:0;top:0;width:200px;height:256px;opacity:0.8;z-index:30;
+				background-color:#000000;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}
+				.jiudianjieshao>div.fl{
+					margin-bottom:20px;
+				}
+		</style>
+	</head>
+	<body style="height: 100%;">
+	
+		<div class="carouseDiv">
+			<!--轮播-->
+	        <div style="width:100%;margin:0 auto;">
+	            <div class="swiper-container">
+	                <div class="shadeLeft"></div>
+	                <div class="shadeRight"></div>
+	                <div class="swiper-wrapper" id="list_logo">
+	                <!--<div class="swiper-slide"><img src="http://123.57.36.72:8104/Uploads/Seller/2017-07-11/400_200_59643e43346df.png" style="width:100%"></div><div class="swiper-slide"><img src="http://123.57.36.72:8104/Uploads/Seller/2017-07-11/400_200_59643e4959a0f.png" style="width:100%"></div><div class="swiper-slide"><img src="http://123.57.36.72:8104/Uploads/Seller/2017-07-11/400_200_59643e527218d.png" style="width:100%"></div>-->
+	                </div>
+	                <div class="pagination"></div>
+	            </div>
+	        </div>
+		</div>
+		<ul class="commodityUl">
+			<li class="commodityTit">
+				<span class="after red border-b">特惠商品</span>
+				<span class="after">品牌街</span>
+				<span>分类</span>
+			</li>
+		</ul>
+		<!--特惠商品-->
+		<div class="tabDiv">
+			<ul class="preferentialCommodity pl_20 pr_20 box-s" id="Preferential">
+				<!--<li class="border-b">
+					<div class="preferentialCommodity_left">
+						<img src="../../images/property/101.jpg"/>
+					</div>
+					<div class="preferentialCommodity_right">
+						<p class="miaoshu hy_dd2">名盾春秋礼服套装男青年商务休闲羊毛西
+服结婚新郎伴郎西装</p>
+						<p class="price">￥300</p>
+					</div>
+				</li>
+				<li class="border-b">
+					<div class="preferentialCommodity_left">
+						<img src="../../images/property/101.jpg"/>
+					</div>
+					<div class="preferentialCommodity_right">
+						<p class="miaoshu hy_dd2">名盾春秋礼服套装男青年商务休闲羊毛西
+服结婚新郎伴郎西装</p>
+						<p class="price">￥300</p>
+					</div>
+				</li>-->
+			</ul>
+		</div>
+		<!--品牌街-->
+		<div class="tabDiv hide_">
+			<ul class="brandStreet" id="getPosterList" >
+				<!--<li>
+					<img src="../../images/property/102.jpg"/>
+				</li>
+				<li>
+					<img src="../../images/property/102.jpg"/>
+				</li>
+				<li>
+					<img src="../../images/property/102.jpg"/>
+				</li>
+				<li>
+					<img src="../../images/property/102.jpg"/>
+				</li>-->
+			</ul>
+		</div>
+		<!--分类-->
+		<div class="tabDiv classification mt_20 hide_">
+			<div class="classification_left" id="wrapper1">
+				<ul id="cateList">
+					<!--<li></li>
+					<li>全部商品</li>
+					<li>全部商品</li>-->
+				</ul>
+			</div>
+			<div class="preferentialCommodity pl_20 pr_20 box-s classification_right" id="wrapper">
+				<ul id="goodsList">
+					<!--<li class="border-b">
+						<div class="preferentialCommodity_left ">
+							<img src="../../images/property/101.jpg"/>
+						</div>
+						<div class="preferentialCommodity_right ">
+							<p class="miaoshu hy_dd3">名盾春秋礼服套装男青年商务休闲羊毛西
+	服结婚新郎伴郎西装</p>
+							<p class="price">￥300</p>
+						</div>
+					</li>
+					<li class="border-b">
+						<div class="preferentialCommodity_left ">
+							<img src="../../images/property/101.jpg"/>
+						</div>
+						<div class="preferentialCommodity_right ">
+							<p class="miaoshu hy_dd3">名盾春秋礼服套装男青年商务休闲羊毛西
+	服结婚新郎伴郎西装</p>
+							<p class="price">￥300</p>
+						</div>
+					</li>
+					<li class="border-b">
+						<div class="preferentialCommodity_left ">
+							<img src="../../images/property/101.jpg"/>
+						</div>
+						<div class="preferentialCommodity_right ">
+							<p class="miaoshu hy_dd3">名盾春秋礼服套装男青年商务休闲羊毛西
+	服结婚新郎伴郎西装</p>
+							<p class="price">￥300</p>
+						</div>
+					</li>
+					<li class="border-b">
+						<div class="preferentialCommodity_left ">
+							<img src="../../images/property/101.jpg"/>
+						</div>
+						<div class="preferentialCommodity_right ">
+							<p class="miaoshu hy_dd3">名盾春秋礼服套装男青年商务休闲羊毛西
+	服结婚新郎伴郎西装</p>
+							<p class="price">￥300</p>
+						</div>
+					</li>
+					<li class="border-b">
+						<div class="preferentialCommodity_left ">
+							<img src="../../images/property/101.jpg"/>
+						</div>
+						<div class="preferentialCommodity_right ">
+							<p class="miaoshu hy_dd3">名盾春秋礼服套装男青年商务休闲羊毛西
+	服结婚新郎伴郎西装</p>
+							<p class="price">￥300</p>
+						</div>
+					</li>-->
+					
+				</ul>
+			</div>
+				
+				
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/property/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/property/index.js"></script>
+	<script type="text/javascript" src="../../script/property/iscroll.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/property/idangerous.swiper.min.js"></script>
+	<script type="text/javascript">
+		
+		$(function(){
+			var myScroll = new IScroll('#wrapper', { 
+				 mouseWheel: true, 
+				 hScrollbar:false,
+				 vScrollbar:false,
+				 click:true
+			}); 
+			var myScroll1 = new IScroll('#wrapper1', { 
+				 mouseWheel: true, 
+				 hScrollbar:false,
+				 vScrollbar:false,
+				 click:true
+			}); 
+			$(".commodityTit span").on("click",function(){
+		    	$(this).addClass("red border-b").siblings().removeClass("red border-b");
+		    	var index_ = $(this).index();
+		    	$(".tabDiv").addClass("hide_");
+		    	$(".tabDiv").eq(index_).removeClass("hide_");
+		    	switchTab = index_;
+		    	myScroll.refresh();
+		    	myScroll1.refresh();
+		    })
+		});
+	    
+	    //$(".classification_left li").on("click",function(){
+	    //	$(this).css("background","#F2F2F2").siblings().css("background","white");
+	   // 	$(this).css("border-right","none").siblings().css("border-right","#e0e0e0");
+	    //})
+	    
+	    
+	    
+	var id = 46;  //店铺id
+	    
+	var page = 1;
+	var is_page = true;
+	
+	var page2 = 1;
+	var is_page2 = true;
+	var switchTab = 0; //当前tab位置  0 1 2
+	apiready = function(){
+		//id = api.pageParam.id;
+		
+		//听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){   
+			if(switchTab ==0){
+				if(is_page2){
+			        page2++;
+				    Preferential();
+			     }
+			}     
+		     
+		    if(switchTab ==1){
+				if(is_page){
+			        page++;
+				    getPosterList();
+			     }
+			} 
+			  
+		});
+
+		//加载状态
+		loading('mall_shop_body');
+		//获取店铺信息
+		getShopDetail();
+		//获取店铺分类信息
+		getShopCategory();
+		
+		
+		//品牌街
+		getPosterList();
+		
+		//特惠商品
+		Preferential();
+	};
+	
+	function getShopDetail(){
+		_ajax(ajax_url +"Index/Mall/getShopDetail",{'id':id},'get',function(ret){
+		
+			if(ret.status ==1){
+			
+				$(".bili").html(ret.comments.bili+"%");
+				
+				
+				
+				strVar="";
+		    	var commnum = ret.comments.num;
+		    	for(i=1; i<=commnum;i++ ){
+		    		 strVar += "<img src=\"../../images/star02.png\">";
+		    	}
+		    	
+		    	for(i=5; i>commnum;i-- ){
+		    		 strVar += "<img src=\"../../images/star01.png\">";
+		    	}
+				$(".commavg").prepend(strVar);
+				
+				$(".address").html(ret.address);
+				
+				$(".shopname").html(ret.shopDetail.name);
+				
+				//判断优惠券是否存在
+				if(ret.coupons == -1){
+					$(".coupons").hide();
+				}else{
+					$(".coupons").hide();
+				}
+				
+				$(".telphone").attr('href','tel:'+ret.shopDetail.telphone);
+				
+				//Banner
+				var strVar = "";
+		   		$.each(ret.pic,function(k,v){
+		   			strVar += "<div class=\"swiper-slide\" ><img src=\""+v+"\" style=\"width:100%\"><\/div>";
+		   		});
+		   		
+		   		$("#list_logo").html(strVar);
+//		   		console.log($("#list_logo").html())
+		   		//轮播图js
+                var mySwiper = new Swiper('.swiper-container', {
+                    pagination: '.pagination',
+                    loop: true,
+                    //  eventTarget:container, //包含在container内的所有元素都可以触发移动
+                    autoplay: 2000,
+                    autoplayDisableOnInteraction: false,
+                    offsetPxBefore: 200, //左偏移200
+                    offsetPxAfter: 200, //右偏移200
+                    paginationClickable: true,
+                    slidesPerView: 'auto',
+                    paginationAsRange: false
+                })
+				
+				//$(".swiper-container1 .swiper-slide").css({height:$(window).width()*0.44});
+				//$(".swiper-container1 .swiper-slide img").css({height:$(window).width()*0.44});
+				
+			}else{
+				_toast(ret.msg);
+			}
+			
+			closeloading();
+		});
+	}
+	
+	
+	/**
+	 * 获取店铺详情，当前店铺的分类信息 
+	 */
+	function getShopCategory(){
+		
+		_ajax(ajax_url +"Index/Mall/getShopCateGood",{'id':id},'get',function(ret){
+			var strVar = "";
+			if(ret.status ==1){
+				var n =1;
+				$.each(ret.cate,function(k,v){
+					if(n==1){
+						strVar += "<li style='background:#F2F2F2;border-right:none;'  onclick=\"cateAction("+v['id']+",this)\" >";
+						getCateGoods(v['id']);
+					}else{
+						strVar += "<li   onclick=\"cateAction("+v['id']+",this)\" >";
+					}
+					
+				    strVar += v['name'];
+				    strVar += "<\/li>";
+				    n++;
+				});				
+			}else{
+				_toast(ret.msg);
+			}
+			
+			$("#cateList").html(strVar);
+		});
+		
+	}
+	
+	/**
+	 * 
+	 */
+	function cateAction(cate_id ,el){
+		$("#cateList li").css("background","white");
+		$(el).css("background","#F2F2F2");
+		$("#cateList li").css("border-right","#e0e0e0");
+	    $(el).css("border-right","none").siblings().css("border-right","#e0e0e0");
+	    	
+		getCateGoods(cate_id); 
+	}
+	
+	/**
+	 * 获取分类下商品列表信息 
+	 * @param id 分类Id  -1时为全部商品
+	 */
+	function getCateGoods(cate_id){
+
+	
+		_ajax(ajax_url +"Index/Mall/getCateGood",{'id':id,'cate':cate_id},'get',function(ret){
+			var strVar = "";
+			if(ret.status ==1){
+				$.each(ret.good,function(k,v){
+					strVar += "<li class=\"border-b pt_10 pb_10\" onclick=\"_openWinByUrl('mall_goodsdetail','mall_goodsdetail',{'goods_id':"+v['goods_id']+"})\"   >\n";
+				    strVar += "<div class=\"preferentialCommodity_left \">\n";
+				    strVar += "	<img src=\""+v['goods_img']+"\"/>\n";
+				    strVar += "<\/div>\n";
+				    strVar += "<div class=\"preferentialCommodity_right \">\n";
+				    strVar += "	<p class=\"miaoshu hy_dd2\">\n";
+				    strVar += v['goods_name'];
+				
+				    strVar += "	<\/p>\n";
+				    strVar += "	<p class=\"price\">\n";
+				    strVar += "		￥"+v['shop_price'];
+				    strVar += "	<\/p>\n";
+				    strVar += "<\/div>\n";
+				    strVar += "<\/li>\n";
+    
+				});				
+			}else{
+				_toast(ret.msg);
+			}
+			$("#goodsList").html(strVar);
+				
+		});
+	}
+	
+	/**
+	 * 获取分类下商品列表信息 
+	 * @param id 分类Id  -1时为全部商品
+	 */
+	function Preferential(){
+
+	
+		_ajax(ajax_url +"Index/Mall/getCateGood",{'id':id,'cate':-1 , 'p':page2},'get',function(ret){
+			var strVar = "";
+			if(ret.status ==1){
+				$.each(ret.good,function(k,v){
+					strVar += "<li class=\"border-b\" onclick=\"_openWinByUrl('mall_goodsdetail','mall_goodsdetail',{'goods_id':"+v['goods_id']+"})\"   >\n";
+				    strVar += "<div class=\"preferentialCommodity_left \">\n";
+				    strVar += "	<img src=\""+v['goods_img']+"\"/>\n";
+				    strVar += "<\/div>\n";
+				    strVar += "<div class=\"preferentialCommodity_right \">\n";
+				    strVar += "	<p class=\"miaoshu hy_dd2\">\n";
+				    strVar += v['goods_name'];
+				
+				    strVar += "	<\/p>\n";
+				    strVar += "	<p class=\"price\">\n";
+				    strVar += "		￥"+v['shop_price'];
+				    strVar += "	<\/p>\n";
+				    strVar += "<\/div>\n";
+				    strVar += "<\/li>\n";
+				    
+				    
+    
+				});	
+				
+				if(page2 ==1){
+					$("#Preferential").html(strVar);
+				}else{
+					$("#Preferential").append(strVar);
+				}
+							
+			}else{
+				is_page2= false;
+				if(page2 ==1){
+					_toast(ret.msg);
+				}
+				
+			}
+			
+			
+		});
+	}
+	
+	
+	
+	
+	//品牌街
+	function getPosterList(){
+		_ajax(ajax_url+"Index/Mall/getBrandList" ,{'p':page},'get',function(ret){
+		
+			if(ret.status !=1){
+				is_page = false;
+				closeloading();
+				api.refreshHeaderLoadDone();
+				return false;
+			}
+
+				
+			var strVar = "";
+			$.each(ret.info,function(k,v){
+				strVar += "<li>";
+				strVar += "    <img onclick=\"_openWinByUrl('mall_goods_list','mall_goods_list',{'brand_id':"+v['id']+"})\" src=\""+v['logo']+"\" />";
+		   		strVar += "<\/li>";
+			});
+		    
+		    if(page==1){
+		    	$("#getPosterList").html(strVar);
+		    }else{
+		    	$("#getPosterList").append(strVar);
+		    }
+	  
+		    closeloading();
+		    api.refreshHeaderLoadDone();
+		});
+	}
+	
+	//打开外链
+	function _openUrl(url){
+		//_openWinByUrl('url',url);
+		if(url.substr(0,7).toLowerCase()=="http://"  || url.substr(0,8).toLowerCase()=="https://" ){
+			url=url;
+		}else{
+			url ="http://"+url;
+		}
+		
+		_openWinByUrl('hang_head_url','../window_head_url',{'furl':url,'frame':'hang_url','title':'详情'});
+	}
+
+	</script>
+</html>

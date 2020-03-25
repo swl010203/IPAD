@@ -1,0 +1,1002 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+	<title>全部订单</title>
+	<link rel="stylesheet" href="../../css/user/style.css" />
+	<link rel="stylesheet" href="../../css/user/allStyle.css">
+	
+	<style>
+		.w_list{margin-top:10px; padding:0;}
+		.w_list li {width:16.5%;}
+		.w_listCon li{width:100%;}
+		.w_list .w_xian{width:16.5%;}
+		.w_touxiangBag img{height:100%;}
+		.w_touxiangBag{
+			height: 180px;
+			width:200px!important;
+			overflow: hidden;
+		}
+		.w_neirong p.red:nth-child(2){float:right;padding-right:0;}
+		.w_neirong p.red:nth-child(3){float:right;padding-right:0;}
+		.w_listCon li:nth-child(1){overflow:hidden;}
+		.w_neirong p.red:nth-child(4){float:right;padding-right:0;}
+		
+		.jifen .dui p:nth-child(1) i{
+			width:40px;height:28px;
+		}
+		.jifen p:nth-child(3) span i{
+			width:23px;height:20px;
+			background-size:23px 20px;
+			margin-right:5px;
+		}
+	</style>
+</head>
+<body>
+
+	<ul class="siwchul clearfloat w_list box-s border-t border-t" >
+		<li onclick="swichTab(1,1);" class="red">预约</li>
+		<li onclick="swichTab(0,1);">商品</li>
+		<!--<li onclick="swichTab(0,1);" class="red">商品</li>
+		<li onclick="swichTab(1,1);" >预约</li>-->
+		<li onclick="swichTab(2,1);" >餐饮</li>
+		<li onclick="swichTab(3,1);" >洗衣</li>
+		<li onclick="swichTab(4,1);" >酒店</li>
+		<li onclick="swichTab(5,1);" >积分</li>
+		<div class="w_xian"></div>
+	</ul>
+	
+	<div class="w_tab" id="list">
+	</div>
+
+	
+	<!--全部订单-->
+	
+	
+	
+</body>
+<script type="text/javascript" src="../../script/user/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../../script/user/index.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/*导航点击效果和切换内容部分*/
+		$(".w_list li").click(function(){
+			$(this).addClass("red").siblings().removeClass("red");
+			var index_ = $(this).index();
+			var width_ = $(".w_list li").width();
+			if(index_==5){
+				width_ = '16.66666666%';
+				$(".w_list .w_xian").css("left",width_*index_);
+			}else{
+				$(".w_list .w_xian").css("left",width_*index_);
+			}
+			//var index_ = $(this).index();
+			//$(".w_tab").eq(index_).removeClass("hide_").siblings(".w_tab").addClass("hide_");
+		})
+	});
+
+
+	
+	var page = 1;
+	var is_page = true;
+	var channel = 1;   //0商城超市 1 预约2餐饮 3西医 4酒店 5积分 6秒杀
+	
+	var uid = localStorage.getItem("uid");
+	apiready = function(){
+		paramChannel = api.pageParam.channel;
+		if(typeof paramChannel != undefined  && paramChannel!=''  && paramChannel !=null  ){
+			channel = paramChannel;
+		}
+		if(paramChannel==0){
+			channel=0;
+		}
+		
+		//听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page   && channel !=1){
+		        page = page +1;
+			    swichTab(channel , page);
+		     }
+			  
+		});
+		
+		api.addEventListener({
+	        name:'refe_order_list'
+        },function(ret,err){
+        	//coding...
+        	//根据不同频道获取不同的订单列表
+        	page = 1;
+        	is_page = true;
+			swichTab(channel,page);
+        });
+        
+        //如监听网络连接事件
+		api.addEventListener({
+		    name: 'hotel_refundss'
+		}, function(ret, err) {
+			page = 1;
+			is_page = true;
+		    gethotelOderList();
+		});
+		
+		//如监听网络连接事件
+		api.addEventListener({
+		    name: 'hotel_pingjia'
+		}, function(ret, err) {
+			page = 1;
+			is_page = true;
+		    gethotelOderList();
+		});
+		
+		//根据不同频道获取不同的订单列表
+		swichTab(channel,page);
+	};
+	
+	
+	
+	//切换类型
+	function swichTab(channelType,pages){
+		if(pages==1){
+			is_page =true;
+		}
+		page = pages;
+		channel = channelType;
+		if(channel == 1){
+			chanaa = 0;
+		}else if(channel == 0){
+			chanaa = 1;
+		}else{
+			chanaa = channelType;
+		}
+		
+		$(".w_list li").eq(chanaa).addClass("red").siblings().removeClass("red");
+		
+		var width_ = $(".w_list li").width();
+		if(channel==4){
+			$(".w_list .w_xian").css("left",width_*chanaa+4.5);
+		}else{
+			$(".w_list .w_xian").css("left",width_*chanaa);
+		}
+		switch(channel){
+			case 0:
+				getMallSuperOrder();  //商城超市订单
+				break;
+			case 1:
+				getAppointOrderList();  //预约订单
+				break;
+			case 2:
+				getFoodOrderList();     //餐饮订单
+				break;
+			case 3:
+				getlaundryOrderList();  //洗衣订单
+				break;
+			case 4:
+				gethotelOderList();    //酒店订单
+				break;
+			case 5:
+				getIntegralOrderList();  //积分订单
+				break;
+			case 6:
+				getSpikeOrderList();  //秒杀订单
+				break;
+		}
+		
+	}
+	
+	//酒店订单
+	function gethotelOderList(){
+		_ajax(ajax_url+"Index/HotelOrder/getHotelOrderList",{'uid':uid,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				var strVar = "";
+				$(ret.hotelOrder).each(function(k,v){
+				
+				    strVar += "<ul class=\"w_listTwo clearfloat pb_20\">\n";
+				    strVar += "			<li class=\"w_title pl_14 pr_14\">\n";
+				    strVar += "				<div class=\"fl w_titImg\">"+v['shopname']+"&nbsp;><\/div>\n";
+				    strVar += "				<div class=\"fr red\"><span>";
+				    if(v['hotelstatsu']!=null && v['hotelstatsu']!=''){
+				     	strVar +=v["hotelstatsu"]['msg'];					    				    
+				    }else{
+				      	strVar +=v["hotelstatsu"]['msg'];
+				    }
+				    
+				    strVar += "<\/span><\/div>\n";
+				    strVar += "			<\/li>\n";
+			    	strVar += "			<ul onclick=\"orderDetail('hotel_order_detail','hotel_order_detail',"+v['id']+")\" class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+				    strVar += "				<li class=\"border-b\">\n";
+				    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+				    strVar += "						<img src=\""+v['roomimg']+"\"   height=\"\"/>\n";
+				    strVar += "					<\/div>\n";
+				    strVar += "					<div class=\"w_neirong\">\n";
+				    strVar += "						<p>"+v['roomname']+"<\/p>\n";
+				    strVar += "						<p class=\"red fr pr_14\">￥"+v['price']+"<\/p>\n";
+				    strVar += "					<\/div>\n";
+				    strVar += "				<\/li>\n";
+				    strVar += "			<\/ul>\n";
+				    
+				    strVar += "			<li class=\"pt_20 pb_20 box-s pl_14 pr_14\">\n";
+				    strVar += "					<div class=\"w_lastDiv\">\n";
+				    strVar += "						<p class=\"dy_dd fl\">共<span>"+v['room_num']+"<\/span>间 合计:<span>￥"+v['order_price']+"<\/span><\/p>\n";
+				    
+				    strVar += "						<div class=\"fr\">";
+				    if(v["hotelstatsu"]['type']==1){
+				    	strVar += "							<button  onclick=\"cancel_order("+v['id']+","+v['channel']+")\" >取消订单<\/button>\n";
+				    	strVar += "							<button onclick=\"goPay('"+v['order_sn']+"',"+v['channel']+")\">去支付<\/button>\n";
+				    }
+				    
+				    if(v["hotelstatsu"]['type']==2){
+				    	strVar += "							<button  onclick=\"refund("+v['id']+")\" >退单<\/button>\n";
+				    }
+				    
+				    if(v["hotelstatsu"]['type']==3 && v['is_evaluation'] == 0){
+				    	strVar += "							<button onclick=\"evaluation('"+v['id']+"',"+v['channel']+")\">去评价<\/button>\n";
+				    }
+				    
+				    
+				    strVar += "					<\/div>\n<\/div>\n"; 
+				    strVar += "			<\/li>\n";
+				    strVar += "		<\/ul>\n";
+
+				});
+				    
+				
+				if(page ==1){
+					$("#list").html(strVar);
+				}else{
+					$("#list").append(strVar);
+				}
+			}else{
+				if(page ==1){
+					$("#list").html(strVar);
+				}
+				
+				is_page=false;
+				//_toast(ret.msg);
+			}
+			
+		});
+	}
+	
+	//商城超市
+	function getMallSuperOrder(){
+		_ajax(ajax_url+"Index/UserOrder/getUserOrderList",{'uid':uid,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				var strVar = "";
+				$(ret.data).each(function(k,v){
+				
+				    strVar += "<ul class=\"w_listTwo clearfloat pb_20\">\n";
+				    strVar += "			<li class=\"w_title pl_14 pr_14\">\n";
+				    strVar += "				<div class=\"fl w_titImg\">"+v['shopname']+"&nbsp;><\/div>\n";
+				    strVar += "				<div class=\"fr red\"><span>";
+				    if((v['aftersale']!=null && v['aftersale']['type']!=7) && v['aftersale']!=''){
+				     	strVar +=v["aftersale"]['msg'];					    				    
+				    }else{
+				      	strVar +=v["status_name"]['msg'];
+				    }
+				    
+				    strVar += "<\/span><\/div>\n";
+				    strVar += "			<\/li>\n";
+				    var goods_num = 0;//v['goodslist'].length;
+				    $(v['goodslist']).each(function(key,val){
+				    	goods_num += (val['goods_number']*1);
+				    	if(v['channel'] ==1){
+				    		var name = 'mall_order_detail';
+				    	}else{
+				    		var name = 'super_order_detail';
+				    	}
+				    	strVar += "			<ul onclick=\"orderDetail('"+name+"','"+name+"',"+v['order_id']+")\" class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+					    strVar += "				<li class=\"border-b\">\n";
+					    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+					    strVar += "						<img src=\""+val['img']+"\"   height=\"\"/>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "					<div class=\"w_neirong\">\n";
+					    strVar += "						<p>"+val['goods_name']+"<\/p>\n";
+					    //strVar += "						<p>预约时间：<span>05-16(周二)22:00<\/span><\/p>\n";
+
+					    strVar += "						<p class=\"red fr pr_14\">￥"+val['goods_price']+"<\/p>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "				<\/li>\n";
+					    strVar += "			<\/ul>\n";
+				    });
+				    
+				    strVar += "			<li class=\"pt_20 pb_20 box-s pl_14 pr_14\">\n";
+				    strVar += "					<div class=\"w_lastDiv\">\n";
+				    strVar += "						<p class=\"dy_dd fl\">共<span>"+goods_num+"<\/span>件 合计:<span>￥"+v['income']+"<\/span><\/p>\n";
+				    
+				    strVar += "						<div class=\"fr\">";
+				    if(v["status_name"]['type']==1){
+				    	strVar += "							<button  onclick=\"cancel_order("+v['order_id']+","+v['channel']+")\" >取消订单<\/button>\n";
+				    	strVar += "							<button onclick=\"goPay('"+v['order_sn']+"',"+v['channel']+")\">去支付<\/button>\n";
+				    }
+				    
+				    if(v["status_name"]['type']==4){
+				    	strVar += "							<button onclick=\"afterMeal('"+v['order_id']+"',"+v['channel']+")\">确认收货<\/button>\n";
+				    }
+				    
+				    if(v["status_name"]['type']==5 && ( v['aftersale']=='' || v['aftersale']['type']==7 )){
+				    	strVar += "							<button onclick=\"evaluation('"+v['order_id']+"',"+v['channel']+")\">去评价<\/button>\n";
+				    }
+				    
+				    if(v["status_name"]['type']==5 && v['aftersale']['type']==5 && v['aftersale']['types']==1){
+				    	strVar += "							<button onclick=\"replacementAfterMeal('"+v['aftersale']['id']+"',"+v['channel']+")\">确认收货<\/button>\n";
+				    }
+				    
+				    strVar += "					<\/div>\n<\/div>\n";
+				    strVar += "			<\/li>\n";
+				    strVar += "		<\/ul>\n";
+
+				});
+				    
+				
+				if(page ==1){
+					$("#list").html(strVar);
+				}else{
+					$("#list").append(strVar);
+				}
+			}else{
+				if(page ==1){
+					$("#list").html(strVar);
+				}
+				
+				is_page=false;
+				//_toast(ret.msg);
+			}
+			
+		});
+	}
+	
+	
+	/**
+	 * 取消订单
+	 * @param id  订单Id 
+	 * @param pay_type 支付类型 1商城  2超市 4餐饮  14预约订座
+	 */
+	function cancel_order(id ,pay_type){
+		if(pay_type ==1){
+			var queryUrl = 'Index/UserMallOrder/cancelOrder';
+		}
+		if(pay_type ==2){
+			var queryUrl = 'Index/UserSuperOrder/cancelOrder';
+		}
+		if(pay_type ==3){
+			var queryUrl = 'Index/HotelOrder/cancelHotelOrder';
+		}
+		if(pay_type ==4){
+			var queryUrl = 'Index/UserFoodOrder/cancelFoodOrder';
+		}
+		
+		if(pay_type ==14){
+			var queryUrl = 'Index/UserFoodOrder/cancelFoodAppointOrder';
+		}
+		
+		if(pay_type ==6){
+			var queryUrl = 'Index/UserLaundryOrder/cancelOrder';
+		}
+		api.confirm({
+		    title: '取消订单',
+		    msg: '确认取消订单？',
+		    buttons: ['是', '先保留']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +queryUrl,{'order_id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			is_page = true;
+		    			swichTab(channel,1);
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	
+	/**
+	 * 确认收货 
+	 * @param pay_type 支付类型 1商城  2超市
+	 */
+	function afterMeal(id , pay_type){
+	
+		if(pay_type ==1){
+			var queryUrl = 'Index/UserMallOrder/confirmReceipt';
+		}
+		if(pay_type ==2){
+			var queryUrl = 'Index/UserSuperOrder/confirmReceipt';
+		}
+		
+	
+		api.confirm({
+		    title: '提示',
+		    msg: '你要确认收货吗',
+		    buttons: ['确定', '取消']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +queryUrl,{'order_id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			is_page = true;
+		    			swichTab(channel,1);
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	
+	/**
+	 * 换货确认收货 
+	 * @param pay_type 支付类型 1商城  2超市  6洗衣
+	 */
+	function replacementAfterMeal(id , pay_type){
+	
+		if(pay_type ==1){
+			var queryUrl = 'Index/UserMallOrder/replacementReceipt';
+		}
+		if(pay_type ==2){
+			var queryUrl = 'Index/UserSuperOrder/replacementReceipt';
+		}
+		
+		if(pay_type ==6){
+			var queryUrl = 'Index/UserLaundryOrder/replacementReceipt';
+		}
+		
+	
+		api.confirm({
+		    title: '提示',
+		    msg: '你要确认收货吗',
+		    buttons: ['确定', '取消']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +queryUrl,{'id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			is_page = true;
+		    			page = 1;
+		    			swichTab(channel,1);
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	
+	/*
+	 * 评价
+	 * @param pay_type 支付类型 1商城  2超市 4餐饮
+	 */
+	function evaluation(order_id , pay_type){
+		if(pay_type ==1){
+			openevaluation('mall_pingjia','mall_pingjia','评价',order_id);
+		}
+		if(pay_type ==2){
+			openevaluation('super_pingjia','super_pingjia','评价',order_id);
+		}
+		
+		if(pay_type ==3){
+			openevaluation('hotel_pingjia','hotel_pingjia','评价',order_id);
+		}
+		
+		if(pay_type ==4){
+			openevaluation('food_pingjia','food_pingjia','评价',order_id);
+		}
+		
+		
+	}
+	
+	function openevaluation(name,url,title,id){
+	 _openWinByUrl(name+'_head','../user/evaluationhead',{'furl':url,'frame':name,'title':title,'order_id':id});
+	}
+	
+	
+	/*
+	 * 支付
+	 * @param order_sn 订单编号
+	 * @param pay_type 支付类型 1商城  2超市
+	 */
+	function goPay(order_sn , pay_type){
+		api.openWin({
+			name : 'pay_head',
+			url : '../order/pay_head.html',
+			allowEdit:true ,
+			useWKWebView:App.useWKWebView,
+			delay:0,
+			pageParam :{'order_sn':order_sn,'pay_notify_type':pay_type,'back_root':1},
+			slidBackEnabled:false,
+			reload:true,
+		});
+	
+				
+		//_openWinByUrl('pay_head','../order/pay_head',{'order_sn':order_sn,'pay_notify_type':pay_type,'back_root':1,''});
+	}
+	
+	
+	//餐饮
+	function getFoodOrderList(){
+		_ajax(ajax_url+"Index/UserOrder/getFoodOrderList",{'uid':uid,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				var strVar = "";
+				$(ret.data).each(function(k,v){
+				
+		
+				    strVar += "<ul class=\"w_listTwo clearfloat pb_20\">\n";
+				    strVar += "			<li class=\"w_title pl_14 pr_14\">\n";
+				    strVar += "				<div class=\"fl w_titImg\">"+v['shopname']+"&nbsp;><\/div>\n";
+				    strVar += "				<div class=\"fr red\"><span>"+v['status_wz']['msg']+"<\/span><\/div>\n";
+				    strVar += "			<\/li>\n";
+				    
+				    /*strVar += "			<ul class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+				    strVar += "				<li class=\"border-b\">\n";
+				    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+				    strVar += "						<img src=\"../../images/user/6304.png\" alt=\"\" />\n";
+				    strVar += "					<\/div>\n";
+				    strVar += "					<div class=\"w_neirong\">\n";
+				    strVar += "						<p>预约订餐<\/p>\n";
+				    strVar += "						<p>预约时间：<span>05-16(周二)22:00<\/span><\/p>\n";
+				    strVar += "						<p class=\"moGreen fl\">4人/大厅<\/p>\n";
+				    strVar += "						<p class=\"red fr\">￥243<\/p>\n";
+				    strVar += "					<\/div>\n";
+				    strVar += "				<\/li>\n";*/
+				    var goods_num = 0;//v['goodslist'].length;
+				    $(v['goodslist']).each(function(key,val){
+				    	goods_num += (val['goods_num']*1);
+				    	strVar += "			<ul  onclick=\"orderDetail('food_order_detail','food_order_detail',"+v['id']+")\" class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+					    strVar += "				<li class=\"border-b\">\n";
+					    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+					    strVar += "						<img src=\""+val['img']+"\"   height=\"\"/>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "					<div class=\"w_neirong\">\n";
+					    strVar += "						<p>"+val['goods_name']+"<\/p>\n";
+					    if(val['food_type'] ==1){
+					    	strVar += "						<p>单点商品<span><\/span><\/p>\n";
+					    }else{
+					    	strVar += "						<p>套餐商品<span><\/span><\/p>\n";
+					    }
+					    
+					    strVar += "						<p class=\"red fr pr_14\">￥"+val['goods_price']+"<\/p>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "				<\/li>\n";
+					    strVar += "			<\/ul>\n";
+				    });
+				    strVar += "				<li class=\"pt_20 pb_20 box-s pl_14 pr_14\">\n";
+				    strVar += "					<div class=\"w_lastDiv\">\n";
+				    strVar += "						<p class=\"dy_dd fl\">共<span>"+goods_num+"<\/span>件 合计:<span>￥"+v['price']+"<\/span><\/p>\n";
+				    strVar += "						<div class=\"fr\">";
+				    
+				    if(v['status_wz']['type']==3){
+				    	strVar += "<button onclick=\"cancel_order("+v['id']+","+v['channel']+")\" style=\"margin-right:5px;\">取消订单<\/button>";
+				    	strVar += "<button onclick=\"goPay("+v['order_sn']+","+v['channel']+")\" >去支付<\/button>";
+				    }
+				    //待就餐待接单  申请退款
+				    if(v['status_wz']['type']==5  || v['status_wz']['type']==4){
+				    	if(v['is_return'] !=1){
+				    		strVar += "<button onclick=\"tui('"+v['id']+"',"+v['channel']+")\" >申请退款<\/button>";
+				    	}
+				    	
+				    
+				    }
+				    
+				    if(v['status_wz']['type']==7){
+				    	strVar += "<button onclick=\"evaluation('"+v['id']+"',"+v['channel']+")\" >去评价<\/button>";
+				    
+				    }
+				    
+				    strVar += "					<\/div>\n<\/div>\n";
+				    strVar += "				<\/li>\n";
+				  
+				    strVar += "		<\/ul>\n";
+
+
+				});
+				    
+				
+				if(page ==1){
+					$("#list").html(strVar);
+				}else{
+					$("#list").append(strVar);
+				}
+			}else{
+				if(page ==1){
+					$("#list").html(strVar);
+				}
+				is_page=false;
+				//_toast(ret.msg);
+			}
+		});
+	}
+	
+	
+	//洗衣
+	function getlaundryOrderList(){
+	
+		_ajax(ajax_url+"Index/UserOrder/getlaundryOrderList",{'uid':uid,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				var strVar = "";
+				$(ret.data).each(function(k,v){
+					strVar += "<ul class=\"w_listSi daifukuan border-b\">\n";
+				    strVar += "			<li class=\"w_title pl_14 pr_14\">\n";
+				    strVar += "				<div class=\"fl w_titWenzi\">订单编号：<span>"+v['order_sn']+"<\/span><\/div>\n";
+				    strVar += "				<div class=\"fr red\"><span>"+v['status_wz']['msg']+"<\/span><\/div>\n";
+				    strVar += "			<\/li>\n";
+				    strVar += "			<ul   class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+				    strVar += "				<li onclick=\"orderDetail('laundry_order_detail','laundry_order_detail',"+v['id']+")\" class=\"border-b\">\n";
+				    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+				    strVar += "						<img src=\""+v['logo']+"\" alt=\"\" />\n";
+				    strVar += "					<\/div>\n";
+				    strVar += "					<div class=\"w_neirong\">\n";
+				    strVar += "						<p>"+v['shopname']+"<\/p>\n";
+				    strVar += "						<p>取件时间：<span>"+v['take_date']+" "+v['take_time']+"<\/span><\/p>\n";
+				    strVar += "					<\/div>\n";
+				    strVar += "				<\/li>\n";
+				    strVar += "				<li>\n";
+				    strVar += "					<ul class=\"w_zhuangtai clearfloat\">\n";
+				    stat = 0;
+				    if(v['status_wz']['type'] <=2 ){
+				    	stat =20;
+				    	strVar += "						<li class=\"red\">\n";
+				    	strVar += "							<div><p class='newClass'>取件中</p><div class=\"tu1_1\"><\/div><\/div>\n";
+				    }else{
+				    	if(v['status_wz']['type'] >2  && v['status_wz']['type'] !=7){
+				    		strVar += "						<li class=\"red\">\n";
+				    		strVar += "							<div><p class='newClass'>取件中</p><div class=\"tu1_1\"><\/div><\/div>\n";
+				    	}else{
+				    		strVar += "						<li class=\"\">\n";
+				    		strVar += "							<div><p class='newClass'>取件中</p><div class=\"tu1\"><\/div><\/div>\n";
+				    	}
+				    	
+				    }
+				    strVar += "						<\/li>\n";
+				    if(v['status_wz']['type'] ==3 ){
+				    	stat =40;
+				    	strVar += "						<li class=\"chang red\">\n";
+				    	strVar += "							<div><p class='newClass'>送往加工店</p><div class=\"tu2_1\"><\/div><\/div>\n";
+				    }else{
+				    	if(v['status_wz']['type'] >3 && v['status_wz']['type'] !=7){
+				    		strVar += "						<li class=\"chang red\">\n";
+				    		strVar += "							<div><p class='newClass'>送往加工店</p><div class=\"tu2_1\"><\/div><\/div>\n";
+				    	}else{
+				    		strVar += "						<li class=\"\">\n";
+				    		strVar += "							<div><p class='newClass'>送往加工店</p><div class=\"tu2\"><\/div><\/div>\n";
+				    	}
+				    	
+				    }
+				    strVar += "						<\/li>\n";
+				    if(v['status_wz']['type'] ==4 ){
+				    	stat =60;
+				    	strVar += "						<li class=\"chang red\">\n";
+				    	strVar += "							<div><p class='newClass'>清洗中</p><div class=\"tu3_1\"><\/div><\/div>\n";
+				    }else{
+				    	if(v['status_wz']['type'] >4 && v['status_wz']['type'] !=7){
+				    		strVar += "						<li class=\" red\">\n";
+				    		strVar += "							<div><p class='newClass'>清洗中</p><div class=\"tu3_1\"><\/div><\/div>\n";
+				    	}else{
+				    		strVar += "						<li class=\"\">\n";
+				    		strVar += "							<div><p class='newClass'>清洗中</p><div class=\"tu3\"><\/div><\/div>\n";
+				    	}
+				    	
+				    }
+				    strVar += "						<\/li>\n";
+				    if(v['status_wz']['type'] ==5 ){
+				    	stat =70;
+				    	strVar += "						<li class=\"chang red\">\n";
+				    	strVar += "							<div><p class='newClass'>送回中</p><div class=\"tu4_1\"><\/div><\/div>\n";
+				    }else{
+				    	if(v['status_wz']['type'] >5 && v['status_wz']['type'] !=7){
+				    		strVar += "						<li class=\"red\">\n";
+				    		strVar += "							<div><p class='newClass'>送回中</p><div class=\"tu4_1\"><\/div><\/div>\n";
+				    	}else{
+				    		strVar += "						<li class=\"\">\n";
+				    		strVar += "							<div><p class='newClass'>送回中</p><div class=\"tu4\"><\/div><\/div>\n";
+				    	}
+				    	
+				    }
+				    strVar += "						<\/li>\n";
+					if(v['status_wz']['type'] ==6){
+						stat =80;
+				    	strVar += "						<li class=\" red\">\n";
+				    	strVar += "							<div><p class='newClass'>已收货</p><div class=\"tu5_1\"><\/div><\/div>\n";
+				    }else{
+				    	strVar += "						<li class=\"\">\n";
+				    	strVar += "							<div><p class='newClass'>已收货</p><div class=\"tu5\"><\/div><\/div>\n";
+				    }
+				    strVar += "						<\/li>\n";
+				    strVar += "						<div class=\"huixian\"><\/div>\n";
+				    strVar += "						<div class=\"hongxian\" style=\"width:"+stat+"%;\"><\/div>\n";
+				    strVar += "					<\/ul>\n";
+				    strVar += "				<\/li>\n";
+				    
+				    strVar += "				<li class=\"pt_20 pb_20 box-s\">\n";
+				    strVar += "					<div class=\"w_lastDiv\">\n";
+				    strVar += "						<div class=\"fr xiyiBtn\">\n";
+				    if(v['status_wz']['type']==0){
+				    
+				    	strVar += "<button onclick=\"goPay('"+v['order_sn']+"',"+v['channel']+")\" >去支付<\/button>";
+				    }
+				    if(v['status_wz']['type']==1){
+				    	strVar += "<button onclick=\"cancel_order("+v['id']+","+v['channel']+")\" >取消订单<\/button>";
+				    	
+				    }
+				    if(v['status_wz']['type']==5){
+				    	strVar += "<button onclick=\"replacementAfterMeal("+v['id']+","+v['channel']+")\" >确认收货<\/button>";
+				    	
+				    }
+				   // strVar += "							<button>查看进度<\/button>\n";
+				    strVar += "						<\/div>\n";
+				    strVar += "					<\/div>\n";
+				    strVar += "				<\/li>\n";
+				    
+				    
+				    strVar += "			<\/ul>\n";
+				    strVar += "		<\/ul>\n";
+		
+				});
+				    
+				
+				if(page ==1){
+					$("#list").html(strVar);
+					
+					
+				}else{
+					$("#list").append(strVar);
+				}
+				
+				
+			}else{
+				if(page ==1){
+					$("#list").html(strVar);
+				}
+				is_page=false;
+				//_toast(ret.msg);
+			}
+		});
+	}
+	
+	
+	function laundrysta(){
+		
+	}
+	
+	
+	
+	//积分订单
+	function getIntegralOrderList(){
+		_ajax(ajax_url+"Index/Score/orderList",{'uid':uid,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				var strVar = "";
+				$(ret.orderList).each(function(k,v){
+					    strVar += "<ul class=\"w_listTwo jifen border-b\">\n";
+					    strVar += "			<li class=\"w_title pl_14 pr_14\">";
+					    strVar += "				<div class=\"fl w_titWenzi\">订单编号：<span>"+v['order_sn']+"<\/span><\/div>\n";
+				    	strVar += "				<div class=\"fr red\"><span>"+v['order_state_str']+"<\/span><\/div>\n";
+					    strVar += "			<\/li>";
+					    strVar += "			<ul onclick=\"orderDetail('jifen_order_detail','jifen_order_detail',"+v['order_id']+")\" class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+					    strVar += "				<li class=\"border-b\">\n";
+					    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+					    strVar += "						<img src=\""+v['goods_img']+"\" alt=\"\" />\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "					<div class=\"w_neirong dui\">\n";
+					    strVar += "						<p>"+v['goods_name']+"<i ><\/i><\/p>\n";
+					    strVar += "						<p><\/p>\n";
+					    strVar += "						<p class=\"clearfloat\">\n";
+					    strVar += "							<span><i> <\/i>"+v['goods_amount']+"<\/span>\n";
+					    strVar += "							<span class=\"fr\">x1<\/span>\n";
+					    strVar += "						<\/p>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "				<\/li>\n";
+					    /*
+					    strVar += "				<li class=\"pt_20 pb_20 box-s\">\n";
+					    strVar += "					<div class=\"w_lastDiv\">\n";
+					    
+					    strVar += "						<p class=\"dy_dd fl\">共<span>1<\/span>件商品 合计:<span>￥"+v['goods_amount']+"<\/span><\/p>\n";
+					    strVar += "						<div class=\"fr\">\n";
+					    strVar += "							<button>退订<\/button>\n";
+					    strVar += "						<\/div>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "				<\/li>\n";
+					    */
+					    strVar += "			<\/ul>\n";
+					    strVar += "		<\/ul>\n";
+
+				});
+				    
+				
+				if(page ==1){
+					$("#list").html(strVar);
+				}else{
+					$("#list").append(strVar);
+				}
+			}else{
+				if(page ==1){
+					$("#list").html(strVar);
+				}
+				is_page=false;
+				//_toast(ret.msg);
+			}
+		});
+	}
+	
+	//秒杀订单
+	function getSpikeOrderList(){
+		_ajax(ajax_url+"Index/UserOrder/getSeckillOrderList",{'uid':uid,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				var strVar = "";
+				$(ret.data).each(function(k,v){
+					    strVar += "<ul class=\"w_listTwo jifen border-b\">\n";
+					    strVar += "			<li class=\"w_title pl_14 pr_14\">";
+					    strVar += "				<div class=\"fl w_titWenzi\">订单编号：<span>"+v['order_sn']+"<\/span><\/div>\n";
+				    	strVar += "				<div class=\"fr red\"><span>"+v['order_status_chinese']+"<\/span><\/div>\n";
+					    strVar += "			<\/li>";
+					    strVar += "			<ul onclick=\"orderDetail('spike_order_detail','spike_order_detail',"+v['order_id']+")\" class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+					    strVar += "				<li class=\"border-b\">\n";
+					    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+					    strVar += "						<img src=\""+v['goodsList.img']+"\" alt=\"\" />\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "					<div class=\"w_neirong dui\">\n";
+					    strVar += "						<p>"+v['goodsList.goods_name']+"<i ><\/i><\/p>\n";
+					    strVar += "						<p><\/p>\n";
+					    strVar += "						<p class=\"clearfloat\">\n";
+					    strVar += "							<span><i> <\/i>"+v['goods_num']+"<\/span>\n";
+					    strVar += "							<span class=\"fr\">x1<\/span>\n";
+					    strVar += "						<\/p>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "				<\/li>\n";
+					    /*
+					    strVar += "				<li class=\"pt_20 pb_20 box-s\">\n";
+					    strVar += "					<div class=\"w_lastDiv\">\n";
+					    
+					    strVar += "						<p class=\"dy_dd fl\">共<span>1<\/span>件商品 合计:<span>￥"+v['goods_amount']+"<\/span><\/p>\n";
+					    strVar += "						<div class=\"fr\">\n";
+					    strVar += "							<button>退订<\/button>\n";
+					    strVar += "						<\/div>\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "				<\/li>\n";
+					    */
+					    strVar += "			<\/ul>\n";
+					    strVar += "		<\/ul>\n";
+
+				});
+				if(page ==1){
+					$("#list").html(strVar);
+				}else{
+					$("#list").append(strVar);
+				}
+			}else{
+				if(page ==1){
+					$("#list").html(strVar);
+				}
+				is_page=false;
+				//_toast(ret.msg);
+			}
+		});
+	}
+	
+	//预约订单
+	function getAppointOrderList(){
+		_ajax(ajax_url+"Index/UserOrder/getAppointOrderList",{'uid':uid,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+				
+				var strVar = "";
+				$(ret.data).each(function(k,v){
+					    strVar += "<ul class=\"w_listTwo\">\n";
+					    strVar += "			<li class=\"w_title pl_14 pr_14\">\n";
+					    strVar += "				<div class=\"fl w_titImg\">"+v['shopname']+"&nbsp;><\/div>\n";
+					    strVar += "				<div class=\"fr red\"><span>"+v['status_wz']['msg']+"<\/span><\/div>\n";
+					    strVar += "			<\/li>\n";
+					    strVar += "			<ul class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+					    strVar += "				<li class=\"border-b\">\n";
+					    strVar += "					<div class=\"w_touxiangBag fl\">\n";
+					    strVar += "						<img src=\""+v['logo']+"\" alt=\"\" />\n";
+					    strVar += "					<\/div>\n";
+					    strVar += "					<div class=\"w_neirong\">\n";
+					    strVar += "						<p>"+v['goods_name']+"<\/p>\n";
+					    strVar += "						<p>预约时间：<span>"+v['appoint_time']+"<\/span><\/p>\n";
+//					    strVar += "						<p class=\"moGreen fl\">庆典类型：<span>婚庆<\/span>&nbsp;<span>100桌<\/span><\/p>\n";
+						if(v['channel'] ==14){
+							strVar += "						<p class=\"moGreen fl\">预约人数:"+v['number']+"人<\/p>\n";
+							strVar += "						<p class=\"red fr\">￥"+v['price']+"<\/p>\n";
+						}
+						if(v['channel'] == 5){
+							strVar += "						<p class=\"moGreen fl\">预约户型：<span>"+v['house_type_str']+"<\/span><\/p>\n";
+						}
+					    
+					    strVar += "					<\/div>\n";
+					    strVar += "				<\/li>\n";
+					    if(v['channel'] ==14 ){
+					    	strVar += "				<li class=\"pt_20 pb_20 box-s\">\n";
+					    	strVar += "					<div class=\"w_lastDiv\"  style=\"padding-bottom:60px;clear:both;height:100%;\">\n";
+					    
+					    	strVar += "						<p class=\"dy_dd fl\">共<span>1<\/span>件 合计:<span>￥"+v['price']+"<\/span><\/p>\n";
+					    
+						    strVar += "						<div class=\"fr\">\n";
+							if(v['status_wz']['type'] == 0){
+								strVar += "							<button onclick=\"goPay('"+v['order_sn']+"',"+v['channel']+")\" >去支付<\/button>\n";
+							}
+						    if(v['status_wz']['type'] == 1){
+								strVar += "							<button onclick=\"cancel_food_order("+v['id']+","+v['channel']+")\">取消预约<\/button>\n";
+							}
+						    
+						    
+						    strVar += "						<\/div>\n";
+				
+						    strVar += "					<\/div>\n";
+						    strVar += "				<\/li>\n";
+					    }
+					    strVar += "			<\/ul>\n";
+					    strVar += "		<\/ul>\n";
+				});
+				
+					$("#list").html(strVar);
+				
+			}else{
+				if(page ==1){
+					$("#list").html(strVar);
+				}
+				is_page=false;
+				//_toast(ret.msg);
+			}
+		});
+	}
+	
+	
+	
+	
+	function tui(order_id){
+		 var name='food_refund';
+		 var url='../user/food_refund';
+		 var title='退款';
+		 _openWinByUrl(name+'_head','../user/aftersalehead',{'furl':url,'frame':name,'title':title,'order_id':order_id});
+ 	}
+ 	
+	
+	//订单详情
+	function orderDetail(name,url,id){
+		
+		_openWinByUrl(name,url,{'id':id});
+	}
+	
+	
+	
+	//餐饮取消预约订单
+	function cancel_food_order(id,type){
+		_openWinByUrl(name+'_window_head','../window_head',{'furl':'users/food_cancel','frame':'food_cancel','title':'取消预约','id':id});
+	}
+	
+	function refund(id){
+		 var name='hotel_refund';
+		 var url='hotel_refund';
+		 var title='退单';
+		  _openWinByUrl(name+'_head','../user/aftersalehead',{'furl':url,'frame':name,'title':title,'id':id});
+ 	}
+</script>
+
+</html>

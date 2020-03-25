@@ -1,0 +1,106 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgRed">
+			<h1 class="mui-title">我的水票</h1>
+			<a class="mui-icon mui-icon-back" onclick="fanHui()"></a>
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="bgRed show_payInfo pt40 pb40 pl20 pr20 box_s">
+				<p class="colorWhite fs100 mui-text-center countTicket">0</p>
+				<p class="colorWhite mt30 fs36 font_weightS mui-text-center">水票剩余</p>
+			</div>
+			<div class="mui-row pl20 pr20 box_s pt40 fs32">
+				<div class="mui-col-sm-6 mui-col-xs-6" onclick="_openWinByUrl('no_bucket', 'no_bucket');dot_click('water_nobarrelsbuy');">
+					<div class="addCart noTong_btn mui-pull-right mr10">无桶购买</div>
+				</div>
+				<div class="mui-col-sm-6 mui-col-xs-6" onclick="_openWinByUrl('has_bucket', 'has_bucket');dot_click('water_bucketsbuy');">
+					<div class="buyNow yesTong_btn ml10">有桶购买</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+
+		var userinfo = '';
+		var toGo = '';
+		apiready = function(){
+			userinfo = $api.getStorage('userinfo');
+            toGo     = api.pageParam.toGo;
+			api.addEventListener({
+	            name: 'keyback'
+	        }, function(ret, err) {
+	            fanHui();
+	        });
+
+			api.addEventListener({
+				name: 'closePayBody'
+			}, function(){
+			    /*api.sendEvent({
+					name: 'closeThis'
+				});*/
+			    api.closeWin({
+                    name: 'pay_head'
+                });
+			});
+
+			// 获取水票剩余数量
+			getCountTicket();
+
+		};
+
+		// 获取水票剩余数量
+		function getCountTicket(){
+			var url = ajax_url + 'Index/WaterService/getHasTicket';
+			var data = {
+				'uid': userinfo ? userinfo.uid : '',
+				'type': 1
+			};
+			_ajax(url, data, 'post', function(ret){
+				if(ret.status == 1){
+					$('.countTicket').text(ret.data);
+				}else{
+					$('.countTicket').text(0);
+				}
+			});
+		}
+
+		function fanHui(){
+		    if(toGo == 'index'){
+		        api.closeToWin({
+                    name: 'root',
+                });
+            }else{
+		        api.closeWin();
+            }
+        }
+
+        //点击统计操作
+        function dot_click(type, remark) {
+            if( typeof remark == 'undefined' ) {
+                remark = 0;
+            }
+            if( type == 'water_nobarrelsbuy' ) {
+                //点击无桶购买
+                data_dot( 'water_nobarrelsbuy', 0, remark );
+            } else if( type == 'water_bucketsbuy' ) {
+                //点击有桶购买
+                data_dot( 'water_bucketsbuy', 0, remark );
+            }
+        }
+	</script>
+</html>

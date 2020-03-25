@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>快递记录</title>
+		<link rel="stylesheet" type="text/css" href="../../css/property/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/property/allStyle.css"/>
+	</head>
+	<body>
+		<header>
+			<ul class="fl back" id="back">
+				<a href="javascript:"><img src="../../images/property/back.png"/></a>
+			</ul>
+			<ul class="fl word">快递记录</ul>
+			<ul class="fr bianji" onclick="_openWinByUrl('expressInquiry','expressInquiry');">
+				<a href="javascript:">快递查询</a>
+			</ul>
+		</header>
+		
+	</body>
+	<script type="text/javascript" src="../../script/property/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/property/index.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+		apiready = function(){
+			api.parseTapmode();
+			        
+			var header = $api.dom('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			
+	        api.openFrame({
+	            name: 'expressLog_body',
+	            url: 'expressLog_body.html',
+	            bounces: true,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h,
+	                w: headerPos.w,
+	                h: body_h-headerPos.h
+	            },
+				pageParam:api.pageParam,
+				reload:true
+				
+	        });
+	        
+		};
+	</script>
+</html>

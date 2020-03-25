@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+	<title>一键预约</title>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/03_reservation.css"/>
+	
+	<!--预约失败-->
+	<script src="../../script/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/laundry/style.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/laundry/03_reservation.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	
+	<style>
+		.nav{
+			padding:0 0.1rem!important;
+		}
+		.choose .nav li {
+			margin-right:0.1rem;
+		}
+		.swiper-wrapper {
+		    position: relative;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 1;
+		    display: -webkit-box;
+		    display: -moz-box;
+		    display: -ms-flexbox;
+		   
+		    -webkit-transition-property: -webkit-transform;
+		    -moz-transition-property: -moz-transform;
+		    -o-transition-property: -o-transform;
+		    -ms-transition-property: -ms-transform;
+		    transition-property: transform;
+		    -webkit-box-sizing: content-box;
+		    -moz-box-sizing: content-box;
+		    box-sizing: content-box;
+    }
+		 .swiper-slide {
+		    padding: 0 5px;
+		    letter-spacing: 2px;
+		    max-width: 3rem;
+		    text-align: center;
+		}
+		.succ, .err{
+			z-index:100;
+		}
+	</style>
+</head>
+<body style="height: 100%;">
+	
+	<!--顶部结束-->
+	<div class="choose">
+		<ul class="head w-100bfb">
+			<li>请选择您需要的服务</li>
+			<i></i>
+		</ul>                      
+		<ul class="nav clearfloat swiper-container swiper1" >
+			  
+			  <div class="swiper-wrapper" id="fristCate">
+			    <!--<div class="swiper-slide active"><li onclick="selectGetCate();" class=" active">洗衣</li></div>
+			    <div class="swiper-slide"><li class=" ">洗衣</li></div>-->
+			    
+			  </div>
+
+		</ul>
+	</div>
+	<!--选择服务-->
+	<form action="#" method="post">
+		<div class="list">
+			<ul>
+				<a href="javascript:" >
+                    <li>
+                        <i class="icon-add" style="background: url(../../images/icon/edit.png) no-repeat;background-size: 100% 100%;"></i><input style='width: 80%;' name="number" id="number" placeholder="请添加洗衣数量">
+                    </li>
+                </a>
+				<a href="javascript:" onclick="address();" >
+					<li>
+						<i class="icon-add"></i><input style='width: 80%;' name="adders" id="add_info" value="请添加收货地址" disabled="true">
+					</li>
+				</a>
+				<a href="javascript:" onclick="opentimes();">
+					<li>
+						<i class="icon-time"></i><input name="data_times" id="data_times" value="请选择上门取件时间" disabled="true">						
+					</li>
+				</a>
+			</ul>
+		</div>
+		<!---->
+		<div class="text">
+			<ul class="head w-100bfb">
+				<li>如有问题请备注留言</li>
+				<i></i>
+			</ul> 
+			<ul>
+				<textarea id="remark" maxlength="50" name="remark" placeholder="请输入留言信息,最多50个文字" ></textarea>
+			</ul>
+		</div>
+		<!--留言框-->
+		<div id="btn" class="btn">
+			<a onclick="order();" href="javascript:">上门取件</a>
+		</div>
+	</form>
+	<div class="succ">
+		<div class="con">
+			<ul class="pic">
+				<img src="../../images/icon/succ.png"/>
+			</ul>
+			<ul class="desc">
+				<li>恭喜您</li>
+				<li>预约成功，请耐心等待</li>
+			</ul>
+			<ul class="btn2" onclick="btnOrderSucc();">
+				确定
+			</ul>
+		</div>
+	</div>
+	<!--成功预约-->
+	<div class="err">
+		<div class="con">
+			<ul class="pic">
+				<img src="../../images/icon/err.png"/>
+			</ul>
+			<ul class="desc">
+				<li>很遗憾</li>
+				<li>预约失败，请重新预约</li>
+			</ul>
+			<ul class="btn2">
+				确定
+			</ul>
+		</div>
+	</div>
+	
+	<input type="hidden" name="category_id" id="category_id" value="" >
+	
+	
+	
+	
+	<script src="../../script/swiper.min.js"></script>
+	<script>
+	
+		
+function resizeSwiper(){
+	var mySwiper = new Swiper('.swiper1', {
+			freeMode: true,
+			freeModeMomentumRatio: 0.5,
+			slidesPerView: 'auto',
+		
+		});
+		
+		
+	swiperWidth = mySwiper.container[0].clientWidth;
+	maxTranslate = mySwiper.maxTranslate();
+	maxWidth = -maxTranslate + swiperWidth / 2;
+	
+	$(".swiper-container").on('touchstart', function(e) {
+		//e.preventDefault()
+	})
+	/*
+	mySwiper.on('tap', function(swiper, e) {
+		e.preventDefault()
+		slide = swiper.slides[swiper.clickedIndex]
+		slideLeft = slide.offsetLeft
+		slideWidth = slide.clientWidth
+		slideCenter = slideLeft + slideWidth / 2
+		// 被点击slide的中心点
+		mySwiper.setWrapperTransition(300)
+		if (slideCenter < swiperWidth / 2) {
+			mySwiper.setWrapperTranslate(0)
+		} else if (slideCenter > maxWidth) {
+			mySwiper.setWrapperTranslate(maxTranslate)
+		} else {
+			nowTlanslate = slideCenter - swiperWidth / 2
+			mySwiper.setWrapperTranslate(-nowTlanslate)
+		}
+		$(".swiper1  .active").removeClass('active')
+		$(".swiper1 .swiper-slide").eq(swiper.clickedIndex).addClass('active')
+	
+	})*/
+}
+
+
+
+		var category_id = [];  //分类id
+		var address_id  = "";   //收获地址id
+		var date        = "";   //取件日期
+		var times       = "";  //取件时间
+		var address_id  = 0;//
+		
+		//选择分类
+		function selectGetCate(el,id){
+			//$("#fristCate a li").removeClass('active');
+			var hasClass = $(el).hasClass('active');
+			
+			if(hasClass){
+				var is_arr = $.inArray(id,category_id);
+				//判断是否存在 不存在则追加 存在则修改
+				if(is_arr > -1){
+					category_id.splice(is_arr,1);
+				}
+				$(el).removeClass('active');
+			}else{
+				$(el).addClass('active');
+				category_id.push(id);
+			}
+			console.log(category_id);
+			$("#category_id").val(category_id.join(","));
+		}
+		
+		
+		apiready = function(){
+			
+			//收获地址
+			api.addEventListener({
+	            name:'sureaddress'
+            },function(ret,err){
+            	address_id = ret.value.address_id;
+            	//coding...
+            	getUserAddress();
+            });
+            
+            //取件日期
+            api.addEventListener({
+	            name:'laundry_time'
+            },function(ret,err){
+            	//coding...
+            	times = ret.value.times;
+            	date = ret.value.date;
+            	date_info = ret.value.date_info;
+            	
+            	$("#data_times").val(date_info+" "+times);
+            });
+            
+            
+            getAddress();
+            
+            
+            loading('order_body');
+			//获取一级分类
+			getFristCate();
+		};
+		
+		//获取用户收获地址信息
+		function getAddress(){
+			var uid = localStorage.getItem("uid");
+			_ajax(ajax_url+"Index/User/address",{'uid':uid},'get',function(ret){
+				if(ret.code==1){
+					address_id = ret.data[0]['address_id'];
+					var add_info =ret.data[0]['address'];
+					$("#add_info").val(add_info);
+				}
+			});
+		}
+		
+		function getFristCate(){
+			_ajax(ajax_url+"Index/Laundry/index",{},'get',function(ret){
+				var strVar = "";
+				if(ret.code==1){
+					var n = 1;
+					$(ret.data).each(function(k,v){
+							strVar += "<div class=\"swiper-slide\"  ><li onclick=\"selectGetCate(this,"+v['id']+");\"   class=\"\" >"+v['name']+"</li></div>";
+					});
+					
+					$("#fristCate").html(strVar);
+					resizeSwiper();
+					closeloading();
+					
+				}
+			});
+		}
+		
+		
+		
+		//跳转收获地址
+		
+		function address(){
+			var uid = localStorage.getItem("uid");
+			
+			//判断是否登陆
+			if(uid  =='undefined'  ||  uid =='' || uid ==null){
+				_openWinByUrl('login','../login');
+				return false;
+			}
+		
+			_openWinByUrl('address_head','../user/address_head')
+		}
+		
+		function opentimes(){
+			
+			_openWinByUrl('time','time',{'date':date,'times':times})
+		}
+		
+		//获取用户收获地址信息
+		function getUserAddress(){
+			
+			_ajax(ajax_url+"Index/User/upAddress",{'id':address_id},'get',function(ret){
+				if(ret.status==1){
+					//ret.info.city_info+ret.info.area_info+ret.info.country_info+
+					var add_info = ret.info.address;
+					$("#add_info").val(add_info);
+				}
+			});
+		}
+		
+		
+		
+		//预约下单
+		var start=1;
+		function order(){
+		
+			var uid = localStorage.getItem("uid");
+			
+			//判断是否登陆
+			if(uid  =='undefined'  ||  uid =='' || uid ==null){
+				_openWinByUrl('login','../login');
+				return false;
+			}
+			
+			var number = $('#number').val();
+			if( !number ) {
+			     alert( '请填写洗衣数量' );
+			     return false;
+			}
+			
+			var reg = /^\+?[1-9][0-9]*$/;　　//正整数
+            if( !reg.test( number ) ) {
+                alert( '洗衣数量请填写整数' );
+                return false;
+            }
+			
+			var category_ids = $("#category_id").val();
+			if(category_ids =="" ){
+				_toast('请选择分类');
+				return false;
+			}
+			
+			
+			if(address_id ==""){
+				_toast('请选择取件地址');
+				return false;
+			}
+			
+			
+			if(date ==""  || times ==""){
+				_toast('请选择取件时间');
+				return false;
+			}
+			
+			var remark = $("#remark").val();
+			if(start==2){
+				return;		
+			}else{
+				start=2;
+			}
+			_ajax(ajax_url+"Index/Laundry/order",{'uid':uid,
+				'address_id':address_id,
+				'category_id':category_ids,
+				'take_date'  :date,
+				'take_time'  :times,
+				'remark'     :remark
+			
+			},'post',function(ret){
+				if(ret.code==1){
+					$(".succ").show();
+					updateOrderMethod( ret.order_sn , 6 , 4);
+				}else{
+					_toast(ret.msg);
+					//$(".err").show();
+				}
+			});
+		}
+		
+		
+		function btnOrderSucc(){
+			api.sendEvent({
+		        name:'index',
+		        extra: {
+				    key1: 'success',
+				    pagename:'member',
+				}
+	        });
+	        
+	        openWinOrderList('order_list','../users/order_list',{'channel':3,'closeWinName':'root'});
+	        	/*
+	        //支付成功退到首页
+	        api.closeToWin({
+		        name: 'root'
+	        });*/
+	        
+	        
+		}
+		
+		
+	
+	
+	/**
+	 * 个人中心判断是否登陆 跳转页面 
+	 */
+	function openWinOrderList(name,url,param){
+	
+		_openWinByUrl(name,url,param);
+
+	}
+	$("#btn").on('click',function(){
+		$("body").css("overflow-y","hidden");
+	});
+	$(".btn2").on('click',function(){
+		$("body").css("overflow-y","auto");
+	})
+	</script>
+	
+</body>
+</html>
+
+
+
+

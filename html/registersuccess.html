@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+<style>
+	.reg_fail{width:55%;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+		
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+				<h1 class="header_h1">注册结果</h1>
+		</div>
+	</header>
+	<div class="wp_100">
+		<div class="null_h"></div>
+	</div>
+<div class="clear"></div>
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="reg_fail">
+	<p class="reg_failimg"><img src="../images/sucess_icon.png"></p>
+	<p class="reg_failtxt reg_success">注册成功,惠管家赠您500积分</p>
+	<p class="reg_failtxt"><span class="daojishi_time">3</span>秒后，自动跳转到首页</p>
+		
+	</div>
+	
+</div>
+<script type="text/javascript">
+	apiready = function (){
+	
+		var info = api.pageParam.info;
+		$(".reg_success").html(info);
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+	};
+	$(function () {            
+	   setTimeout("lazyGo();", 1000);
+	});
+	function lazyGo() {
+		var sec = $(".daojishi_time").text();
+		$(".daojishi_time").text(--sec);
+		if (sec > 0)
+			setTimeout("lazyGo();", 1000);
+		else{
+		api.sendEvent({
+				name : 'index',
+				extra : {
+					key1 : 'success',
+					pagename : 'default',
+				}
+			});
+			api.closeToWin({
+			    name: 'root'
+			});
+			}
+			
+	}
+	</script>
+</body>
+</html>

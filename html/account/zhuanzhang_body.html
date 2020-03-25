@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>012转账</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		
+		<!--中间内容-->
+		<!--<div class="jtzh_banner clearfloat">
+			<span class="fl">家庭账户余额：<span id="money_all">0元</span></span>
+			<span class="fr">可用积分：<span id="integral">0分</span></span>
+			<div class="jtzhTouxiang">
+				<div class="touxiang">
+					<img id="portrait" src="../../images/account/shouye01.jpg"/>
+				</div>
+			</div>
+			<p class="jtzhAddr" id="address"></p>
+			<ul class="dibuliebiao clearfloat">
+				<li class="click after">家庭账户</li>
+				<li class="after">家庭账户</li>
+				<li>家庭账户</li>
+			</ul>
+		</div>-->
+		<div class="wanshanxinxi">
+			<div class="jtzhTit quMr_20 clearfloat">
+				<div>
+					<i class="xian"></i>
+					<span>转账</span>
+				</div>
+			</div>
+			<div class="glzzDiv">
+				<div class="botchongzhi">
+					<div class="clearfloat">
+						<span class="fl">转账账户：</span>
+						<div class="fl">
+							<span><i class="yessel sel weixuan" id="guanlianzhanghu"></i><label for="guanlianzhanghu">惠通卡关联账户</label></span>
+							<span><i class="nosel sel weixuan" id="zhifubao"></i><label for="zhifubao">其他账户</label></span>
+							<!--点击支付方式对应内容-->
+							<div class="tabQiehuan xialaxiaoguo">
+								<input id="relation_id" val="" class="input_select" type="text" placeholder="请选择您要用来充值的惠通卡关联账户" readonly/> 
+								<ul id="relationInfo"> 
+									<li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></li> 
+									<li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></li> 
+									<li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></li> 
+									<li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></li> 
+								</ul>
+							</div>
+							<div class="tabQiehuan qiehuanqita hide_">
+								<div class="qitazhanghuInp">
+									<span>转账账户：</span>
+									<input type="text" id="phone" placeholder="请输入惠通卡开卡手机号">
+								</div>
+								<!--<div class="qitazhanghuInp">
+									<span>转账金额：</span>
+									<input type="text"/ placeholder="请输入您要转账的金额">
+								</div>-->
+								<div class="qitazhanghuInp">
+									<span>转账密码：</span>
+									<input type="password" id="password" placeholder="请输入支付密码">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="chongzhiMoney glzh_chongzhiMoney">
+			<div class="topchongzhi clearfloat">
+				<div class="fl">
+					<span>转账金额：</span>
+					<input type="number" id="price" placeholder="输入您要充值的金额"/>
+				</div>
+				<div class="fl">
+					<button onclick="selectMoney(500);">500元</button>
+					<button onclick="selectMoney(1000);">1000元</button>
+					<button onclick="selectMoney(3000);">3000元</button>
+					<button onclick="selectMoney(5000);">5000元</button>
+				</div>
+			</div>
+			<span class="glzzSpan">本次转账为免密服务，请您核实信息后点击转账</span>
+		</div>
+		<div class="outCzanniu">
+			<div class="czBtn">
+				<button onclick="transfer();">转账</button>
+			</div>
+		</div>
+		<!--转账完成-->
+		<div class="mark hide_">
+			<div class="chongzhicg">
+				<div class="bagimg"></div>
+				<p class="czp">恭喜您，转账成功</p>
+				<div class="czclose">关闭</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".dibuliebiao li").on("click",function(){
+				$(".dibuliebiao li").removeClass("click");
+				$(this).addClass("click");
+			});
+			/*点击button*/
+			$(".botchongzhi>div div span").on("click",function(){
+				var index_ = $(this).index();
+				type = index_ +1;
+				
+				$(".botchongzhi>div div span").children(".sel").removeClass("yessel");
+				$(".botchongzhi>div div span").children(".sel").addClass("nosel");
+				$(this).children(".sel").addClass("yessel");
+				$(".tabQiehuan").addClass("hide_");
+				$(".tabQiehuan").eq(index_).removeClass("hide_");
+			});
+			/*点击充值完成按钮*/
+			$(".czBtn").on("click",function(){
+				
+			});
+			/*点击关闭按钮*/
+			$(".czclose").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+			});
+			/*下拉列表效果*/
+			$(".input_select").click(function(event){ 
+				event.stopPropagation();
+				var ul = $(".xialaxiaoguo ul"); 
+				if(ul.css("display")=="none"){ 
+					ul.slideDown("fast"); 
+				}else{ 
+					ul.slideUp("fast"); 
+				} 
+			});
+			$(document).click(function(){
+				var ul = $(".xialaxiaoguo ul"); 
+				ul.slideUp("fast"); 
+			})
+			//获取数据
+			//$(".xialaxiaoguo ul li a").click(function(){
+			
+		});
+
+		$(document).on('click',".xialaxiaoguo ul li a",function(){ 
+			var val = $(this).attr('val');
+			var txt = $(this).text(); 
+			$(".input_select").val(txt); 
+			$(".input_select").attr('val',val); 
+			var value = $(this).attr("rel"); 
+			$(".xialaxiaoguo ul").hide(); 
+			$("#result").html("您选择了"+txt+"，值为："+value); 
+		}); 
+		
+		
+		function selectMoney(price){
+			$("#price").val(price);
+		}
+		
+		//初始化用户Id
+		var uid = localStorage.getItem("uid");
+		var relationUids = "";  //当前关联用户
+		
+		var type = 1;  //类型  1 转给关联账户   2其他账户
+		apiready = function(){
+			api.addEventListener({
+	            name:'refe_relation'
+            },function(ret,err){
+            	getAccountInfo();
+            });
+			
+			//获取用户信息
+			getAccountInfo();
+		};
+		
+		
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+				if(ret.status ==1){
+					$("#address").text(ret.user.address);
+					$("#integral").text(ret.user.integral + "分");
+					$("#money_all").text(ret.user.money_all + "元");
+					$("#portrait").attr('src',ret.user.portrait);
+					
+					//监听是否有未读消息
+					api.sendEvent({
+	                    name:'read_msg',
+	                    extra:{
+	                    	read_msg:ret.user.read_msg
+	                    }
+                    });
+					
+					relationUids = ret.user.uids;
+					
+					//获取关联账户
+					getrelationInfo();
+
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		//获取关联账户
+		function getrelationInfo(){
+			_ajax(ajax_url+"Index/Family/relationInfo" ,{'uids':relationUids},'get',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					var relkey =2;
+					$(ret.user).each(function(k , v){
+						strVar += "<li><a href=\"#none\" val=\""+v['uid']+"\" rel=\""+relkey+"\">"+v['real_name']+"<\/a><\/li>\n";
+						
+					});
+				    
+				}else{
+					$(".jtzh_liebiao").hide();
+				}
+				$("#relationInfo").html(strVar);
+			});
+		}
+		
+		//转账
+		function transfer(){
+			var relation_id = $("#relation_id").attr('val');
+			var phone = $("#phone").val();
+			var password = $("#password").val();
+			var price = $("#price").val();
+			
+			if(type ==1){
+				if(!relation_id){
+					_toast('请选择转账账户');
+					return false;
+				}
+			}
+			if(type ==2){
+				if(!phone){
+					_toast('请输入转账账户');
+					return false;
+				}
+				if(!password){
+					_toast('请输入支付密码');
+					return false;
+				}
+			}
+			
+			if(!price){
+				_toast('请输入金额');
+				return false;
+			}
+			
+			if(!_isDecimal(price)){
+				_toast('金额不正确');
+				$("#price").val('');
+				return false;
+			}
+			
+			_ajax(ajax_url+"Index/Family/transfer" ,{
+				'uid':uid,'relation_id':relation_id,
+				'type':type,
+				'phone':phone,
+				'password':password,
+				'price' : price
+			},'post',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(".mark").removeClass("hide_");
+					$("body").css("overflow-y","hidden");
+					var scroll_ = $(document).scrollTop();
+					$(".mark").css("top",scroll_);
+					
+					$("#price").val('');
+					
+					//getAccountInfo();
+					api.sendEvent({
+	                    name:'refe_relation'
+                    });
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		
+			
+				
+		
+		}
+	</script>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="pad_20">
+		<div class="pwd_msg" style="display:none;color:#d12a18;margin-top: 5px;">
+		请修改初始密码
+		</div>
+		<div class="inputContainer defaule_pwd">
+			<input type="password" class="loginInpt loginInpt01" id="defaule_pwd" placeholder="原密码" autocomplete="off">
+		</div>
+		
+		<div class="inputContainer">
+			<input type="password" class="loginInpt loginInpt01" id ="password" placeholder="请输入新密码" autocomplete="off">
+		</div>
+		<div class="inputContainer">
+			<input type="password" class="loginInpt loginInpt01" id ="rpassword" placeholder="确认密码" autocomplete="off">
+		</div>
+
+		
+		<div style="padding-top: 2rem;" onclick="submit();">
+		<a href="javascript:void(0)" class="btn01">确 定</a>
+		</div>
+	
+	</div>
+	
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script>
+
+	var userinfo = "";
+	var default_pwd=0;
+	var cardno="";
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		loading('card_pwd');
+		cardno = api.pageParam.cardno;
+		default_pwd = api.pageParam.type;
+		//alert(default_pwd);
+		//判断是否是 默认密码  如果为默认密码时，不需要原密码，反之需要验证原密码
+		if(default_pwd !=2){
+			$(".defaule_pwd").hide();
+			//$(".pwd_msg").show();
+		}else{
+			$(".pwd_msg").hide();
+			$(".defaule_pwd").show();
+		}
+		closeloading();
+	};
+	
+	
+	// 判断密码
+function _isPass(str){
+	var re =/^(\d{6})$/;
+	return re.test(str);
+}
+
+	function submit(){
+
+		if(default_pwd ==2){
+			var defaule_password = $("#defaule_pwd").val();
+			if(defaule_password  ==""  &&  default_pwd == 0){
+				_toast('请输入原密码');
+				return false;
+			}
+		}
+		
+		
+		var password = $("#password").val();
+		if(password  ==""){
+			_toast('请输入密码');
+			return false;
+		}
+		
+		var password = $("#password").val();
+		if(!_isPass(password)){
+			_toast('密码必须6位数值');
+			return false;
+		}
+		
+		var rpassword = $("#rpassword").val();
+		if(rpassword  !=password){
+			_toast('确认密码不相同');
+			return false;
+		}
+		_ajax(ajax_url + "Index/User/setUserCardPwd",{'cardno':cardno,'uid':userinfo.uid,'token':userinfo.token,'password':password,'default_pwd':defaule_password},'post',function(ret){
+			if(ret.status==1){
+				//向订单支付页面发送监听  修改一卡通密码成功
+				api.sendEvent({
+			        name:'pay_card_default_pwd',
+			        extra: {
+					    pay_card_default_pwd:2,
+					}
+		        });
+		        
+				_toast(ret.msg,function(){
+					var redirect_url = api.pageParam.redirect_url;
+					api.sendEvent({
+	                    name:'user_card_default_pwd'
+                    });
+					if(redirect_url !='undefined'  && redirect_url !=null  && redirect_url !=''){
+						api.closeToWin({
+		                    name: redirect_url
+	                    });
+					}else{
+						api.closeToWin({
+							name:'card_window_head'
+						});
+					}
+					
+					
+				},1500)
+			}else{
+				_toast(ret.msg);
+			}
+		});
+	
+	}
+	
+	
+</script>
+</body>
+</html>

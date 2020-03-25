@@ -1,0 +1,964 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+		
+		<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+		<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">订单支付</h1>
+			<a class="mui-icon mui-icon-back colorRed" id="fanhui_btn"></a>
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="ddzf_banner mui-text-center">
+				<p class="ddzf_banner_time colorWhite"></p>
+				<p class="colorWhite mt40">支付剩余时间</p>
+			</div>
+			<p class="pt20 pb20 pl20 pr20 box_s clearfloat border_b fs32">
+				<span>订单号：<i class="order_sn"></i></span>
+				<span class="mui-pull-right">￥<i class="order_amount">0.00</i></span>
+			</p>
+			<ul class="zaixianzhifu_ul border_b10">
+				<li class="zaixianzhifu_liTit pl20 pr20 box_s border_b fs36">请选择支付方式</li>
+				<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+					<div class="mui-col-xs-1 mui-col-sm-1">
+						<div class="pay_icon card_icon"></div>
+					</div>
+					<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">惠通卡余额</div>
+					<!--<div class="mui-col-xs-6 mui-col-sm-6 fs26 colorHui999"></div>-->
+					<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer clearfloat">
+						<div class="checkbox_div active  fr" data-id="3"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+					</div>
+				</li>
+				<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+					<div class="mui-col-xs-1 mui-col-sm-1">
+						<div class="pay_icon weixinPay_icon"></div>
+					</div>
+					<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">微信支付</div>
+					<!--<div class="mui-col-xs-6 mui-col-sm-6 fs26 colorHui999"></div>-->
+					<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer clearfloat">
+						<div class="checkbox_div  fr" data-id="2"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+					</div>
+				</li>
+				<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+					<div class="mui-col-xs-1 mui-col-sm-1">
+						<div class="pay_icon zhifubaoPay_icon"></div>
+					</div>
+					<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">支付宝支付</div>
+					<!--<div class="mui-col-xs-6 mui-col-sm-6 fs26 colorHui999"></div>-->
+					<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer clearfloat">
+						<div class="checkbox_div  fr" data-id="1"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+					</div>
+				</li>
+			<!--	<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+					<div class="mui-col-xs-1 mui-col-sm-1">
+						<div class="pay_icon xianjin_icon"></div>
+					</div>
+					<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">现金支付</div>
+					<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer clearfloat">
+						<div class="checkbox_div  fr" data-id="4"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+					</div>
+				</li>-->
+			</ul>
+			<div style="height: 200px;background: #FFFFFF;"></div>
+			<p class="pt20 pb20 box_s pl20 pr20 bgqianOrange colorBlack tishi_p">注：超过30分钟无人接单，系统将自动取消订单，在线支付金额将原路径返回</p>
+			<footer class="cart_footer clearfloat fs24 mui-row pl20 box_s">
+				<div class="mui-col-sm-9 mui-col-xs-9">
+					<div class="bianjiClick_div">
+						<p style="line-height: 50px;">
+							<span>应付金额:</span>
+							<span class="fs24 colorRed">￥</span>
+							<span class="fs36 colorRed order_amount">0.00</span>
+						</p>
+					</div>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<div class="buyNow colorWhite">提交订单</div>
+				</div>
+			</footer>
+		</div>
+		<input type="hidden" id="card_default_pwd" value="0"/>
+
+<style>
+	.ftc_wzsf2{
+		display: none;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		z-index: 999;
+		top: 0;
+		left: 0;
+		background: #f8f8f8;
+	}
+	.srzfmm_box2{
+		position: absolute;
+		z-index: 10;
+		background: #f8f8f8;
+		top: 25px;
+		width: 100%;
+		text-align: center;
+
+	}
+	.cancel_btn{
+		position: absolute;
+		z-index: 10;
+		text-align: center;
+		width: 100%;
+		bottom: 50px;
+	}
+	.cancel_btn img{
+		width: 50px;
+		height: 50px;
+		z-index: 10;
+		background: #333;
+		border-radius: 50px;
+	}
+</style>
+<!--浮动层-->
+<div class="ftc_wzsf2">
+	<div class="srzfmm_box2">
+		<img class="pay_code" src="http://123.57.36.72:8104/Uploads/Qrcode/T15423387626666.png" style="width:300px;height:300px; z-index: 10;" >
+	</div>
+	<div class="cancel_btn">
+		<img src="../../images/guanbi.png" >
+	</div>
+	
+</div>
+<div class="ftc_wzsf">
+  <div class="srzfmm_box">
+    <div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>
+    <div class="zfmmxx_shop">
+      <div class="mz ordername">商品</div>
+      <div class="wxzf_price order_amount">￥0.00</div>
+    </div>
+    
+    <ul class="mm_box">
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+    </ul>
+  </div>
+  <div class="numb_box">
+    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+    <ul class="nub_ggg">
+      <li><a href="javascript:void(0);">1</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+      <li><a href="javascript:void(0);">3</a></li>
+      <li><a href="javascript:void(0);">4</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+      <li><a href="javascript:void(0);">6</a></li>
+      <li><a href="javascript:void(0);">7</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+      <li><a href="javascript:void(0);">9</a></li>
+      <li><span></span></li>
+      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+    </ul>
+  </div>
+  <div class="hbbj"></div>
+</div>
+
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+	$(".cancel_btn").click(function(){//取消支付
+		$('.ftc_wzsf2').hide();
+	});
+	/**
+	 * 清除支付密码 
+	 */
+	function clearPayPwd(){
+		paypassword="";
+		$(".mm_box li").attr('pwd','');
+		$(".mm_box li").removeClass("mmdd");
+		i1 = 0;
+		is_pay_status = 1;
+	}
+	var i1 = 0;
+	
+	$(function(){
+		//出现浮动层
+		$(".ljzf_but").click(function(){
+			$(".ftc_wzsf").show();
+		});
+		//关闭浮动  清除支付密码
+		$(".close").click(function(){
+			$(".ftc_wzsf").hide();
+			i = 0;
+			clearPayPwd();
+		});
+		var i = 0;
+		$(document).on('touchstart',".nub_ggg li", function(){
+			$(this).css('background','#e0e0e0');
+		});
+
+		$(document).on('touchend',".nub_ggg li a", function(){
+			$(this).css('background','#f5f5f5');
+		});
+		$(document).on('touchend',".nub_ggg li a", function(){
+			i1++;
+			var pwd =$(this).parent("li").index()+1;
+			if(pwd ==11){
+				pwd =0 ;
+			}
+		
+			if(i1<6){
+				$(".mm_box li").eq(i1-1).addClass("mmdd");
+				$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+				}else{
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+					if(i1>6){
+						i1=6;
+					}
+					setTimeout(function(){
+						//验证支付密码 并支付
+						var paypassword="";
+						$(".mm_box li").each(function(){
+							paypassword+=$(this).attr('pwd');
+						});
+						point(paypassword);
+						
+					},10);
+			 	} 
+		});
+ 		$(document).on('touchend',".nub_ggg li .del", function(){
+			if(i1>0){
+				i1--;
+				$(".mm_box li").eq(i1).removeClass("mmdd");
+				$(".mm_box li").eq(i1).attr("pwd","");
+				i1==0;
+			}
+		}); 
+	});
+	
+	
+	
+	
+	
+	
+	
+		var pay_type = 3;
+		var isPayFrameFlag = false;  //打开输入密码iframe
+		
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$(".zaixianzhifu_ul .checkbox_div").on("tap",function(){
+			pay_type = $(this).attr('data-id');
+			$(".zaixianzhifu_ul .checkbox_div").removeClass("active");
+			$(this).addClass("active");
+		});
+
+		var card_default_pwd = 0;
+	    var pay_notify_type = 0;    //回调类型
+	    var goods_type = "";        //商品所属类型  1商城 2超市
+	    var dot_type = '';          //页面来源
+//		var userinfo = '';
+		var order_sn = ""; //订单编号
+	    var order_amount = 0.00;
+	    var paybody = '合并支付';
+		var endtime = 0;
+		var help_type = '';
+		var uid = '';
+		apiready = function(){
+			goods_type = api.pageParam.goods_type;
+	        dot_type = api.pageParam.dot_type;
+//	        userinfo = $api.getStorage('userinfo');
+	        uid = localStorage.getItem("uid");
+			help_type = api.pageParam.help_type;
+
+	        order_sn = api.pageParam.order_sn;  //订单编号
+			notify_url = ajax_url+"Index/Pay/orderPayNotify?order_sn="+order_sn+"&uid="+uid+"&pay_type="+pay_notify_type;
+			pay_notify_type = api.pageParam.pay_notify_type;
+
+			api.addEventListener({
+	            name: 'pay_card_default_pwd'
+	        }, function (ret, err) {
+	            if (ret && ret.value.pay_card_default_pwd == 2) {
+	                $('#card_default_pwd').val(ret.value.pay_card_default_pwd);//默认密码是否设置
+	            }
+	        });
+
+			api.addEventListener({
+			    name: 'keyback'
+			}, function(ret, err){
+			    fanhui();
+			});
+
+	        //监听支付密码回调
+	        api.addEventListener({
+	            name: 'payPassword'
+	        }, function (ret, err) {
+	            point(ret.value.paypassword);
+	        });
+			updateOrderMethod(order_sn , pay_notify_type , 1);
+			getOrderInfo(order_sn);
+
+		};
+
+
+		/**
+	     * 清除支付密码
+	     */
+	    function clearPayPwd() {
+	        paypassword = "";
+	        $(".mm_box li").attr('pwd', '');
+	        $(".mm_box li").removeClass("mmdd");
+
+	        i1 = 0;
+	        is_pay_status = 1;
+	    }
+
+	    function closePayWzsf() {
+	        $(".ftc_wzsf").hide();
+	        i = 0;
+	        clearPayPwd();
+	    }
+	    var i1 = 0;
+
+		//关闭支付密码iframe
+		function closePayPassword() {
+	        isPayFrameFlag = false;
+	        api.sendEvent({
+	            name: 'setPayFrameFlag',
+	            extra: {
+	                flag: false
+	            }
+	        });
+
+	        api.closeFrame({
+	            name: 'pay_password'
+	        });
+	    }
+
+		/**
+	     * 获取订单信息
+	     */
+	    function getOrderInfo(order_sn) {
+	        _ajax(ajax_url + "Index/Pay/getOrderPayInfo", {
+	            'order_sn': order_sn,
+	            'uid': uid,
+	            'pay_type': pay_notify_type
+	        }, 'post', function (ret) {
+	            $(".order_sn").html(ret.data.order_sn);
+	            card_default_pwd = ret.card_default_pwd;
+	            $('#card_default_pwd').val(card_default_pwd);//默认密码是否设置
+	            order_amount = ret.data.order_amount;  //订单价格
+	            paybody = ret.data.body;
+	            $('.ordername').html(paybody);
+	            $(".order_amount").html(ret.data.order_amount);
+				endtime = ret.data.endtime;
+				djtime();
+
+				// djtime();
+	            //cart_num=ret.member.cart_num;
+	        });
+	    }
+
+		$('.buyNow').on('tap',function(){
+			if(endtime <=0){
+				return false;
+			}
+			pay();
+		});
+		//订单支付
+		function pay(){
+
+			//支付宝支付
+			if (pay_type == 1) {
+	            erweima(1);
+	        }
+
+			//微信支付
+	        if (pay_type == 2) {
+	            erweima(2);
+	        }
+
+			//惠通卡支付
+			if (pay_type == 3) {
+	            if(card_default_pwd != 1 ){
+					_toast('请先设置支付密码' , function(){
+						_openWinByUrl('zhifumima' , '../account/account_head' , {'frame':'zhifumima_body' , 'furl':'zhifumima_body' , 'title':'设置支付密码'});
+						return false;
+					});
+					return false;
+				}
+				$(".ftc_wzsf").show();
+	        }
+		}
+
+		function erweima(pay_id){
+			//生成二维码
+			_ajax(ajax_url+"Index/FamilyPay/getOrderPayQrcode",{
+				'order_sn':order_sn,'uid':uid,'pay_id':pay_id,'channel_id':pay_notify_type,'paybody':paybody
+			},'post',function(ret){
+				if(ret.status ==1){
+					pay_code = ret.pay_code;  //支付二维码
+					$(".pay_code").attr('src',pay_code);
+					$(".ftc_wzsf2").show();
+					
+					startLoopOrderInfo();
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+
+
+var loopint = "";
+var pay_code = "";
+/**
+ * 开启轮询查看充值订单状态
+ */
+function startLoopOrderInfo(){
+
+	loopint=window.setInterval(function(){
+		_ajax(ajax_url+"Index/FamilyPay/getOrderPayInfo" ,{'order_sn':order_sn,'uid':uid,'pay_type':pay_notify_type},'post',function(ret){
+			if(ret.type ==1){
+				_toast('付款成功',function(){
+					paySuccess();
+				},1500);
+				//关闭轮询
+				endLoopOrderInfo(); 
+			}
+		});
+	},2000);
+	
+}
+
+/**
+ * 关闭长轮训 
+ */
+function endLoopOrderInfo(){
+	window.clearInterval(loopint); 
+}
+
+		/**
+	     * 支付成功回掉地址
+	     * *@param trade_np  流水号
+	     */
+	    function paySuccess(trade_no, pay_notify_type) {
+	        var pay_id = pay_type;
+	        api.sendEvent({
+	            name: 'paysuccess_refresh'
+	        });
+
+	        api.sendEvent({
+	            name: 'refe_order_list'
+	        });
+
+	        api.sendEvent({
+	            name: 'refresh_order_cartinfo'
+	        });
+
+	        api.setFrameAttr({
+	            name: 'cart_body',
+	            hidden: true
+	        });
+	        if (pay_notify_type == 13) {
+	            //刷新外卖订单
+	            api.sendEvent({
+	                name: 'comments_body_over'
+	            });
+	        }
+			if(pay_notify_type == 21 || pay_notify_type == 22 || pay_notify_type == 23){
+				api.sendEvent({
+				    name: 'tab',
+				    extra: {
+				        key1: 2
+				    }
+				});
+				api.closeWin({
+				    name: 'helpget'
+				});
+				_openWinByUrl('allorder','cityrun');
+				return false;
+			}
+			if(pay_notify_type == 20){
+				_openWinByUrl('phone_pay_success','phone_pay_success');
+				return false;
+			}
+	        if(pay_notify_type == 15){
+	            _openWinByUrl('my_ticket', '../water/my_ticket', {'toGo':'index'});
+	            api.closeWin();
+	        }else{
+	            _openWinByUrl('pay_success', 'pay_success', {
+	                'channel': pay_notify_type,
+	                'order_sn': order_sn,
+	                'goods_type': goods_type
+	            }, false);
+	        }
+	    }
+
+
+		/*
+	     * 惠通卡支付
+	     */
+	    function point(password) {
+	        api.setFrameAttr({
+	            name: 'cart_body',
+	            hidden: true
+	        });
+	        var pay_id = pay_type;
+	        var order_amount = $(".order_amount").html();
+	        var notify_url = ajax_url + "Index/Pay/orderPayNotify?order_sn=" + order_sn + "&uid=" + uid + "&pay_type=" + pay_notify_type + "&pay_id=" + pay_id + "&order_amount=" + order_amount + "&password=" + password;
+
+	        api.ajax({
+	            url: notify_url,
+	            method: 'get',
+	            data: {}
+	        }, function (ret, err) {
+	            if (ret) {
+	                if (ret.status == 1) {
+	                    //数据打点统计点
+	                    //支付成功
+	                    dot_click('Pay_success', '惠通卡支付');
+
+	                    //数据打点统计点
+	                    //支付成功
+	                    dot_click('Housingpay_success', '惠通卡支付');
+
+	                    //数据打点统计点
+	                    //支付成功
+	                    dot_click('Meal_success', '惠通卡支付');
+
+	                    //数据打点统计点
+	                    //支付成功
+	                    dot_click('Restaurant_success', '惠通卡支付');
+
+	                    //数据打点统计点
+	                    //支付成功
+	                    dot_click('Cartpay_success', '惠通卡支付');
+
+	                    _toast(ret.msg, function () {
+	                        clearPayPwd();
+	                        $(".ftc_wzsf").hide();
+
+	                        paySuccess(order_sn, pay_notify_type);
+	                    });
+
+	                } else {
+	                    api.execScript({
+	                        script: 'clearPayPwd();',
+	                        frameName: 'pay_password'
+	                    });
+
+	                    clearPayPwd();
+	                    //_toast(ret.msg);
+	                    api.toast({
+	                        msg: ret.msg,
+	                        duration: 2000,
+	                        location: 'middle'
+	                    });
+
+	                    //数据打点统计点
+	                    //支付失败
+	                    dot_click('Pay_fail', '惠通卡支付###' + ret.msg);
+
+	                    //数据打点统计点
+	                    //支付失败
+	                    dot_click('Housingpay_fail', '惠通卡支付###' + ret.msg);
+
+	                    //数据打点统计点
+	                    //支付失败
+	                    dot_click('Meal_fail', '惠通卡支付###' + ret.msg);
+
+	                    //数据打点统计点
+	                    //支付失败
+	                    dot_click('Restaurant_fail', '惠通卡支付###' + ret.msg);
+
+	                    //数据打点统计点
+	                    //支付失败
+	                    dot_click('Cartpay_fail', '惠通卡支付###' + ret.msg);
+
+	                    return false;
+	                }
+	            } else {
+	                _alert('网络连接失败,请稍后重试');
+	            }
+	        });
+	    }
+
+
+
+		//支付宝支付
+	    function aliPay() {
+	        api.setFrameAttr({
+	            name: 'cart_body',
+	            hidden: true
+	        });
+	        var pay_id = $("input[name='pay']:checked").val();
+	        var notify_url = pay_url + "Index/Pay/orderPayNotify?order_sn=" + order_sn + "&uid=" + uid + "&pay_type=" + pay_notify_type + "&pay_id=" + pay_id;
+	        var random = parseInt(Math.random() * 10000) + 10000;
+	        var timestamp = new Date().getTime();
+	        var tradeNO = timestamp + "" + random;
+	        var subject = paybody;
+	        var body = subject;
+	        var aliPay = api.require('aliPay');
+	        aliPay.config({
+	            partner: '2088521528292839',
+	            seller: 'hangjia_sye@163.com',
+	            rsaPriKey: 'MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANoHjuChISF8YtR/5c/LiWXS1OmiGdiJMXmSfLzNUu+R4llGv8bD0b/dZHMEfLhQmZ4MGStdX6FT0+0dEB5DZ+SEkJQkzFeKcCy1y6mNW56fqHFvkAoNx7+y0ueOP48D+fObZbmkivLgAfg7lWEsioXnkjbbskS8mTtJXW1g/UDDAgMBAAECgYEAjj98ImY9/WDwAgBn6Yi73ekN7FhMUJBB7TV7mJrFT3R4nxKfsIi14l4JWVlGHeLINuthyH8lE1Zj4EGj8Hq93o+YKq9EbNj0FGE6343uDMDg0T2A5R+WGlFGvpfNdiOpgfDkkIE4lglxyQL8jry/nzd+T9nJAMBCIywHUgfPFUECQQDyCMETiF/egCgaPmOMAgRTWCbZU67Zxq7X6t51a0qtptAlb1c3uqv98H9ZohNL/0OUI3srkrSG5oBgttyeYpPxAkEA5pw3FKvqkDw9JIsHkOzPvwG3ADhXUhCAWibRY5Kl02YuHZatTVORe7NQpOVLvOTmP5Hk0cESBC3IOSnQ758D8wJBAMJ8UlmVviOWq6La+zbn7/3g2ebMnbYVNy39ZyDHREzhvGQ4YcdAUzBM7qhh2ku5JN6G3FSZIEM+OW59wi3rXKECQQDUGffbLme2M4F0+96AoB5PKo+bRzahBwZWZH+PmpCkR8XAdxZ8GZGkeX+BuleXq9xNua0AcxhT+Zu/X8OIsPObAkAizPg9SqtBwH/70lqsFaBoztH5WRUyUr2R9K6dz3YgobyFeRn5RncqSEKuS+1TPfe+gHUU19guB3SrQDyOwnW7',
+	            rsaPubKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDaB47goSEhfGLUf+XPy4ll0tTpohnYiTF5kny8zVLvkeJZRr/Gw9G/3WRzBHy4UJmeDBkrXV+hU9PtHRAeQ2fkhJCUJMxXinAstcupjVuen6hxb5AKDce/stLnjj+PA/nzm2W5pIry4AH4O5VhLIqF55I227JEvJk7SV1tYP1AwwIDAQAB',
+	            notifyURL: notify_url
+	        }, function (ret, err) {
+	            if (ret) {
+	                if (ret.status) {
+	                    //进行支付
+	                    aliPay.pay({
+	                        subject: subject,
+	                        body: body,
+	                        amount: order_amount,
+	                        tradeNO: tradeNO
+	                    }, function (ret, err) {
+
+	                        if (ret.statusCode == 9000 || ret.code == 9000) {
+	                            //支付成功，保存到数据库
+	                            //数据打点统计点
+	                            //支付成功
+	                            dot_click('Pay_success', '支付宝支付');
+
+	                            //数据打点统计点
+	                            //支付成功
+	                            dot_click('Housingpay_success', '支付宝支付');
+
+	                            //数据打点统计点
+	                            //支付成功
+	                            dot_click('Meal_success', '支付宝支付');
+
+	                            //数据打点统计点
+	                            //支付成功
+	                            dot_click('Restaurant_success', '支付宝支付');
+
+	                            //数据打点统计点
+	                            //支付成功
+	                            dot_click('Cartpay_success', '支付宝支付');
+	                            _toast(ret.msg, function () {
+	                                clearPayPwd();
+	                                $(".ftc_wzsf").hide();
+	                                _toast('支付成功', function () {
+	                                    paySuccess(tradeNO, pay_notify_type);
+	                                }, 2000);
+	                            });
+	                            // }
+	                        } else {
+	                            var error_msg = '订单支付失败';
+	                            if (ret.code == 4000) {
+	                                _toast('订单支付失败');
+	                            } else if (ret.code == 6001) {
+	                                error_msg = '取消支付';
+	                                _toast('取消支付');
+	                            } else if (ret.code == 4006) {
+	                                _toast('订单支付失败');
+	                            } else {
+	                                _toast('订单支付失败');
+	                            }
+	                            //数据打点统计点
+	                            //支付失败
+	                            dot_click('Pay_fail', '支付宝支付###' + error_msg);
+
+	                            //数据打点统计点
+	                            //支付失败
+	                            dot_click('Housingpay_fail', '支付宝支付###' + error_msg);
+
+	                            //数据打点统计点
+	                            //支付失败
+	                            dot_click('Meal_fail', '支付宝支付###' + error_msg);
+
+	                            //数据打点统计点
+	                            //支付失败
+	                            dot_click('Restaurant_fail', '支付宝支付###' + error_msg);
+
+	                            //数据打点统计点
+	                            //支付失败
+	                            dot_click('Cartpay_fail', '支付宝支付###' + error_msg);
+	                        }
+	                    });
+	                }
+	            } else {
+	                _toast("配置错误");
+	            }
+	        });
+	    }
+
+	    /**
+	     * 微信支付 wxPay()
+	     */
+	    function wxPay() {
+
+	        api.setFrameAttr({
+	            name: 'cart_body',
+	            hidden: true
+	        });
+
+	        var pay_id = $("input[name='pay']:checked").val();
+	        var random = parseInt(Math.random() * 10000) + 10000;
+	        var timestamp = new Date().getTime();
+	        var tradeNO = timestamp + "" + random;
+	        var subject = paybody;
+	        var body = subject;
+	        var wxPay = api.require('wxPay');
+
+	        var wxnotify_url = pay_url + "Index/Pay/orderPayNotify/out_trade_no/" + tradeNO + "/trade_no/" + tradeNO + "/order_sn/" + order_sn + "/uid/" + uid + "/pay_type/" + pay_notify_type + "/pay_id/" + pay_id + "/pay_method/1";
+	        wxPay.config({
+	            apiKey: 'wx967c2d25800a08ae',
+	            mchId: '1430124402',
+	            partnerKey: 'b36a5b2f763c76ef2af4ea389eb39f8e',
+	            notifyUrl: wxnotify_url
+	        }, function (info, err) {
+	            if (info.status) {
+	                var wxorder_amount = parseFloat(order_amount) * 100;
+	                wxPay.pay({
+	                    description: body,
+	                    totalFee: wxorder_amount,
+	                    tradeNo: tradeNO,
+	                    detail: body,
+	                    attach: timestamp,
+	                    feeType: 'CNY'
+	                }, function (ret, err) {
+	                    if (ret.status) {
+	                        //数据打点统计点
+	                        //支付成功
+	                        dot_click('Pay_success', '微信支付');
+
+	                        //数据打点统计点
+	                        //支付成功
+	                        dot_click('Housingpay_success', '微信支付');
+
+	                        //数据打点统计点
+	                        //支付成功
+	                        dot_click('Meal_success', '微信支付');
+
+	                        //数据打点统计点
+	                        //支付成功
+	                        dot_click('Restaurant_success', '微信支付');
+
+	                        //数据打点统计点
+	                        //支付成功
+	                        dot_click('Cartpay_success', '微信支付');
+
+	                        paySuccess(order_sn, pay_notify_type);
+	                        _toast('支付成功');
+	                    } else {
+	                        if (App.debug == true) {
+	                            api.alert({msg: err});
+	                        }
+	                        //数据打点统计点
+	                        //支付失败
+	                        dot_click('Pay_fail', '微信支付###' + err.msg);
+
+	                        //数据打点统计点
+	                        //支付失败
+	                        dot_click('Housingpay_fail', '微信支付###' + err.msg);
+
+	                        //数据打点统计点
+	                        //支付失败
+	                        dot_click('Meal_fail', '微信支付###' + err.msg);
+
+	                        //数据打点统计点
+	                        //支付失败
+	                        dot_click('Restaurant_fail', '微信支付###' + err.msg);
+
+	                        //数据打点统计点
+	                        //支付失败
+	                        dot_click('Cartpay_fail', '微信支付###' + err.msg);
+
+	                        _toast('支付失败');
+	                    }
+	                });
+	            } else {
+	                _toast(err.msg);
+	            }
+	        });
+	    }
+
+	    //选择支付方式统计
+	    function dot_click_pay(remark) {
+	        //数据打点统计点
+	        if (dot_type == 'hotel_pay') {
+	            //酒店支付
+	            //支付方式
+	            data_dot('Housingpay_paytype', 0, remark);
+	        } else if (dot_type == 'cart_pay') {
+	            //超市
+	            //选择支付方式
+	            data_dot('Cartpay_paytype', 0, remark);
+	        } else if (dot_type == 'super_pay') {
+	            //超市
+	            //选择支付方式
+	            data_dot('Pay_paytype', 0, remark);
+	        }
+	    }
+
+	    //点击统计操作
+	    function dot_click(type, remark) {
+	        if (typeof remark == 'undefined') {
+	            remark = 0;
+	        }
+	        //数据打点统计点
+	        if (dot_type == 'hotel_pay') {
+	            //酒店支付
+	            if (type == 'Housingpay_success') {
+	                //支付成功
+	                data_dot('Housingpay_success', 0, remark);
+	            } else if (type == 'Housingpay_fail') {
+	                //支付失败
+	                data_dot('Housingpay_fail', 0, remark);
+	            }
+	        } else if (dot_type == 'hotel_food') {
+	            //酒店餐饮支付
+	            if (type == 'Meal_success') {
+	                //支付成功
+	                data_dot('Meal_success', 0, remark);
+	            } else if (type == 'Meal_fail') {
+	                //支付失败
+	                data_dot('Meal_fail', 0, remark);
+	            }
+	        } else if (dot_type == 'index_food') {
+	            //餐饮支付
+	            if (type == 'Restaurant_success') {
+	                //支付成功
+	                data_dot('Restaurant_success', 0, remark);
+	            } else if (type == 'Restaurant_fail') {
+	                //支付失败
+	                data_dot('Restaurant_fail', 0, remark);
+	            }
+	        } else if (dot_type == 'cart_pay') {
+	            //购物车支付
+	            if (type == 'Cartpay_success') {
+	                //支付成功
+	                data_dot('Cartpay_success', 0, remark);
+	            } else if (type == 'Cartpay_fail') {
+	                //支付失败
+	                data_dot('Cartpay_fail', 0, remark);
+	            } else if (type == 'Cartpay_submit') {
+	                //支付失败
+	                data_dot('Cartpay_submit', 0, remark);
+	            }
+	        } else if (dot_type == 'super_pay') {
+	            //超市
+	            if (type == 'Pay_submit') {
+	                //确认支付
+	                data_dot('Pay_submit', 0, remark);
+	            } else if (type == 'Pay_success') {
+	                //支付成功
+	                data_dot('Pay_success', 0, remark);
+	            } else if (type == 'Pay_fail') {
+	                //支付失败
+	                data_dot('Pay_fail', 0, remark);
+	            }
+	        }
+	    }
+
+		function closeRoot() {
+	        if (isPayFrameFlag == true) {
+	            closePayPassword();
+	            return false;
+	        }
+
+	        //刷新成功 执行发送监听事件  所有需要刷新的页面  name 统一 paysuccess_refresh
+	        api.sendEvent({
+	            name: 'paysuccess_refresh'
+	        });
+
+	        var jsfun = 'closePayWzsf();';
+	        api.execScript({
+	            frameName: 'pay_body',
+	            script: jsfun
+	        });
+	            // alert(api.pageParam.pay_notify_type);
+	        if (back_root == 1) {
+	            //支付成功退到首页
+	            api.closeWin();
+	        }
+	        openWinOrderList('mine_order','../mine/mine_order', {'pay_status':'2'});
+
+	    }
+
+		var result = 0;
+		var interval = 0;
+		//订单倒计时
+		function djtime(){
+			result=Math.floor(endtime);
+
+			interval=setInterval(sub,1000); //定时器 调度对象
+			/*封装减1秒的函数*/
+
+		}
+		//订单倒计时
+		function sub(){
+			if (result>0) {
+			   result = result - 1;
+			   var second = Math.floor(result % 60);     // 计算秒 ，取余
+			   var minite = Math.floor((result / 60) % 60); //计算分 ，换算有多少分，取余，余出多少秒
+				if(second < 10){
+					second = '0'+second;
+				}
+				if(minite < 10){
+					minite = '0'+minite;
+				}
+			   $(".ddzf_banner_time").html(minite + ":" + second);
+			} else{
+				// _toast('订单支付时间结束');
+				$(".buyNow").css("background","#dbdbdb");
+				qxorder();
+				window.clearInterval(interval);//这里可以添加倒计时结束后需要执行的事件
+			}
+        }
+    $('#fanhui_btn').on('tap',function(){
+			fanhui();
+		});
+		function fanhui(){
+			api.sendEvent({
+			    name: 'tab',
+			    extra: {
+			        key1: 2
+			    }
+			});
+			api.closeToWin({
+			    name: 'cityrun'
+			});
+		}
+		//支付时间结束，取消订单
+		function qxorder(){
+			// alert(JSON.stringify(order_sn+'-'+uid+'-'+help_type));return false;
+			_ajax(ajax_url+'Index/CityRun/cancelOrder',{'order_sn':order_sn,'help_type':help_type,'uid':uid},'post',function(ret,err){
+				if(ret.status == 1){
+					_toast('订单支付时间结束，请重新下单',function(){
+						api.sendEvent({
+						    name: 'tab',
+						    extra: {
+						        key1: 2
+						    }
+						});
+						api.closeToWin({
+						    name: 'cityrun'
+						});
+					});
+					return false;
+				}else{
+					_toast(ret.msg);
+					return false;
+				}
+			});
+		}
+	</script>
+</html>

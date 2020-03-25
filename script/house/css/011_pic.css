@@ -1,0 +1,28 @@
+.pic-list {
+  position: absolute;
+  top: 50%;
+  height: 5rem;
+  margin-top: -2.5rem;
+  overflow: hidden;
+  width: 100%;
+}
+.pic-list ul {
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+.pic-list ul .car_img {
+  float: left;
+  width: 6.4rem;
+  height: 100%;
+  position: absolute;
+}
+.text {
+  font-size: 0.36rem;
+  color: #282828;
+  position: absolute;
+  top: 7.5rem;
+  width: 100%;
+  text-align: center;
+}
+/*# sourceMappingURL=011_pic.css.map */

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>042家政服务</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<!--中间内容-->
+		<ul class="fuwuDiv clearfloat" id="cate_list">
+			<!-- <li><a href=""><img src="../../images/account/4209.png"/></a></li> -->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript" >
+        var category_id = 0;
+        apiready = function(){
+            category_id = api.pageParam.cid;
+            //获取商品
+            getCategory();
+        };
+        
+        function getCategory(){
+            _ajax(ajax_url+"Index/Housekeeping/getCategoryInfo" ,{},'get',function(ret){
+                var html  = '';
+                if(ret.status ==1){
+                    $.each(ret.data, function(k,v){
+                        html += '<li class="cate_click" data-tit="'+v.label_name+'" data-id="'+v.id+'"><a href="javascript:void(0);"><img src="'+v.pic+'"/></a></li>';
+                    })
+                }
+                $("#cate_list").html(html);
+            });
+        }
+        
+        $(document).on('click', '.cate_click', function() {
+            var id = $(this).attr( 'data-id' );
+            var title = $(this).attr( 'data-tit' );
+            _openWinByUrl('baojiefuwu','baojiefuwu', {cid:id,'title':title});
+        });
+    </script>
+</html>

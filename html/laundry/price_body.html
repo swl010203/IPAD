@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+	<title>价格明细</title>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/02_price.css"/>
+	
+	<style>
+	.kind-list .main-list .main ul {
+		border-top: 1px solid #E0E0E0;
+	  	display: none;
+	}
+	.kind-list .main-list .main ul li {
+	  text-align: center;
+	  width: calc(25%);
+	  border: 1px solid #E0E0E0;
+	  height:350px;
+	  float: left;
+	  border-top: none;
+	  border-left: none;
+	  overflow: hidden;
+	  
+	}
+    	.swiper-wrapper {
+		    position: relative;
+		    width: 100%;
+		    height: 100%;
+		    z-index: 1;
+		    display: -webkit-box;
+		    display: -moz-box;
+		    display: -ms-flexbox;
+		   
+		    -webkit-transition-property: -webkit-transform;
+		    -moz-transition-property: -moz-transform;
+		    -o-transition-property: -o-transform;
+		    -ms-transition-property: -ms-transform;
+		    transition-property: transform;
+		    -webkit-box-sizing: content-box;
+		    -moz-box-sizing: content-box;
+		    box-sizing: content-box;
+	    }
+		.swiper-slide {
+		    padding: 0 5px;
+		    letter-spacing: 2px;
+		    max-width: 3rem;
+		    text-align: center;
+		}
+		.kind-list .main-list .tit ul li {
+			width:auto;padding:0 0.2rem;
+		}
+    </style>
+    
+    <script src="../../script/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/laundry/style.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	
+	<script src="../../script/swiper.min.js"></script>
+	
+</head>
+<body>
+
+	<!--顶部结束-->	
+	<div class="kind-list w-100bfb">
+		<div class="head w-100bfb clearfloat">
+			<ul class="swiper-container swiper1 " id="">
+				<div class="swiper-wrapper" id="fristCate">
+					<!--<div class="swiper-slide active"><li onclick="selectGetCate();" class=" active">洗衣</li></div>
+			    	<div class="swiper-slide"><li class=" ">洗衣</li></div>-->
+			    
+				</div>
+			</ul>			                   
+		</div>
+
+		<!--首层按钮-->
+		<div class="box" style="width:100%;">
+			<div class="main-list" style="display: block;width:100%:">
+				<div class="tit" style="width:100%;overflow: hidden;">
+					<ul class="swiper-container swiper2" id="">
+						<div class="swiper-wrapper" id="lastCate">
+							<!--<div class="swiper-slide"   ><li    class=" active">犯得上犯得上犯得上</li></div>
+							<div class="swiper-slide"   ><li    class=" active">犯得上犯得上犯得上</li></div>
+							<div class="swiper-slide"   ><li    class=" active">犯得上犯得上犯得上</li></div>
+							<div class="swiper-slide"   ><li    class=" active">犯得上犯得上犯得上</li></div>
+							-->
+							<!--<li class="active">上衣</li>
+							<li>大衣外套</li>
+							<li>裤装群套</li>
+							<li>其他ddsdsd配件</li>-->
+						</div>
+						
+					</ul>
+				</div>
+				<!--二层按钮-->
+				<div class="main clearfloat" id="lastList">
+					<ul style="display: block;">
+						<!--<li>
+							<p class="commodity"><img src="../../images/02_price/ad.png" alt="单衬衫"/></p>
+							<p class="name" style='width:100%;overflow-x:hidden;white-space:nowrap;text-overflow:ellipsis;'>单衬衫sdfasdfasdf</p>
+							<p class="money"><span>￥</span>15.0</p>
+						</li>-->
+						
+					</ul>
+					<!--上衣列表-->
+					
+					<!--其他配件-->
+				</div>
+				<!--二层列表-->
+			</div>
+			
+		</div>		
+	</div>
+	<!--<div class="btn">
+		<a href="javascript:;" onclick="_openWinByUrl('order','order')" >立即预约</a>
+	</div>-->
+	
+	
+    <script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	
+	
+	<script>
+	resizeSwiper('.swiper2');
+		function resizeSwiper(cls){
+			var mySwiper = new Swiper(cls, {
+					freeMode: true,
+					freeModeMomentumRatio: 0.5,
+					slidesPerView: 'auto',
+				
+				});
+
+		}
+		
+		
+		apiready = function(){
+		
+			loading('price_body');
+			//获取一级分类
+			getFristCate();
+		};
+		
+		function getFristCate(){
+			_ajax(ajax_url+"Index/Laundry/index",{},'get',function(ret){
+				var strVar = "";
+				if(ret.code==1){
+					var n = 1;
+					$(ret.data).each(function(k,v){
+						if(n ==1){
+							getCategoryInfo(v['id']);
+							strVar += "<div class=\"swiper-slide\"  ><li onclick=\"clickLastCate(this,"+v['id']+")\" class=\"fristCateli active\">"+v['name']+"</li></div>";
+						}else{
+							strVar += "<div class=\"swiper-slide\"  ><li onclick=\"clickLastCate(this,"+v['id']+")\" class=\"fristCateli\" >"+v['name']+"</li></div>";
+						}
+						
+						n++;
+					});
+					
+					$("#fristCate").html(strVar);
+					resizeSwiper('.swiper1');
+					
+				}
+			});
+		}
+		
+		
+		function clickLastCate(el,id){
+			var thisIndex = $(el).index();
+			$("#fristCate li").removeClass("active");
+			$(el).addClass("active");
+			$(".kind-list .head ul").animate({
+				left:-thisIndex*0.63+"rem"
+			},200);
+			//$(".kind-list .main-list").css("display","none");
+			
+			//$(".kind-list .main-list").eq(thisIndex).css("display","block");
+		
+			getCategoryInfo(id);
+		}
+		
+		
+		function LastCate(el,id){
+			var thisIndex = $(el).index();
+				$(".main-list .tit li").removeClass("active");
+				$(el).find('li').addClass("active");
+				var oMain = el.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("main")[0];
+				
+				var aUl = oMain.getElementsByTagName("ul");
+				for (var i = 0 ; i < aUl.length ; i++){
+					aUl[i].style.display = "none";
+				}
+				$(aUl).eq(thisIndex).css("display","block");
+		}
+		
+		
+		
+		function getCategoryInfo(id){
+			_ajax(ajax_url+"Index/Laundry/getTwoCate",{'pid':id},'get',function(ret){
+				closeloading();
+				var strVar = "";
+				var strVar2 ="";
+				if(ret.code==1){
+					var n =1;
+					$(ret.data).each(function(k,v){
+						if(n ==1){
+							strVar += "<div class=\"swiper-slide\" onclick=\"LastCate(this,"+v['id']+")\"  ><li    class=\" active\">"+v['name']+"</li></div>";
+							
+							strVar2 += "<ul style=\"display: block;\">\n";
+						}else{
+							strVar += "<div class=\"swiper-slide\"  onclick=\"LastCate(this,"+v['id']+")\" ><li    class=\"\" >"+v['name']+"</li></div>";
+						
+							
+							strVar2 += "<ul style=\"\">\n";
+						}
+						n++;
+						
+					    
+					    $(v['parent_list']).each(function(key,val){
+					    	strVar2 += "	<li>\n";
+						    strVar2 += "	<p class=\"commodity\">\n";
+						    strVar2 += "		<img src=\""+val['pic_path']+"\" alt=\"\"/>\n";
+						    strVar2 += "	<\/p>\n";
+						    strVar2 += "	<p class=\"name\" style='width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'>\n";
+						    strVar2 += val['name'];
+						    strVar2 += "	<\/p>\n";
+						    strVar2 += "	<p class=\"money\">\n";
+						    strVar2 += "		<span>￥<\/span>"+val['price'];
+						    strVar2 += "	<\/p>\n";
+						    strVar2 += "	<\/li>\n";
+					    });
+					    strVar2 += "</ul>";
+					    
+					});
+					
+					
+					$("#lastCate").html(strVar);
+					$("#lastList").html(strVar2);
+					
+					resizeSwiper('.swiper2');
+				}else{
+					$("#lastCate").html(strVar);
+					$("#lastList").html(strVar2);
+				}
+				
+			});
+		}
+	</script>
+</body>
+</html>
+
+
+
+

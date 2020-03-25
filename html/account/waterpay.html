@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>016缴费</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+        <style>
+        
+            .glzzDiv{
+                padding:10px;
+            }
+            .glzh_chongzhiMoney{
+                margin-top:0;
+            }
+            .jtzhAllanniu{
+                padding-bottom:0;
+            }
+        </style>
+    </head>
+    <body>
+        <!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" id="back">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon">
+				水缴费
+			</div>
+			<div onclick="_openWinByUrl('message','message')" class="fr">
+				<i class="youxinxi"></i>
+			</div>
+		</header>
+        <div class="wanshanxinxi">
+            <div class="jtzhTit quMr_20 clearfloat">
+                <div class="fl">
+                    <i class="xian"></i>
+                    <span>缴费</span>
+                </div>
+                
+                <div class="fr" id="jump_log" data-tab="">
+                    <span class="colorRed">缴费记录</span>
+                </div>
+            </div>
+            <div class="glzzDiv">
+                <div class="chongzhiMoney glzh_chongzhiMoney jiaofeidiv">
+                    <div class="topchongzhi clearfloat">
+                        <div class="fl">
+                            <span>缴费项目：</span>
+                        </div>
+                        <div class="fl">
+                            <div class="jtzhAllanniu">
+                                <button data-id="water_div">水费</button>
+                                <button data-id="electric_div">电费</button>
+                                <button data-id="property_div">物业费</button>
+                                <button data-id="broadband_div">宽带费</button>
+                                <!-- <button>物业费</button>
+                                <button>宽带费</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- <div class="chongzhiMoney glzh_chongzhiMoney">
+            <div class="topchongzhi clearfloat">
+                <div class="fl">
+                    <span>缴费金额：</span>
+                    <input type="hidden" value="" id="water_collectid" />
+                    <input type="hidden" value="" id="water_meter" />
+                    <input type="number" id="water_price" placeholder="输入您要充值的金额"/>
+                </div>
+            </div>
+            <span class="glzzSpan">1元钱为1方水</span>
+        </div>
+        <div class="outCzanniu">
+            <div class="czBtn">
+                <button onclick="water_order();">充值</button>
+            </div>
+        </div> -->
+        
+        
+        <div id="water_div" class="down_div" style="display:none;">
+            <div class="chongzhiMoney">
+                <div class="topchongzhi clearfloat">
+                    <div class="fl">
+                        <span>水&nbsp;&nbsp;表&nbsp;&nbsp;号：</span>
+                        <span id="water_meterId">0</span>
+                    </div>
+                </div>
+                <div class="topchongzhi clearfloat">
+                    <div class="fl">
+                        <span>已用水量：</span>
+                        <span id="water_used">0</span>
+                    </div>
+                    <div class="fl">
+                        <span>剩余水量：</span>
+                        <span id="water_using">0</span>
+                    </div>
+                </div>
+                <div class="topchongzhi clearfloat">
+                    <div class="fl">
+                        <span>缴费金额：</span>
+                        <input type="number" id="water_price" value="" placeholder="输入您要充值的金额"/>
+                    </div>
+                </div>
+                <div class="botchongzhi">
+                    <div class="clearfloat">
+                        <span class="fl">缴费方式：</span>
+                        <div class="fl">
+                            <span><i class="nosel sel weixuan" data-type="zhifubao"></i><label for="zhifubao">支付宝</label></span>
+                            <span><i class="nosel sel weixuan" data-type="weixin"></i><label for="weixin">微信</label></span>
+                            <span><i class="nosel sel weixuan" data-type="yue"></i><label for="weixin">账户余额</label></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="outCzanniu">
+                <div class="czBtn" onclick="water_order();">
+                    <button>充值</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="electric_div" class="down_div" style="display:none;">
+            <div class="chongzhiMoney">
+                <div class="topchongzhi clearfloat">
+                    <div class="fl">
+                        <span>电&nbsp;&nbsp;表&nbsp;&nbsp;号：</span>
+                        <span id="electric_meterId">0</span>
+                    </div>
+                </div>
+                <div class="topchongzhi clearfloat">
+                    <div class="fl">
+                        <span>已用电量：</span>
+                        <span id="electric_used">0</span>
+                    </div>
+                    <div class="fl">
+                        <span>剩余电量：</span>
+                        <span id="electric_using">0</span>
+                    </div>
+                </div>
+                <div class="topchongzhi clearfloat">
+                    <div class="fl">
+                        <span>缴费金额：</span>
+                        <input type="number" id="electric_price" value="" placeholder="输入您要充值的金额"/>
+                    </div>
+                </div>
+                <div class="botchongzhi">
+                    <div class="clearfloat">
+                        <span class="fl">缴费方式：</span>
+                        <div class="fl">
+                            <span><i class="nosel sel weixuan" data-type="zhifubao"></i><label for="zhifubao">支付宝</label></span>
+                            <span><i class="nosel sel weixuan" data-type="weixin"></i><label for="weixin">微信</label></span>
+                            <span><i class="nosel sel weixuan" data-type="yue"></i><label for="weixin">账户余额</label></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="outCzanniu">
+                <div class="czBtn" onclick="electric_order();">
+                    <button>充值</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="property_div" class="down_div" style="display:none;">
+            <div class="jtzh_liebiao">
+                <table border="0" cellspacing="0" cellpadding="0" style="width:100%;">
+                    <tr>
+                        <th>收费项目</th>
+                        <th>应缴金额</th>
+                        <th>开始时间</th>
+                        <th>结束时间</th>
+                        <th>操作</th>
+                    </tr>
+                    <tbody id="property_list">
+                        <!-- <tr>
+                            <td>张先生</td>
+                            <td>子女</td>
+                            <td>
+                                <span class="blueGRed">编辑&nbsp;&nbsp;</span>
+                                <span class="colorRed">删除</span>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        
+        
+        <!--浮动层-->
+		<div class="ftc_wzsf">
+		  <div class="srzfmm_box">
+		    	<div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>	    
+			    <ul class="mm_box">
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			    </ul>
+		  </div>
+		  <div class="numb_box">
+		    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+		    <ul class="nub_ggg">
+		      <li><a href="javascript:void(0);">1</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+		      <li><a href="javascript:void(0);">3</a></li>
+		      <li><a href="javascript:void(0);">4</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+		      <li><a href="javascript:void(0);">6</a></li>
+		      <li><a href="javascript:void(0);">7</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+		      <li><a href="javascript:void(0);">9</a></li>
+		      <li><span></span></li>
+		      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+		      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+		    </ul>
+		  </div>
+		  <div class="hbbj"></div>
+		</div>	
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".dibuliebiao li").on("click",function(){
+                $(".dibuliebiao li").removeClass("click");
+                $(this).addClass("click");
+            });
+            /*点击button*/
+            $(".jtzhAllanniu button").on("click",function(){
+                $(".jtzhAllanniu button").removeClass("click");
+                $(this).addClass("click");
+                
+                $('.down_div').hide();
+                var data_id = $(this).attr( 'data-id' );
+                
+                //跳转记录
+                var tab = '';
+                if( data_id == 'water_div' ) {
+                    tab = 'water';
+                } else if( data_id == 'electric_div' ) {
+                    tab = 'electric';
+                } else if( data_id == 'property_div' ) {
+                    tab = 'property';
+                    
+                    //这里需要判断是否验证了业主信息
+                    check_property();
+                } else if( data_id == 'broadband_div' ) {
+                    //打开连接页面
+                    _openWinByUrl('broadband','broadband_head');
+                    return;
+                }
+                $('#jump_log').attr( 'data-tab', tab );
+                
+                $('#'+data_id).show();
+            });
+            
+            $(".botchongzhi>div div span").on("click",function(){
+                var index_ = $(this).index();
+                $(".botchongzhi>div div span").children(".sel").removeClass("yessel");
+                $(".botchongzhi>div div span").children(".sel").addClass("nosel");
+                $(this).children(".sel").addClass("yessel");
+                $(".tabQiehuan").addClass("hide_");
+                $(".tabQiehuan").eq(index_).removeClass("hide_");
+            });
+            
+//          /*点击充值完成按钮*/
+//          $(".czBtn").on("click",function(){
+//              $(".mark").removeClass("hide_");
+//              $("body").css("overflow-y","hidden");
+//              var scroll_ = $(document).scrollTop();
+//              $(".mark").css("top",scroll_);
+//          })
+//          /*点击关闭按钮*/
+//          $(".czclose").on("click",function(){
+//              $(".mark").addClass("hide_");
+//              $("body").css("overflow-y","auto");
+//          })
+            
+            
+        })
+    </script>
+    
+    <script>
+       //初始化用户Id
+        var uid = localStorage.getItem("uid");
+        
+        var order_sn = "";
+        var pay_tab = '';
+        var default_pwd = 0; //是否设置支付密码 0否 1是
+        apiready = function(){
+            pay_tab  = 'water'; //api.pageParam.pay_tab;//跳转区分
+            $('#jump_log').attr( 'data-tab', pay_tab );
+            var button_div = '';
+            if( pay_tab == 'water' ) {
+                button_div = 'water_div';
+                $('#water_div').show();
+            } else if( pay_tab == 'electric' ) {
+                button_div = 'electric_div';
+                $('#electric_div').show();
+            }
+            
+            $('.jtzhAllanniu button').each(function() {
+                if( $(this).attr( 'data-id' ) == button_div ) {
+                    $(this).addClass('click');
+                }
+            });
+            
+            //监听支付成功刷新页面
+            api.addEventListener({
+                name:'pay_property_cost_ok'
+            },function(ret,err){
+                if( ret.value.we_type == 1 ) {
+                    getWaterInfo( 'electric' );//获取电表信息
+                } else if( ret.value.we_type == 2 ) {
+                    getWaterInfo( 'water' );//获取水表信息
+                }
+                getPayList();
+            });
+            
+            //监听支付成功刷新页面
+            api.addEventListener({
+                name:'property_check_room_ok'
+            },function(ret,err){
+                getPayList();
+            });
+            
+            api.addEventListener({
+		        name:'setPayPwdSuccess'
+	        },function(ret,err){
+	        	default_pwd = 1;
+	        });
+	        
+            
+            getAccountInfo();
+            
+            getPayList();
+
+            getWaterInfo( 'water' );//获取水表信息
+            getWaterInfo( 'electric' );//获取电表信息
+        };
+        
+        //用户信息
+        function getAccountInfo(){
+            _ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+                if(ret.status ==1){
+                	default_pwd = ret.user.paypassword;
+                    //监听是否有未读消息
+                    api.sendEvent({
+                        name:'read_msg',
+                        extra:{
+                            read_msg:ret.user.read_msg
+                        }
+                    });
+                    
+                }else{
+                    //_toast(ret.msg);
+                }
+            });
+        }
+        
+        //获取物业缴费信息
+        function getPayList() {
+            _ajax(ajax_url+"Index/PayCost/getPayList" ,{uid:uid},'get',function(ret){
+                var html = '';
+                if(ret.status ==1){
+                    $.each(ret.data, function(key, val) {
+                        html += '<tr>';
+                        html += '    <td>'+val.itemname+'</td>';
+                        html += '    <td>'+val.ActualAmount+'</td>';
+                        html += '    <td>'+val.starttime+'</td>';
+                        html += '    <td>'+val.endtime+'</td>';
+                        html += '    <td>';
+                        html += '        <span data-money="'+val.ActualAmount+'" data-id="'+val.cbillitemid+'" class="blueGRed pay_property">缴费</span>';
+                        html += '    </td>';
+                        html += '</tr>';
+                    });
+                    $('#property_list').html( html );
+                }else{
+                    //_toast(ret.info);
+                }
+            });
+        }
+        
+        //交水费
+        function water_order() {
+            var money = $.trim($('#water_price').val());
+            //支付方式
+            var paytype = $('#water_div').find('.yessel').attr( 'data-type' );
+            //var paytype = $('.yessel').attr('data-type');
+            if(!money){
+                _toast('请选择充值金额！');return;
+            }
+            
+            if(!_isznumber(money)){
+                _toast('金额格式错误！');return;
+            }
+            
+            var pay_type = 0;
+            if( paytype == 'zhifubao' ) {
+                pay_type = 1;
+            } else if( paytype == 'weixin' ) {
+                pay_type = 2;
+            } else if( paytype == 'yue' ) {
+            	if(default_pwd != 1 ){
+					_toast('请先设置支付密码' , function(){
+						_openWinByUrl('zhifumima' , './account_head' , {'frame':'zhifumima_body' , 'furl':'zhifumima_body'});
+						return false;
+					});
+					return false;
+				}
+				
+                pay_type = 4;
+            } else {
+                _toast( '请选择支付方式' );
+                return false;
+            }
+            water_electric( money, pay_type, 2 );
+        }
+        
+        //交电费
+        function electric_order() {
+            var money = $.trim($('#electric_price').val());
+            //支付方式
+            var paytype = $('#electric_div').find('.yessel').attr( 'data-type' );
+            //var paytype = $('.yessel').attr('data-type');
+            if(!money){
+                _toast('请选择充值金额！');return;
+            }
+            
+            if(!_isznumber(money)){
+                _toast('金额格式错误！');return;
+            }
+            
+            var pay_type = 0;
+            if( paytype == 'zhifubao' ) {
+                pay_type = 1;
+            } else if( paytype == 'weixin' ) {
+                pay_type = 2;
+            } else if( paytype == 'yue' ) {
+            	if(default_pwd != 1 ){
+					_toast('请先设置支付密码' , function(){
+						_openWinByUrl('zhifumima' , './account_head' , {'frame':'zhifumima_body' , 'furl':'zhifumima_body'});
+						return false;
+					});
+					return false;
+				}
+				
+                pay_type = 4;
+            } else {
+                _toast( '请选择支付方式' );
+                return false;
+            }
+            water_electric( money, pay_type, 1 );
+        }
+        
+        //调用接口
+        function water_electric( money, pay_type, type ) {
+            var tab_type = 'water_electric';
+            _ajax(ajax_url+"Index/Water/payQrpay" ,{uid:uid, money:money, pay_type:pay_type, type:type},'get',function(ret){
+                if(ret.status == 1 ){
+                	order_sn = ret.data.order_sn;
+                	if( pay_type == 4){
+                		$(".ftc_wzsf").show();
+                	}else{
+                		_openWinByUrl('paycost','paycost',{'frame':'paycost_body','furl':'paycost_body','pay_code':ret.data.code,'order_sn':ret.data.order_sn, tab_type:tab_type, we_type:type});
+                	}
+                    
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+        
+        //跳转付款页面
+        $(document).on('click', '.pay_property', function() {
+            var money = $(this).attr( 'data-money' );
+            var id    = $(this).attr( 'data-id' );
+            _openWinByUrl('propertypay_body','account_head',{'frame':'propertypay_body','furl':'propertypay_body', 'money':money, 'itemid':id});
+        });
+        
+        //跳转缴费记录
+        $(document).on('click', '#jump_log', function() {
+            var pay_tab = $(this).attr( 'data-tab' );
+            if( pay_tab ) {
+                _openWinByUrl('watercheck_body','account_head',{'frame':'watercheck_body','furl':'watercheck_body', 'pay_tab':pay_tab});
+            } else {
+                _toast( '请选择缴费项目' );
+            }
+        });
+        
+        //判断是否验证业主
+        function check_property() {
+            _ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+                if(ret.status ==1){
+                    if( ret.user.cust_id && ret.user.cust_id > 0 ) {
+                        
+                    } else {
+                        _openWinByUrl('yanzhengyezhu','../property/yanzhengyezhu', {jump_type:'pay_cost' ,'hide':true});
+                    }
+                }else{
+                    //_toast(ret.msg);
+                }
+            });
+        }
+        
+        
+        
+        
+        
+        
+        
+        /**
+		 * 清除支付密码 
+		 */
+		function clearPayPwd(){
+			paypassword="";
+			$(".mm_box li").attr('pwd','');
+			$(".mm_box li").removeClass("mmdd");
+			i1 = 0;
+			is_pay_status = 1;
+		}
+		var i1 = 0;	
+		$(function(){
+			//关闭浮动  清除支付密码
+			$(".close").click(function(){
+				$(".ftc_wzsf").hide();
+				i = 0;
+				clearPayPwd();
+			});
+			//----
+			var i = 0;
+			$(document).on('touchstart',".nub_ggg li", function(){
+				$(this).css('background','#e0e0e0');
+			});
+			$(document).on('touchend',".nub_ggg li a", function(){
+				$(this).css('background','#f5f5f5');
+			});
+			$(document).on('touchend',".nub_ggg li a", function(){
+				i1++;
+				var pwd =$(this).parent("li").index()+1;
+				if(pwd ==11){
+					pwd =0 ;
+				}
+				if(i1<6){
+					$(".mm_box li").eq(i1-1).addClass("mmdd");
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					}else{
+						$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+						$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+						if(i1>6){
+							i1=6;
+						}
+						setTimeout(function(){
+							//验证支付密码 并支付
+							var paypassword="";
+							$(".mm_box li").each(function(){
+								paypassword+=$(this).attr('pwd');
+							});
+							point(paypassword);					
+						},10);
+				 	} 
+			});
+	 		$(document).on('touchend',".nub_ggg li .del", function(){
+				if(i1>0){
+					i1--;
+					$(".mm_box li").eq(i1).removeClass("mmdd");
+					$(".mm_box li").eq(i1).attr("pwd","");
+					i1==0;
+				}
+			}); 
+		});
+		
+		
+		/**
+		 * 关联账户充值 如果cardno 有内容则是惠通卡卡号充值
+		 */
+		function point(paypassword){
+			_ajax(ajax_url+"Index/Water/familyPayNotify" ,{'uid':uid ,'order_sn':order_sn , 'password':paypassword },'post',function(ret){
+				if(ret.status==1){		
+                    clearPayPwd();
+                    $(".ftc_wzsf").hide();
+                    api.sendEvent({
+	                    name:'refe_relation',
+	                    extra:{
+	                    	type:1
+	                    }
+                    });
+
+                    //更新水电表信息
+                    $('.jtzhAllanniu button').each(function() {
+                        if( $(this).hasClass('click') ) {
+                            var button_tab = $(this).attr( 'data-id' );
+                            if( button_tab == 'electric_div' ) {
+                                getWaterInfo( 'electric' );//获取电表信息
+                            } else if( button_tab == 'water_div' ) {
+                                getWaterInfo( 'water' );//获取水表信息
+                            }
+                        }
+                    });
+
+                    _toast('充值成功！',function(){
+//                      api.closeWin();
+                    },1500);
+
+				}else{					
+					_toast(ret.msg);
+					clearPayPwd();
+					//$(".ftc_wzsf").hide();
+
+				}
+			});
+		}
+		
+
+        //获取水电表信息
+        function getWaterInfo( pay_tab ){
+            if( pay_tab == 'water' ) {
+                type = 2;
+            } else if( pay_tab == 'electric' ) {
+                type = 1;
+            }
+            _ajax(ajax_url+"Index/Water/waterInfo" ,{type:type, uid:uid},'get',function(ret){
+                if(ret.status ==1){
+                    $('#'+pay_tab+'_meterId').text( ret.data.meterId );
+                    $('#'+pay_tab+'_used').text( ret.data.used );
+                    $('#'+pay_tab+'_using').text( ret.data.using );
+                }else{
+                    //_toast(ret.info);
+                }
+            });
+        }
+    </script>
+</html>

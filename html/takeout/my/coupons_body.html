@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>我的代金券</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    </head>
+
+    <body>
+        <div class="myVoucher_div pl_20 pr_20 box-s mt_20">
+            <ul class="myVoucher_div_ul" id="list">
+                <li>
+                    <div>
+                        <p>
+                            <span class="myVoucher_div_ul_tit">百草味坚果零食券</span>
+                            <span class="fr red">
+                                <span class="fontSize_big">50</span>元
+                            </span>
+                        </p>
+                        <p>
+                            <span>有效期至2018.02.11</span>
+                            <span class="fr">满300元可用</span>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <p>
+                            <span class="myVoucher_div_ul_tit">百草味坚果零食券</span>
+                            <span class="fr red">
+                                <span class="fontSize_big">50</span>元
+                            </span>
+                        </p>
+                        <p>
+                            <span>有效期至2018.02.11</span>
+                            <span class="fr">满300元可用</span>
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    
+    <script>
+    	var uid = localStorage.getItem( "uid" );
+    	var goods_price = 0;
+    	apiready = function(){
+    		goods_price = api.pageParam.goods_price;
+    		is_order    = api.pageParam.is_order;
+    		//获取优惠券列表
+    		getCouponsList();
+    		
+    	};
+    	
+    	function getCouponsList(){
+    		_ajax(ajax_url+"Index/Takeout/getCouponsList" ,{uid:uid  ,'price':goods_price  },'post',function(ret) {
+	            var strVar = "";
+	            if( ret.status == 1 ){
+	            	$(ret.data).each(function(k,v){
+	            		if( is_order == 1){
+	            			strVar += "<li onclick='selectCoupons("+v['coupons_id']+")'>";
+	            		} else {
+	            			strVar += "<li>";
+	            		}
+	            		
+					    strVar += "    <div>";
+					    strVar += "        <p>";
+					    strVar += "            <span class=\"myVoucher_div_ul_tit\">"+v['name']+"<\/span>";
+					    strVar += "            <span class=\"fr red\">";
+					    strVar += "                <span class=\"fontSize_big\">"+v['money']+"<\/span>元";
+					    strVar += "            <\/span>";
+					    strVar += "        <\/p>";
+					    strVar += "        <p>";
+					    strVar += "            <span>有效期至"+_formatDate( v['end_time']*1000)+"<\/span>\n";
+					    strVar += "            <span class=\"fr\">满"+v['full']+"元可用<\/span>\n";
+					    strVar += "        <\/p>";
+					    strVar += "    <\/div>";
+					    strVar += "<\/li>";
+	            	});
+				    
+	            }
+	            
+	            $("#list").html(strVar);
+	        });
+    	}
+    	
+    	/**
+    	 * 判断当前优惠券是否满足使用
+    	 * @param id 优惠券Id
+    	 */
+    	function selectCoupons(id){
+    		api.sendEvent({
+	            name:'takeout_order',
+	            extra:{
+	            	coupons_id:id
+	            }
+            });
+            
+            api.closeWin();
+    	}
+    </script>
+
+</html>

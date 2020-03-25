@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>043保洁服务</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--中间内容-->
+        <ul class="cslist clearfloat bjfw_cslist" id="ul_more">
+            <li class="cstitle">
+                <div class="bjfwPx bor_b clearfloat">
+                    <span class="click fl price_click">价格<i class="paixu px1"></i></span>
+                    <span style="width: 150px;" class="fl new_click">最新发布<i class="paixu px2"></i></span>
+                </div>
+            </li>
+            <li class="bjfwshangpin">
+                <ul id="goods_list">
+                    <!-- <li class="clearfloat">
+                        <div class="bjfwimg"><img src="img/4301.jpg"/></div>
+                        <p class="titp_1">东直门家政</p>
+                        <p class="dy_dd">科尔沁超级休闲肉脯零食 内蒙古特</p>
+                        <p class="clearfloat colorRed"><span class="fl">￥50</span><span class="fr">07-22</span></p>
+                    </li> -->
+                </ul>
+            </li>
+        </ul>
+        <p style="text-align: center;background: white;line-height: 50px;display:none;" id="more">加载更多</p>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            /*排序点击样式*/
+            $(".cslist li.cstitle>div.bjfwPx span").on("click",function(){
+                $(".cslist li.cstitle>div.bjfwPx span").removeClass("click");
+                $(this).addClass("click");
+                var index_ = $(this).index();
+                if(this.classList.contains("click")){
+                    if($(this).children(".paixu").get(0).classList.contains("px1")){
+                        $(this).children(".paixu").removeClass("px1");
+                        $(this).children(".paixu").addClass("px3");
+                    }else if($(this).children(".paixu").get(0).classList.contains("px3")){
+                        $(this).children(".paixu").removeClass("px3");
+                        $(this).children(".paixu").addClass("px1");
+                    }else{
+                        $(this).children(".paixu").removeClass("px2");
+                        $(this).children(".paixu").addClass("px3");
+                    }
+                }
+            })
+        })
+    </script>
+    
+    <script type="text/javascript" >
+        var category_id = 0;
+        apiready = function(){
+            category_id = api.pageParam.cid;
+            //获取商品
+            getGoods( 0, 1 );
+        };
+        
+        //价格排序
+        $(document).on('click', '.price_click', function() {
+            var price = $(this).children().hasClass('px3');
+            var order = price ? 2 : 1;
+            getGoods( order, 1 );
+        });
+        
+        //最新排序
+        $(document).on('click', '.new_click', function() {
+            var new_p = $(this).children().hasClass('px3');
+            var order = new_p ? 3 : 0;
+            getGoods( order, 1 );
+        });
+        
+        function getGoods( order, p ){
+            _ajax(ajax_url+"Index/Housekeeping/getGoodsListByCategoryId" ,{order:order, category_id:category_id, p:p},'get',function(ret){
+                var html  = '';
+                var total = ret.total;
+                var li_len = $('#goods_list li').length;
+                if(ret.status ==1){
+                    $.each(ret.data, function(k,v){
+                        html += '<li class="clearfloat detail_click" data-id="'+v.id+'">';
+                        html += '<div class="bjfwimg"><img src="'+v.pic+'"/></div>';
+                        html += '<p class="titp_1">'+v.name+'</p>';
+                        html += '<p class="dy_dd">'+v.des+'</p>';
+                        html += '<p class="clearfloat colorRed"><span class="fl">￥'+v.value+'</span><span class="fr"></span></p>';
+                        html += '</li>';
+                    })
+                }
+                if( p > 1 ) {
+                    $("#goods_list").append(html);
+                } else {
+                    $("#goods_list").html(html);
+                }
+                if( li_len < total ) {
+                    $('#more').show();
+                } else {
+                    $('#more').hide();
+                }
+            });
+        }
+        
+        $(document).on('click', '.detail_click', function() {
+            var id = $(this).attr( 'data-id' );
+            _openWinByUrl('xiangqingyemian','xiangqingyemian', {goods_id:id});
+        });
+    </script>
+</html>

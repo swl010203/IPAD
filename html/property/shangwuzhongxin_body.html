@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>034商务中心</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--中间内容-->
+        <div class="bannerSwzx" style="padding:0;">
+            <!--<p class="tit">办事不出门</p>
+            <p class="conP">方便、快捷、为您的生活带来无限方便和快乐</p>-->
+            <img style="width:100%;height:100%;" src="" />
+        </div>
+        <div class="conDivSwzx">
+            <p class="conDivSwzx_tit bor_b">
+                <i class="xian"></i>
+                <span>商务中心介绍</span>
+            </p>
+            <p class="conDivSwzx_con bor_b" id="desc">
+                
+            </p>
+        </div>
+        <div class="conDivSwzx mar_t bor_b">
+            <div class="conDivSwzx_tit bor_b clearfloat">
+                <div class="fl">
+                    <i class="xian"></i>
+                    <span>服务项目</span>
+                </div>
+                <div class="fr" onclick="_openWinByUrl('jiagemingxi','jiagemingxi');">
+                    <i class="priceIcon"></i>
+                    <span class="colorRed">价格明细</span>
+                </div>
+            </div>
+            <ul class="conDivSwzx_con bor_b clearfloat" id="list">
+                <!--<li>
+                    <div><img src="../../images/property/1801.jpg"/></div>
+                    <p>打印</p>
+                </li>
+                <li>
+                    <div><img src="../../images/property/1801.jpg"/></div>
+                    <p>打印</p>
+                </li>
+                <li>
+                    <div><img src="../../images/property/1801.jpg"/></div>
+                    <p>打印</p>
+                </li>
+                <li>
+                    <div><img src="../../images/property/1801.jpg"/></div>
+                    <p>打印</p>
+                </li>
+                <li>
+                    <div><img src="../../images/property/1801.jpg"/></div>
+                    <p>打印</p>
+                </li>
+                <li>
+                    <div><img src="../../images/property/1801.jpg"/></div>
+                    <p>打印</p>
+                </li>
+                <li>
+                    <div><img src="../../images/property/1801.jpg"/></div>
+                    <p>打印</p>
+                </li>-->
+            </ul>
+        </div>
+        <div class="conDivSwzx  mar_t">
+            <p class="conDivSwzx_tit bor_b">
+                <i class="xian"></i>
+                <span>联系方式</span>
+            </p>
+            <div class="conDivSwzx_con bor_b" id="teltype">
+                <!--<p class="clearfloat"><span class="fl">地址：<i>北京市丰台区科丰桥总部基地</i></span></p>
+                <p class="clearfloat">
+                    <span class="fl width_50">联系电话：<i>15510393159</i></span>
+                    <span class="fl width_50">邮箱：<i>1546317959@11.com</i></span>
+                </p>
+                <p class="clearfloat">
+                    <span class="fl width_50">QQ：<i>1546317959&nbsp;&nbsp;13454356765</i></span>
+                    <span class="fl width_50">24小时热线：<i>15718817201</i></span>
+                </p>
+                <p class="clearfloat">
+                    <span class="fl width_50">联系人：<i>刘经理</i></span>
+                    <span class="fl width_50">手机：<i>13426368639</i></span>
+                </p>-->
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script>
+		//默认加载
+    	apiready = function(){
+    	 	//获取商务信息
+    	 	getCommerce();
+    	};
+    	
+    	//获取商务信息
+    	function getCommerce(){
+    		_ajax(ajax_url+"Index/Commerce/index",{},'post',function(ret){
+    			if(ret.status==1){
+    				//banner图
+    				//var imgurl="background:url("+ret.info.bannerimg+") 0 0 no-repeat";
+    				$('.bannerSwzx img').attr('src',ret.info.bannerimg);
+    				
+    				//介绍
+    				$('#desc').html(ret.info.desc);
+    				
+    				//联系方式
+    				$('#teltype').html(ret.info.teltype);
+    				
+    				var html='';
+    				for(var i in ret.info.type){
+    					html+='<li><div><img src="'+ret.info.type[i].img+'"/></div><p>'+ret.info.type[i].name+'</p></li>';
+    				}
+    				$('#list').html(html);
+    			}
+    		});
+    	}
+    </script>
+</html>

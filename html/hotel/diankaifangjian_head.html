@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../css/hotel/wangting/common.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css">-->
+    <link rel="stylesheet" type="text/css" href="../../css/hotel/swiper.min.css">
+
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/swiper.min.js"></script>
+    <title>点开房间图</title>
+    <style>
+    	.zshop-price span{font-size:16px;}
+    	.zshopping{font-size:18px;}
+    </style>
+    
+</head>
+<body style="height:100%;">
+    <div class="gxyhead diankai" style="height:100%;">
+        <div class="zshopping clearfix " id="foot">
+                    <div class="zshoppingleft"> 
+                         <div class="zshop-price">￥<i id="foot_price"></i><span>起</span>
+                         </div>
+                    </div>
+            <!-- <div class="zSettlement"><a href="#">去预定</a> -->
+            </div>
+        </div>
+    </div>  
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+    //默认加载
+    var sid  = 0;
+    apiready = function(){
+        sid  = api.pageParam.sid;
+        
+        var body_h = $api.offset($api.dom('body')).h;
+        var footer_h = $api.offset($api.byId('foot')).h;
+        api.openFrame({
+            name: 'diankaifangjian',
+            url: 'diankaifangjian.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: 0,
+                h: body_h-footer_h-1
+            },
+            pageParam:api.pageParam,
+            reload:true
+            
+        });
+        
+        api.addEventListener({
+            name:'house_root_price'
+        },function(ret,err){
+            var price = ret.value.price;
+            $('#foot_price').html(price);
+        });
+        
+    };
+    
+    //返回上一页
+    function bank(){
+        api.closeWin();
+    }
+    
+</script>
+</body>
+</html>

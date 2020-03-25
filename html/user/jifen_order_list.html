@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!-- 头部 -->
+
+
+<!-- 内容 -->
+<div class="wp_100" >
+	
+
+<div class="siteSearchlist" style="background:#fff;" id="list">
+											
+</div>
+
+
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script >
+
+	var userinfo = "";
+	var page = 1;
+	var is_page = true;
+	var type =1;
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		//加载状态
+		loading('jifen_order_list');
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			page=1;
+			is_page = true;
+			ready();
+		});
+
+		
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		         page++;
+			     ready();
+		     }
+			  
+		});
+		
+		ready();
+	};
+	
+	function ready(){
+	   _ajax(ajax_url +'Index/Score/orderList',{
+				uid:localStorage.getItem("uid"),
+				p:page
+		},'post', function(ret, err) {
+	   if(ret){
+	    if(ret.status==1){
+	      var html='';
+	      var data=ret.orderList;
+	      if(data!=null && data.length>0){
+	        for(var i in data){
+	         html+='	<div class="pinpai_intrtop" style="color: #999;">订单号：<span>'+data[i]['order_sn']+'</span><span class="fr" ';
+	         		
+	         	if(data[i]['shipping_status']  ==1){
+								//已领取
+                               html+='style="color:#D12A18">' ;
+							}else{
+								//未领取
+							   html+='style="color:#199908">';
+							}
+	         	html+=data[i]['order_state_str']+'</span></div>'+
+						'<ul class="siteSearchul">'+
+								'<li class="busi_fenleili"  >'+
+										'<div class="busi_fenlei">'+
+										'<a href="#"class="busi_fenleia"><img src="'+data[i]['goods_img']+'"></a>'+
+										'<div class="busi_fenleir">'+
+											'<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">'+data[i]['goods_name']+'</a></p>'+
+											'<p class="busi_fenleirrice"><b class="jifen_icon"></b>'+data[i]['goods_amount']+'</p>'+
+										'</div>';
+										if(data[i]['shippingtype']==2){
+										 html+='<a href="javascript:void(0);"  class="orderBtn " style="background: #CCCCCC" onclick="detail('+data[i]['order_id']+');">查看详情</a>	';
+										}
+										
+									html+='</div>'+								
+									
+								'</li>'+		
+						'</ul>';
+	        }
+	       if(page==1){
+		    	$("#list").html(html);
+		    }else{
+		    	$("#list").append(html);
+		    }
+	      }
+	    }else{
+	     is_page = false;
+	     _toast(ret.msg);
+	     //return false;
+	    }	    	
+		    closeloading();
+			api.refreshHeaderLoadDone();
+	   }else{
+	    closeloading();
+			api.refreshHeaderLoadDone();
+	     _alert('网络连接失败,请稍后重试');
+	    
+	   }
+	})
+
+	}
+	
+	/*
+	 * 详情
+	 */
+	function detail(id){
+	    	var url='user/jifen_order_detail';
+	    	var name='jifen_order_detail';
+     	var title='订单详情';
+     	_openWinByUrl('jifen_order_detail_head','../window_head',{'furl':url,'frame':name,'title':title,'id':id});
+	}
+	
+
+
+</script>
+</body>
+</html>

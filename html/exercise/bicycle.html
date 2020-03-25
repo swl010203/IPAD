@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">动感单车</h1>
+			<a class="mui-pull-right iconfont icon-tishi fs24Icon colorRed mt20"></a>
+		</header>
+		<div class="mui-content">
+			<div class="fixed_div">
+				<div class="spinning_top">
+					<div class="spinning_integral fs24">
+						<p class="mui-text-right">现有积分</p>
+						<p class="font_weightB mui-text-right integral">0</p>
+					</div>
+					<div class="spinning_top_con">
+						<div class="mui-text-center">
+							<span class="iconfont icon-xiaohuomiao"></span>
+							<span class="fs24">今日卡路里</span>
+						</div>
+						<p class="spinning_top_kcl mt20"><span class="dangqiankl"></span>kcl</p>
+						<p class="fs24 mui-text-center mt20">每日24点清零</p>
+						<p class="fs24 mui-text-center click_duihuan"><a href="">点击兑换</a></p>
+					</div>
+				</div>
+				<div class="spinning_navigation bgwhite pl20 pr20 box_s fs28">
+					<div class="mui-row">
+						<div class="mui-col-xs-3 mui-col-sm-3 mui-text-center after">
+							<span class="active">日榜</span>
+						</div>
+						<div class="mui-col-xs-3 mui-col-sm-3 mui-text-center after">
+							<span>周榜</span>
+						</div>
+						<div class="mui-col-xs-3 mui-col-sm-3 mui-text-center after">
+							<span>月榜</span>
+						</div>
+						<div class="mui-col-xs-3 mui-col-sm-3 mui-text-center">
+							<span>总榜</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<ul style="margin-top: 251px;" class="fs28 bgwhite mt20 spinning_ul pl20 pr20 box_s">
+				<!--<li class="clearfloat border_b">
+					<span class="iconfont icon-xx mui-pull-left first">
+						<span class="iconfont_span">1</span>
+					</span>
+					<div class="mui-pull-left clearfloat">
+						<div class="mui-pull-left spinning_ul_img">
+							<img src="../../images/1902_1.png"/>
+						</div>
+						<span>Steven</span>
+					</div>
+					<span class="mui-pull-right">1000kcal</span>
+				</li>
+				<li class="clearfloat border_b">
+					<span class="iconfont icon-xx mui-pull-left second">
+						<span class="iconfont_span">2</span>
+					</span>
+					<div class="mui-pull-left clearfloat">
+						<div class="mui-pull-left spinning_ul_img">
+							<img src="../../images/1902_1.png"/>
+						</div>
+						<span>Steven</span>
+					</div>
+					<span class="mui-pull-right">1000kcal</span>
+				</li>
+				<li class="clearfloat border_b">
+					<span class="iconfont icon-xx mui-pull-left third">
+						<span class="iconfont_span">3</span>
+					</span>
+					<div class="mui-pull-left clearfloat">
+						<div class="mui-pull-left spinning_ul_img">
+							<img src="../../images/1902_1.png"/>
+						</div>
+						<span>Steven</span>
+					</div>
+					<span class="mui-pull-right">1000kcal</span>
+				</li>
+				<li class="clearfloat border_b">
+					<span class="mui-pull-left width_24">4</span>
+					<div class="mui-pull-left clearfloat">
+						<div class="mui-pull-left spinning_ul_img">
+							<img src="../../images/1902_1.png"/>
+						</div>
+						<span>Steven</span>
+					</div>
+					<span class="mui-pull-right">1000kcal</span>
+				</li>
+				<li class="clearfloat border_b">
+					<span class="mui-pull-left width_24">4</span>
+					<div class="mui-pull-left clearfloat">
+						<div class="mui-pull-left spinning_ul_img">
+							<img src="../../images/1902_1.png"/>
+						</div>
+						<span>Steven</span>
+					</div>
+					<span class="mui-pull-right">1000kcal</span>
+				</li>
+				<li class="clearfloat border_b">
+					<span class="mui-pull-left width_24">4</span>
+					<div class="mui-pull-left clearfloat">
+						<div class="mui-pull-left spinning_ul_img">
+							<img src="../../images/1902_1.png"/>
+						</div>
+						<span>Steven</span>
+					</div>
+					<span class="mui-pull-right">1000kcal</span>
+				</li>-->
+			</ul>
+		</div>
+		<div class="mark_common mui-hidden">
+			<div class="duihuan_mark pl20 pr20 box_s">
+				<p class="fs32 mui-text-center pb20">当前卡路里为<span class="dangqiankl">1000</span></p>
+				<p class="fs32 mui-text-center border_b pb30">可兑换<span class="colorRed" id="keyiduihuan"></span>积分</p>
+				<div class="duihuan_mark_btn clearfloat">
+					<div class="mui-pull-left small_btn border quxiao_click" data-id="1">取消</div>
+					<div class="mui-pull-right small_btn buyNow colorWhite" data-id="2">确认</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$(".spinning_navigation>div div").on("tap",function(){
+			$(".spinning_navigation>div div").find("span").removeClass("active");
+			$(this).find("span").addClass("active");
+		});
+		$(".click_duihuan").on("tap",function(){
+			$(".mark_common").removeClass("mui-hidden");
+			show_mark();
+		});
+	    $(".quxiao_click,.buyNow").on("tap", function () {
+	    	var dataId = ''; 
+	    	dataId = $(this).attr('data-id');
+	    	if(dataId == 2){
+	    		duihuanjifen();
+	    	}
+	        $(".mark_common").addClass("mui-hidden");
+	        hidden_mark();
+	    });
+	    
+	    var userinfo = '';
+	    
+	     apiready = function(){
+	        api.addEventListener({
+	            name: 'keyback'
+	        }, function(ret, err){
+	            fanhui();
+	        });
+			api.addEventListener({
+		        name:'exchangeScore'
+	        },function(ret,err){
+	        	if(ret.value.status == 'success'){
+	        		getTodayCalorie();
+	    			getIntegral();
+	        	}
+	        });
+	        userinfo = $api.getStorage('userinfo');
+	
+	        // 获取用户积分
+	        getIntegral();
+	        //获取今日卡路里
+	        getTodayCalorie();
+	    };
+	
+	    // 检测 userinfo
+	    function checkUserInfo(){
+	        var checkInfo = true;
+	        if(typeof userinfo == 'undefined' || userinfo == ''){
+	            _toast('请先登录');
+	            checkInfo = false;
+	        }
+	        return checkInfo;
+	    }
+	
+	    // 获取用户积分
+	    function getIntegral(){
+	        if(!checkUserInfo()){return false;}
+	        api.ajax({
+	            url : ajax_url+'Index/User/score',
+	            method : 'post',
+	            data : {
+	                values : {
+	                    uid : userinfo.uid
+	                }
+	            }
+	        },function(ret, err) {
+	            if(ret){
+	                if(ret.code==1){
+	                    var data=ret.data;
+	                    $(".integral").html(data);
+	                }
+	            }
+	        });
+	    }
+	
+	    $('.mui-action-back').on('tap',function(){
+	        fanhui();
+	    });
+	    function fanhui(){
+	        api.closeWin();
+	    }
+	    
+	    function duihuanjifen(){
+		    var kl = '';
+		    var score = '';
+	    	kl = $('.dangqiankl').html();
+	    	score = $('#keyiduihuan').html();
+	    	if(kl < 500){
+	    		_toast('卡路里不足');
+	    		return false;
+	    	}
+	    	_ajax(ajax_url+'Index/Exercise/exchangeScore',{'uid':userinfo.uid,'score':score,'kcl':kl},'post',function(ret,err){
+	    		if(ret.status == 1){
+	    			api.sendEvent({
+		                name:'exchangeScore',
+		                extra:{
+		                	status:'success'
+		                }
+	                });
+	    			_toast(ret.msg);
+	    		}else{
+	    			_toast(ret.msg);
+	    		}
+	    	});
+	    
+	    }
+		//获取今日卡路里
+		function getTodayCalorie(){
+			_ajax(ajax_url+'Index/Exercise/dayKcl',{'uid':userinfo.uid},'post',function(ret,err){
+				if(ret.status == 1){
+					$('.dangqiankl').html(0);
+					$('#keyiduihuan').html(0);
+				}else{
+					$('.dangqiankl').html(1000);
+					var kl = ''; 
+			    	var score = '';
+			    	var duihuanscore = '';
+			    	kl = $('.dangqiankl').html();
+			    	duihuanscore = kl / 500;
+			    	score =  duihuanscore.toFixed(2);
+			    	$('#keyiduihuan').html(score);
+				}
+			});
+		}
+	</script>
+</html>

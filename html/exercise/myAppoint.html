@@ -1,0 +1,753 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/iconfont.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+</head>
+
+<body>
+<header id="header" class="mui-bar mui-bar-nav bgwhite">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="touch-action: none;"></a>
+    <h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei fs36 colorHui999">
+        <span class="colorRed mr20 click" onclick="getClass(1);">团课</span>
+        <span onclick="getClass(2);">私教</span>
+    </h1>
+    <button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right ykbianjiClick">编辑</button>
+</header>
+<div class="mui-content">
+    <!--团课-->
+    <!--没课-->
+    <div class="null_ss mui-hidden">
+        <div class="null_ss_bg"></div>
+        <p class="mui-text-center fs28 colorHui666" id="aa"></p>
+        <div class="btn_small" onclick="appointClass()" id="bb"></div>
+    </div>
+    <!--有课-->
+    <div class="yueke_tap">
+        <ul class="pl20 pr20 box_s bgwhite mt20 fs28 tuankeList">
+             <!--<li class="pb20 pt20 border_b myyueke_li">
+                <div class="myyueke_li_div">
+                    <div class="myyueke_li_div_check mui-hidden">
+                        <span class="iconfont icon-danxuankuang mui-pull-left"></span>
+                    </div>
+                    <div class="myyueke_li_div_con">
+                        <div class="tk_div_top clearfloat">
+                            <div class="tk_div_top_con mui-pull-left">
+                                <p class="colorBlack font_weightB">印度瑜伽</p>
+                                <p class="mt10">教练：李佳</p>
+                                <p>09:00-11:00（20/20）</p>
+                            </div>
+                            <div class="tk_div_top_con1 mui-pull-left yk_tiezi">
+                                <div class="tk_div_top_img">
+                                    <img src="../../images/yk1.jpg"/>
+                                </div>
+                                <div class="yk_tiezi_img"></div>
+                            </div>
+                        </div>
+                        <div class="clearfloat">
+                            <div class="mui-pull-left tk_div_bottom">
+                                <span class="iconfont icon-dizhi"></span>
+                                <span class="colorHui999">瑜伽室</span>
+                            </div>
+                            <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="pb20 pt20 border_b myyueke_li">
+                <div class="myyueke_li_div">
+                    <div class="myyueke_li_div_check mui-hidden">
+                        <span class="iconfont icon-danxuankuang mui-pull-left"></span>
+                    </div>
+                    <div class="myyueke_li_div_con">
+                        <div class="tk_div_top clearfloat">
+                            <div class="tk_div_top_con mui-pull-left">
+                                <p class="colorBlack font_weightB">印度瑜伽</p>
+                                <p class="mt10">教练：李佳</p>
+                                <p>09:00-11:00（20/20）</p>
+                            </div>
+                            <div class="tk_div_top_con1 mui-pull-left yk_tiezi">
+                                <div class="tk_div_top_img">
+                                    <img src="../../images/yk1.jpg"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfloat">
+                            <div class="mui-pull-left tk_div_bottom">
+                                <span class="iconfont icon-dizhi"></span>
+                                <span class="colorHui999">瑜伽室</span>
+                            </div>
+                            <div class="mui-pull-right yk_btn buyNow">取消预约</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="pb20 pt20 border_b myyueke_li">
+                <div class="myyueke_li_div">
+                    <div class="myyueke_li_div_check mui-hidden">
+                        <span class="iconfont icon-danxuankuang mui-pull-left"></span>
+                    </div>
+                    <div class="myyueke_li_div_con">
+                        <div class="tk_div_top clearfloat">
+                            <div class="tk_div_top_con mui-pull-left">
+                                <p class="colorBlack font_weightB">印度瑜伽</p>
+                                <p class="mt10">教练：李佳</p>
+                                <p>09:00-11:00（20/20）</p>
+                            </div>
+                            <div class="tk_div_top_con1 mui-pull-left yk_tiezi">
+                                <div class="tk_div_top_img">
+                                    <img src="../../images/yk1.jpg"/>
+                                </div>
+                                <div class="yk_tiezi_img"></div>
+                            </div>
+                        </div>
+                        <div class="clearfloat">
+                            <div class="mui-pull-left tk_div_bottom">
+                                <span class="iconfont icon-dizhi"></span>
+                                <span class="colorHui999">瑜伽室</span>
+                            </div>
+                            <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+                        </div>
+                    </div>
+                </div>
+            </li>-->
+        </ul>
+    </div>
+    <!--私教-->
+    <div class="yueke_tap mui-hidden">
+        <ul class="pl20 pr20 box_s jlList_ul yk_list myyk_list bgwhite mt20 sijiaoList">
+            <!--<li class="pt20 pb20 border_b">
+                <div class="myyueke_li_div_check">
+                    <span class="iconfont icon-danxuankuang mui-pull-left"></span>
+                </div>
+                <div class="myyueke_li_div_con">
+                    <div class="mui-row">
+                        <div class="mui-col-sm-3 mui-col-xs-3">
+                            <div class="jlList_img">
+                                <img src="../../image/bwm4.jpg"/>
+                            </div>
+                        </div>
+                        <div class="mui-col-sm-9 mui-col-xs-9">
+                            <div class="jlList_con">
+                                <p class="font_weightB fs28 colorBlack">刘教练</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mui-row">
+                            <div class="mui-col-sm-3 mui-col-xs-3"></div>
+                            <div class="mui-col-sm-9 mui-col-xs-9">
+                                <div class="ykShow_info fs28 yk_tiezi">
+                                    <div class="tk_div_top">
+                                        <p class="colorBlack font_weightB">印度瑜伽</p>
+                                        <p class="mt10">09:00-11:00（20/20）</p>
+                                    </div>
+                                    <div class="clearfloat">
+                                        <div class="mui-pull-left tk_div_bottom">
+                                            <span class="iconfont icon-dizhi"></span>
+                                            <span class="colorHui999">瑜伽室</span>
+                                        </div>
+                                        <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+                                    </div>
+                                    <div class="yk_tiezi_img"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mui-row">
+                            <div class="mui-col-sm-3 mui-col-xs-3"></div>
+                            <div class="mui-col-sm-9 mui-col-xs-9">
+                                <div class="ykShow_info fs28 yk_tiezi">
+                                    <div class="tk_div_top">
+                                        <p class="colorBlack font_weightB">印度瑜伽</p>
+                                        <p class="mt10">09:00-11:00（20/20）</p>
+                                    </div>
+                                    <div class="clearfloat">
+                                        <div class="mui-pull-left tk_div_bottom">
+                                            <span class="iconfont icon-dizhi"></span>
+                                            <span class="colorHui999">瑜伽室</span>
+                                        </div>
+                                        <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+                                    </div>
+                                    <div class="yk_tiezi_img"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="pt20 pb20 border_b">
+                <div class="myyueke_li_div_check">
+                    <span class="iconfont icon-danxuankuang mui-pull-left"></span>
+                </div>
+                <div class="myyueke_li_div_con">
+                    <div class="mui-row">
+                        <div class="mui-col-sm-3 mui-col-xs-3">
+                            <div class="jlList_img">
+                                <img src="../../image/bwm4.jpg"/>
+                            </div>
+                        </div>
+                        <div class="mui-col-sm-9 mui-col-xs-9">
+                            <div class="jlList_con">
+                                <p class="font_weightB fs28 colorBlack">刘教练</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mui-row">
+                            <div class="mui-col-sm-3 mui-col-xs-3"></div>
+                            <div class="mui-col-sm-9 mui-col-xs-9">
+                                <div class="ykShow_info fs28 yk_tiezi">
+                                    <div class="tk_div_top">
+                                        <p class="colorBlack font_weightB">印度瑜伽</p>
+                                        <p class="mt10">09:00-11:00（20/20）</p>
+                                    </div>
+                                    <div class="clearfloat">
+                                        <div class="mui-pull-left tk_div_bottom">
+                                            <span class="iconfont icon-dizhi"></span>
+                                            <span class="colorHui999">瑜伽室</span>
+                                        </div>
+                                        <div class="mui-pull-right yk_btn buyNow">取消预约</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="pt20 pb20 border_b">
+                <div class="myyueke_li_div_check">
+                    <span class="iconfont icon-danxuankuang mui-pull-left"></span>
+                </div>
+                <div class="myyueke_li_div_con">
+                    <div class="mui-row">
+                        <div class="mui-col-sm-3 mui-col-xs-3">
+                            <div class="jlList_img">
+                                <img src="../../image/bwm4.jpg"/>
+                            </div>
+                        </div>
+                        <div class="mui-col-sm-9 mui-col-xs-9">
+                            <div class="jlList_con">
+                                <p class="font_weightB fs28 colorBlack">刘教练</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mui-row">
+                            <div class="mui-col-sm-3 mui-col-xs-3"></div>
+                            <div class="mui-col-sm-9 mui-col-xs-9">
+                                <div class="ykShow_info fs28 yk_tiezi">
+                                    <div class="tk_div_top">
+                                        <p class="colorBlack font_weightB">印度瑜伽</p>
+                                        <p class="mt10">09:00-11:00（20/20）</p>
+                                    </div>
+                                    <div class="clearfloat">
+                                        <div class="mui-pull-left tk_div_bottom">
+                                            <span class="iconfont icon-dizhi"></span>
+                                            <span class="colorHui999">瑜伽室</span>
+                                        </div>
+                                        <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+                                    </div>
+                                    <div class="yk_tiezi_img"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mui-row">
+                            <div class="mui-col-sm-3 mui-col-xs-3"></div>
+                            <div class="mui-col-sm-9 mui-col-xs-9">
+                                <div class="ykShow_info fs28 yk_tiezi">
+                                    <div class="tk_div_top">
+                                        <p class="colorBlack font_weightB">印度瑜伽</p>
+                                        <p class="mt10">09:00-11:00（20/20）</p>
+                                    </div>
+                                    <div class="clearfloat">
+                                        <div class="mui-pull-left tk_div_bottom">
+                                            <span class="iconfont icon-dizhi"></span>
+                                            <span class="colorHui999">瑜伽室</span>
+                                        </div>
+                                        <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+                                    </div>
+                                    <div class="yk_tiezi_img"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>-->
+        </ul>
+    </div>
+</div>
+<div class="myyk_footer mui-hidden">
+    <div style="height: 80px;"></div>
+    <footer class="cart_footer clearfloat fs24 mui-row pl20">
+        <div class="mui-col-sm-3 mui-col-xs-3">
+            <div class="allCheck clearfloat">
+                <span class="iconfont icon-danxuankuang mui-pull-left quanxuan"></span>
+                <span class="mui-pull-left fs30">全选</span>
+            </div>
+        </div>
+        <div class="mui-col-sm-6 mui-col-xs-6">
+            <div class="bianjiClick_div">
+                <p class="fs36">已选择<span class="selCount">0</span>个</p>
+            </div>
+        </div>
+        <div class="mui-col-sm-3 mui-col-xs-3">
+            <div class="buyNow colorWhite bianjiClick_del fs28 delAppoint">删除</div>
+        </div>
+    </footer>
+</div>
+<div class="mark_common mui-hidden">
+    <div style="padding-top: 20px;" class="duihuan_mark pl20 pr20 box_s">
+        <p class="fs32 mui-text-center pb10">您确定取消预约</p>
+        <p class="fs32 mui-text-center pb10 font_weightB">09-10  09:00-11:00</p>
+        <p class="fs32 mui-text-center border_b pb30">的瑜伽课吗？</p>
+        <div class="duihuan_mark_btn clearfloat">
+            <div class="mui-pull-left small_btn border quxiao_click">取消</div>
+            <div class="mui-pull-right small_btn buyNow colorWhite">确认</div>
+        </div>
+    </div>
+</div>
+</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+    mui.init();
+    //		头部tap切换
+    $(".inp_muiTitle span").on("tap",function(){
+        $(".yueke_tap").addClass("mui-hidden");
+        var index_ = $(this).index();
+        $(this).addClass("colorRed click").siblings().removeClass("colorRed click");
+        $(".yueke_tap").eq(index_).removeClass("mui-hidden");
+    });
+
+    //是否预约
+    $(".click_yuyue").on("tap",function(){
+        $(".mark_common").removeClass("mui-hidden");
+        show_mark();
+    });
+    $(".quxiao_click").on("tap",function(){
+        $(".mark_common").addClass("mui-hidden");
+        hidden_mark();
+    });
+    //点击全选
+    $(".allCheck").on("tap",function(){
+        if($(this).find("span.iconfont").hasClass("icon-danxuankuangyixuan")){
+            $(this).find("span.iconfont").removeClass("icon-danxuankuangyixuan");
+            $(".myyueke_li_div_check").find("span.iconfont").removeClass("icon-danxuankuangyixuan");
+        }else{
+            $(this).find("span.iconfont").addClass("icon-danxuankuangyixuan");
+            $(".myyueke_li_div_check").find("span.iconfont").addClass("icon-danxuankuangyixuan");
+        }
+    });
+
+    $(".myyueke_li_div_check span.iconfont").on("tap",function(){
+        if($(this).hasClass("icon-danxuankuangyixuan")){
+            $(this).removeClass("icon-danxuankuangyixuan");
+        }else{
+            $(this).addClass("icon-danxuankuangyixuan");
+        }
+    });
+    //点击编辑
+    var flag_ = true;
+    $(".ykbianjiClick").on("tap",function(){
+        $('.selCount').text(0);
+
+        $('.icon-danxuankuang').removeClass('icon-danxuankuangyixuan');
+
+        if(flag_){
+            $(".myyk_footer").removeClass("mui-hidden");
+            $(this).text("完成");
+            $(".myyueke_li_div_con").addClass("marginLeft");
+            $(".myyueke_li_div_check").removeClass("mui-hidden");
+            flag_ = false;
+        }else{
+            $(".myyk_footer").addClass("mui-hidden");
+            $(this).text("编辑");
+            $(".myyueke_li_div_con").removeClass("marginLeft");
+            $(".myyueke_li_div_check").addClass("mui-hidden");
+            flag_ = true;
+        }
+    });
+
+    var userinfo = '';
+    var appointType = '';
+    apiready = function(){
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+            fanhui();
+        });
+
+        userinfo = $api.getStorage('userinfo');
+
+        getAppointClass(1); // 获取团课
+    };
+
+    // 检测 userinfo
+    function checkUserInfo(){
+        var checkInfo = true;
+        if(typeof userinfo == 'undefined' || userinfo == ''){
+            _toast('请先登录');
+            checkInfo = false;
+        }
+        return checkInfo;
+    }
+
+    // 课程类型切换
+    var getClassType = 1;
+    function getClass(classType){
+        classType = typeof classType !== 'undefined' ? classType : 1;
+        getClassType = classType;
+        getAppointClass(classType);
+    }
+
+    /**
+     * 获取预约课程
+     * @param type  1：团课 2：私教
+     */
+    function getAppointClass(type){
+        if(!checkUserInfo()){return false;}
+        var getType = typeof type !== 'undefined' ? type : 1;
+
+        var appointData = {
+            'uid': userinfo.uid,
+            'getType': getType,
+        };
+
+        var appointUrl = ajax_url + 'Index/Exercise/getAppointClass';
+
+        _ajax(appointUrl, appointData, 'get', function (ret) {
+            if(ret.status == 1){
+                if(!$('.null_ss').hasClass('mui-hidden')){
+                    $('.null_ss').addClass('mui-hidden');
+                }
+
+                var inner_html = '';
+                if(getType == 1){
+                    $('.tuankeList').html('');
+
+                    // 团课
+                    $.each(ret.data, function (k, v) {
+                        inner_html += '';
+                        inner_html += '<li class="pb20 pt20 border_b myyueke_li">';
+                        inner_html += '    <div class="myyueke_li_div">';
+                        inner_html += '        <div class="myyueke_li_div_check mui-hidden">';
+                        inner_html += '            <span class="iconfont icon-danxuankuang mui-pull-left tuankeClass" data-appoint_id="'+ v.appoint_id +'"></span>';
+                        inner_html += '        </div>';
+                        inner_html += '        <div class="myyueke_li_div_con">';
+                        inner_html += '            <div class="tk_div_top clearfloat">';
+                        inner_html += '                <div class="tk_div_top_con mui-pull-left">';
+                        inner_html += '                    <p class="colorBlack font_weightB">'+ v.classname +'</p>';
+                        inner_html += '                    <p class="mt10">教练：'+ v.coachInofo['name'] +'</p>';
+                        inner_html += '                    <p>'+ v.classtime +'（'+ v.join +'/'+ v.max +'）</p>';
+                        inner_html += '                </div>';
+                        inner_html += '                <div class="tk_div_top_con1 mui-pull-left yk_tiezi">';
+                        inner_html += '                    <div class="tk_div_top_img">';
+                        inner_html += '                        <img src="'+ v.imgs +'"/>';
+                        inner_html += '                    </div>';
+                        if(v.is_finish == 1){
+                            inner_html += '                    <div class="yk_tiezi_img"></div>';
+                        }
+                        inner_html += '                </div>';
+                        inner_html += '            </div>';
+                        inner_html += '            <div class="clearfloat">';
+                        inner_html += '                <div class="mui-pull-left tk_div_bottom">';
+                        inner_html += '                    <span class="iconfont icon-dizhi"></span>';
+                        inner_html += '                    <span class="colorHui999">'+ v.place +'</span>';
+                        inner_html += '                </div>';
+                        if(v.appoint_status == 2){
+                            inner_html += '                <div class="mui-pull-right yk_btn bgcolorCcc">已取消</div>';
+                        }else if(v.is_finish == 1){
+                            inner_html += '                <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>';
+                        }else{
+                            inner_html += '                <div class="mui-pull-right yk_btn buyNow cancelAppoint" data-id="'+ v.class_id +'" data-appoint_id="'+ v.appoint_id +'">取消预约</div>';
+                        }
+
+                        inner_html += '            </div>';
+                        inner_html += '        </div>';
+                        inner_html += '    </div>';
+                        inner_html += '</li>';
+                    });
+
+                    $('.tuankeList').html(inner_html);
+
+                    $(".myyueke_li_div_check span.iconfont").on("tap",function(){
+                        /*if($(this).hasClass("icon-danxuankuangyixuan")){
+                            $(this).removeClass("icon-danxuankuangyixuan");
+                        }else{
+                            $(this).addClass("icon-danxuankuangyixuan");
+                        }*/
+                        selCheckBox(this);
+                    });
+
+                    // 取消预约
+                    $('.cancelAppoint').click(function(){
+                        var class_id = $(this).attr('data-id');
+                        var appoint_id = $(this).attr('data-appoint_id');
+                        cancelAppoint(class_id, appoint_id);
+                    });
+
+                }else if(getType == 2){
+                    // 私教
+                    $('.sijiaoList').html('');
+                    inner_html = '';
+                    $.each(ret.data, function (k, v) {
+                        //
+                        inner_html += '<li class="pt20 pb20 border_b">';
+                        inner_html += '    <div class="myyueke_li_div_check">';
+                        inner_html += '        <span class="iconfont icon-danxuankuang mui-pull-left privateClass" data-appoint_id="'+ v.classInfo[0].appoint_id +'"></span>';
+                        inner_html += '    </div>';
+                        inner_html += '    <div class="myyueke_li_div_con">';
+                        inner_html += '        <div class="mui-row">';
+                        inner_html += '            <div class="mui-col-sm-3 mui-col-xs-3">';
+                        inner_html += '                <div class="jlList_img">';
+                        inner_html += '                    <img src="'+ v.head_img +'"/>';
+                        inner_html += '                </div>';
+                        inner_html += '            </div>';
+                        inner_html += '            <div class="mui-col-sm-9 mui-col-xs-9">';
+                        inner_html += '                <div class="jlList_con">';
+                        inner_html += '                    <p class="font_weightB fs28 colorBlack">'+ v.name +'</p>';
+                        inner_html += '                </div>';
+                        inner_html += '            </div>';
+                        inner_html += '        </div>';
+                        inner_html += '        <div>';
+
+                        $.each(v.classInfo, function(ck, cv){
+                            inner_html += '            <div class="mui-row">';
+                            inner_html += '                <div class="mui-col-sm-3 mui-col-xs-3"></div>';
+                            inner_html += '                <div class="mui-col-sm-9 mui-col-xs-9">';
+                            inner_html += '                    <div class="ykShow_info fs28 yk_tiezi">';
+                            inner_html += '                        <div class="tk_div_top">';
+                            inner_html += '                            <p class="colorBlack font_weightB">'+ cv.classname +'</p>';
+                            inner_html += '                            <p class="mt10">'+ cv.classtime +'（'+ cv.join +'/'+ cv.max +'）</p>';
+                            inner_html += '                        </div>';
+                            inner_html += '                        <div class="clearfloat">';
+                            inner_html += '                            <div class="mui-pull-left tk_div_bottom">';
+                            inner_html += '                                <span class="iconfont icon-dizhi"></span>';
+                            inner_html += '                                <span class="colorHui999">'+ cv.place +'</span>';
+                            inner_html += '                            </div>';
+                            if(cv.appoint_status == 2){
+                                inner_html += '                            <div class="mui-pull-right yk_btn bgcolorCcc">已取消</div>';
+                            }else if(cv.is_finish == 1){
+                                inner_html += '                            <div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>';
+                            }else{
+                                inner_html += '                            <div class="mui-pull-right yk_btn buyNow cancelAppoint" data-class_id="'+ cv.class_id +'" data-appoint_id="'+ cv.appoint_id +'">取消预约</div>';
+                            }
+
+                            inner_html += '                        </div>';
+                            if(cv.is_finish == 1){
+                                inner_html += '                        <div class="yk_tiezi_img"></div>';
+                            }
+
+                            inner_html += '                    </div>';
+                            inner_html += '                </div>';
+                            inner_html += '            </div>';
+                        });
+
+                        inner_html += '        </div>';
+                        inner_html += '    </div>';
+                        inner_html += '</li>';
+                    });
+                    $('.sijiaoList').html(inner_html);
+
+                    console.log(inner_html);
+
+                    $(".myyueke_li_div_check span.iconfont").on("tap",function(){
+                        /*if($(this).hasClass("icon-danxuankuangyixuan")){
+                            $(this).removeClass("icon-danxuankuangyixuan");
+                        }else{
+                            $(this).addClass("icon-danxuankuangyixuan");
+                        }*/
+                        selCheckBox(this);
+                    });
+
+                    // 取消预约
+                    $('.cancelAppoint').click(function(){
+                        var class_id = $(this).attr('data-class_id');
+                        var appoint_id = $(this).attr('data-appoint_id');
+                        cancelAppoint(class_id, appoint_id);
+                    });
+                }
+
+            }else{
+                if(type == 1){
+                    $('.tuankeList').html('');
+                    $('#aa').html('很抱歉，您还没有预约任何团课');
+                    $('#bb').html('预约团课');
+                    appointType = 1;
+                }else{
+                    $('.sijiaoList').html('');
+                    $('#aa').html('很抱歉，您还没有预约任何私教');
+                    $('#bb').html('预约私教');
+                    appointType = 2;
+                }
+                $('.null_ss').removeClass('mui-hidden');
+            }
+        });
+    }
+
+    /**
+     * 取消预约
+     * @param class_id      课程 id
+     * @param appoint_id    预约 id
+     */
+    function cancelAppoint(class_id, appoint_id){
+        if(!checkUserInfo()){return false;}
+
+        class_id = typeof class_id !== 'undefined' ? class_id : '';
+        if(class_id == ''){
+            _toast('未获取到课程标识', function(){
+                return false;
+            });
+        }
+
+        var cancelData = {
+            'uid' : userinfo.uid,
+            'class_id' : class_id,
+            'appoint_id' : appoint_id,
+        };
+
+        api.confirm({
+            title: '',
+            msg: '您确定取消预约此课程吗？',
+            buttons: ['确定', '取消']
+        }, function(ret, err) {
+            var index = ret.buttonIndex;
+            if(index == 1){
+                _ajax(ajax_url + 'Index/Exercise/appointCancel', cancelData, 'get', function (ret) {
+                    if(ret.status == 1){
+                        _toast(ret.info, function(ret){
+                            getAppointClass(getClassType);
+                        });
+                    }else{
+                        _toast(ret.info);
+                    }
+                });
+            }
+        });
+    }
+
+
+    function selCheckBox(t){
+        if($(t).hasClass("icon-danxuankuangyixuan")){
+            $(t).removeClass("icon-danxuankuangyixuan");
+        }else{
+            $(t).addClass("icon-danxuankuangyixuan");
+        }
+
+        if(getClassType == 1){
+            var sum = 0;
+            var selSum = 0;
+            // 获取团课列表总个数
+            $('.tuankeClass').each(function(){
+                sum = Number(sum) + 1;
+            });
+
+            $('.tuankeClass').each(function(){
+                if($(this).hasClass('icon-danxuankuangyixuan')){
+                    selSum = Number(selSum) + 1;
+                }
+            });
+            $('.selCount').text(selSum);
+
+            if(sum == selSum){
+                $('.quanxuan').addClass('icon-danxuankuangyixuan');
+            }else{
+                if($('.quanxuan').hasClass('icon-danxuankuangyixuan')){
+                    $('.quanxuan').removeClass('icon-danxuankuangyixuan');
+                }
+            }
+        }else if(getClassType == 2){
+            var sum2 = 0;
+            var selSum2 = 0;
+            // 获取团课列表总个数
+            $('.privateClass').each(function(){
+                sum2 = Number(sum2) + 1;
+            });
+
+            $('.privateClass').each(function(){
+                if($(this).hasClass('icon-danxuankuangyixuan')){
+                    selSum2 = Number(selSum2) + 1;
+                }
+            });
+
+            $('.selCount').text(selSum2);
+
+            if(sum2 == selSum2){
+                $('.quanxuan').addClass('icon-danxuankuangyixuan');
+            }else{
+                if($('.quanxuan').hasClass('icon-danxuankuangyixuan')){
+                    $('.quanxuan').removeClass('icon-danxuankuangyixuan');
+                }
+            }
+        }
+    }
+
+    // 点击删除
+    $('.delAppoint').on('tap', function () {
+        if(!checkUserInfo()){return false;}
+        var appointData = [];
+
+        if(getClassType == 1){
+            appointData = [];
+            $('.tuankeClass').each(function(){
+                if($(this).hasClass('icon-danxuankuangyixuan')){
+                    appointData.push($(this).attr('data-appoint_id'));
+                }
+            });
+        }else if(getClassType == 2){
+            appointData = [];
+            $('.privateClass').each(function(){
+                if($(this).hasClass('icon-danxuankuangyixuan')){
+                    // alert($(this).attr('data-appoint_id'));
+                    // alert($(this).parent().parent().find('.cancelAppoint').attr('data-appoint_id'));
+                    appointData.push($(this).attr('data-appoint_id'));
+                }
+            });
+        }
+
+        appointData = appointData.join(',');
+
+        _ajax(ajax_url + 'Index/Exercise/appointDelete', {
+            'uid': userinfo.uid,
+            'appoint_id': appointData,
+            'classType':getClassType
+        }, 'get', function (ret) {
+            if(ret.status == 1){
+                _toast(ret.info,function(){
+                    getAppointClass(getClassType);
+                });
+            }else{
+                _toast(ret.info);
+            }
+        });
+
+
+    });
+    $('.mui-action-back').on('tap',function(){
+        fanhui();
+    });
+    function fanhui(){
+        api.closeWin();
+    }
+    function appointClass(){
+        api.sendEvent({
+            name: 'tabType',
+            extra:{
+            	appointClassType:appointType
+            }
+        });
+
+        api.closeToWin({
+            name: 'exercise'
+        });
+    }
+</script>
+</html>

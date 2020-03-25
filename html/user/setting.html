@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<style>
+	.checkin_iforl{width:auto;}
+	.checkin_ifor{line-height:46px;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="pinpai_intr mt15">
+
+	<!--<div class="checkin_ifor" onclick="open_address();">
+		<div class="checkin_iforl">
+			收货地址
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+			<span class="checkin_iforrpos01"><a href="javascript:void(0);"  class="right_arrowcom"></a></span>
+		</div>
+	</div>-->
+	<!--<div class="checkin_ifor" onclick=openpass('updatepassword','user/updatepassword','修改登录密码')>
+		<div class="checkin_iforl" >
+			修改登录密码
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+			<span class="checkin_iforrpos01"><a href="javascript:void(0);" class="right_arrowcom"></a></span>
+		</div>
+	</div>-->
+	
+	<div class="" style="background: #f5f5f5;"></div>
+	<div class="checkin_ifor " onclick="clearCache();" >
+		<div class="checkin_iforl" >
+			清除缓存
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+			
+			<span class="checkin_iforrpos01">
+				<span class="mingcheng dy_dd nickname" id="clear" style="color:#999;">0M</span>
+			<a href="javascript:void(0);" class="right_arrowcom"></a></span>
+		</div>
+	</div>
+	<div class="checkin_ifor " onclick="checkUpdate();" >
+		<div class="checkin_iforl" >
+			检查更新
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+			
+			<span class="checkin_iforrpos01">
+				<!-- <span class="mingcheng dy_dd nickname" id="version_name" style="color:#999;">1.1</span> -->
+			<a href="javascript:void(0);" class="right_arrowcom"></a></span>
+		</div>
+	</div>
+
+	</div>
+	
+</div>
+<!--<div class="bqt_hallorderwrap" style="background: #f5f5f5; bottom: 50px;">
+    <div class="bqt_hallorder">
+        <a href="javascript:void(0)" onclick="loginout();" class="bot_btna bot_btnapay order_btnapay" style="border-radius: 5px;">退出当前用户</a>
+    </div>
+</div>-->
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+	var userinfo ="";
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		api.getCacheSize(function(ret, err) {
+				if (ret) {
+					$("#clear").text((ret.size / 1000 / 1000).toFixed(2) + " M");
+				} else {
+					$("#clear").text("0 M");
+				}
+			});
+			
+//		var version_name = localStorage.getItem("versionName");
+//		$("$version_name").html(version_name);
+	};
+	
+	
+	// 清除缓存
+	function clearCache(){
+		api.showProgress({
+		    title: '努力清除中...',
+		    text: '先喝杯茶...',
+		    modal: false
+		});
+		api.clearCache(function(ret, err) {
+			api.hideProgress();
+			$("#clear").text("0 M");
+			api.toast({msg:'清除成功'});
+		});
+    }
+    function checkUpdate() {
+            var mam = api.require('mam');
+            mam.checkUpdate(function(ret, err) {
+                if (ret) {
+                    var result = ret.result;
+                    if (result.update == true && result.closed == false) {
+                        var str = '新版本型号:' + result.version + ';更新提示语:' + result.updateTip + ';发布时间:' + result.time;
+                        api.confirm({
+                            title : '有新的版本,是否下载并安装 ',
+                            msg : str,
+                            buttons : ['确定', '取消']
+                        }, function(ret, err) {
+                            if (ret.buttonIndex == 1) {
+                                if (api.systemType == "android") {
+                                    api.download({
+                                        url : result.source,
+                                        report : true
+                                    }, function(ret, err) {
+                                        if (ret && 0 == ret.state) {/* 下载进度 */
+                                       		api.showProgress({
+											    title: "正在下载应用" + ret.percent + "%",
+											    text: '先喝杯茶...',
+											    modal: false
+											});
+                                           
+                                        }
+                                        if (ret && 1 == ret.state) {/* 下载完成 */
+                                       	api.hideProgress();
+                                            var savePath = ret.savePath;
+                                            api.installApp({
+                                                appUri : savePath
+                                            });
+                                        }
+                                    });
+                                }
+                                if (api.systemType == "ios") {
+                                    api.installApp({
+                                        appUri : result.source
+                                    });
+                                }
+                            }
+                        });
+                    } else {
+                        api.alert({
+                            msg : "暂无更新"
+                        });
+                    }
+                } else {
+                    api.alert({
+                        msg : err.msg
+                    });
+                }
+            });
+        }
+	
+	/**
+	 * 退出登陆 
+	 */
+	function loginout(){
+	
+		var launch  = localStorage.getItem("launch");//清除c的值
+		$api.rmStorage('userinfo');
+		localStorage.removeItem("uid");//清除c的值
+		
+		localStorage.setItem("launch" , launch);//清除c的值
+		
+		api.sendEvent({
+	        name:'event_cart_num'
+        });
+		//退出登陆 刷新广播页面
+		api.sendEvent({
+		    name: 'loginout',
+		    extra: {}
+		});
+		
+		_openWinByUrl('login','../login',{'redirect_url':'root'});
+		
+	}
+	function openpass(name,url,title,id){
+	   //判断是否登陆
+        if(userinfo  =='undefined' ||  userinfo =='' || userinfo ==null){
+            _openWinByUrl('login','../login');
+            return false;
+        }
+	    _openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title,'id':id});
+	}
+	
+	function open_address(){
+        //判断是否登陆
+        if(userinfo  =='undefined' ||  userinfo =='' || userinfo ==null){
+            _openWinByUrl('login','../login');
+            return false;
+        }
+        _openWinByUrl('address_head','address_head')
+    }
+</script>
+</body>
+</html>

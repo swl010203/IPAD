@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+</head>
+<body class="bg_fff">
+
+<!-- 内容 -->
+<div class="wp_100">
+	<div style="background: #F5F5F5; height: 0.15rem;"></div>
+<!--详情-->
+	<div class="hinfor_detail">
+		<p class=" detail"></p>
+	</div>
+</div>
+
+<script type="text/javascript">
+		$(document).ready(function(){
+$(".xg_img ").css({height:$(window).width()/2.75});
+$(".xg_img img").css({height:$(window).width()/2.75});
+$('.yhq_bg').click(function(){
+	
+	$(this).find('.yhq_checkicon').show().siblings().find('.yhq_checkicon').hide();
+})
+});
+apiready=function(){
+loading('messagedetail');
+ info();
+ 
+ api.sendEvent({
+	name: 'messageyidu',
+	extra: {
+		key1: 'success',
+		id:api.pageParam['id']
+	}
+});
+};
+function info(){
+ var id=api.pageParam['id'];
+    api.ajax({
+		    url: ajax_url+'Index/Sms/getSmsDetail',
+		    dataType: "json",
+		    method: 'post',
+				 data: {
+		        values: { 
+		            id:id
+	           
+		        },       
+             }
+		},function(ret, err){
+		  if(ret){
+		   if(ret.status){
+		     var data=ret.info;
+		     $(".detail").html(data.message);
+		   }else{
+		    _toast(ret.msg);
+		   }
+		   closeloading();
+		  }else{
+		  closeloading();
+		   _alert('网络连接失败,请稍后重试');
+		  }
+		})
+}
+</script>
+</body>
+</html>

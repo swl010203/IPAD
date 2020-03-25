@@ -1,0 +1,492 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!-- 头部 -->
+
+
+<!-- 内容 -->
+<div onclick="super_hide();" class="super_list pinpai_intrtop" style="color: #666;"><i class="shangpin_listicon"></i>超市</div>
+<div class="wp_100" id="list">
+	
+
+	<div class="siteSearchlist" style="background:#fff;">
+			<div class="cart_topicon"><img src="../../images/cart_pinpaiicon.jpg"/>柏卡姿专卖店<span class="fr" style="color:#D12A18">退款中</span></div>
+			<div class="pinpai_intrtop" style="color: #999;">订单号：468462546484631616</div>
+			<ul class="siteSearchul">
+					<li class="busi_fenleili">
+							<div class="busi_fenlei">
+							<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+							<div class="busi_fenleir">
+								<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+								<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00</p>
+							</div>
+						</div>
+						
+					</li>
+					<!--<li class="busi_fenleili">
+							<div class="busi_fenlei">
+							<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+							<div class="busi_fenleir">
+								<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+								<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00</p>
+							</div>
+						</div>
+						
+					</li>
+			</ul>
+			<div class="orderListBot">
+				
+				<a href="#" class="orderBtn">再来一单</a>
+			</div>
+</div>
+
+
+</div>
+
+<div onclick="mall_hide();" class="mall_list pinpai_intrtop" style="color: #666;"><i class="shangpin_listicon"></i>商城</div>
+<div class="wp_100" id="list2">
+
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script >
+
+	function super_hide(){
+		var super_hide = $("#list").css('display');
+		if(super_hide =='none'){
+			$("#list").show();
+		}else{
+			$("#list").hide();
+		}
+	}
+	
+	function mall_hide(){
+		var mall_hide = $("#list2").css('display');
+		if(mall_hide =='none'){
+			$("#list2").show();
+		}else{
+			$("#list2").hide();
+		}
+	}
+	
+	var userinfo = "";
+	var page = 1;
+	var is_page = true;
+	var type =1;
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		//加载状态
+		loading('mall_order_list_body');
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			page=1;
+			is_page = true;
+			ready();
+		});
+
+		//监听类型选择
+		api.addEventListener({
+		    name:'mall_order_list_type'
+		}, function(ret, err){        
+	     	param_type = ret.value.type;
+	     	//判断是否与当前相同，不相同则进行查询
+	     	if(type != param_type){
+	     		loading('mall_order_list_body');
+	     		type = param_type;
+	     		page = 1;
+	     		is_page = true;
+		   		ready();
+	     	} 
+		});
+		
+				//监听类型选择
+		api.addEventListener({
+		    name:'mall_pingjia'
+		}, function(ret, err){ 
+			page = 1; 
+			type=1;
+			ready();      
+	       
+		});
+		
+			//刷新页面
+		api.addEventListener({
+		    name:'viewdisappear'
+		}, function(ret, err){        
+		   page=1;
+			is_page = true;
+			ready();
+		});
+		
+		//监听滚动条是否到底部
+//		api.addEventListener({
+//		    name:'scrolltobottom',
+//		    extra:{
+//		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+//		    }
+//		}, function(ret, err){        
+//		     if(is_page){
+//		         page++;
+//			     ready();
+//		     }
+//			  
+//		});
+		
+		ready();
+	}
+	
+	function ready(){
+	
+		_ajax(ajax_url +"Index/UserMallOrder/mergeOrder",{'uid':userinfo.uid,'token':userinfo.token,'p':page,'type':type},'post',function(ret){
+			var strVar = "";
+			var strVar2 = "";
+			if(ret.status  ==1){
+					
+				if(ret.orderList  != null  &&  ret.orderList.length>0){
+					$.each(ret.orderList,function(k,v){
+						strVar += "<div class=\"siteSearchlist\" style=\"background:#fff;\">";
+						strVar += "	<div onclick=\"openShop("+v['shop']['id']+",'mall')\" class=\"cart_topicon\">";
+						strVar += "		<img src=\""+v['shop']['logo']+"\"/>"+v['shop']['name']+"<span class=\"fr\" style=\"color:#D12A18\">";
+						if((v['aftersale']!=null && v['aftersale']['type']!=7) && v['aftersale']!=''){
+						 strVar +=v["aftersale"]['msg'];					    				    
+						}else{
+						  strVar +=v["status_name"]['msg'];
+						}				  				    
+						strVar += "<\/span>";
+						strVar += "	<\/div>";
+						strVar += "	<div class=\"pinpai_intrtop\" onclick=\"orderDetail("+v['order_id']+");\" style=\"color: #999;\">";
+						strVar += "		订单号："+v['order_sn'];
+						strVar += "	<\/div>";
+						strVar += "	<ul class=\"siteSearchul\" onclick=\"orderDetail("+v['order_id']+");\">";
+						//遍历商品信息
+						$.each(v['goodslist'],function(key,val){
+							strVar += "		<li class=\"busi_fenleili\">";
+							strVar += "		<div class=\"busi_fenlei\">";
+							strVar += "			<a href=\"javascript:void(0);\"class=\"busi_fenleia\"><img src=\""+val['img']+"\"><\/a>";
+							strVar += "			<div class=\"busi_fenleir\">";
+							strVar += "				<p class=\"busi_fenleirtxt\">";
+							strVar += "					<a href=\"javascript:void(0);\" class=\"busi_fenleirtxta dy_dd\">"+val['goods_name']+"<\/a>";
+							strVar += "				<\/p>";
+							strVar += "				<p class=\"busi_fenleirrice\">";
+							strVar += "					<b class=\"busi_fenleirpriceb\">￥<\/b>"+val['goods_price'];
+							strVar += "				<\/p>";
+							strVar += "			<\/div>";
+							strVar += "		<\/div>";
+							strVar += "		<\/li>";
+						});
+						
+						strVar += "	<\/ul>";
+						strVar += "	<div class=\"orderListBot\">";
+					   // strVar += "		<a href=\"#\" class=\"orderBtn\">再来一单<\/a>";
+						//取消支付   1.未支付  
+						
+						if(v["status_name"]['type']==1){
+							strVar += "		<a href=\"javascript:void(0);\" onclick=\"cancel_order("+v['order_id']+")\" class=\"orderBtn cancel_orderbtn\">取消订单<\/a>";
+							strVar += "		<a href=\"javascript:void(0);\" onclick=\"goPay('"+v['order_sn']+"')\" class=\"orderBtn \">去支付<\/a>";
+						}
+						//确认收货   已支付 (已接单  || 已发货 )
+						if(v["status_name"]['type']==4){
+							strVar += "		<a href=\"javascript:void(0);\" onclick=\"afterMeal("+v['order_id']+")\" class=\"orderBtn \">确认收货<\/a>";
+						}
+						if(v["status_name"]['type']==5 && v['aftersale']==''){
+							strVar += "		<a href=\"javascript:void(0);\" onclick=\"evaluation("+v['order_id']+")\" class=\"orderBtn \">评价<\/a>";
+						}
+						 if(v["status_name"]['type']==6 && v['aftersale']==''){
+							strVar += "		<a href=\"javascript:void(0);\" onclick=\"pingjia("+v['order_id']+")\" class=\"orderBtn \">查看评价<\/a>";
+						}
+						
+					 
+						
+						strVar += "	<\/div>";
+						strVar += "<\/div>";
+					});
+					$(".mall_list").show();
+				}else{
+					$(".mall_list").hide();
+				}	
+				
+				
+				if(ret.superorderList  != null  &&  ret.superorderList.length>0){
+					$.each(ret.superorderList,function(k,v){
+						strVar2 += "<div class=\"siteSearchlist\" style=\"background:#fff;\">";
+						strVar2 += "	<div onclick=\"openShop("+v['shop']['id']+",'food')\" class=\"cart_topicon\">";
+						strVar2 += "		<img src=\""+v['shop']['logo']+"\"/>"+v['shop']['name']+"<span class=\"fr\" style=\"color:#D12A18\">";
+						 if((v['aftersale']!=null && v['aftersale']['type']!=7) && v['aftersale']!=''){
+						 strVar2 +=v["aftersale"]['msg'];					    				    
+						}else{
+						  strVar2 +=v["status_name"]['msg'];
+						}				  				    
+						strVar2 += "<\/span>";
+						strVar2 += "	<\/div>";
+						strVar2 += "	<div class=\"pinpai_intrtop\" onclick=\"super_orderDetail("+v['order_id']+");\" style=\"color: #999;\">";
+						strVar2 += "		订单号："+v['order_sn'];
+						strVar2 += "	<\/div>";
+						strVar2 += "	<ul class=\"siteSearchul\" onclick=\"super_orderDetail("+v['order_id']+");\">";
+						//遍历商品信息
+						$.each(v['goodslist'],function(key,val){
+							strVar2 += "		<li class=\"busi_fenleili\">";
+							strVar2 += "		<div class=\"busi_fenlei\">";
+							strVar2 += "			<a href=\"javascript:void(0);\"class=\"busi_fenleia\"><img src=\""+val['img']+"\"><\/a>";
+							strVar2 += "			<div class=\"busi_fenleir\">";
+							strVar2 += "				<p class=\"busi_fenleirtxt\">";
+							strVar2 += "					<a href=\"javascript:void(0);\" class=\"busi_fenleirtxta dy_dd\">"+val['goods_name']+"<\/a>";
+							strVar2 += "				<\/p>";
+							strVar2 += "				<p class=\"busi_fenleirrice\">";
+							strVar2 += "					<b class=\"busi_fenleirpriceb\">￥<\/b>"+val['goods_price'];
+							strVar2 += "				<\/p>";
+							strVar2 += "			<\/div>";
+							strVar2 += "		<\/div>";
+							strVar2 += "		<\/li>";
+						});
+						
+						strVar2 += "	<\/ul>";
+						strVar2 += "	<div class=\"orderListBot\">";
+					   // strVar += "		<a href=\"#\" class=\"orderBtn\">再来一单<\/a>";
+						//取消支付   1.未支付  
+						
+						if(v["status_name"]['type']==1){
+							strVar2 += "		<a href=\"javascript:void(0);\" onclick=\"super_cancel_order("+v['order_id']+")\" class=\"orderBtn cancel_orderbtn\">取消订单<\/a>";
+							strVar2 += "		<a href=\"javascript:void(0);\" onclick=\"super_goPay('"+v['order_sn']+"')\" class=\"orderBtn \">去支付<\/a>";
+						}
+						//确认收货   已支付 (已接单  || 已发货 )
+						if(v["status_name"]['type']==4){
+							strVar2 += "		<a href=\"javascript:void(0);\" onclick=\"super_afterMeal("+v['order_id']+")\" class=\"orderBtn \">确认收货<\/a>";
+						}
+						 if(v["status_name"]['type']==5 && v['aftersale']==''){
+							strVar2 += "		<a href=\"javascript:void(0);\" onclick=\"super_evaluation("+v['order_id']+")\" class=\"orderBtn \">评价<\/a>";
+						}
+						 if(v["status_name"]['type']==6 && v['aftersale']==''){
+							strVar2 += "		<a href=\"javascript:void(0);\" onclick=\"super_pingjia("+v['order_id']+")\" class=\"orderBtn \">查看评价<\/a>";
+						}
+						
+					 
+						
+						strVar2 += "	<\/div>";
+						strVar2 += "<\/div>";
+					});
+					$(".super_list").show();
+				}else{
+					$(".super_list").hide();
+				}	
+				
+			}else{
+				closeloading();
+				is_page = false;
+				$(".mall_list").hide();
+				$(".super_list").hide();
+				_toast(ret.msg);
+			}
+			
+			//超市
+			$("#list").html(strVar2);
+			//商城
+			$("#list2").html(strVar); 
+			
+			
+			closeloading();
+			api.refreshHeaderLoadDone();
+			
+		})
+			
+			
+			
+	
+	}
+	
+	//订单详情
+	function orderDetail(id){
+		_openWinByUrl('mall_order_detail_window_head','../window_head',{
+			'furl':'user/mall_order_detail',
+			'frame':'mall_order_detail',
+			'title':'订单详情',
+			'id'   :id
+		})
+	}
+	
+	//订单详情
+	function super_orderDetail(id){
+		_openWinByUrl('super_order_detail_window_head','../window_head',{
+			'furl':'user/super_order_detail',
+			'frame':'super_order_detail',
+			'title':'订单详情',
+			'id'   :id
+		})
+	}
+	
+	function openevaluation(name,url,title,id){
+	 _openWinByUrl(name+'_head','evaluationhead',{'furl':url,'frame':name,'title':title,'order_id':id});
+	}
+	function viewevaluation(name,url,title,id){
+	 _openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title,'order_id':id});
+	}
+	/*
+	 * 查看评价
+	 */
+	function pingjia(order_id){
+	viewevaluation('mall_pingjia','user/mall_pingjia','评价',order_id);
+	}
+	/*
+	 * 超市查看评价
+	 */
+	function super_pingjia(order_id){
+	viewevaluation('super_pingjia','user/super_pingjia','评价',order_id);
+	}
+	/*
+	 * 评价
+	 */
+	function evaluation(order_id){
+	  openevaluation('mall_pingjia','mall_pingjia','评价',order_id);
+	}
+	/*
+	 * 超市评价
+	 */
+	function super_evaluation(order_id){
+	  openevaluation('super_pingjia','super_pingjia','评价',order_id);
+	}
+	
+	/**
+	 * 取消订单
+	 * @param id  订单Id 
+	 */
+	function cancel_order(id ){
+		api.confirm({
+		    title: '取消订单',
+		    msg: '确认取消订单？',
+		    buttons: ['是', '先保留']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +"Index/UserMallOrder/cancelOrder",{'token':userinfo.token,'order_id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			ready();
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	/**
+	 * 超市取消订单
+	 * @param id  订单Id 
+	 */
+	function super_cancel_order(id ){
+		api.confirm({
+		    title: '取消订单',
+		    msg: '确认取消订单？',
+		    buttons: ['是', '先保留']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +"Index/UserSuperOrder/cancelOrder",{'token':userinfo.token,'order_id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			ready();
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	
+	/**
+	 * 确认收货 
+	 */
+	function afterMeal(id){
+		api.confirm({
+		    title: '提示',
+		    msg: '你要确认收货吗',
+		    buttons: ['确定', '取消']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +"Index/UserMallOrder/confirmReceipt",{'token':userinfo.token,'order_id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			ready();
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	/**
+	 * 超市确认收货 
+	 */
+	function super_afterMeal(id){
+		api.confirm({
+		    title: '提示',
+		    msg: '你要确认收货吗',
+		    buttons: ['确定', '取消']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +"Index/UserSuperOrder/confirmReceipt",{'token':userinfo.token,'order_id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			ready();
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	
+	/*
+	 * 支付
+	 * @param order_sn 订单编号
+	 */
+	function goPay(order_sn){
+		_openWinByUrl('pay_head','../order/pay_head',{'order_sn':order_sn,'pay_notify_type':1});
+	}
+	
+	/*
+	 * 超市支付
+	 * @param order_sn 订单编号
+	 */
+	function super_goPay(order_sn){
+		_openWinByUrl('pay_head','../order/pay_head',{'order_sn':order_sn,'pay_notify_type':2});
+	}
+	
+	
+	
+	
+	/**
+	 * 店铺详情 
+	 */
+	function openShop(sid , type){
+		if(type =='mall'){
+			_openWinByUrl('mall_shop','../mall/mall_shop',{'id':sid});
+		}else{
+			_openWinByUrl('super','../super/super',{'id':sid});
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>我的</title>
+        <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+        <link rel="stylesheet" type="text/css" href="../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/takeout/takeOutCommon.css" />
+    </head>
+    <body>
+        <div class="myInfor_div mt_20">
+            <ul class="border-t">
+                <li class="bgWhite border-b pl_20 pr_20 box-s" onclick="_openWinByUrl('./my/collect_head','./my/collect_head')">
+                    <i class="fl myInfor_icon collection_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">我的收藏<i class="right_arrow fr myInfor_icon"></i><span class="fr" id="collect_count"></span></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s" onclick="_openWinByUrl('window_head','../window_head',{'furl':'card/card','frame':'window_head','title':'惠通卡'});">
+                    <i class="fl myInfor_icon money_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">汇通卡余额<i class="right_arrow fr myInfor_icon"></i><span class="fr" id="card_money"></span></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s" onclick="_openWinByUrl('./my/coupons_head','./my/coupons_head')">
+                    <i class="fl myInfor_icon myCard_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">我的代金券<i class="right_arrow fr myInfor_icon"></i><span class="fr">4</span></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s mt_20" onclick="_openWinByUrl('./my/comments_list_head','./my/comments_list_head')">
+                    <i class="fl myInfor_icon evaluation_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">待评价<i class="right_arrow fr myInfor_icon"></i><span class="fr" id="comments_count"></span></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s" onclick="_openWinByUrl('../user/address_head','../user/address_head')">
+                    <i class="fl myInfor_icon address_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">地址管理<i class="right_arrow fr myInfor_icon"></i><span class="fr"></span></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s mt_20">
+                    <i class="fl myInfor_icon take0ut_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">惠管家外卖平台规则<i class="right_arrow fr myInfor_icon"></i><span class="fr"></span></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s" onclick="tel();">
+                    <i class="fl myInfor_icon customer_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">我的客服<i class="right_arrow fr myInfor_icon"></i><span class="fr"></span></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s">
+                    <i class="fl myInfor_icon shop_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">我要开店<i class="right_arrow fr myInfor_icon"></i><span class="fr"></span></p>
+                </li>
+            </ul>
+            
+        </div>
+            
+    </body>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script>
+    var uid = localStorage.getItem( "uid" );
+    apiready = function() {
+        uid = localStorage.getItem( "uid" );
+        getMyInfo();
+    };
+    //获取信息
+    function getMyInfo() {
+        _ajax(ajax_url+"Index/Takeout/getMyInfo" ,{uid:uid},'post',function(ret) {
+            if(ret.status ==1){
+                $('#collect_count').text(ret.data.collect_count);
+                $('#comments_count').text(ret.data.comments_count);
+                $('#card_money').text(ret.data.card_money);
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //打客服电话
+    function tel() {
+        window.location.href = "tel:4009008987";
+    }
+    </script>
+</html>

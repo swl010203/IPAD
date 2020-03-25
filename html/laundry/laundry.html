@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+	<title>洗涤首页</title>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/washing.css"/>
+    <script src="../../script/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/laundry/style.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+</head>
+<body>
+	<header class="w-100bfb">
+		<a href="javascript:" class="quit" id="fanhui_btn"></a>
+		<span style="letter-spacing:3px;">UCC国际洗衣</span>
+	</header>
+	<!--顶部结束-->
+	
+    
+    
+    <script>
+		apiready = function(){
+			addEventUserInfo();
+			api.parseTapmode();
+			
+
+			var header = $api.dom('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+        	var body_h = $api.offset($api.dom('body')).h;
+	        api.openFrame({
+	            name: 'laundry_body',
+	            url: './laundry_body.html',
+	            bounces: true,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h,
+	                h: 'auto'
+	            },
+				pageParam:api.pageParam
+	        });
+	        
+	
+		};
+	</script>
+</body>
+</html>
+

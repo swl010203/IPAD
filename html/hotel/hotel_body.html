@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>首页</title>
+	<link rel="stylesheet" href="../../css/hotel/common.css">
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+</head>
+<body>
+	<div class="zhead">              
+        <div class="zlogo">
+            <img src="../../images/hotel/logo_02.png" class="zthumbnail" alt="">
+            <div class="zmain-head">
+                <div class="zmain-logo"><a href="javascript:goLink('hotelDetail');"><img style="border-radius: 50%;width:6rem;height:6rem;" class="zthumbnail" id="shopimg" src="" alt=""></a></div>
+                <div class="zmain-name"><a href="#" id="shopname"></a></div>
+                <div class="zhx"><a href=""></a></div>
+                <div class="zmain-tip" style='text-align: left;'><a id="shop_xg" onclick="openShopXg();">公告：</a></div>
+            </div>
+        </div>
+        
+        <div class="zbanner">
+          	<div class="zbanner1"> 
+                <a href="javascript:goLink('reservation');" class="service1"><img src="../../images/hotel/service11.jpg" alt="">
+                <span class="service1-df">订 房</span>
+                <span class="service1-Reservation">Reservation</span>
+                <span class="service1-df1">&gt;&gt;</span>
+                </a>
+            </div>
+            <div class="zbanner1"> 
+                 <a href="javascript:goLink('food');" class="service1"><img src="../../images/hotel/service22.jpg" alt="">
+                 <span class="service1-df">餐 饮</span>
+                <span class="service1-Restaurant">Restaurant</span>
+                <span class="service1-df1">&gt;&gt;</span>
+                </a>
+            </div>
+            <div class="zbanner1"> 
+                 <a href="javascript:goLink('exhibition');" class="service1"><img src="../../images/hotel/service33.jpg" alt="">
+                <span class="service1-df">会 展</span>
+                <span class="service1-Exhibition">Exhibition</span>
+                <span class="service1-df1">&gt;&gt;</span></a>
+            </div>
+            <div class="zbanner1"> 
+                 <a href="javascript:goLink('celebration');" class="service1"><img src="../../images/hotel/service44.jpg" alt="">
+                 <span class="service1-df">庆 典</span>
+                <span class="service1-Reservation">Celebration</span>
+                <span class="service1-df1">&gt;&gt;</span></a>
+            </div>
+       </div>
+    </div>	
+</body>
+<script>
+	//默认加载
+	var sid='';
+	apiready = function(){
+		//店铺id 
+		sid=25;//api.pageParam.sid;
+		
+		//获取店铺详情
+		getShop(sid);
+	};
+	
+	//获取店铺详情
+	function getShop(sid){
+		_ajax(ajax_url+"Index/Hotel/getHotel",{sid:sid},'post',function(ret){
+			if(ret.status==1){
+				$('#shopimg').attr('src',ret.hotel.logo);
+				$('#shopname').text(ret.hotel.name);
+				if(ret.hotel.xg){
+					$('#shop_xg').text('公告：'+ret.hotel.xg);
+				}
+			}
+		});
+	}
+	
+	function openShopXg(){
+		_openWinByUrl('hotel_gonggao_winhead','../window_head',{'furl':'hotel/gonggao','frame':'hotel_gonggao','sid':sid,'title':'店铺公告'});
+	}
+	
+	//链接跳转
+	function goLink(type){
+		if(type=='reservation'){
+			_openWinByUrl('reservation','reservation_body',{'sid':sid});
+		}
+		
+		if(type=='food'){
+			_openWinByUrl('food','../food/food',{'sid':sid});
+		}
+		
+		if(type=='hotelDetail'){
+			_openWinByUrl('hotelDetail','hotelDetail',{'sid':sid});
+		}
+        
+        if( type=='exhibition' ) {
+            _openWinByUrl('exhibition_head','../hall/exhibition_head', {'sid':sid});
+        }
+        
+        if( type=='celebration' ) {
+            _openWinByUrl('celebration_head','../hall/celebration_head', {'sid':sid});
+        }
+	}
+</script>
+</html>

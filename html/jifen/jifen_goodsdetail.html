@@ -1,0 +1,196 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script src="../../script/swiper.min.js"></script>
+<style>
+	.cartNum_widow{ position: relative;height: 0.4rem;clear: both;}
+	.jifen_icon{height: 0.3rem;}
+		.swiper-slide{
+		height:265px;
+	}
+	.swiper-slide img{
+		width: 100%;
+		height:100%
+	}
+</style>
+
+</head>
+<body>
+<!-- 头部 -->
+	<header>
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">商品详情</h1>
+			
+		</div>
+	</header>
+<div class="wp_100">
+	<div class="botH"></div>
+</div>
+<div class="footer_01 footer_new" id="footer" style="border-top:0;height:70px;">
+<div style="padding-left: 0.2rem;padding-right: 0.2rem;padding-top: 0.05rem;">
+		<a href="javascript:void(0);" class="btn01 quduihuan" onclick="submit()"></a>
+		<!--<div class="footer_closecon">
+			<span style="font-size: 0.26rem; padding-top: 0.3rem;">共计：<b class="busi_fenleirpriceb">￥</b>145.00</span>		
+		</div>-->
+	</div>
+</div>
+<!-- banner轮播js -->
+<script src="js/swiper.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$('.bot_btnapay').click(function(){
+		$('.maskBg').hide();
+		$('.etc_pay').stop().slideUp(1000);
+	})
+});
+	// 顶部banner
+	var swiper = new Swiper('.swiper-container1', {
+		pagination: '.swiper-pagination',
+		paginationClickable: true,
+		autoplay: 2500,
+		autoplayDisableOnInteraction: false
+	});
+	
+//	$(document).ready(function(){
+//$(".swiper-container1 .swiper-slide").css({height:$(window).width()/1.8});
+//$(".swiper-container1 .swiper-slide img").css({height:$(window).width()/1.8});
+//});
+apiready=function(){
+   	api.addEventListener({
+		    name: 'jifengoodsdetail'
+		}, function(ret, err) {
+		    if(ret && ret.value){
+					if (ret.value.key1 == 'success') {	
+					    price=ret.value.shop_price;//商品价格      
+					    stock=ret.value.goods_number;//库存 
+					    if(stock<1){
+					    	$('.quduihuan').text('已售罄');
+					    	$('.quduihuan').attr('onclick','');
+					    	$('.quduihuan').attr('style','background-color:#ccc;');
+					    }else{
+					    	$('.quduihuan').text('去兑换');
+					    }            									  											 
+					}
+				}
+		});
+		
+		
+	api.addEventListener({
+	    name:'jifen_detail_pay'
+    },function(ret,err){
+    	//coding...
+    		var header =$api.dom('header');
+		    $api.fixStatusBar(header); 
+		    var headerPos = $api.offset(header);
+		    var body_h = $api.offset($api.dom('body')).h;
+		    api.openFrame({
+		        name: 'jifen_goodsdetail_pay',
+		        url: 'jifen_goodsdetail_pay.html',
+		        bounces: false,
+		        rect: {
+		            x: 0,
+		            y: headerPos.h+1,
+		            w: headerPos.w,
+		            h: 'auto'
+		        },
+				pageParam:api.pageParam
+		    });
+    });
+  
+   ready();
+};
+function openCart(){
+	api.sendEvent({
+				name : 'index',
+				extra : {
+					key1 : 'success',
+					pagename : 'cart',
+				}
+			});
+			api.closeWin({
+            });
+     
+
+}
+var gid=0;
+var sid=0;
+var stock=0;//库存
+var price=0;//价格
+ function ready(){
+	$api.fixStatusBar($api.dom('header')); 		
+   var body_h = $api.offset($api.dom('body')).h;
+  var header_h = $api.offset($api.dom('header')).h;
+  var footer_h=$api.offset($api.byId('footer')).h;
+  var height_h=body_h-header_h-footer_h;
+  var parm=api.pageParam;
+  gid=api.pageParam['goods_id'];
+  openFrameUrl('jifen_goodsdetail_body',header_h,height_h,parm);
+ }
+ /*
+  * 属性弹窗
+  */
+ 
+ 
+// function openAttr(type){
+//	 api.openFrame({
+//          name: 'jifenattr',
+//          url: 'jifenattr.html',
+//          bounces: false,
+//          rect: {
+//              x: 0,
+//              y: 0,
+//              w: 'auto',
+//              h: 'auto'
+//          },
+//			pageParam:{
+//				id:gid,
+//				type:type
+//			}
+//      });
+//}
+/*
+ * 跳转到确认订单页面
+ */
+function submit(){
+  //获取商品数量
+  var num=1;
+    if(num>stock){
+     _toast('库存不足');
+     return false;
+    }
+    userinfo = $api.getStorage('userinfo');	
+     if(!userinfo){
+	      _openWinByUrl('login','../login');
+	      return false;
+	    }
+     var pram={goods_id:gid,goods_num:num,goods_price:price};
+	      _openWinByUrl('jifen_order','jifen_order',pram);
+//	api.sendEvent({
+//      name:'suborder'
+//  });
+    
+    
+    
+}
+
+
+</script>
+</body>
+</html>

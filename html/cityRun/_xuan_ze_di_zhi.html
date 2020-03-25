@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">选择地址</h1>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">三居室</button>-->
+			<a class="mui-icon mui-icon-back colorRed"></a>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">选择地址</button>
+		</header>
+		<div class="mui-content">
+			<ul class="xzdz_ul borde_b bgwhite mt10">
+				<li class="pl20 pr20 box_s border_b10 pt20">
+					<p><span class="fs32">收件人：史密斯</span><span class="ml20">185****0219</span></p>
+					<p class="fs28 colorHui999 mt10 border_b pb20">北京市昌平区六环以内北京市昌平区生命科学园珠江摩尔国际大厦5号楼1单元</p>
+					<div class="clearfloat xzdz_ul_bbottom colorHui999">
+						<div class="fl checkbox_div_outer clearfloat">
+							<div class="checkbox_div active fl">
+								<i class="mui-icon mui-icon-checkmarkempty"></i>
+							</div>
+							<span class="fl ml20">默认地址</span>
+						</div>
+						<div class="fr">
+							<span class="iconfont icon-bianji"></span>
+							<span class="mr20">编辑</span>
+							<span class="iconfont icon-shanchu"></span>
+							<span>删除</span>
+						</div>
+					</div>
+				</li>
+				<li class="pl20 pr20 box_s border_b10 pt20">
+					<p><span class="fs32">收件人：史密斯</span><span class="ml20">185****0219</span></p>
+					<p class="fs28 colorHui999 mt10 border_b pb20">北京市昌平区六环以内北京市昌平区生命科学园珠江摩尔国际大厦5号楼1单元</p>
+					<div class="clearfloat xzdz_ul_bbottom colorHui999">
+						<div class="fl checkbox_div_outer clearfloat">
+							<div class="checkbox_div active fl">
+								<i class="mui-icon mui-icon-checkmarkempty"></i>
+							</div>
+							<span class="fl ml20">默认地址</span>
+						</div>
+						<div class="fr">
+							<span class="iconfont icon-bianji"></span>
+							<span class="mr20">编辑</span>
+							<span class="iconfont icon-shanchu"></span>
+							<span>删除</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div style="height: 100px;"></div>
+			<div class="pl20 pr20 box_s mt30">
+				<button type="button" class="mui-btn mui-btn-danger mui-btn-outlined btn_allQuanping mt30">+新增地址</button>
+			</div>
+		</div>
+	</body>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/jquery-1.12.2.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$(".checkbox_div").on("tap",function(){
+			if($(this).hasClass("active")){
+				$(this).removeClass("active");
+			}else{
+				$(this).addClass("active");
+			}
+		})
+	</script>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="wp_100" id="header" style="background:#fff;">
+<!-- 头部 -->
+	<header>
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">商城订单</h1>
+		</div>
+	</header>
+
+<!-- 内容 -->
+
+	<div class="my_mainconlist">
+		<ul class="my_mainul">
+			<li class="my_mainlicur"><a href="javascript:void(0);" onclick="selectType(1,this);" class="my_mainlia my_mainlia1">
+				<i class="my_icon01"></i>
+				<p class="my_mainlip01">全部订单</p>
+				<span class="my_mainli_line"></span>
+			</a></li>
+			<li class=""><a  href="javascript:void(0);" onclick="selectType(2,this);"  class="my_mainlia my_mainlia2">
+				<i class="my_icon02"></i>
+				<p class="my_mainlip01">待支付</p>
+				<span class="my_mainli_line"></span>
+				<!--<b class="zhufu_dot">12</b>-->
+			</a></li>
+			<li class=""><a  href="javascript:void(0);" onclick="selectType(3,this);"  class="my_mainlia my_mainlia3">
+				<i class="my_icon03"></i>
+				<p class="my_mainlip01">已支付</p>
+				<span class="my_mainli_line"></span>
+			</a></li>
+			<li class=""><a  href="javascript:void(0);" onclick="selectType(4,this);"  class="my_mainlia my_mainlia4">
+				<i class="my_icon04"></i>
+				<p class="my_mainlip01">待评价</p>
+				<span class="my_mainli_line"></span>
+			</a></li>
+		</ul>
+	</div>
+
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script>
+	apiready = function(){
+		api.parseTapmode();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+
+		userinfo = $api.getStorage('userinfo');
+		
+        api.openFrame({
+            name: 'mall_order_list_body',
+            url: 'mall_order_list_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: headerPos.w,
+                h: 'auto'
+            },
+			pageParam:api.pageParam
+        });
+        
+        var type=api.pageParam.type;
+        if(type){
+        	selectType(type,'#my_mainlia'+type);
+        }
+  
+		
+	};
+	
+	//切换查询类型
+	function selectType(type,el){
+		$(".my_mainul li ").removeClass('my_mainlicur');
+		$(el).parent("li").addClass('my_mainlicur');
+		api.sendEvent({
+	        name:'mall_order_list_type',
+	    	extra: {
+		        type: type
+		    }
+        });
+	}
+</script>
+</body>
+</html>

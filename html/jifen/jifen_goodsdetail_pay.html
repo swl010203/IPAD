@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script src="../../script/swiper.min.js"></script>
+
+<style type="text/css">
+		html,body{background: rgba(0,0,0,0);}
+	
+</style>
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+	
+
+
+
+<!--浮动层-->
+
+<div class="ftc_wzsf" style="display: block">
+  <div class="srzfmm_box">
+    <div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>
+    <div class="zfmmxx_shop">
+      <div class="mz ordername"></div>
+      <div class="wxzf_price score">￥0.00</div>
+    </div>
+    
+    <ul class="mm_box">
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+    </ul>
+  </div>
+  <div class="numb_box">
+    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+    <ul class="nub_ggg">
+      <li><a href="javascript:void(0);">1</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+      <li><a href="javascript:void(0);">3</a></li>
+      <li><a href="javascript:void(0);">4</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+      <li><a href="javascript:void(0);">6</a></li>
+      <li><a href="javascript:void(0);">7</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+      <li><a href="javascript:void(0);">9</a></li>
+      <li><span></span></li>
+      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+    </ul>
+  </div>
+  <div class="hbbj"></div>
+</div>
+<!-- banner轮播js -->
+
+<script type="text/javascript">
+
+
+
+/**
+ * 清除支付密码 
+ */
+function clearPayPwd(){
+	paypassword="";
+	$(".mm_box li").attr('pwd','');
+	$(".mm_box li").removeClass("mmdd");
+	i1 = 0;
+	is_pay_status = 1;
+}
+	
+$(function(){
+	//出现浮动层
+	$(".ljzf_but1").click(function(){
+		
+	});
+	//关闭浮动  清除支付密码
+	$(".close").click(function(){
+		api.closeFrame({
+				name:'jifen_goodsdetail_pay'
+            });
+            
+		//$(".ftc_wzsf").hide();
+		clearPayPwd();
+	});
+		//数字显示隐藏
+		$(".xiaq_tb").click(function(){
+			
+		//$(".numb_box").slideUp(500);
+		});
+		$(".mm_box").click(function(){
+			//$(".numb_box").slideDown(500);
+		});
+		//----
+		var i = 0;
+		$(document).on('touchend',".nub_ggg li a", function(){
+			
+		//$(".nub_ggg li a").change(function(){
+			i++;
+			var pwd =$(this).parent("li").index()+1;
+			if(pwd ==11){
+				pwd =0 ;
+			}
+		
+			if(i<6){
+				$(".mm_box li").eq(i-1).addClass("mmdd");
+				$(".mm_box li").eq(i-1).attr("pwd",pwd);
+				}else{
+					$(".mm_box li").eq(i-1).attr("pwd",pwd);
+					$(".mm_box li").eq(i-1).addClass("mmdd"); 
+					if(i>6){
+						i=6;
+					}
+					setTimeout(function(){
+						//验证支付密码 并支付
+						var paypassword="";
+						$(".mm_box li").each(function(){
+							paypassword+=$(this).attr('pwd');
+						});
+						order(paypassword);
+						
+					},10);
+					//window.document.location="cg.html"
+			 	} 
+		});
+ 		$(document).on('touchend',".nub_ggg li .del", function(){
+		//$(".nub_ggg li .del").click(function(){
+			if(i>0){
+				i--;
+				$(".mm_box li").eq(i).removeClass("mmdd");
+				$(".mm_box li").eq(i).attr("pwd","");
+				i==0;
+				}
+			//alert(i);
+		}); 
+});
+
+/**
+ * 提交订单信息
+ */
+function order(paypassword){
+
+	api.sendEvent({
+        name:'suborder_pay',
+        extra:{
+        	paypassword:paypassword
+        }
+    });
+
+	
+	
+}
+	
+
+var goods_id =0;
+var userinfo = "";
+apiready=function(){
+	userinfo = $api.getStorage('userinfo');
+
+		//去结算
+		api.addEventListener({
+	        name:'suborder'
+        },function(ret,err){
+        	payorder();
+        });
+		
+		api.addEventListener({
+	        name:'close_jifen_goodsdetail_pay'
+        },function(ret,err){
+        	//coding...
+        	api.closeFrame({
+				name:'jifen_goodsdetail_pay'
+            });
+        });
+		
+  goods_id=api.pageParam['goods_id'];
+  getinfo(goods_id);
+  
+
+};
+
+
+/*
+ * 获取商品详情
+ */
+function getinfo(id){
+		api.ajax({
+				url : ajax_url+'Index/Score/getGoodsDetail',
+				method : 'post',
+				data : {
+					values : {
+					gid:id,
+					uid:localStorage.getItem("uid")
+					},
+				}
+			}, function(ret, err) {
+			  if(ret){
+			    if(ret.status==1){
+			     var goods=ret.goods;//商品详情
+			     var goodspic=ret.goodspic;//商品相册
+			     var goodsbannerHtml=''; //banner
+			     var couponsHtml='';//优惠券
+			     
+
+                $(".goods_name").html(goods.goods_name);//商品名称
+                $(".shop_price").html(goods.shop_price);//商品价格
+                $(".market_price").html(goods.market_price);//商品市场价格
+                $(".goods_desc").html(goods.goods_desc);//商品描述  
+                 $(".brand").html(goods.brand);//品牌
+                 goods_price = goods.shop_price;
+                 goods_number=goods.goods_number;
+                 $(".score").html("金额:"+goods_price);
+                      	api.sendEvent({
+							name : 'jifengoodsdetail',
+							extra : {
+								key1 : 'success',
+								shop_price:goods.shop_price,
+								goods_number:goods.goods_number
+							}
+						});
+			    }
+			  }else{
+			  _alert('网络连接失败,请稍后重试');
+			  }
+			})
+}
+
+
+</script>
+</body>
+</html>

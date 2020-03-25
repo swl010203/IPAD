@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>031报修记录</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+		<div id="list">
+		</div>
+        <!--中间内容-->
+        <!--<ul class="baoxiujiluOuter">
+            <li class="tit clearfloat colorRed">
+                <span class="fl">个人报修</span>
+                <span class="fr">未分配</span>
+            </li>
+            <li class="con">
+                <ul>
+                    <li class="clearfloat">
+                        <p>
+                            <span class="fl">创建时间：<i>2017-07-22&nbsp;&nbsp;14:24</i></span>
+                            <span class="fr">创建时间：<i>2017-07-22&nbsp;&nbsp;14:24</i></span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>报修种类：<span>水管</span></p>
+                    </li>
+                    <li>
+                        <p>保修内容：<span>热水器嗓音大，右侧漏水，加热时间长，检查有服</span></p>
+                    </li>
+                    <li>
+                        <p>备注：<span>麻烦快一点，着急等着使用</span></p>
+                    </li>
+                    <li class="clearfloat colorRed"><p>状态：<span>已结束</span></p></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="baoxiujiluOuter">
+            <li class="tit clearfloat">
+                <span class="fl blueGRed">公共报修</span>
+                <span class="fr">已分配</span>
+            </li>
+            <li class="con">
+                <ul>
+                    <li class="clearfloat">
+                        <p>
+                            <span class="fl">创建时间：<i>2017-07-22&nbsp;&nbsp;14:24</i></span>
+                            <span class="fr">创建时间：<i>2017-07-22&nbsp;&nbsp;14:24</i></span>
+                        </p>
+                    </li>
+                    <li>
+                        <p>报修种类：<span>水管</span></p>
+                    </li>
+                    <li>
+                        <p>保修内容：<span>热水器嗓音大，右侧漏水，加热时间长，检查有服</span></p>
+                    </li>
+                    <li>
+                        <p>备注：<span>麻烦快一点，着急等着使用</span></p>
+                    </li>
+                    <li class="clearfloat">
+                        <p>
+                            <span class="blueGRed fl">维修师傅：<i>133-2117-3097</i></span>
+                            <span class="colorRed fr">状态：<i>已完成</i></span>
+                        </p>
+                    </li>
+                </ul>
+            </li>
+        </ul>-->
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript" >
+    
+    	var uid='';
+		
+		apiready = function(){
+			
+			uid=localStorage.getItem("uid");
+			//获取用户信息
+			index();
+		};
+		
+	
+		function index(){
+			_ajax(ajax_url+"Index/Repair/repairRecord" ,{'uid':uid},'get',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(ret.data).each(function(k,v){
+					
+					
+					    strVar += "<ul class=\"baoxiujiluOuter\">\n";
+					    strVar += "            <li class=\"tit clearfloat\">\n";
+					   // strVar += "                <span class=\"fl blueGRed\">公共报修<\/span>\n";
+					    strVar += "                <span class=\"fr\">"+v['status']+"<\/span>\n";
+					    strVar += "            <\/li>\n";
+					    strVar += "            <li class=\"con\">\n";
+					    strVar += "                <ul>\n";
+					    strVar += "                    <li class=\"clearfloat\">\n";
+					    strVar += "                        <p>\n";
+					    strVar += "                            <span class=\"fl\">预约时间：<i>"+v['pre_time']+"<\/i><\/span>\n";
+					    strVar += "                            <span class=\"fr\">报修时间：<i>"+v['repair_time']+"<\/i><\/span>\n";
+					    strVar += "                        <\/p>\n";
+					    strVar += "                    <\/li>\n";
+					    strVar += "                    <li>\n";
+					    strVar += "                        <p>报修种类：<span>"+v['category_name']+"<\/span><\/p>\n";
+					    strVar += "                    <\/li>\n";
+					    strVar += "                    <li>\n";
+					    strVar += "                        <p>保修内容：<span>"+v['repair_content']+"<\/span><\/p>\n";
+					    strVar += "                    <\/li>\n";
+//					    strVar += "                    <li>\n";
+//					    strVar += "                        <p>备注：<span>麻烦快一点，着急等着使用<\/span><\/p>\n";
+//					    strVar += "                    <\/li>\n";
+//					    strVar += "                    <li class=\"clearfloat\">\n";
+//					    strVar += "                        <p>\n";
+//					    strVar += "                            <span class=\"blueGRed fl\">维修师傅：<i>133-2117-3097<\/i><\/span>\n";
+//					    strVar += "                            <span class=\"colorRed fr\">状态：<i>已完成<\/i><\/span>\n";
+//					    strVar += "                        <\/p>\n";
+//					    strVar += "                    <\/li>\n";
+					    strVar += "                <\/ul>\n";
+					    strVar += "            <\/li>\n";
+					    strVar += "        <\/ul>\n";
+					});
+					
+					$("#list").html(strVar);
+				}else{
+				
+				}
+			});
+		}
+    
+    
+    </script>
+</html>

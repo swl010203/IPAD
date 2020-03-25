@@ -1,0 +1,526 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style type="text/css">
+    .goods_desc{
+        width: 100%;
+    }
+    .goods_desc img{
+        width: 100%;
+        height: auto;
+    }
+</style>
+</head>
+
+<body class="mui-android mui-android-8 mui-android-8-0">
+    <header id="header" class="mui-bar mui-bar-transparent" style="background-color: rgba(230, 60, 37, 0);">
+        <a class="mui-pull-left back_icon"></a>
+        <h1 class="mui-title headerTit"></h1>
+        <!--<a class="mui-pull-right share_icon fenxiang_click"></a>-->
+    </header>
+    <div class="mui-content">
+        <div class="mui-slider mui_slider mui_slider_shangpin bgwhite">
+            <div id="lunboDiv" class="mui-slider-group mui-slider-loop"></div>
+        </div>
+        <div class="shopInfoDiv bgwhite pt20 pb20">
+            <div>
+                <div class="pl20 pr20 box_s">
+                    <p id="goods_name" class="fs28"></p>
+                    <div class="fs24 mt20">
+                        <!--<span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">2倍积分</span>-->
+                    </div>
+                    <div class="shopDiv_infoPrice mui-row mt30">
+                        <div>
+                            <p class="colorRed">
+                                <span class="fs24">￥</span>
+                                <span id="shop_price">
+                                    <span class="fs36"></span>
+                                    <span class="fs32"></span>
+                                </span>
+                                <span class="fs24 oldPrice">￥<span id="market_price"></span></span>
+                            </p>
+                            <div class="shop_label colorHei888 fs24 mt10">
+                                <!-- <span class="mr20"><i class="duihao_icon mr10"></i>当日达</span> -->
+                                <span class="mr20"><i class="duihao_icon mr10"></i>正品保障</span>
+                                <span class="mr20"><i class="duihao_icon mr10"></i>支持七天无理由退货</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="fs24 colorHei888 mt30">配送时间：每日9：00-12：00\13：30-18：30</p>
+                </div>
+            </div>
+        </div>
+        <div class="shopInfoCon_tit colorHei888"><span>浏览图文详情</span></div>
+        <div id="goods_desc" class="pl20 pr20 box_s goods_desc">
+            <!--此处是富文本内容-->
+        </div>
+        <div style="height: 80px;"></div>
+        <footer class="shopFooter">
+            <div class="mui-row">
+                <div class="mui-col-sm-2 mui-col-xs-2" onclick='goCart();'>
+                    <div class="cart_blackIcon"><span class="mui-badge mui_badge">10</span></div>
+                    <p class="fs24 mui-text-center">购物车</p>
+                </div>
+                <div onclick="collect(this)"; class="mui-col-sm-2 mui-col-xs-2 shoucangN_iconClick">
+                    <div class="shoucangN_icon shoucangY_icon"></div>
+                    <p class="fs24 mui-text-center">收藏</p>
+                </div>
+                <div class="mui-col-sm-4 mui-col-xs-4">
+                    <div onclick="openAttr(1);" class="addCart fs32 guige_click">加入购物车</div>
+                </div>
+                <div class="mui-col-sm-4 mui-col-xs-4">
+                    <div onclick="openAttr(2);" class="buyNow fs32 guige_click">立即购买</div>
+                </div>
+            </div>
+        </footer>
+        <div class="mark_common mui-hidden"></div>
+        <!--属性规格-->
+        <div style="display: none;z-index: 999999999" class="attr attr_new">
+            <p class="pl20 pr20 box_s colorHui999 pt20 pb20 border_b">请选择规格</p>
+            <div class="list pl20 pr20 box_s mui-row mt30">
+                <div id="attr_guigeName" class="payList2 payList201 mui-col-sm-4 mui-col-xs-4"></div>
+                <div id="attr_guigeCon" class="payListr mui-col-sm-8 mui-col-xs-8 mui-row">
+                    <!-- <div class="payListrli01 mui-col-sm-6 mui-col-xs-6 mb20">
+                        <div class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+                        <label for="'+attr_val[j]['id']+'">黑色</label>
+                        <img style="width:30px;heihgt:30px;" src='' />
+                    </div> -->
+                </div>
+            </div>
+            <div class="attr_bottom">
+                <div class="pl20 pr20 box_s clearfloat mt20 shuliang_div">
+                    <div class="mui-pull-right">
+                        <div class="mui-numbox mui_numbox" data-numbox-step="1" data-numbox-min="1" data-numbox-max="10000">
+                            <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                            <input class="mui-numbox-input mui_numbox_input" type="number">
+                            <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="pl20 pr20 box_s footer_div_mark mt30 mb20">
+                    <footer onclick="getAttr()" class="footer_fixedNoscreen buyNow">确定</footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/mui.min.js"></script>
+<script src="../../script/jquery_2_1_4.js"></script>
+<script src="../../script/api.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    var labelHtml="";   // 规格属性名称
+    var labelId = "";   // 规格ID
+    var type_ = 0;      // 1  加入购物车   2 立即购买
+    var shop_id = 0;    // 店铺ID
+    var goodsIMG = '';
+    var goodsName = '';
+    mui.init({
+        swipeBack: true // 启用右滑关闭功能
+    });
+    setTimeout(function(){
+        var gallery = mui('.mui-slider');
+        gallery.slider({
+            interval:1800   //自动轮播周期，若为0则不自动播放，默认为0；
+        });
+    },300);
+
+    var userinfo = '';
+    apiready = function() {
+        userinfo = $api.getStorage('userinfo');
+
+        //接收商品ID
+        var goods_id=api.pageParam['goods_id'];
+        api.addEventListener({
+            name: 'event_ecart_num',
+        }, function(){
+            getCartInfo();
+        });
+        //浏览足迹
+    	footprint();
+        getinfo(goods_id);
+        getGoodsKucun(goods_id);
+    };
+
+    /*
+     * 获取商品详情
+     */
+    function getinfo(id){
+        _ajax(ajax_url+"Index/ExerciseShop/getGoodsDetail",{'gid':id,'uid':localStorage.getItem("uid")},'post',function(ret){
+            var strVar = "";
+            var collectGood = 0;    //是否收藏
+            var cartnum = 0;        //购物车商品种类数量
+            if(ret.status==1){
+            	goodsIMG = ret.goods.goods_img;
+                //轮播相册
+                var lunboHtml="";
+                var goodspic = ret.goodspic;
+                for(var i =0 in goodspic){
+                    if(i == 0){
+                        lunboHtml += '<div class=\'mui-slider-item mui-slider-item-duplicate\'>'+
+                        '<img src=\''+goodspic[goodspic.length - 1]+'\' />'+
+                        '</div>';
+                    }
+                    lunboHtml += '<div class=\'mui-slider-item\'>'+
+                    '<img src=\''+goodspic[i]+'\' />'+
+                    '</div>';
+                    if(i == goodspic.length - 1){
+                        lunboHtml += '<div class=\'mui-slider-item mui-slider-item-duplicate\'>'+
+                        '<img src=\''+goodspic[0]+'\' />'+
+                        '</div>';
+                    }
+                }
+                $("#lunboDiv").html(lunboHtml);
+
+                //优惠前价格
+                $("#market_price").html(ret.goods.market_price);
+
+                //优惠后价格
+                var shop_price_ = ret.goods.shop_price;
+                shop_id = ret.goods.shop_id;
+                var str_before = shop_price_.split(".")[0];
+                var str_after = shop_price_.split(".")[1];
+                $("#shop_price").find("span:first-child").html(str_before);
+                $("#shop_price").find("span:last-child").html("."+str_after);
+
+                //商品名称
+                $("#goods_name").html(ret.goods.goods_name);
+                $('.headerTit').text(ret.goods.goods_name);
+                goodsName = ret.goods.goods_name;
+
+                //商品详情
+                $("#goods_desc").html(ret.goods.goods_desc);
+
+                //购物车总数
+                $(".mui_badge").html(ret.cartnum);
+
+                //判断是否收藏
+                if(ret.collectGood == 0){
+                    $(".shoucangN_iconClick").find(".shoucangN_icon").removeClass("shoucangY_icon");
+                }else{
+                    $(".shoucangN_iconClick").find(".shoucangN_icon").addClass("shoucangY_icon");
+                }
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+
+    //获取商品详情库存属性
+    function getGoodsKucun(id){
+        _ajax(ajax_url+"Index/ExerciseShop/getGoodsKucun",{'gid':id},'post',function(ret){
+            var strVar = "";
+            if(ret.code==1){
+                var attr_left = ret.data.attr;
+                if(attr_left[0].name == null){
+                    $(".attr_bottom").addClass("mui-hidden");
+                }else{
+                    $(".attr_bottom").removeClass("mui-hidden");
+                    $("#attr_guigeName").html(attr_left[0].name+"：");
+                    var attr_right = ret.data.attrval;
+                    var strHtml = "";
+                    for(var i in attr_right){
+                        strHtml += '<div onclick="checkGg(this)" class="payListrli01 mui-col-sm-6 mui-col-xs-6 mb20"><div id='+attr_right[i].id+' class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div><label>'+attr_right[i].color_name+'</label></div>';
+                    }
+                    $("#attr_guigeCon").html(strHtml);
+                }
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    /*
+     * 规格弹窗
+     */
+    function openAttr(type){
+        // share();
+        $(".mark_common").removeClass("mui-hidden");
+        show_mark();
+        $(".attr_new").slideDown();
+        $(".attr_new").css("bottom",-scroll_);
+        type_ = type;
+    }
+    function getAttr(){
+        //属性判断
+        if($(".payListr div.payListrli01 div.checkbox_div").hasClass("active")){
+            $(".mark_common").addClass("mui-hidden");
+            $(".attr_new").slideUp();
+            hidden_mark();
+            //获取商品数量
+            // var num=$(".mui_numbox_input").val();
+            //获取商品的属性
+            for(var i =0;i<$("#attr_guigeCon div.payListrli01").length;i++){
+                if($("#attr_guigeCon div.payListrli01").eq(i).find("div.checkbox_div").hasClass("active")){
+                    labelHtml = $("#attr_guigeCon div.payListrli01").eq(i).find("label").html();
+                    labelId = $("#attr_guigeCon div.payListrli01").eq(i).find("div.checkbox_div").attr("id");
+                }
+            }
+            //根据属性获取商品的价格跟库存
+            getPrice(labelId);
+        }else{
+            _toast('请选择规格');
+        }
+    }
+
+    function getPrice(labelId){
+        //判断是否登陆
+        if(localStorage.getItem("uid")  =='undefined' ||  localStorage.getItem("uid") =='' || localStorage.getItem("uid") ==null){
+            _openWinByUrl('login','../login');
+            return false;
+        }
+        var aid = api.pageParam.aid;
+
+        //获取商品数量
+        var num = $(".mui_numbox_input").val();
+        api.ajax({
+            url : ajax_url+'Index/ExerciseShop/findgoodkucun',
+            method : 'post',
+            data : {
+                values : {
+                    gid:api.pageParam['goods_id'],
+                    attr_str:labelId,
+                    aid:aid
+                },
+            }
+        }, function(ret, err) {
+            if(ret){
+                if(ret.code==1){
+                    var data=ret.data.content;
+                    var price=data.price;//价格
+                    var market_price=data.market_price;//市场价
+                    var stock= +data.num;//库存
+                    var attr_str=ret.data.attr_str;//属性字符串
+                    if(num>stock){
+                        _toast('库存不足');
+                        return false;
+                    }
+                    //根据选择按钮进行加入购物车或区结算操作
+                    if(type_==1){ //加入购物车
+                        add_cart(num,price)
+                    }else if(type_==2){ //去结算
+                        var pram = {
+                            buy_type: 'once',
+                            aid: aid,
+                            goods_id: api.pageParam['goods_id'],
+                            goods_num: num,
+                            goods_attr: labelId,
+                            goods_attr_str: labelHtml,
+                            goods_type: 2,
+                            goods_sid: shop_id,
+                            goods_price: price,
+                            goods_img :goodsIMG,
+                            goods_name:goodsName
+                        };
+                        _openWinByUrl('sureOrder','sureOrder',pram);
+                    }
+                }
+            }else{
+                _alert('网络连接失败,请稍后重试');
+            }
+        });
+    }
+
+    /*
+     * num 数量
+     * price 商品属性所对应的价格
+     */
+    function add_cart(num,price){
+        //判断是否登陆
+        if(localStorage.getItem("uid")  =='undefined' ||  localStorage.getItem("uid") =='' || localStorage.getItem("uid") ==null){
+            _openWinByUrl('login','../login');
+            return false;
+        }
+        var data = {
+        	'uid':localStorage.getItem("uid"),
+        	'sid':shop_id,
+        	'gid':api.pageParam['goods_id'],
+        	'num':num,
+        	'attribute':labelId,
+        	'attribute_name':labelHtml,
+        	'goods_price':price
+        };
+        _ajax(ajax_url+'Index/ExerciseShop/detailAddCart',data,'post', function(ret, err) {
+            if(ret){
+                if(ret.status==1){
+                    //刷新购物车
+                    api.sendEvent({
+                        name:'refresh_ecartinfo'
+                    });
+                    _toast(ret.msg);
+                    getCartInfo();
+                    return false;
+                }else{
+                    _toast(ret.msg);
+                    return false;
+                }
+            }else{
+                _alert('网络连接失败,请稍后重试');
+            }
+        });
+    }
+
+    //获取购物车信息
+		function getCartInfo(){
+			uid = localStorage.getItem("uid");
+			if(typeof uid ==undefined || uid ==''  || uid ==null){
+				return false;
+			}
+
+			_ajax(ajax_url+"Index/ExerciseShop/getCartInfo",{'uid':uid},'post',function(ret){
+				if(ret.status==1){
+					$(".mui_badge").html(ret.data.znum);
+				}
+			});
+
+		}
+
+
+    /*
+    * 收藏
+    */
+    function collect(obj){
+        if (localStorage.getItem("uid")) {
+            if($(obj).find("div.shoucangN_icon").hasClass("shoucangY_icon")){
+                //取消收藏
+                api.ajax({
+                    url : ajax_url + 'Index/ExerciseShop/goodsCancel',
+                    method : 'post',
+                    data : {
+                        values : {
+                            gid : api.pageParam['goods_id'],
+                            uid:localStorage['uid']
+                        },
+                    }
+                }, function(ret, err) {
+                    if (ret.code) {
+                        //收藏成功
+                        $(".shoucangN_iconClick").find(".shoucangN_icon").removeClass("shoucangY_icon");
+                        api.toast({
+                            msg : ret.msg,
+                            duration : 3000,
+                            location : 'bottom'
+                        });
+                    } else {
+                        api.toast({
+                            msg : ret.msg,
+                            duration : 3000,
+                            location : 'bottom'
+                        });
+                    }
+                });
+            }else{
+                //收藏
+                api.ajax({
+                    url : ajax_url + 'Index/ExerciseShop/collectgoods',
+                    method : 'post',
+                    data : {
+                        values : {
+                            gid : api.pageParam['goods_id'],
+                            uid:localStorage['uid']
+                        },
+                    }
+                }, function(ret, err) {
+                    if (ret.code) {
+                        //收藏成功
+                        $(".shoucangN_iconClick").find(".shoucangN_icon").addClass("shoucangY_icon");
+                        api.toast({
+                            msg : ret.msg,
+                            duration : 3000,
+                            location : 'bottom'
+                        });
+                    } else {
+                        api.toast({
+                            msg : ret.msg,
+                            duration : 3000,
+                            location : 'bottom'
+                        });
+                    }
+                });
+            }
+        } else {
+            //登陆
+            api.openWin({
+                name : 'login',
+                url : '../login.html',
+                reload : true
+            });
+        }
+    }
+
+    //点击弹出层关闭弹出层
+    $(".mark_common").on("tap",function(){
+        hidden_mark();
+        $(".attr_new").slideUp(function(){
+            $(".mark_common").addClass("mui-hidden");
+        });
+    });
+
+    //点击分享出来弹层
+    $(".fenxiang_click").on("tap",function(){
+        share();
+        $(".mark_common").removeClass("mui-hidden");
+        $(".mark_share").slideDown();
+        show_mark();
+    });
+
+    window.onscroll = window.ontouchmove = function() {
+        var scrollY = $(document).scrollTop();  // 获取垂直滚动的距离，即滚动了多少
+        if (scrollY > 1){
+            //如果滚动距离大于550px则隐藏，否则删除隐藏类
+            $("header").find(".headerTit").css("opacity",1);
+            $("header .back_icon").css("background","rgba(170,171,173,0) url(../../image/back_icon.png) center center no-repeat");
+            $("header .share_icon").css("background","rgba(170,171,173,0) url(../../image/share_icon.png) center center no-repeat");
+        }else{
+            $("header").find(".headerTit").css("opacity",0);
+            $("header .back_icon").css("background","rgba(170,171,173,1) url(../../image/back_icon.png) center center no-repeat");
+            $("header .share_icon").css("background","rgba(170,171,173,1) url(../../image/share_icon.png) center center no-repeat");
+        }
+    };
+
+    //点击选择规格
+    function checkGg(obj){
+        $(".payListr div.payListrli01 div.checkbox_div").removeClass("active");
+        $(obj).find("div.checkbox_div").addClass("active");
+    }
+
+    // 返回
+    $('.back_icon').click(function(){
+        api.closeWin();
+    });
+
+    function goCart(){
+        if(!checkNull(userinfo)){
+            _toast('请先登录', function(){
+                _openWinByUrl('login', '../login');
+            });
+        }else{
+            _openWinByUrl('cart', 'cart');
+        }
+    }
+
+    function checkNull(param){
+        if(param == '' || param == null || param == 'undefined' || typeof param == 'undefined'){
+            return false;
+        }
+        return true;
+    }
+
+    function footprint() {
+    	var goods_id = api.pageParam['goods_id'];
+    	uid = localStorage.getItem("uid");
+    	_ajax(ajax_url + 'Index/Mall/footprint', {
+    		'uid': uid,
+    		'goods_id': goods_id,
+    		'channel': 14
+    	}, 'get', function() {
+
+    	})
+    }
+</script>
+</html>

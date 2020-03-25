@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>待评价</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    </head>
+
+    <body>
+        <div class="evaluate_div mt_20">
+            <ul class="evaluate_div_ul" id="comments_list">
+                <!-- <li class="bgWhite border-b border-t pr_20 pl_20 box-s clearfloat">
+                    <div class="evaluate_div_img fl">
+                        <img src="img/1801.jpg"/>
+                    </div>
+                    <div class="fl evaluate_div_con">
+                        <p>金鼎轩南北点心</p>
+                        <p>100字+3张图=送100积分</p>
+                    </div>
+                    <div class="fr">
+                        <span class="btn_whiteSpan fr">去评价</span>
+                    </div>
+                </li>
+                <li class="bgWhite border-b border-t pr_20 pl_20 box-s clearfloat">
+                    <div class="evaluate_div_img fl">
+                        <img src="img/1801.jpg"/>
+                    </div>
+                    <div class="fl evaluate_div_con">
+                        <p>金鼎轩南北点心</p>
+                        <p>100字+3张图=送100积分</p>
+                    </div>
+                    <div class="fr">
+                        <span class="btn_whiteSpan fr">去评价</span>
+                    </div>
+                </li>
+                <li class="bgWhite border-b border-t pr_20 pl_20 box-s clearfloat">
+                    <div class="evaluate_div_img fl">
+                        <img src="img/1801.jpg"/>
+                    </div>
+                    <div class="fl evaluate_div_con">
+                        <p>金鼎轩南北点心</p>
+                        <p>100字+3张图=送100积分</p>
+                    </div>
+                    <div class="fr">
+                        <span class="btn_whiteSpan fr">去评价</span>
+                    </div>
+                </li> -->
+            </ul>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script>
+    var page    = 1;
+    var is_page = true;
+    var uid = localStorage.getItem( "uid" );
+    apiready = function() {
+        uid = localStorage.getItem( "uid" );
+        
+        //评价完成监听刷新
+        api.addEventListener({
+            name: 'comments_body_over'
+        }, function(ret, err) {
+            is_page = true;
+            page=1;
+            getList();
+        });
+        
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err) {
+            is_page = true;
+            page=1;
+            getList();
+        });
+        
+        //监听滚动条是否到底部
+        api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err){        
+             if(is_page){
+                 page++;
+                 getList();
+             }
+        });
+        
+        getList();
+    };
+    
+    //店铺列表
+    function getList() {
+        _ajax(ajax_url+"Index/TakeoutComments/commentsList" ,{uid:uid, p:page},'post',function(ret) {
+            api.refreshHeaderLoadDone();
+            if(ret.status ==1){
+                var comments_list_html = '';
+                if( ret.data.length > 0 ) {
+                    $.each(ret.data, function(key, val) {
+                        comments_list_html += '<li class="bgWhite border-b border-t pr_20 pl_20 box-s clearfloat">';
+                        comments_list_html += '    <div class="evaluate_div_img fl">';
+                        comments_list_html += '        <img src="'+val.shop_logo+'"/>';
+                        comments_list_html += '    </div>';
+                        comments_list_html += '    <div class="fl evaluate_div_con">';
+                        comments_list_html += '        <p>'+val.shop_name+'</p>';
+                        comments_list_html += '        <p>100字+3张图=送100积分</p>';
+                        comments_list_html += '    </div>';
+                        comments_list_html += '    <div class="fr">';
+                        comments_list_html += '        <span class="btn_whiteSpan fr" onclick="goComments('+val.order_id+', \''+val.shop_name+'\');">去评价</span>';
+                        comments_list_html += '    </div>';
+                        comments_list_html += '</li>';
+                    });
+                } else {
+                    is_page = false;
+                    _toast( '没有更多记录了' );
+                }
+                if( page > 1 ) {
+                    $('#comments_list').append( comments_list_html );
+                } else {
+                    $('#comments_list').html( comments_list_html );
+                }
+            }else{
+                is_page = false;
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //去评价
+    function goComments(oid, title) {
+        _openWinByUrl('comments_head','comments_head',{title:title,oid:oid});
+    }
+    </script>
+</html>

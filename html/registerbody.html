@@ -1,0 +1,323 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>华海</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<link href="../css/style.css" rel="stylesheet" type="text/css" />
+		<link href="../css/index.css" rel="stylesheet" type="text/css" />
+		<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+		<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+		<script type="text/javascript" src="../script/common.js"></script>
+		<script type="text/javascript" src="../script/api.js"></script>
+		<script type="text/javascript" src="../script/app.js"></script>
+		<style>
+			.loginInpt01 {
+				text-indent: 0rem;
+			}
+			.h_loginInptwrap{
+				padding: 0 0.2rem;
+				height: 100%;
+			}
+			.vereistIcon{ top:0.15rem;}
+		</style>
+	</head>
+	<body>
+		<!-- 登录内容 -->
+		<div class="wp_100">
+			<div class="pad_20">
+				<div class="inputContainer">
+					<i class="vereistIcon">*</i>
+					<div class="h_loginInptwrap">
+						<input class="loginInpt loginInpt01" placeholder="请输入手机号" autocomplete="off" name="mobile">
+					</div>
+				</div>
+				<div class="inputContainer">
+					<i class="vereistIcon">*</i>
+					<div class="h_loginInptwrap">
+					<input class="loginInpt loginInpt01" placeholder="请输入密码" autocomplete="off" name="password" type="password">
+				     </div>
+				</div>
+				<div class="inputContainer">
+					<i class="vereistIcon">*</i>
+					<div class="h_loginInptwrap">
+					<input class="loginInpt loginInpt01" placeholder="确认密码" autocomplete="off" name="confirmpassword" type="password">
+				    </div>
+				</div>
+				<div class="inputContainer">
+					<i class="vereistIcon">*</i>
+					<div class="h_loginInptwrap">
+					<input class="loginInpt loginInpt01" placeholder="真实姓名" autocomplete="off" name="name" id="name" type="text">
+				    </div>
+				</div>
+				<div class="inputContainer">
+					<i class="vereistIcon">*</i>
+					<div class="h_loginInptwrap">
+					<input class="loginInpt loginInpt01" placeholder="身份证" autocomplete="off" name="idNo" id="idNo" type="text">
+				    </div>
+				</div>
+				<div class="inputContainer">
+					<i class="vereistIcon">*</i>
+					<div class="h_loginInptwrap">
+					<a href="javascript:void(0);" onclick="sms();" id="getcode" class="gainCode">获取验证码</a>
+					<input type="number" class="loginInpt loginInpt01" placeholder="请输入验证码" autocomplete="off" name="code">
+				</div>
+				</div>
+				<p class="regp01">
+					<span class="reg_check">
+						<input id="a_pl2" type="checkbox" name="agree" value="1" class="duo_checkbox02">
+						<label for="a_pl2">我同意并遵守</label><a onclick="argreement();" style="font-size: 0.26rem;color:#d12a18;line-height: 0.39rem;">《用户协议》</a></span>
+				</p>
+			</div>
+		</div>
+		<script type="text/javascript">
+			apiready = function(){
+				getConfig();
+			};
+			$("input[name=agree]").click(function(){
+				if($(this).prop('checked')  ==true){
+//					var flag = true;
+//					$("input").each(function(){
+//						
+//						if($(this).val() ==''){
+//							flag = false;
+//						}
+//					})	
+//					if(flag ==true){
+//						api.sendEvent({
+//		                    name:'submitbtn',
+//		                    extra:{
+//		                    	'sub':true
+//		                    }
+//	                    });
+//					}else{
+//						api.sendEvent({
+//		                    name:'submitbtn',
+//		                    extra:{
+//		                    	'sub':false
+//		                    }
+//	                    });
+//					}
+					api.sendEvent({
+		                    name:'submitbtn',
+		                    extra:{
+		                    	'sub':true
+		                    }
+	                    });
+				}else{
+					api.sendEvent({
+		                    name:'submitbtn',
+		                    extra:{
+		                    	'sub':false
+		                    }
+	                    });
+				}
+				
+			});
+			$("input").on('input propertychange',function(){
+				var flag = true;
+				$("input").each(function(){
+					if($(this).val() ==''){
+						flag = false;
+					}
+				});
+				if(flag){
+					if (!$('input[name=agree]:checked').val()) {
+						api.sendEvent({
+		                    name:'submitbtn',
+		                    extra:{
+		                    	'sub':false
+		                    }
+	                    });
+					}else{
+						api.sendEvent({
+		                    name:'submitbtn',
+		                    extra:{
+		                    	'sub':true
+		                    }
+	                    });
+					}
+				}else{
+					api.sendEvent({
+	                    name:'submitbtn',
+	                    extra:{
+	                    	'sub':false
+	                    }
+                    });
+				}
+			});
+			
+			/*
+			 * 发送验证码
+			 */
+			function sms() {
+				var mobile = $("input[name=mobile]").val();
+				//手机号
+				if (!mobile) {
+					_toast('请填写手机号码');
+					return false;
+				} else {
+					if (!_isPhone(mobile)) {
+						_toast('手机格式不正确');
+						return false;
+					}
+				}
+				
+				//$("#getcode").attr('onclick', 'sms()');
+				$("#getcode").attr('onclick', '');
+				api.ajax({
+					url : ajax_url + 'Index/Base/getVerificationCode',
+					method : 'post',
+					data : {
+						values : {
+							mobile : mobile,
+						},
+					}
+				}, function(ret, err) {
+					if (ret) {
+						if (ret.status) {
+							time();
+							_toast(ret.msg);
+						} else {
+							$("#getcode").attr('onclick', 'sms()');
+							_toast(ret.msg);
+						}
+					}else{
+						$("#getcode").attr('onclick', 'sms()');
+					}
+				})
+			}
+
+			function register() {
+				var mobile = $("input[name=mobile]").val();
+				//手机号
+				var password = $("input[name=password]").val();
+				//密码
+				var confirmpass = $("input[name=confirmpassword]").val();
+				//确认密码
+				var code = $("input[name=code]").val();
+				
+				
+				var name = $("input[name=name]").val();
+				
+				var idNo = $("input[name=idNo]").val();
+				
+				
+				
+				
+				//验证码
+				if (!mobile) {
+					_toast('请填写手机号码');
+					return false;
+				} else {
+					if (!_isPhone(mobile)) {
+						_toast('手机格式不正确');
+						return false;
+					}
+				}
+				if (!password) {
+					_toast('请填写密码');
+					return false;
+				}
+				if (!confirmpass) {
+					_toast('请填写确认密码');
+					return false;
+				}
+				if (password != confirmpass) {
+					_toast('密码与确认密码不一致');
+					return false;
+				}
+				if (!code) {
+					_toast('请输入验证码');
+					return false;
+				}
+				
+				if (!name) {
+					_toast('请填写姓名');
+					return false;
+				}
+				
+				if (!idNo) {
+					_toast('请填写身份证');
+					return false;
+				}
+				
+				if (!$('input[name=agree]:checked').val()) {
+					_toast("请先同意注册协议");
+					return false;
+				}
+				var name = $("#name").val();
+				var idNo = $("#idNo").val();
+				api.ajax({
+					url : ajax_url + 'Index/User/register',
+					method : 'post',
+					data : {
+						values : {
+							mobile : mobile,
+							password : password,
+							name : name,
+							idNo : idNo,
+							code : code
+						},
+					}
+				}, function(ret, err) {
+					if (ret) {
+						if (ret.status == 1) {
+							$api.setStorage('userinfo', ret.data);
+							localStorage.setItem("uid", ret.data.uid);
+							openWinByUrl('registersuccess',{'info':ret.info});
+						} else if(ret.status == -4) {
+							_toast(ret.info,function(){
+								api.closeToWin({
+	                                name: 'login'
+                                });
+							});
+							return false;
+						} else {
+							_toast(ret.info);
+							return false;
+						}
+					} else {
+						_alert('网络连接失败,请稍后重试');
+					}
+				})
+			}
+
+			var wait = 60;
+			function time() {
+				//时间倒计时
+				if (wait == 0) {
+					$("#getcode").attr('onclick', 'sms()');
+					$("#getcode").html('获取验证码');
+					wait = 60;
+				} else {
+					$("#getcode").text(wait + ' 秒后重新发送');
+					$("#getcode").attr('onclick', '');
+					wait--;
+					setTimeout(function() {
+						time()
+					}, 1000)
+				}
+			}
+			
+			function argreement(){
+				_openWinByUrl('argreement_window_head','./window_head',{'frame':'argreement','furl':'argreement','title':'用户协议'});
+			}
+			
+			//获取网站配置项
+			function getConfig(){
+				var config = $api.getStorage('config');
+				//if(config =='undefined'  || config==""  || config==null  || typeof(config)==undefined ){
+					_ajax(ajax_url +"Index/index/getConfig",{},'get',function(ret){
+						if(ret.status==1){
+							$api.setStorage('config',ret.data);
+						}
+					});
+				//}
+				
+			} 
+		</script>
+	</body>
+</html>

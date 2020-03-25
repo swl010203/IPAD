@@ -1,0 +1,424 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>底部导航</title>
+    <!--<link rel="stylesheet" type="text/css" href="../../css/takeout/style.css" />-->
+    <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    <style>
+        html, body {
+            height: auto;
+        }
+    </style>
+    
+</head>
+<body id="mybody">
+    <!--排序  筛选-->
+    <div id="" class="goods_div" style="height: 100%;position: relative;">
+        <div class="goods_title clearfloat border-b">
+            <span class="after paixu1">综合排序<i class="goods_down_arrow"></i></span>
+            <span class="after top_title" onclick="shopOrder('SALES_VOLUME');">销量最高</span>
+            <span class="after top_title" onclick="shopOrder('DISTANCE');">距离最近</span>
+            <span class="paixu2 select_top_title">筛选<i class="goods_down_arrow"></i></span>
+            <div id="wrapper" class="goods_title_ul hide_">
+                <ul class="goods_title_ul_inner clearfloat">
+                    <li class="pl_20 pr_20 box-s" onclick="shopOrder('default');">综合排序</li>
+                    <li class="pl_20 pr_20 box-s" onclick="shopOrder('SALES_VOLUME');">销量最高</li>
+                    <li class="pl_20 pr_20 box-s" onclick="shopOrder('START_PEICE');">起送价最低</li>
+                    <li class="pl_20 pr_20 box-s" onclick="shopOrder('AVERAGE_TIME');">配送最快</li>
+                    <li class="pl_20 pr_20 box-s" onclick="shopOrder('COST');">配送费最低</li>
+                    <li class="pl_20 pr_20 box-s" onclick="shopOrder('CAPITA_ASC');">人均从低到高</li>
+                    <li class="pl_20 pr_20 box-s" onclick="shopOrder('CAPITA_DESC');">人均从高到低</li>
+                </ul>
+            </div>
+            <div id="wrapper1" class="goods_title_div hide_">
+            	<div style="height: auto;position: absolute;width:100%;">
+	                <div class="goods_title_div_top pl_20 pr_20 box-s border-b">
+	                    <p class="goods_title_div_top_tit">优惠活动</p>
+	                    <div class="goods_title_div_top_con select_one">
+	                        <span data-value="1">优惠商家</span>
+	                        <span data-value="2">新用户立减</span>
+	                        <!--<span>下单返券/余额</span>
+	                        <span>折扣优惠</span>
+	                        <span>进店领券</span>
+	                        <span>预定优惠</span>-->
+	                    </div>
+	                </div>
+	                <div class="goods_title_div_center pl_20 pr_20 box-s border-b">
+	                    <p class="goods_title_div_top_tit">人均价值</p>
+	                    <div class="goods_title_div_center_con clearfloat select_two">
+	                        <span data-value="1">20以下</span>
+	                        <span data-value="2">20-40</span>
+	                        <span data-value="3">40以上</span>
+	                    </div>
+	                </div>
+	                <div class="goods_title_div_center pl_20 pr_20 box-s border-b">
+	                    <p class="goods_title_div_top_tit">商家服务（多选）</p>
+	                    <div class="goods_title_div_center_con1 clearfloat select_three">
+	                        <span data-value="1">免费配送</span>
+	                        <!--<span>品牌商家</span>-->
+	                        <span data-value="2">在线支付</span>
+	                        <!--<span>支付代金券</span>-->
+	                    </div>
+	                </div>
+	                <div class="clearfloat goods_title_div_footer">
+	                    <div class="fl resert_div">重置</div>
+	                    <div class="fl red success_div" onclick="clickSelect();">完成</div>
+	                </div>
+	              </div>
+            </div>
+        </div>
+        <ul class="goods_list pl_20 pr_20 box-s border-b" id="shop_list">
+            
+        </ul>
+        
+    </div>
+    <br/>
+</body>
+
+<script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../../script/api.js"></script>
+<script type="text/javascript" src="../../../script/property/iscroll.js"></script>
+<script type="text/javascript" src="../../../script/takeout/index.js"></script>
+<script type="text/javascript" src="../../../script/app.js"></script>
+<script type="text/javascript">
+    $(function() {
+    	var myScroll = new IScroll('#wrapper', { 
+			 mouseWheel: true, 
+			 hScrollbar:false,
+			 vScrollbar:false,
+			 click:true
+		});
+		var myScroll1 = new IScroll('#wrapper1', { 
+			 mouseWheel: true, 
+			 hScrollbar:false,
+			 vScrollbar:false,
+			 click:true
+		});
+        scroll_();
+        var goods_title_top = $(".goods_title").offset().top;
+        var scrollTop_ = $(".goods_list").offset().top - goods_title_top;
+        //排序  筛选标题的效果
+        var flag1 = true;
+        var flag2 = true;
+        $(".goods_title>span").click(function() {
+//          document.body.addEventListener('touchmove',bodyScroll,true);
+//          $("body").css("overflow-y","hidden");
+//          console.log(111);
+            $("#mybody").animate({
+                scrollTop: goods_title_top - scrollTop_
+            }, 400, function() {
+                move();
+            });
+            $(".goods_title span").find("i").removeClass("goods_top_arrow");
+            $(this).addClass("red").siblings("span").removeClass("red");
+            $(this).css("border-bottom", "2px solid #D12A18").siblings("span").css("border-bottom", "none");
+            var this_ = this;
+            function move() {
+            
+                scroll_();
+                if(this_.classList.contains("paixu1") && flag1 == true) {
+                    $(this_).find("i").addClass("goods_top_arrow");
+                    $(".goods_title_ul").slideDown(500);
+                    $(".goods_title_div").slideUp(500);
+                    flag1 = false;
+                    flag2 = true;
+                } else if(this_.classList.contains("paixu1") && flag1 == false) {
+                    $(this_).find("i").removeClass("goods_top_arrow");
+                    $(".goods_title_ul").slideUp(500);
+                    flag1 = true;
+                } else if(this_.classList.contains("paixu2") && flag2 == true) {
+                    $(this_).find("i").addClass("goods_top_arrow");
+                    $(".goods_title_div").slideDown(500);
+                    $(".goods_title_ul").slideUp(500);
+                    flag2 = false;
+                    flag1 = true;
+                } else if(this_.classList.contains("paixu2") && flag2 == false) {
+                    $(this_).find("i").removeClass("goods_top_arrow");
+                    $(".goods_title_div").slideUp(500);
+                    flag2 = true;
+                } else {
+                    $(".goods_title_ul").slideUp(500);
+                    $(".goods_title_div").slideUp(500);
+                    flag1 = true;
+                    flag2 = true;
+//                  document.body.removeEventListener('touchmove',bodyScroll,true);
+                    $("body").css("overflow-y","scroll");
+                }
+                myScroll.refresh();
+                myScroll1.refresh();
+            }
+        });
+        //点击综合筛选下拉点击的效果
+        $(".goods_title_ul li").click(function() {
+            $(this).addClass("red hook_i").siblings("li").removeClass("red hook_i");
+            $(".goods_title_ul").slideUp(500);
+//          document.body.removeEventListener('touchmove',bodyScroll,true);
+            $("body").css("overflow-y","scroll");
+            flag1 = true;
+        });
+        //点击筛选里面优惠活动
+        $(".goods_title_div_top_con>span").click(function() {
+            $(this).addClass("red").siblings("span").removeClass("red");
+            $(this).css("color", "red").siblings("span").css("color", "black");
+        });
+        //点击筛选里面人均价值的效果
+        $(".goods_title_div_center_con>span").click(function() {
+            $(this).addClass("bgRed").siblings("span").removeClass("bgRed");
+            $(this).css("color", "white").siblings("span").css("color", "black");
+        });
+        //点击筛选里面商家服务的效果
+        $(".goods_title_div_center_con1>span").click(function() {
+            if(this.classList.contains("bgRed")) {
+                $(this).removeClass("bgRed");
+                $(this).css("color", "black");
+            } else {
+                $(this).addClass("bgRed");
+                $(this).css("color", "white");
+            }
+        });
+        //点击筛选里面重置的效果
+        $(".resert_div").click(function() {
+            $(".goods_title_div_top_con>span").removeClass("red");
+            $(".goods_title_div_top_con>span").css("color", "black");
+            
+            $(".goods_title_div_center_con1>span").removeClass("bgRed");
+            $(".goods_title_div_center_con1>span").css("color", "black");
+            $(".goods_title_div_center_con>span").removeClass("bgRed");
+            $(".goods_title_div_center_con>span").css("color", "black");
+        });
+        //点击筛选里面完成的效果
+        $(".success_div").click(function() {
+//          document.body.removeEventListener('touchmove',bodyScroll,true);
+            $("body").css("overflow-y","scroll");
+            $(".goods_title_div").slideUp(500);
+            flag2 = true;
+        });
+        function scroll_() {
+            $("body").scroll(function() {
+                var scroll_ = document.documentElement.scrollTop || document.body.scrollTop;
+                if(scroll_ >= (goods_title_top - scrollTop_)) {
+                    $(".goods_title").addClass("fixed");
+                } else {
+                    $(".goods_title").removeClass("fixed");
+                }
+            })
+        }
+        //弹出层出来禁止页面滚动
+        function bodyScroll(event){
+            event.preventDefault();
+        }
+        /*
+        //尾部点击效果
+        $(".footer_index_ul li").click(function(){
+            $(".footer_index_ul li div").removeClass("commenDiv0");
+            $(".footer_index_ul li div").removeClass("commenDiv1");
+            $(".footer_index_ul li div").removeClass("commenDiv2");
+            $(".footer_index_ul li p").removeClass("red");
+            var index_ = $(this).index();
+            $(this).find("div").addClass("commenDiv"+index_);
+            $(this).find("p").addClass("red");
+        })*/
+    })
+</script>
+<script>
+    var page    = 1;
+    var is_page = true;
+    var lon = 1;
+    var lat = 1;
+    var keyword = '';
+    apiready = function() {
+        lon = 1;//localStorage.getItem( "lon" );
+        lat = 1;//localStorage.getItem( "lat" );
+        getCategoryAdv();
+        /*
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err) {
+            is_page = true;
+            page=1;
+            getShopList();
+        });
+        */
+        
+        //监听滚动条是否到底部
+        api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err){        
+             if(is_page){
+                 page++;
+                 getShopList();
+             }
+        });
+            
+        getShopList();
+    };
+    //获取广告位和分类
+    function getCategoryAdv(){
+        _ajax(ajax_url+"Index/Takeout/getCategoryAdv" ,{},'post',function(ret) {
+            if(ret.status ==1){
+                var category_list = '';
+                $.each(ret.data.category, function(key, val) {
+                    category_list += '<li>';
+                    category_list += '    <div class="icon_img icon_img01" style="background:url('+val.img+') center center no-repeat;background-size: 80px 80px;"></div>';
+                    category_list += '    <p class="describe_p">'+val.title+'</p>';
+                    category_list += '</li>';
+                });
+                //console.log( category_list );
+                $('#category_list').html( category_list );
+                $('#adv_img').attr( 'src', ret.data.adv.image );
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //筛选排序
+    function shopOrder( order_type ) {
+        is_page = true;
+        page=1;
+        $('#shop_list').html( '' );
+        if( order_type == 'SALES_VOLUME' || order_type== 'DISTANCE' ) {
+            $('.select_top_title').removeClass( 'red' );
+        }
+        getShopList( order_type );
+    }
+    //筛选
+    function clickSelect() {
+        is_page = true;
+        page=1;
+        $('#shop_list').html( '' );
+        getShopList( 'SELECT_SELECT' );
+    }
+    
+    //获取店铺
+    function getShopList( order_type ){
+        if( $('.select_top_title').hasClass( 'red' ) ) {
+            //筛选的时候执行
+            var select_one = $('.select_one').find('.red').attr( 'data-value' );
+            if( typeof select_one == 'undefined' ) {
+                select_one = 0
+            }
+            
+            var select_two = $('.select_two').find('.bgRed').attr( 'data-value' );
+            if( typeof select_two == 'undefined' ) {
+                select_two = 0
+            }
+            
+            var threeArr = [];
+            $('.select_three span').each(function() {
+                if( $(this).hasClass('bgRed') ) {
+                    threeArr.push( $(this).attr( 'data-value' ) );
+                }
+            });
+            var select_three = threeArr.join(',');
+        }
+        
+        var data = {
+            p:page,
+            lon:lon,
+            lat:lat,
+            order:order_type,
+            keyword:keyword,
+            select_one:select_one,
+            select_two:select_two,
+            select_three:select_three,
+        };
+        _ajax(ajax_url+"Index/Takeout/getShop" ,data,'get',function(ret){
+            api.refreshHeaderLoadDone();
+            var strVar = '';
+            if(ret.status ==1){
+                if( ret.data.length > 0 ) {
+                    $.each(ret.data, function(key, val) {
+                        strVar += '<a href="javascript:void(0);" onclick="shopDetail('+val.id+', \''+val.name+'\');">';
+                        strVar += '    <li class="clearfloat border-b">';
+                        strVar += '        <div class="fl fl_divImg">';
+                        strVar += '            <img src="'+val.logo+'" alt="" />';
+                        strVar += '        </div>';
+                        strVar += '        <div class="fl fr_div_con">';
+                        strVar += '            <p class="clearfloat">';
+                        strVar += '                <span class="fl span_tit dy_dd">'+val.name+'</span>';
+                        strVar += '                <span class="fr span_mi">'+val.distance_str+'</span>';
+                        strVar += '            </p>';
+                        strVar += '            <p class="xing_p">';
+                        strVar += '                <span class="xingxing">';
+                        var inum = val.comment_star;//星星个数
+                        if( inum > 0 ) {
+                            for( var i=1; i<=inum; i++) {
+                        strVar += '                    <span class="icon_xingnoClick icon_xing fl"></span>';
+                            }
+                        }
+                        var jnum = 5-inum;//剩余个数
+                        if( jnum > 0 ) {
+                            for( var j=1; j<=jnum; j++) {
+                        strVar += '                    <span class="icon_xingnoClick  fl"></span>';
+                            }
+                        }
+                        //strVar += '                    <span class="icon_xingnoClick icon_xing fl"></span>';
+                        //strVar += '                    <span class="icon_xingnoClick icon_xing fl"></span>';
+                        //strVar += '                    <span class="icon_xingnoClick icon_xing fl"></span>';
+                        //strVar += '                    <span class="icon_xingnoClick icon_xing fl"></span>';
+                        //strVar += '                    <span class="icon_xingnoClick  fl"></span>';
+                        strVar += '                </span>';
+                        strVar += '                <span>'+val.comment_score+'分</span>';
+                        strVar += '                <span>销量'+val.sales_volume+'</span>';
+                        strVar += '            </p>';
+                        strVar += '            <p class="active_p">';
+                        strVar += '                <span>起送￥'+val.setting.start_price+'</span>';
+                        strVar += '                <span>配送￥'+val.setting.cost+'</span>';
+                        strVar += '                <span>人均￥'+val.setting.capita+'</span>';
+                        //strVar += '                <span class="fr">2个活动</span>';
+                        strVar += '            </p>';
+                        if( val.activity != '' ) {
+                        strVar += '            <p>'+val.activity+'</p>';
+                        }
+                        //strVar += '            <p>配送费限时优惠</p>';
+                        strVar += '        </div>';
+                        strVar += '    </li>';
+                        strVar += '</a>';
+                    });
+                } else {
+                    is_page = false;
+                    _toast( '没有更多记录了' );
+                }
+                if( page > 1 ) {
+                    $('#shop_list').append( strVar );
+                } else {
+                    $('#shop_list').html( strVar );
+                }
+            }else{
+                is_page = false;
+                _toast( ret.msg );
+            }
+        });
+    }
+    
+    //店铺详情页
+    function shopDetail(id, title) {
+        _openWinByUrl('shop_detail_head','shop_detail_head',{title:title,sid:id});
+    }
+    
+    //搜索
+    function search( key ) {
+        if( key == '' || typeof key == 'undefined' ) {
+            _toast( '请填写搜索内容' );
+            return false;
+        }
+        keyword = key;
+        is_page = true;
+        page=1;
+        $('#shop_list').html( '' );
+        getShopList();
+    }
+</script>
+</html>

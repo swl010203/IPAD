@@ -1,0 +1,152 @@
+@charset "utf-8";
+/*公共样式*/
+html{padding:0px; margin:0px;font-size: 100px;background-color: #f2f2f2;height: 100%;}
+body{margin:0px; padding:0px; background:#f2f2f2; font-size:0.24rem; color:#666; font-family: "微软雅黑",tahoma,arial,Hiragino Sans GB,Microsoft YaHei,"\u5b8b\u4f53",sans-serif;height: 100%;}
+div,form,img,ul,ol,li,dl,dt,dd{margin:0px; padding:0px; border:0px;}
+h1,h2,h3,h4,h5,h6,form,p,span{margin:0px;padding:0px;}
+ul,li{list-style-type:none;}
+table,tr,td{word-break:break-all;}
+table{border-collapse:collapse; border-spacing:0;}
+th, td{vertical-align:middle;}
+img{border:0px;display: block;}
+input,button{outline:none; font-family: tahoma,arial,Hiragino Sans GB,Microsoft YaHei,"\u5b8b\u4f53",sans-serif; padding:0px; border:0px; margin:0px;}
+a{color:#666; text-decoration:none; outline:none; cursor:pointer;}
+em{font-style:normal;}
+i{font-style:normal;}
+a{
+tap-highlight-color: rgba(0,0,0,0);
+focus-ring-color: rgba(0, 0, 0, 0);
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+-webkit-focus-ring-color: rgba(0, 0, 0, 0);
+-moz-tap-highlight-color: rgba(0,0,0,0);
+-moz-focus-ring-color: rgba(0, 0, 0, 0);
+}
+header{
+	padding: 0.2rem 0.3rem 0 0.3rem;
+    height: 0.6rem;
+    background: white;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid #e0e0e0;
+}
+header .back a img{
+	width: 0.21rem;
+	height: 0.38rem;
+	margin-top: 0.05rem;
+}
+header .word{
+	font-size: 0.36rem;
+	color: #d12a18;
+	position: absolute;
+	left: 50%;
+	width: 5rem;
+	margin-left: -2.5rem;
+	text-align: center;
+}
+header .bianji{
+	font-size: 0.25rem;
+	margin-top: 0.06rem;
+}
+header .bianji a{
+	color: #d12a18;
+}
+.fl{float:left;}
+.fr{float:right;}
+.mt_05{margin-top:0.05rem;}
+.mt_01{margin-top:0.01rem;}
+.mt_10{margin-top:0.1rem;}
+.mt_14{margin-top:0.14rem;}
+.mt_15{margin-top:0.15rem;}
+.mt_20{margin-top:0.2rem;}
+.mt_25{margin-top:0.25rem;}
+.mt_23{margin-top:0.23rem;}
+.mt_30{margin-top:0.3rem;}
+.mt_35{margin-top:0.35rem ;}
+.mt_50{margin-top:0.5rem;}
+.mt_60{margin-top:0.6rem;}
+.mt_90{margin-top:0.9rem!important;}
+.mr_5{margin-right:0.05rem; _display:inline;}
+.mr_10{margin-right:0.1rem; _display:inline;}
+.mr_15{margin-right:0.15rem; _display:inline;}
+.mr_20{margin-right:0.2rem; _display:inline;}
+.ml_01{margin-left:0.01rem; _display:inline;}
+.ml_5{margin-left:0.05rem; _display:inline;}
+.ml_10{margin-left:0.1rem; _display:inline;}
+.ml_15{margin-left:0.15rem; _display:inline;}
+.ml_20{margin-left:0.2rem; _display:inline;}
+.ml_25{margin-left:0.25rem; _display:inline;}
+.ml_30{margin-left:0.3rem; _display:inline;}
+.ml_40{margin-left:0.4rem; _display:inline;}
+.ml_50{margin-left:0.5rem; _display:inline;}
+.ml_100{margin-left:1rem; _display:inline;}
+.ml_150{margin-left:1.5rem; _display:inline;}
+.mb_40{margin-bottom: 0.4rem;}
+.mb_100{margin-bottom: 1rem;}
+.mb_30{margin-bottom: 0.3rem;}
+.pt_10{padding-top:0.1rem;}
+.pt_20{padding-top:0.2rem;}
+.pb_10{padding-bottom:0.1rem;}
+.pb_20{padding-bottom:0.2rem;}
+.pl_10{padding-left:0.1rem;}
+.pr_10{padding-right:0.1rem;}
+.pl_14{padding-left:0.14rem;}
+.pr_14{padding-right:0.14rem;}
+.w_100bfb{width:100%; margin:0 auto;}
+.w_100bfb01{width:100%; float:left;}
+.dy_dd{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.jzxx{text-align:center;}
+.del_x{text-decoration:line-through;}
+.clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0;}
+.clearfloat{zoom:1;}
+.w_520{width: 5.2rem; margin: 0 auto;}
+.w_535{width: 5.35rem; margin: 0 auto;}
+.hide{overflow: hidden;}
+.hide_{display: none;}
+.fon-w{font-weight:bold;}
+.box-s{box-sizing: border-box;}
+.pointer{ cursor: pointer;}
+.write-c{ color: #fff;}
+.border-b{
+	border-bottom: 1px solid #e0e0e0;
+}
+.border-r{
+	border-right: 1px solid #e0e0e0;
+}
+.border-t{
+	border-top: 1px solid #e0e0e0;
+}
+.border-l{
+	border-left: 1px solid #e0e0e0;
+}
+.shadow {
+    -webkit-box-shadow:2px 2px 5px #292929;
+    -moz-box-shadow:2px 2px 5px #292929;
+    box-shadow:2px 2px 5px #292929;
+}
+.huanhang{
+	overflow: hidden; /*自动隐藏文字*/
+	text-overflow: ellipsis;/*文字隐藏后添加省略号*/
+	white-space: nowrap;/*强制不换行*/
+}
+.oldPrice{
+	color: #999999!important;
+	font-size: 0.2rem;
+	display: inline-block;
+	width: 0.7rem;
+	/*border: 1px solid #cccccc;
+	color: #cccccc;*/
+}
+.newPrice{
+	width: 0.9rem;
+	display: inline-block;
+}
+.red{
+	color: #d12a18!important;
+}
+/*.del{
+	border: 1px solid #cccccc;
+	color: #cccccc;
+}*/
+.tr{
+	text-align: right;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>031报修记录</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--头部-->
+        <header class="clearfloat header">
+            <div class="fl" id="back">
+                <i class="back"></i>
+                <span>返回</span>
+            </div>
+            <div class="topCon">
+                报修记录
+            </div>
+            <!--<div class="fr">
+                报修记录
+            </div>-->
+        </header>
+        
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    
+     <script>
+    	apiready  = function(){
+    	
+    		var header = $api.dom('header');
+	        //$api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			
+	        api.openFrame({
+	            name: 'baoxiujilu_body',
+	            url: 'baoxiujilu_body.html',
+	            bounces: false,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+2,
+	                w: 'auto',
+	                h: 'auto'
+	            },
+				pageParam:api.pageParam,
+				reload:true
+				
+	        });
+    	}
+    </script>
+</html>

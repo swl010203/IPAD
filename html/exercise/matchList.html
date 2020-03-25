@@ -1,0 +1,249 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">赛事训练营</h1>
+		</header>
+		<div class="mui-content">
+			<div class="spinning_navigation bgwhite pl20 pr20 box_s fs28 fixed_div">
+				<div class="mui-row fs30 ssxly_tap">
+					<div class="mui-col-xs-6 mui-col-sm-6 mui-text-center after active" data-id="1">全部赛事训练</div>
+					<div class="mui-col-xs-6 mui-col-sm-6 mui-text-center" data-id="2">我参加的</div>
+				</div>
+			</div>
+			<div style="margin-top: 41px;">
+				<!--没有赛事-->
+				<div class="null_ss mui-hidden">
+					<div class="null_ss_bg"></div>
+					<p class="mui-text-center fs28 colorHui666">很抱歉，目前没有任何赛事训练</p>
+				</div>
+				<!--全部赛事-->
+				<div class="tap_ss">
+					<ul class="pl20 pr20 box_s bgwhite" id="allMatch">
+						<!--<li class="border_b pb20 pt20">
+							<div class="ss_img">
+								<img src="../../images/ssxly2.jpg"/>
+							</div>
+							<p class="fs28 font_weightB pt20">将赘肉甩掉三生三世</p>
+							<p class="clearfloat fs28 colorHui999 pt10">
+								<span>即将开始报名</span>
+								<span class="mui-pull-right">0/100</span>
+							</p>
+						</li>
+						<li class="border_b pb20 pt20">
+							<div class="ss_img">
+								<img src="../../images/ssxly2.jpg"/>
+							</div>
+							<p class="fs28 font_weightB pt20">将赘肉甩掉三生三世</p>
+							<p class="clearfloat fs28 colorHui999 pt10">
+								<span>即将开始报名</span>
+								<span class="mui-pull-right">0/100</span>
+							</p>
+						</li>
+						<li class="border_b pb20 pt20">
+							<div class="ss_img">
+								<img src="../../images/ssxly2.jpg"/>
+							</div>
+							<p class="fs28 font_weightB pt20">将赘肉甩掉三生三世</p>
+							<p class="clearfloat fs28 colorHui999 pt10">
+								<span>即将开始报名</span>
+								<span class="mui-pull-right">0/100</span>
+							</p>
+						</li>-->
+					</ul>
+				</div>
+				<!--我参加的-->
+				<div class="tap_ss mui-hidden">
+					<ul class="pl20 pr20 box_s bgwhite" id="myMatch">
+						<!--<li class="border_b pb20 pt20">
+							<div class="ss_img">
+								<img src="../../images/ssxly2.jpg"/>
+							</div>
+							<p class="fs28 font_weightB pt20">将赘肉甩掉三生三世</p>
+							<p class="clearfloat fs28 colorHui999 pt10">
+								<span>即将开始报名</span>
+								<span class="mui-pull-right pl20 pr20 buyNow colorWhite">退出赛事</span>
+							</p>
+						</li>
+						<li class="border_b pb20 pt20">
+							<div class="ss_img">
+								<img src="../../images/ssxly2.jpg"/>
+							</div>
+							<p class="fs28 font_weightB pt20">将赘肉甩掉三生三世</p>
+							<p class="clearfloat fs28 colorHui999 pt10">
+								<span>即将开始报名</span>
+								<span class="mui-pull-right pl20 pr20 buyNow colorWhite">退出赛事</span>
+							</p>
+						</li>
+						<li class="border_b pb20 pt20">
+							<div class="ss_img">
+								<img src="../../images/ssxly2.jpg"/>
+							</div>
+							<p class="fs28 font_weightB pt20">将赘肉甩掉三生三世</p>
+							<p class="clearfloat fs28 colorHui999 pt10">
+								<span>即将开始报名</span>
+								<span class="mui-pull-right pl20 pr20 buyNow colorWhite">退出赛事</span>
+							</p>
+						</li>-->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$(".ssxly_tap div").on("tap",function(){
+			$(this).addClass("active").siblings().removeClass("active");
+			$(".tap_ss").addClass("mui-hidden");
+			var index_ = $(this).index();
+			type = $(this).attr('data-id');
+			if(type == 2){
+				 myMatch();
+			}else{
+				getMatchList();
+			}
+			$(".tap_ss").eq(index_).removeClass("mui-hidden");
+		});
+		var uid = '';
+		var type = 1;
+		apiready = function(){
+			api.addEventListener({
+			    name: 'keyback'
+			}, function(ret, err){
+			    fanhui();
+			});
+
+			uid = localStorage.getItem('uid');
+			getMatchList();
+			// myMatch();
+		};
+		function getMatchList(){
+			_ajax(ajax_url+'Index/Exercise/getMatchList',{'uid':uid},'post',function(ret,err){
+				if(ret.status == 1){
+					var strVar ='';
+						$.each(ret.data,function(k,v){
+							//全部赛事
+								strVar += '<li class="border_b pb20 pt20">';
+								if(v.status != 1){
+									strVar += '	<div class="ss_img" onclick="matchDetail('+v.id+',1)">';
+								}else{
+									strVar += '	<div class="ss_img">';
+								}
+								strVar += '		<img src="'+v.back_img+'"/>';
+								strVar += '	</div>';
+								strVar += '	<p class="fs28 font_weightB pt20">'+v.content+'</p>';
+								strVar += '	<p class="clearfloat fs28 colorHui999 pt10">';
+								strVar += '		<span>'+v.status_name+'</span>';
+								strVar += '		<span class="mui-pull-right">'+v.memberNum+'/'+v.member+'</span>';
+								strVar += '	</p>';
+								strVar += '</li>';
+						});
+					$('#allMatch').html(strVar);
+					$('.null_ss').addClass('mui-hidden');
+					$('#allMatch').removeClass('mui-hidden');
+				}else{
+					$('.null_ss').removeClass('mui-hidden');
+					$('#allMatch').addClass('mui-hidden');
+					return false;
+				}
+			});
+		}
+		function matchDetail(id,type){
+			if(!id){
+				return false;
+			}
+			_openWinByUrl('matchDetail','matchDetail',{'id':id,'type':type});
+		}
+		function myMatch(){
+			_ajax(ajax_url+'Index/Exercise/myMatch',{'uid':uid},'post',function(ret,err){
+				// alert(JSON.stringify(ret));
+				if(ret.status == 1){
+					var myMatch = '';
+					$.each(ret.data,function(k,v){
+						myMatch += '<li class="border_b pb20 pt20">';
+						myMatch += '	<div class="ss_img">';
+						myMatch += '		<img src="'+v.back_img+'"/  onclick="matchDetail('+v.id+',2)">';
+						myMatch += '	</div>';
+						myMatch += '	<p class="fs28 font_weightB pt20">'+v.content+'</p>';
+						myMatch += '	<p class="clearfloat fs28 colorHui999 pt10">';
+						myMatch += '		<span>'+v.status_name+'</span>';
+						if(v.status == 2){
+							if(v.is_cancel != 1){
+								myMatch += '		<span class="mui-pull-right pl20 pr20 buyNow colorWhite" onclick="cancelOrder('+v.id+')">退出赛事</span>';
+							}else{
+								myMatch += '		<span class="mui-pull-right pl20 pr20 buyNow colorWhite" style="background:#ccc">已退出</span>';
+							}
+						}else{
+							if(v.is_cancel !=1 ){
+								myMatch += '		<span class="mui-pull-right pl20 pr20 buyNow colorWhite" style="background:#ccc">退出赛事</span>';
+							}else{
+								myMatch += '		<span class="mui-pull-right pl20 pr20 buyNow colorWhite" style="background:#ccc">已退出</span>';
+							}
+
+						}
+
+						myMatch += '	</p>';
+						myMatch += '</li>';
+					});
+					$('#myMatch').html(myMatch);
+					$('.null_ss').addClass('mui-hidden');
+					$('#myMatch').removeClass('mui-hidden');
+				}else{
+					$('.null_ss').removeClass('mui-hidden');
+					$('#myMatch').addClass('mui-hidden');
+				}
+			});
+		}
+
+		function cancelOrder(id){
+			api.confirm({
+			    msg: '您确定退出赛事吗？',
+			    buttons: ['确定', '取消']
+			}, function(ret, err){
+			    if( ret.buttonIndex == 1 ){
+					_ajax(ajax_url+'Index/Exercise/cancelOrder',{'id':id},'get',function(ret,err){
+						if(ret.status == 1){
+							_toast('操作成功');
+							myMatch();
+							return false;
+						}else if(ret.status == 2){
+							_toast(ret.msg);
+							return false;
+						}else{
+							_toast('操作失败');
+							return false;
+						}
+					});
+			    }else{
+
+			    }
+			});
+			// console.log(111);return false;
+
+		}
+
+		$('.mui-action-back').on('tap',function(){
+			fanhui();
+		});
+		function fanhui(){
+			api.closeWin();
+		}
+	</script>
+</html>

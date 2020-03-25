@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+	<title>全部订单</title>
+	<link rel="stylesheet" href="../../css/user/style.css" />
+	<link rel="stylesheet" href="../../css/user/allStyle.css">
+	<style>
+		html,body{height:100%;}
+		header .back1 a img{
+			width: 20px;
+			height: 24px;
+			margin-top: 15px;
+		}
+	</style>
+</head>
+<body>
+	<!--头部-->
+	<header>
+		<ul class="fl back1 "  onclick="back();">
+			<a  href=""><img src="../../images/user/6301.png"></a>
+		</ul>
+		<ul class="fl  word">全部订单</ul>
+	</header>
+
+
+	
+	<script type="text/javascript" src="../../script/user/jquery-1.10.1.min.js"></script>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+</body>
+<script type="text/javascript" src="../../script/user/index.js"></script>
+<script type="text/javascript">
+
+	function back(){
+		var closeWinName = api.pageParam.closeWinName;
+		if( closeWinName =='root' ){
+			api.closeWidget();
+//			api.closeToWin({
+//	            name: closeWinName
+//       	});
+		}else{
+			api.closeWin();
+		}
+        return false;
+    }
+    apiready = function(){
+		api.parseTapmode();
+		var header = $api.dom('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+
+
+        api.openFrame({
+            name: 'order_list_body',
+            url: 'order_list_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: headerPos.w,
+                h: 'auto'
+            },
+			pageParam:api.pageParam
+        });
+		
+	}
+</script>
+</html>

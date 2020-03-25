@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>004家庭账户</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" id="back">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon">
+				消费记录
+			</div>
+			<div onclick="_openWinByUrl('order_list','../users/order_list')" class="fr">
+				消费订单
+			</div>
+		</header>
+		
+		
+	
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		
+
+	
+		apiready = function(){
+			addEventUserInfo();
+
+			api.parseTapmode();
+			
+			var  bounces = false;
+			var header = $api.dom('header');
+	        //$api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			var frame = api.pageParam.frame;
+			var furl  = api.pageParam.furl;
+			var parbounces = api.pageParam.bounces;
+			
+			if(typeof(parbounces) !=undefined  && parbounces !='undefined'){
+				bounces = parbounces;
+			}
+	        api.openFrame({
+	            name: frame,
+	            url: furl+'.html',
+	            bounces: bounces,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h,
+	                w: headerPos.w,
+	                h: 'auto'
+	            },
+				pageParam:api.pageParam
+	        });
+			
+		}
+		
+
+	</script>
+</html>

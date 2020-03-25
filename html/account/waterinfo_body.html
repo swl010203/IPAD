@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>020缴费详情</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+        <style>
+            .zhuanzhangInfo p{
+                line-height:2;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wanshanxinxi outxiaofeiInfo  mar_t bor_t">
+            <div class="jtzhTit quMr_20 clearfloat">
+                <div>
+                    <i class="xian"></i>
+                    <span>当前用量</span>
+                </div>
+            </div>
+        </div>
+        <div class="xiaofeiInfoUl bor_b zhuanzhangInfo">
+            <p>缴费用户：<span id="address"></span></p>
+            <p>表集中器ID：<span id="collectId"></span></p>
+            <p>表号：<span id="meterId"></span></p>
+            <p>已用量：<span id="used"></span></p>
+            <p>剩余量：<span id="using"></span></p>
+            <!-- <p>水表号：<span>水费</span></p>
+            <p>舒服点 ：<span>2000</span>元</p> -->
+        </div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".dibuliebiao li").on("click",function(){
+                $(".dibuliebiao li").removeClass("click");
+                $(this).addClass("click");
+                var index_1 = $(this).index();
+                $(".zhanghuTab").addClass("hide_");
+                $(".zhanghuTab").eq(index_1).removeClass("hide_");
+            })
+        })
+    </script>
+    
+    <script>
+        var uid  = localStorage.getItem("uid");
+        var type = 0;
+        apiready = function(){
+            pay_tab  = api.pageParam.pay_tab;//跳转区分
+            if( pay_tab == 'water' ) {
+                type = 2;
+            } else if( pay_tab == 'electric' ) {
+                type = 1;
+            }
+            getWaterInfo();
+        };
+        
+        function getWaterInfo(){
+            _ajax(ajax_url+"Index/Water/waterInfo" ,{type:type, uid:uid},'get',function(ret){
+                var html = '';
+                if(ret.status ==1){
+                    $('#address').text( ret.data.address );
+                    $('#collectId').text( ret.data.collectId );
+                    $('#meterId').text( ret.data.meterId );
+                    $('#used').text( ret.data.used );
+                    $('#using').text( ret.data.using );
+                }else{
+                    _toast(ret.info);
+                }
+            });
+        }
+    </script>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+    <title>惠通卡</title>
+    <link rel="stylesheet" type="text/css" href="../../css/user/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/user/index.css"/>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script src="../../script/user/index.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/layer_mobile/layer.js"></script>
+</head>
+<body style="height:100%;">
+<div style="height:100%;" class="list">
+    <!--头部-->
+        <!--<header>
+            <ul class="fl back">
+                <a href="javascript:;"><img src="img/bank_03.png"/></a>
+            </ul>
+            <ul class="fl word">惠通卡</ul>
+        </header>-->
+<!--顶部结束-->
+<!-- 内容开始 -->
+    <!--<div class="gcard">
+        <div class="gcard_pic">
+                <img src="./img/app_card.png" alt="card">
+                <p class="gcard_pic1">卡号：9966113120200000712</p>
+                <p class="gcard_pic2">卡类：药都惠通卡</p>
+        </div>
+        <div class="gcard_txt">
+                <p>卡号：9966113120200000712</p>
+                <p>余额：￥100</p>
+                <p>积分：236</p>
+                <p>姓名：陈晨</p>
+        </div>
+    </div>-->
+
+<!-- 内容结束 -->
+<!-- 底部按钮开始 -->
+    <!--<div class="gcard-btn">
+        <input type="button" value="充值">
+        <input type="button" value="消费记录">
+        <input type="button" value="积分记录">
+        <input type="button" value="修改支付密码">
+    </div>-->
+<!-- 底部按钮结束 -->
+</div>
+
+</body>
+
+<script>
+	var userinfo ="";
+apiready=function(){
+	userinfo = $api.getStorage('userinfo');
+	api.addEventListener({
+	    name:'cardpaysuccess_refresh'
+    },function(ret,err){
+    	//coding...
+    	ready();
+    });
+
+	loading('card');
+   	ready();
+   	
+};
+
+
+function ready(){
+	_ajax(ajax_url +"Index/User/getUserCard",{'uid':userinfo.uid,'token':userinfo.token},'post',function(ret){
+		var strVar = "";
+		if(ret.status  ==1){
+			var strVar = "";
+			$.each(ret.data,function(k,v){
+				cardno = v['cardNo'];
+				strVar+='<div class="gcard">'
+				+'<div class="gcard_pic" onclick="openQrcode(\''+cardno+'\');">'
+				+'<img src="../../images/user/app_card.png" alt="card">'
+				+'<p class="gcard_pic1">卡号：'+v['cardNo']+'</p>'
+				+'<p class="gcard_pic2">卡类：'+v['cardTypeName']+'</p>'
+				+'</div>'
+				+'<div class="gcard_txt">'
+				+'<p>卡号：'+v['cardNo']+'</p>'
+				+'<p>余额：'+v['info']['cardTotalMoney']+'</p>'
+				+'<p>积分：'+v['info']['cardTotalPoint']+'</p>'
+				+'<p>姓名：'+v['name']+'</p>'
+				+'</div>'
+				+'</div>'
+				+'<div class="gcard-btn">'
+				+'<input type="button" onclick="recharge(\''+v['cardNo']+'\');" value="充值">'
+				+'<input type="button" onclick="openCardLog(\'card_log\',\'card/card_log\',\''+v['cardNo']+'\',1);" value="消费记录">'
+				+'<input type="button" onclick="openCardLog(\'card_log\',\'card/card_log\',\''+v['cardNo']+'\',3);" value="积分记录">'
+				+'<input type="button" onclick="openEditCardPwd(\''+v['cardNo']+'\','+v['info']['card_default_pwd']+');" value="修改支付密码">'
+				+'</div>';
+	
+			});
+			 
+			   
+			   $(".erweima_windowtxt").html(cardno);
+			     openScanner(cardno);
+		}else{
+			_toast(ret.msg);
+		}
+	    $(".list").html(strVar);
+		closeloading();
+	})
+}
+
+var bar_img="";
+var qr_img="";
+
+
+function openQrcode(cardno){
+	_openWinByUrl('qrcode_window_head','../window_head',{'cardno':cardno,'furl':'card/qrcode','frame':'qrcode','title':'二维码'});
+}
+
+/**
+ * 二维码 
+ */
+function openScanner(cardno){
+	//return false;
+	var FNScanner = api.require('FNScanner');
+	
+	
+	FNScanner.encodeImg({
+	    content: cardno,//'http://www.apicloud.com/',
+	    saveToAlbum: false,
+	    type:'qr_image',
+	    saveImg: {
+	        path: 'fs://qr_image.png',
+	        w: 400,
+	        h: 400
+	    }
+	}, function(res, err) {
+	    if (res.status) {
+	        qr_img = res.imgPath;
+	      	$(".qr_img").attr('src',qr_img);
+	    }
+	});
+	
+	FNScanner.encodeImg({
+	    content: cardno,//'http://www.apicloud.com/',
+	    saveToAlbum: false,
+	    type:'bar_image',
+	    saveImg: {
+	        path: 'fs://bar_image.png',
+	        w: 250,
+	        h: 40
+	    }
+	}, function(ret, err) {
+	    if (ret.status) {
+	        //alert(JSON.stringify(ret));
+			bar_img = ret.imgPath;
+			$(".txm_img").attr('src',bar_img);
+		
+	    }
+	});
+
+$('.erweima_window').show();
+
+}
+
+
+function diag(){
+
+
+	 var dialogBox = api.require('dialogBox');
+			dialogBox.discount({
+			    rect: {
+			        w: 300,
+			        h: 300
+			    },
+			    styles: {
+			        bg: '#FFF',
+			        image: {
+			            path: bar_img,//'widget://image/image.png',
+			            marginB: 100
+			        },
+			        cancel: {
+			            icon:'../../images/guanbi.png',
+			            w: 50,
+			            h: 50,
+			           textColor: '#000'                      //（可选项）字符串类型；取消按钮的字体颜色，支持#、rgb、rgba；默认：#000 
+			        }
+			    }
+			}, function(ret) {
+			   // alert(JSON.stringify(ret));
+			    if (ret.eventType == 'cancel') {
+			        dialogBox.close({
+			            dialogName: 'discount'
+			        });
+			    }
+			});
+	    
+}
+
+//修改卡密码
+function openEditCardPwd(cardno,type){
+	var redirect_url = api.pageParam.redirect_url;
+	//_openWinByUrl('card_pwd_window_head','../window_head',{'type':type,'cardno':cardno,'furl':'card/card_pwd','frame':'card_pwd','title':'修改支付密码'});
+	_openWinByUrl('card_editpwd_window_head','../window_head',{'redirect_url':redirect_url,'type':type,'cardno':cardno,'furl':'card/editphone','frame':'editphone','title':'验证手机号'});
+}
+
+//打开 交易记录
+function openCardLog(name,url,cardno,type){
+	_openWinByUrl(name+'_window_head','../window_head',{'type':type,'cardno':cardno,'furl':url,'frame':name,'title':'交易记录'});
+
+}
+
+
+//充值
+function recharge(cardno){
+
+	_openWinByUrl('card_money_window_head','../window_head',{'cardno':cardno,'furl':'card/card_money','frame':'card_money','title':'充值'});
+
+}
+</script>
+</html>

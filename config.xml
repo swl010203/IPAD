@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<widget id="A6055708187778" version="0.0.1"> 
+  <name>华海ipad</name>  
+  <description>Example For APICloud.</description>  
+  <author email="developer@apicloud.com" href="http://www.apicloud.com">Developer</author>  
+  <content src="index.html"/>  
+  <preference name="pageBounce" value="false"/>  
+  <preference name="appBackground" value="rgba(0,0,0,0.0)"/>  
+  <preference name="windowBackground" value="rgba(0,0,0,0.0)"/>  
+  <preference name="frameBackgroundColor" value="rgba(0,0,0,0.0)"/>  
+  <preference name="hScrollBarEnabled" value="true"/>  
+  <preference name="vScrollBarEnabled" value="true"/>  
+  <preference name="autoLaunch" value="true"/>  
+  <preference name="fullScreen" value="false"/>  
+  <preference name="autoUpdate" value="true"/>  
+  <preference name="smartUpdate" value="true"/>  
+  <preference name="debug" value="false"/>  
+  <preference name="statusBarAppearance" value="false"/>  
+  <preference name="iOS7StatusBarAppearance" value="false"/>  
+  <preference name="softInputMode" value="resize"/>  
+  <permission name="readPhoneState"/>  
+  <permission name="camera"/>  
+  <permission name="record"/>  
+  <permission name="location"/>  
+  <permission name="fileSystem"/>  
+  <permission name="internet"/>  
+  <permission name="bootCompleted"/>  
+  <permission name="hardware"/>  
+  <access origin="*"/>  
+  <access origin="*"/>  
+  <feature name="bMap"> 
+    <param name="android_api_key" value="TqXgba649IwRhfzBGqZ4ic3QMH0X1lqF"/>  
+    <param name="ios_api_key" value="CqjvPCXdrOIr37YzCadpOOovn5rW9amW"/> 
+  </feature>  
+  <feature name="aliPay"> 
+    <param name="urlScheme" value="AliPayA6055708187778"/> 
+  </feature>  
+  <feature name="wxPay"> 
+    <param name="urlScheme" value="wx967c2d25800a08ae"/>  
+    <param name="apiKey" value="wx967c2d25800a08ae"/>  
+    <param name="apiSecret" value="b36a5b2f763c76ef2af4ea389eb39f8e"/> 
+  </feature>  
+  <feature name="wx"> 
+    <param name="urlScheme" value="wx967c2d25800a08ae"/>  
+    <param name="apiKey" value="wx967c2d25800a08ae"/>  
+    <param name="apiSecret" value="b36a5b2f763c76ef2af4ea389eb39f8e"/> 
+  </feature>  
+  <feature name="weibo"> 
+    <param name="urlScheme" value="wb654192401"/>  
+    <param name="apiKey" value="654192401"/>  
+    <param name="registUrl" value="http://www.apicloud.com"/> 
+  </feature> 
+</widget>

@@ -1,0 +1,736 @@
+
+.gservice{
+    height: auto;
+    background-color: #fff;
+    position: relative;
+    margin-top: 10px;
+}
+.gservice .gservice_top{
+   margin: 0 20px;
+height: 64px;
+line-height: 54px;
+font-size: 20px;
+border-bottom: 1px solid #e0e0e0;
+}
+.gservice .gservice_top i{
+    position: absolute;
+	background: url(../../images/user/app_14.png) no-repeat 0 0;
+	width: 20px;
+	height: 23px;
+	left:20px;
+	top:23px;
+}
+.gservice .gservice_top span{padding-left:10px;font-size:18px}
+.gservice ul{
+    overflow-y:hidden;
+  	overflow-x:auto;
+    white-space: nowrap;
+    overflow:scroll;
+    height: 0.38rem;
+    line-height: 0.38rem;
+    padding:0 20px; border-bottom: 1px solid #e0e0e0;font-size:18px;}
+.gservice li{
+    display:inline-table;
+    margin-right: 40px;font-size: 18px;
+
+}
+.gservice ul .gservice_top_cls{color:#d12a18;}
+.gshow{
+	clear:both;
+    /*margin-bottom: 0.2rem;*/
+    padding:0 20px;margin-top:10px;background-color: #fff;box-sizing:border-box;font-size:18px;}
+.gshowss{height: auto;padding-bottom:0.2rem;}
+.gshow_top{
+    padding-top:0.1rem;
+    position: relative;
+}
+.gshow_top img{width:100%;height: 2rem;background-size:contain;border-radius: 0.1rem;}
+.gshow_mark{width: 98%;height: 0.4rem;position: absolute;bottom: 0;left: 0;background: rgba(0, 0, 0, 0.4);color:#fff;line-height: 0.4rem;padding-left:20px;font-size:14px;border-radius:0 0 0.1rem 0.1rem;}
+.gshow_bottom{height: auto;padding-left:20px;}
+.gshow_bottom_price{height:0.36rem;line-height: 0.36rem;position: relative;}
+.gshow_bottom_price_cl{color:#d12a18;font-size:18px;margin-left: 20px;}
+.gshow_bottom_price_del{font-size:14px;margin-left: 20px;color:#999999;}
+ .gshow_bottom_price i{    position: absolute;
+    background: url(../../images/user/dis.png) no-repeat center;
+    top: 0.05rem;
+    width: 20px;
+    box-sizing: border-box;
+    height: 20px;
+    background-size: contain;}
+.gshow_bottom .gshow_bottom_shape li{
+    float: left;
+    border:1px solid #e0e0e0;
+    width: 110px;
+    height:30px;
+    line-height:25px;
+    text-align: center;
+    margin-right:20px;
+    border-radius: 50px;
+    font-size:14px;
+}
+.gbtn{
+    height: 52px;
+	position: fixed;
+	bottom: 0;
+	border-top: 1px solid #d12a18;
+	background: #fff;
+	width: 100%;
+}
+.gbtn .gPhone{
+    height: 1rem;
+    width: 1.7rem;
+    position: relative;
+}
+.gbtn .gPhone span {
+    color: #d12a18;
+    position: absolute;
+    display: inline-block;
+    text-align: center;
+    width: 1.6rem;
+    top: 0.66rem;
+    font-size:18px;}
+.gbtn .gPhone i{
+          background: url(../../images/user/app_101.png) no-repeat center;
+    width: 0.5rem;
+    height: 0.5rem;
+    top: 0.1rem;
+    left: 0.5rem;
+    position: absolute;
+    box-sizing: border-box;
+    background-size: contain;
+}
+.gbtn .gbutt{
+    height: 52px;
+line-height: 42px;
+width: 75%;
+position: absolute;
+right: 0;
+top: 0;}
+ .gbtn .gbutt a{
+    background: url(../../images/user/app_102.png) no-repeat 0 0;
+    width: 100%;
+    height:100%;
+    color:#fff;
+    display:block;
+    text-align: center;
+    font-size:18px;
+    background-size: cover;
+}
+//单独设置策划样式
+
+.gbtn .gpPhone{
+    height: 1rem;
+    width: 1.7rem;
+    position: relative;
+}
+.gpPhone span{
+    color: #d12a18;
+	position: absolute;
+	display: inline-block;
+	text-align: center;
+	width: 1.2rem;
+	top: 55%;
+	font-size: 14px;
+}
+.gpPhone i{
+	background: url(../../images/user/app_101.png) no-repeat center;
+	width: 24px;
+	height: 24px;
+	top: 5px;
+	left: 0.55rem;
+	position: absolute;
+	box-sizing: border-box;
+	background-size: contain;
+}
+/*庆典策划结束-------------------*/
+/*庆典详情开始----------------*/
+.gdetails{
+    background-color: #fff;
+    /*line-height: 0.1rem;*/
+    padding: 10px 20px;
+    margin-top: 0.05rem;
+    border-top:1px solid #e0e0e0;
+    }
+.gdetails p{line-height:2;}
+.gdetails p:nth-child(1){
+    font-size: 18px;
+    color:#d12a18;
+}
+.gdetails p:nth-child(2){
+    font-size: 14px;
+}
+.gdetails p:nth-child(3){
+    font-size: 14px;
+}
+.gdetails .gshowss{
+    height: 100%;
+    /*margin-bottom: 1rem;*/
+}
+/*庆典详情结束----------------*/
+/*会展业务开始--------------------*/
+.gbussiness{
+     background-color: #fff;
+    margin-top: 0.05rem;
+    border-top:1px solid #e0e0e0;
+}
+.gbussiness .gbussiness_list ul{ height: 0.38rem;
+    line-height: 0.38rem;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    overflow: scroll;
+	padding: 0 20px;
+	border-bottom: 1px solid #e0e0e0;
+	font-size: 18px;
+    }
+.gbussiness .gbussiness_list li{
+    text-align: center;
+   	margin-right: 40px;
+    display: inline-table;
+    font-size: 18px;
+}
+.gbussiness .gbussiness_list .glist-color{
+    border-bottom:1px solid #d12a18;
+}
+
+/*会展业务结束--------------------*/
+/*会展详情开始--------------------*/
+.gdetailss{
+    background-color: #fff;
+    line-height: 0.5rem;padding: 0.1rem 20px;
+    margin-top: 10px;
+    border-top:1px solid #e0e0e0;
+    }
+.gdetailss p{
+    font-size: 20px;
+}
+
+.gdetailss .gshowss{
+    height: 100%;
+    /*margin-bottom: 1rem;*/
+}
+/*会展详情结束--------------------*/
+
+/*个人中心开始--------------------*/
+
+.ghead-nav{background-size:contain;position: relative;}
+.ghead-nav img{width:100%;height: 265px;}
+.ghead-nav a{position: absolute;background-size:contain;}
+.ghead_pic1{width: 0.15rem;height: 0.15rem;top:0.3rem;left:20px;background: url(../../images/user/app_104.png) no-repeat center;}
+.ghead_pic2{width: 0.15rem;height: 0.15rem;top:0.3rem;right:20px;background: url(../../images/user/app_105.png) no-repeat center;}
+
+.ghead .ghead-icon img{width:0.3rem;height: 0.3rem;position: absolute;top:0.2rem;left:47%;border-radius: 50%;border:1px solid #fff; }
+.ghead-icon::before{content:""; position:absolute;
+  box-shadow: 0rem 0rem 0rem 0.05rem rgba(255,255,255,0.3);width:0.3rem;height: 0.3rem;top:0.2rem;left:47%;border-radius: 50%;}
+
+.ghead .ghead-icon p{text-align: center;position:absolute;top:0.6rem;left:2.5rem;color:#fff;font-size: 18px;}
+.ghead-coupon{position: absolute;height: 0.35rem;border-top:1px solid rgba(255,255,255,0.3);width: 100%;left:0;bottom:0;opacity: 0.2rem;}
+.ghead-coupon div{width: 33.33%;position: absolute;height: 0.35rem;color:rgba(255,255,255,0.9);text-align: center;line-height:0.15rem;}
+.ghead-coupon div span{display: inline-block;width: 100%;font-size:14px;font-weight: 100;text-align:center;}
+.ghead-coupon1{display:inline-block;}
+.ghead-coupon2{top:0;left:0;margin-left: 33%;}
+.ghead-coupon3{top:0;left:0;margin-left: 66%;}
+.gline{    width: 0rem;
+    height: 0.15rem;
+    position: absolute;
+    /* margin-left: 42%; */
+    left: 100%;
+    bottom: 0.1rem;
+    border: 1px solid rgba(255,255,255,0.3)}
+.ggeren{height:0.88rem;line-height: 0.88rem;background-color: #fff;}
+.ggeren li{float: left;width: 25%;text-align: center;font-size: 0.28rem;color:#282828;}
+.ggeren_color{border-bottom: 2px solid #d12a18;}
+.gerenbtn{bottom:0;position: fixed;border-top: 1px solid #d12a18;height: 1rem;width: 100%;background: #fff;}
+.gerenbtn li{float: left;width: 25%;text-align: center;padding-top:0.65rem;}
+
+.gerenbtn li img{width:0.5rem;height: 0.5rem;position: absolute;background-size: contain;}
+.ggrenbtn-pic1{top:0.1rem;left:0.6rem;}
+.ggrenbtn-pic2{top:0.1rem;left:2.1rem;}
+.ggrenbtn-pic3{top:0.1rem;left:3.75rem;}
+.ggrenbtn-pic4{top:0.1rem;left:5.33rem;}
+.gerenbtn_color{color:#d12a18;}
+/*个人中心结束--------------------*/
+
+/*设置开始--------------------*/
+
+.gset{margin-top: 10px;background-color: #fff;width: 100%;}
+.gset li{height: 0.45rem;line-height: 0.45rem;border-bottom:1px solid #e0e0e0;padding-left: 60px;font-size: 18px;position: relative;}
+.gset a{width: 100%;display: inline-block;}
+.gset i {position: absolute;}
+
+
+.gset img{width: 0.15rem;
+height: 0.15rem;
+position: absolute;
+top: 0.15rem;
+left: 20px;}
+.gset .gset1{background:url(../../images/user/app_116.png) no-repeat center;width: 0.7rem;height: 0.7rem;position: absolute;top:0.1rem;right:0.4rem;background-size:contain; }
+.gset .gset0{background:url(../../images/user/app_120.png) no-repeat center;width:20px;height:24px;position: absolute;top:0.15rem;right:20px;}
+
+.gset-button input{width: 96%;height: 0.4rem;line-height: 0.4rem;margin:  0 auto;display: inherit;margin-top: 0.3rem;background: url(../../images/user/app_121.png) repeat 0 0 ;font-size: 18px;
+ border-radius:5px;color:#fff;background-size: cover;}
+
+/*设置结束--------------------*/
+/*修改昵称开始--------------------*/
+.galter{
+    height: 1.45rem;
+    line-height: 1.45rem;
+    background-color: #fff;
+    width: 100%;
+    margin-top: 0.18rem;
+}
+.galter input{
+    width: 6rem;
+    height: 0.8rem;
+    line-height: 0.8rem;
+    border-radius: 0.05rem;
+    margin:0 0.2rem;
+    font-size: 0.28rem;
+    color:#666;
+    outline: medium;
+     text-indent: 0.2rem;
+     text-align: left;
+}
+.galter-bor{border:1px solid #d12a18;}
+/*修改昵称结束--------------------*/
+/*惠通卡开始--------------------*/
+.gcard{
+    background: #fff;
+}
+.gcard .gcard_pic{position: relative;padding:0 20px;}
+.gcard .gcard_pic img{
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
+    height:2rem;
+    background-size: contain;
+}
+.gcard .gcard_pic p{position: absolute;color:#fff;display: inline-block;font-size: 18px; }
+.gcard_pic1{top:0.8rem;left: 0.3rem;}
+.gcard_pic2{top:1rem;left: 0.3rem;}
+.gcard .gcard_txt p{line-height: 0.15rem;padding-left: 0.3rem;font-size: 18px;}
+.gcard .gcard_txt{margin-top: 10px;padding-bottom: 10px;}
+.gcard-btn{
+    margin-top: 0.1rem;
+    padding-left: 200px;
+}
+.gcard-btn input{
+    margin-right:0.3rem;
+    display: inline-block;
+    width:1.25rem;
+    height:0.4rem;
+    line-height:0.4rem;
+    color:#fff;
+    margin-bottom: 0.15rem;
+    background: url(../../images/user/app_121.png) no-repeat center;
+    font-size: 18px;
+    border-radius: 5px;
+    background-size: cover;
+}
+/*惠通卡结束--------------------*/
+/*充值开始--------------------*/
+.gbalance{height:0.4rem;line-height: 0.4rem;background-color: #fff; margin-top: 10px;border-top: 1px solid #e0e0e0;border-bottom:1px solid #e0e0e0;font-size: 18px;padding:0 20px;}
+
+.gway{
+    background-color: #fff;
+
+    margin-top: 10px;
+}
+.gway .gway_top{
+   margin: 0 20px;
+    height: 64px;
+    line-height: 54px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size:18px;
+    position: relative;
+}
+ .gway_top i{
+    position: absolute;
+    background: url(../../images/user/app_14.png) no-repeat 0 0;
+    width: 20px;
+    height: 23px;
+    top: 0.12rem;
+}
+.gway .gway_top span{padding-left:10px;}
+.gway_list li{ margin: 0 20px;
+position:relative;height: 0.5rem;line-height: 0.5rem;border-bottom:1px solid #e0e0e0;padding-left:0.4rem;font-size:18px;}
+/*.gway_list li:nth-child(){
+    margin: 0 0.2rem;
+
+}
+.gway_list li:nth-child(2){
+    padding-left:1rem;
+
+}
+*/.gway_list img{position:absolute;width: 0.2rem;height: 0.18rem;background-size: contain;}
+.gway-list0{top:0.2rem;left:0.1rem}
+.gway-list1{top:0.4rem;left:0.4rem}
+.glist-color{color:#d12a18;}
+.glist-yes{position: absolute;top:0.2rem;right: 0.1rem;background: url(../../images/user/app_125.png) no-repeat center;width: 0.15rem;height: 0.15rem;background-size: contain;}
+.gproject{
+    background-color: #fff;
+    margin-top: 0.18rem;
+}
+.gproject .gproject_top{
+   margin: 0 20px;
+    height: 64px;
+    line-height: 54px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size:18px;
+    position: relative;
+
+}
+ .gproject_top i{
+    position: absolute;
+    background: url(../../images/user/app_14.png) no-repeat 0 0;
+    width: 20px;
+    height: 23px;
+    top: 0.12rem;
+}
+.gproject .gproject_top span{padding-left:10px;}
+
+.gproject .gproject_pic1{
+   position: absolute;
+    background: url(../../images/user/app_126.png) no-repeat 0 0;
+    width: 0.2rem;
+    height: 0.2rem;
+    background-size: 100% 100%;
+    top:0.15rem;
+    left: 0;
+    }
+.falist  .cur{
+    position: absolute;
+    background: url(../../images/user/app_127.png) no-repeat 0 0;
+    width: 0.18rem;
+    height: 0.18rem;
+    background-size: cover;
+    top:0.15rem;
+    left: 0.05rem;
+}
+.falist p{position: relative;
+    height: 0.5rem;line-height: 0.5rem;font-size:18px;padding-left:0.25rem;margin: 0 20px;border-bottom: 1px solid #e0e0e0;}
+
+.zslist  .cur{
+    position: absolute;
+    background: url(../../images/user/app_127.png) no-repeat 0 0;
+    width: 0.4rem;
+    height: 0.4rem;
+    background-size: cover;
+    top:0.3rem;
+    left: 0;
+}
+.zslist p{position: relative;
+    height: 1rem;line-height: 1rem;font-size: 0.28rem;padding-left:0.5rem;margin: 0 0.2rem;border-bottom: 1px solid #e0e0e0;}
+
+.gjine{
+    background-color: #fff;
+    margin-top: 0.18rem;
+}
+.gjine .gjine_top{
+   margin: 0 20px;
+    height:64px;
+    line-height: 54px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size:18px;
+    position: relative;
+
+}
+ .gjine_top i{
+    position: absolute;
+    background: url(../../images/user/app_14.png) no-repeat 0 0;
+    width: 20px;
+    height: 23px;
+    top: 0.13rem;
+}
+.gjine .gjine_top span{padding-left:10px;}
+.gjine_btn{background-color: #fff;padding:0.15rem 20px;}
+.gjine_btn a,input{
+    display: inline-block;
+    margin-right: 20px;
+    width:0.6rem;
+    height:0.3rem;
+    font-size: 18px;
+    line-height: 0.3rem;
+    text-align: center;
+    border:1px solid #e0e0e0;
+    color:#000;
+}
+.gjine_btn .gjine_color{background-color: #d12a18;color:#fff;}
+/*充值结束--------------------*/
+/*消费记录开始--------------------*/
+
+table{background: #fff;width: 100%;text-align: center;font-size: 0.28rem;margin-top: 0.18rem;border-top:1px solid #e0e0e0;}
+table tr{border-bottom: 1px solid #e0e0e0;height:0.86rem;line-height: 0.86rem;}
+
+.gtd-color{color:#d12a18;}
+.gtd-color1{color:#116f81;}
+/*消费记录结束--------------------*/
+/*修改支付密码开始--------------------*/
+
+.gxiugai{
+    height:2.7rem;background:#fff;
+     margin-top: 0.18rem;
+     font-size: 0.28rem;
+}
+.gfocus{border:1px solid #d12a18;}
+.gxiugai1{display: inline-block;width: 6rem;
+    height: 0.8rem;  line-height: 0.8rem;margin:0.2rem 0.2rem 0;border-radius: 0.1rem;text-indent: 0.2rem;text-align: left;}
+.gxiugai-sr{display: inline-block;width: 4rem;
+    height: 0.8rem;  line-height: 0.8rem;margin:0.2rem 0.2rem 0;border-radius: 0.1rem 0 0 0.1rem;text-align: left;float: left;position: relative;text-indent: 0.2rem;}
+.gxiugai2{display: inline-block;width: 2rem;
+    height: 0.83rem;  line-height: 0.83rem;margin:0.2rem 0.2rem 0;text-indent: 0.2rem;position: absolute;right: 0;border-radius: 0 0.1rem 0.1rem 0;color:#fff;background-color: #d12a18;}
+/*修改支付密码结束--------------------*/
+
+/*卡券开始--------------------*/
+
+.gkaquan{background-color: #fff;margin-top:10px;}
+
+.gkaquan li{float: left;width: 50%;text-align: center;font-size:18px;}
+.gkaquan-tab {
+    height: 0.44rem;
+    line-height: 0.44rem;
+    position: relative;
+    border-bottom:1px solid #e0e0e0;
+}
+.gkaquan-tab .gtab-line{
+    width: 2px;
+    height: 0.2rem;
+    background: #e0e0e0;
+    position: absolute;
+    top:0.15rem;
+    left: 50%;
+}
+.gtab-color{border-bottom:1px solid #d12a18;color:#d12a18;}
+.gkaquan-dio {margin: 10px 20px; height: 100%;}
+.gkaquan-dio img{width:100%;height:1.1rem;margin-bottom:0.1rem;}
+.gkaquan-dio1{position: relative;}
+.gkaquan-dio1 p {position: absolute;top:7px;left: 20px;font-size: 18px;color:#fff;}
+.gkaquan-dio1 span{position: absolute;color:#fff;}
+.gdio1-price{font-size: 18px;top:0.4rem;left: 20px;}
+.gdio1-price1{font-size:14px;top:0.45rem;left:0.6rem; }
+.gdio1-price2 span{top:0.8rem;left:20px;font-size:18px;}
+.gdio-cover {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 1.1rem;
+    background: rgba(255,255,255,0.3);
+}
+.gdio-lost img{
+    width: 0.6rem;height: 0.6rem;position: absolute;
+    top:0.3rem;
+    right: 30px;
+}
+.gnormal{margin-top: 10px;}
+.gnormal .gdio-success{
+       position: absolute;
+    top: 0.35rem;
+    right: 0.2rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    background-size: contain;
+    background: url(../../images/user/app_152.png) no-repeat center;
+}
+.main{margin-top: 10px;}
+
+/*卡券结束--------------------*/
+/*意见反馈开始--------------------*/
+.gfankui{
+    background-color: #fff;
+    border-bottom:1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 10px;
+}
+.gfankui .gfankui_top{
+   margin: 0 20px;
+    height: 64px;
+    line-height: 54px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size:18px;
+    position: relative;
+}
+ .gfankui_top i{
+    position: absolute;
+    background: url(../../images/user/app_14.png) no-repeat 0 0;
+    width: 20px;
+    height: 23px;
+    top: 0.11rem;
+}
+.gfankui .gfankui_top span{padding-left:10px;font-size:18px;}
+.gfankui-list{background-color: #fff;}
+.gfankui-list span{margin-top:10px;display: inline-block;border:1px solid #e0e0e0;margin-left:20px;width: 0.9rem;height:0.3rem;line-height: 0.3rem; text-align: center;margin-bottom: 10px;border-radius: 5px;font-size: 18px;}
+.gfankui-color{background: #d12a18;color:#fff;}
+.gneirong {
+    margin:10px  20px;background-color: #fff;
+}
+.gneirong textarea{width:100%;height: 1rem;overflow: hidden; margin-bottom:10px;text-align: left;outline: none;border:1px solid #e0e0e0;font-size:18px;text-indent:0.2rem;padding-top: 0.1rem;resize: none;}
+.gshangchuan{
+    background-color: #fff;height: auto;border-bottom: 1px solid #e0e0e0;padding:0 20px;margin-top:10px;
+}
+.gshangchuan a{margin-top:10px;display: inline-block;margin-left: 0.2rem;}
+.gshangchuan .gsc-pic{width:0.8rem;height:0.8rem;margin-left: 0.2rem;}
+.gtel{height: 0.44rem;line-height:0.44rem;background-color: #fff;padding-left:20px;font-size:18px;border-bottom:1px solid #e0e0e0;}
+.gtel input{width: 2rem;outline: none;float: right;height: 0.44rem;line-height:0.44rem;border:none;text-align: right;font-size:18px;}
+/*意见反馈结束--------------------*/
+/*我要评价开始--------------------*/
+.gcomment{
+    margin-top: 0.18rem;border-top: 1px solid #e0e0e0;
+    border-bottom:1px solid #e0e0e0;
+    height:1.2rem;line-height: 1.2rem;background-color: #fff;}
+.gstar{height:0.6rem;width: 3rem;border:1px solid red;display: inline-block;position: absolute;
+    top:1.3rem;left:1rem;
+     }
+.gstar span{    padding-left: 0.2rem;
+
+    font-size: 0.28rem;
+    margin-right: 0.2rem;}
+.gcomment-star{    display: inline-block;
+    background: url(../../images/user/star.png) no-repeat center;
+    background-size: contain;
+    width: 0.4rem;
+    height: 0.4rem;
+    vertical-align: middle;
+    margin-left: 0.2rem;
+}
+.gstar1{
+     display: inline-block;
+    background: url(../../images/user/star1.png) no-repeat center;
+    background-size: contain;
+    width: 0.4rem;
+    height: 0.4rem;
+    vertical-align: middle;
+    margin-left: 0.2rem;
+}
+.gcomment-good{    padding-left: 0.5rem;
+    display: inline-block;
+    font-size: 0.28rem;}
+.gcom-span{padding-left: 0.2rem;display: inline-block;font-size:0.28rem;}
+.gcomment1 textarea{width:6rem;height: 3.5rem;overflow: hidden; margin-bottom:0.2rem;text-align: left;outline: none;border:1px solid #e0e0e0;font-size: 0.28rem;text-indent:0.2rem;padding-top: 0.2rem;resize: none;}
+.gcomment li {
+            float: left;
+        }
+
+/*我要评价结束--------------------*/
+/*搜索开始--------------------*/
+header input{position: relative;width: 5rem;height: 0.55rem;    top: -2.5px;left:0.45rem; text-align: left;text-indent: 0.5rem;outline: none;border-radius: 0.1rem; }
+.gserach-pic1{position: absolute;background: url(../../images/user/app_158.png) no-repeat center;top:0.3rem; left:1.1rem;width: 0.3rem;height: 0.3rem;background-size:contain;z-index: 100; }
+.gserach-pic2{position: absolute;background: url(../../images/user/app_159.png) no-repeat center;top:0.26rem; right:0.5rem;width: 0.4rem;height: 0.4rem;background-size:contain;z-index: 111;}
+.gsearch{
+    background-color: #fff;
+
+    margin-top: 0.18rem;
+}
+.gsearch-color{border:1px solid #d12a18;}
+.gsearch .gsearch_top{
+   margin: 0 0.2rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    border-bottom: 1px solid #e0e0e0;
+    font-size:0.28rem;
+    position: relative;
+}
+ .gsearch_top i{
+    position: absolute;
+    background: url(../../images/user/app_14.png) no-repeat 0 0;
+    width: 1rem;
+    height: 0.3rem;
+    top: 0.2rem;
+}
+.gsearch .gsearch_top span{padding-left:0.2rem;}
+/*搜索结束--------------------*/
+
+
+.gxq-pic{width:100%;height: 5rem;background-size:contain;  }
+.gxq-pic1{position: absolute; background: url(../../images/user/app_171.png) no-repeat center;  width: 0.3rem;
+    height: 0.4rem;
+    top: 0.7rem;
+    left: 0.2rem;
+background-size: contain;}
+.gxiangqing span{position: absolute;color:#fff;font-size:0.36rem;width: 100%;text-align: center;  top: 0.7rem;}
+.gxq-pic2{
+    position: absolute; background: url(../../images/user/app_180.png) no-repeat center;
+    width: 0.4rem;
+    height: 0.4rem;
+    top: 0.7rem;
+    right: 0.2rem;
+    background-size: contain;
+}
+.gshengji p{height: 60px;line-height: 50px;background-color: #fff;padding-left:20px;font-size: 20px;}
+.gshengji-price{width: 50%;height: 60px;line-height: 50px;background: #d12a18;text-align: center;color:#fff;display: inline-block;}
+.gshengji .gprice0{
+    font-size:18px;
+}
+.gshengji .gprice1{
+    font-size:20px;
+}
+.gshengji .gprice2{
+    font-size:18px;
+}
+.gshengji-time{
+    width: 50%;height: 60px;display: inline-block;float: right;color:#000;position: relative;}
+}
+.gshengji-time .gtime-0{padding-left: 0.3rem;display: inline-block;}
+.gtime-1 span{    
+	display: inline-block;
+	background: #000;
+	width: 30px;
+	height: 30px;
+	line-height: 25px;
+	text-align: center;
+	border-radius: 0.05rem;
+	color: #fff;
+	font-weight: bolder;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+.gtime-2{position: absolute;top:0.1rem;left: 150px;line-height: 0.25rem;color: #fff;}
+.gtime-3{position: absolute;top:0.1rem;left:210px;line-height: 0.25rem;color: #fff;}
+.gtime-5{position: absolute;top:0.1rem;left: 270px;line-height: 0.25rem;color: #fff;}
+
+.gtime-0{position: absolute;top:5px;left: 25px;}
+.gtime-4{color:#116f81;position: absolute;top:30px;left: 25px;}
+.gtime-6{position: absolute;color:#000;top:0.1rem;left:190px;}
+.gtime-7{position: absolute;color:#000;top:0.1rem;left:250px;}
+
+
+.gcuxiao{background-color: #fff;height:1.2rem;line-height: 1.2rem;border-top:1px solid #e0e0e0;border-bottom:1px solid #e0e0e0; position: relative;}
+.gcuxiao .gcx{font-size: 0.28rem;padding-left:0.2rem;height:1.2rem;line-height: 1.2rem;}
+.gmj {font-size: 0.24rem;color:#FFF;
+    background: url(../../images/user/app_181.png) no-repeat center;background-size:contain;width: 1.45rem;height: 0.65rem;line-height: 0.65rem;
+    display: inline-block;text-align: center;padding-left:0.1rem;}
+.gcuxiao a{position: absolute;top:0.5rem;right: 0.2rem;width: 0.12rem;height: 0.2rem;background: url(../../images/user/app_182.png) no-repeat center;background-size: contain;}
+.gbrand{height: 100px;background-color: #fff;border-bottom: 1px solid #e0e0e0;border-top:1px solid #e0e0e0;
+    line-height: 40px;margin-top:15px;
+}
+.gbrand-com{padding-left: 20px;font-size: 20px;}
+.gbrand-top{width:150px;display:inline-block;}
+.gbrand-bott{width:150px;display:inline-block;}
+.gtuwen{height: 100%;background:#fff;padding:0  0.2rem;}
+.gtw-txt{font-size:0.28rem;height: 0.8rem;line-height: 0.5rem;display: inline-block;margin-top: 0.2rem;}
+.gtw-pic{width:100%;height: 4rem;background-size:contain;border-radius: 0.1rem; display: inline-block;margin-top: 0.3rem;margin-bottom: 0.45rem;}
+.gbrand-btn{background:white;border-top:1px solid #d12a18;height:52px;line-height: 42px;position: fixed;bottom:0;width: 100%;}
+.gbrand-btn div.gbrand-btn-right{width: 2.3rem;
+	text-align:center;
+    display: inline-block;position: absolute;top:0;
+    background: url(../../images/user/app_122.png) no-repeat center;
+    margin-left:4.2rem;height: 52px;line-height:42px;color:#fff;font-size: 18px;
+    background-size: cover;
+    border: none;
+	-webkit-appearance:none ;  /*解决iphone safari上的圆角问题*/
+}
+.gbrand-btn-left{width:4.2rem;background: #fff; }
+.gbrand-pic1 {
+	background: url(../../images/user/card.png) no-repeat 0 0;
+	width: 20px;
+	height: 23px;
+	position: absolute;
+	background-size: 20px 23px;
+	left: 20px;
+	top: 12px;
+}
+.gbrand-pic4{width: 18px;height: 18px;line-height: 18px;
+    border-radius: 50%;position: absolute;color:#fff;top:3px;text-align: center;
+    left:30px;background: #d12a18;font-size:12px;}
+.gbrand-pic2{color:#d12a18;font-size:16px;padding-left:50px;}
+.gbrand-pic3{color:#d12a18;font-size:20px;}

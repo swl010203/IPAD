@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/wxzf.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script type="text/javascript" src="../../script/app.js"></script>
+<style type="text/css">
+	.eval_price{ overflow: hidden; }
+.eval_price li{ width: 25%; text-align: center; float: left;  margin-bottom: 0.2rem;}
+.money_inpt{ height: 0.62rem; background: #fff;  border:1px solid #ccc; border-radius: 5px; padding: 0 0.2rem;  margin: 0 0.2rem; }
+.money_inpt input{ width: 100%; height: 100%; border:0; font-size: 0.28rem; }
+.eval_checkbox02{display:none;}
+.eval_checkbox02 + label span{ width: 1.25rem; height: 0.63rem; line-height: 0.63rem; text-align: center; display: inline-block; border-radius: 5px; border: 1px solid #ccc; color: #999; font-size: 0.28rem; background: #fff; }
+.eval_checkbox02:checked + label span{width: 1.25rem; height: 0.63rem; line-height: 0.63rem; text-align: center; display: inline-block; border-radius: 5px; border: 1px solid #dd1b40; color: #fff; font-size: 0.28rem; background: #dd1b40;}
+.spanpay{ margin-left:0.5rem;}
+.payListl{ font-size:0.26rem;}
+.duo_checkbox03 + label{ height:0.36rem;background-size: 0.28rem 0.28rem;}
+.duo_checkbox03:checked + label:after{height:0.36rem;background-size: 0.28rem 0.28rem;}
+/*头部样式*/
+</style>
+</head>
+<body class="bg_fff">
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="pad_20">
+		<div class="reportBusiwrap">
+			
+		<div class="reportBusi" style="padding-bottom: 0;">
+			<div class="reportBusil" style="width: auto; color: #666;">余额：<span class="order_amount"></span>元</div>
+			
+		</div>
+		
+		<div class="payList" style="padding-left: 0; border-bottom: 0;">
+			<div class="payListl" style="left: 0; color: #999;">支付方式：</div>
+			<div class="payListr">
+			 <div class="payListrli">
+					<input type="hidden" name="pay" value="2">
+					<span data-id="2" class="spanpay payListrli_icon01 payListrli_iconcur"></span>
+					<span data-id ="1" class="spanpay payListrli_icon02"></span>
+				</div> 
+				<!--<div class="payListrli">
+							<input id="a_pl2" type="radio" name="pay" value="1" class="duo_checkbox03">
+							<label for="a_pl2">支付宝</label>
+				</div>-->
+				<!--<div class="payListrli">
+							<input id="a_pl1" type="radio" name="pay" value="2" class="duo_checkbox03">
+							<label for="a_pl1">微信</label>
+				</div>-->
+				
+				
+			</div>
+		</div>
+		<div class="payList fangan" style="padding-left: 0; border-bottom: 0;min-height: 20px;">
+			<div class="payListl" style="left: 0; color: #999;">充值方案：</div>
+			<div class="payListr ">
+				<!--<div class="payListrli">
+							<input id="a_pl3" type="radio" onclick="getzengsong(0);" name="pay_fano" value="0" class="duo_checkbox03">
+							<label for="a_pl3">无</label>
+				</div>-->
+				<div class="falist">
+				</div>		
+			</div>
+		</div>
+		
+		<div class="payList zengsong" style="padding-left: 0; border-bottom: 0;min-height: 20px; display: none;">
+			<div class="payListl" style="left: 0; color: #999;">赠送方案：</div>
+			<div class="payListr ">
+				<div class="payListrli">
+							<input id="a_pl33" type="radio"  name="zslx" value="0" class="duo_checkbox03">
+							<label for="a_pl33">无</label>
+				</div>
+				<div class="zslist">
+				</div>		
+			</div>
+		</div>
+		
+		<div class="reportBusi">
+			<div class="reportBusil">充值金额：</div>
+			<!--<div class="reportBusir">
+				<div class="reportBusirinptwrap"><input type="text" class="reportBusirinpt" placeholder="请输入充值金额" /></div>
+			</div>-->
+		</div>
+		<div class="eval_price">
+			<ul class="eval_price">
+				<li><input id="a_pricel3" type="radio" checked="" name="price" value="10" class="eval_checkbox02">
+				<label for="a_pricel3"><span>10元</span></label></li>
+				<li><input id="a_pricel4" type="radio" name="price" value="20" class="eval_checkbox02">
+				<label for="a_pricel4"><span>20元</span></label></li>
+				<li><input id="a_pricel5" type="radio" name="price" value="50" class="eval_checkbox02">
+				<label for="a_pricel5"><span>50元</span></label></li>
+				<li><input id="a_pricel6" type="radio" name="price" value="100" class="eval_checkbox02">
+				<label for="a_pricel6"><span>100元</span></label></li>
+			</ul>
+		</div>
+		
+		</div>
+		
+		<div style="padding-top: 2rem;">
+		<a href="javascript:void(0)" onclick="pay();" class="btn01 js_btn01" style="background:#dd1b40;">立即充值</a>
+	</div>
+	
+	</div>
+	
+</div>
+<!--浮动层-->
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	//支付方式切换
+		 $('.payListrli .spanpay').click(function(){
+			var id = $(this).attr('data-id');
+			$("input[name='pay']").val(id);
+		 	$(this).addClass('payListrli_iconcur').siblings().removeClass('payListrli_iconcur');
+		 })	
+});
+var pay_notify_type = 0;  //回调类型
+var price=0.00;
+var paybody='惠通卡充值';
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		cardno = api.pageParam.cardno;  //卡号
+		
+		notify_url = ajax_url+"Index/Pay/rechargeNotify?cardno="+cardno+"&uid="+userinfo.uid;
+		
+		//loading('card_money');
+		
+		getOrderInfo();
+		rechargePlan();
+			
+	};
+	
+	var is_card = false;
+	var is_card_msg="";
+	/**
+	 * 获取订单信息 
+	 */
+	function getOrderInfo(){
+		_ajax(ajax_url+"Index/User/getUserCardMoney",{'cardno':cardno,'token':userinfo.token,'uid':userinfo.uid},'post',function(ret){
+			if(ret.status==1){
+				$(".order_amount").html(ret.data);
+				is_card = true;
+			}else{
+				is_card = false;
+				
+				_toast(ret.msg);
+			}
+			is_card_msg = ret.msg;
+			
+		});
+	}
+	
+	/**
+	 * 获取赠送方案 
+	 */
+	function getzengsong(type){
+		//alert($(".zs_"+type).html());
+		//console.log($(".zs_"+type).html());
+		
+		if(type ==0){
+			$(".zengsong").hide();
+		}else{
+			$("input[name='zslx']").prop('checked',false);
+			if($(".zs_"+type).html()){
+				$(".zengsong").show();
+			}else{
+				$(".zengsong").hide();
+			}
+		}
+		
+		
+	}
+	/**
+	 * 获取充值方案 
+	 */
+	function rechargePlan(){
+		_ajax(ajax_url+"Index/Pay/rechargePlan",{'cardno':cardno},'post',function(ret){
+			if(ret.status==1){
+				var strVar = "";
+				var strVar2 = "";
+				var key = 1;
+				$.each(ret.data,function(k,v){
+					strVar += "<div class=\"payListrli\">";
+				    strVar += "	<input id=\"a_pl2_"+v['no']+"\" checked  type=\"radio\" name=\"pay_fano\" value=\""+v['no']+"\" onclick=\"getzengsong("+key+")\" attr-k='"+key+"' class=\"duo_checkbox03\">";
+				    strVar += "	<label for=\"a_pl2_"+v['no']+"\">"+v['name']+"<\/label>";
+				    strVar += "<\/div>";
+
+					
+					//判断赠送方案
+					if(v['zsJfFlag'] ==1){
+						strVar2 += "<div class=\"payListrli zs_"+key+"\">";
+					    strVar2 += "	<input id=\"a_pl2_"+key+"\" type=\"radio\" name=\"zslx\" value=\"积分\" class=\"duo_checkbox03\">";
+					    strVar2 += "	<label for=\"a_pl2_"+key+"\">赠送积分<\/label>";
+					    strVar2 += "<\/div>";
+					}
+					
+					if(v['zsLpFlag'] ==1){
+						strVar2 += "<div class=\"payListrli zs_"+key+"\">";
+					    strVar2 += "	<input id=\"a_pl2_"+key+"\" type=\"radio\" name=\"zslx\" value=\"礼品\" class=\"duo_checkbox03\">";
+					    strVar2 += "	<label for=\"a_pl2_"+key+"\">赠送礼品<\/label>";
+					    strVar2 += "<\/div>";
+					}
+					
+					if(v['zsDzqFlag'] ==1){
+						strVar2 += "<div class=\"payListrli zs_"+key+"\">";
+					    strVar2 += "	<input id=\"a_pl2_"+key+"\" type=\"radio\" name=\"zslx\" value=\"电子券\" class=\"duo_checkbox03\">";
+					    strVar2 += "	<label for=\"a_pl2_"+key+"\">赠送电子券<\/label>";
+					    strVar2 += "<\/div>";
+					}
+					key ++;
+				});
+				$(".falist").html(strVar);
+			    $(".fangan").show();
+			    
+			   
+				$(".zslist").html(strVar2);
+				//$(".zslist").show();
+			  //  $(".zengsong").show();
+			  
+			  	getzengsong(1);
+			}else{
+				$(".fangan").hide();
+				$(".zengsong").hide();
+				_toast(ret.msg);
+			}
+		    setTimeout(function(){
+				closeloading();
+			},1000); 
+			
+	
+			
+		});
+	}
+	
+
+	//支付
+	function pay(){
+		if(is_card ==false){
+			_toast(is_card_msg);
+			return false;
+		}
+		var pay_type = $("input[name='pay']").val();
+		if(pay_type ==undefined  ||  pay_type ==''){
+			_toast('请选择支付方式');
+			return false;
+		}
+		
+		price = $("input[name='price']:checked").val();
+		if(price ==''){
+			_toast('请选择充值金额');
+			return false;
+		}
+		
+		var fano = $("input[name='pay_fano']:checked").val();
+		if(typeof(fano) =='undefined'  ||  fano ==undefined){
+			fano = 0;
+		}
+		
+		var zslx = $("input[name='zslx']:checked").val();
+		if(typeof(zslx) =='undefined'  ||  zslx ==undefined){
+			zslx = 0;
+		}
+	
+		
+		_ajax(ajax_url+"Index/Pay/cardRecharge",{'zslx':zslx,'fano':fano,'pay_id':pay_type,'price':price,'cardno':cardno,'token':userinfo.token,'uid':userinfo.uid},'post',function(ret){
+			if(ret.status==1){
+				notify_url = ajax_url+"Index/Pay/cardRechargeNotify/cardno/"+cardno+"/uid/"+userinfo.uid+"/order_sn/"+ret.data.order_sn+"/fano/"+fano;
+				paybody = ret.data.paybody;
+				
+				if(pay_type ==1){
+					aliPay();
+				}
+				
+				if(pay_type ==2){
+					wxPay();
+				}
+				
+			}else{
+				_toast(ret.msg);
+			}
+			
+		});
+		
+		
+	}
+	
+
+/**
+ * 支付成功回掉地址 
+ * *@param trade_np  流水号
+ */
+function paySuccess(){
+	
+	//刷新成功 执行发送监听事件  所有需要刷新的页面  name 统一 paysuccess_refresh
+	api.sendEvent({
+        name:'cardpaysuccess_refresh'
+    });
+    //支付成功
+    api.closeWin();
+	
+}
+	
+
+ //支付宝支付
+ function aliPay() {
+ 	api.setFrameAttr({
+		 name: 'cart_body',
+		 hidden:true
+	});
+	var pay_id = $("input[name='pay']:checked").val();
+
+	var random =parseInt(Math.random()*10000)+10000;
+ 	var timestamp = new Date().getTime();
+ 	var tradeNO = timestamp +"" +random ;
+ 	var subject = paybody;
+ 	var body = subject;
+ 	var aliPay = api.require('aliPay');
+ 	
+ 	aliPay.config({
+ 		partner: '2088521528292839',
+ 		seller: 'hangjia_sye@163.com',
+ 		rsaPriKey: 'MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANoHjuChISF8YtR/5c/LiWXS1OmiGdiJMXmSfLzNUu+R4llGv8bD0b/dZHMEfLhQmZ4MGStdX6FT0+0dEB5DZ+SEkJQkzFeKcCy1y6mNW56fqHFvkAoNx7+y0ueOP48D+fObZbmkivLgAfg7lWEsioXnkjbbskS8mTtJXW1g/UDDAgMBAAECgYEAjj98ImY9/WDwAgBn6Yi73ekN7FhMUJBB7TV7mJrFT3R4nxKfsIi14l4JWVlGHeLINuthyH8lE1Zj4EGj8Hq93o+YKq9EbNj0FGE6343uDMDg0T2A5R+WGlFGvpfNdiOpgfDkkIE4lglxyQL8jry/nzd+T9nJAMBCIywHUgfPFUECQQDyCMETiF/egCgaPmOMAgRTWCbZU67Zxq7X6t51a0qtptAlb1c3uqv98H9ZohNL/0OUI3srkrSG5oBgttyeYpPxAkEA5pw3FKvqkDw9JIsHkOzPvwG3ADhXUhCAWibRY5Kl02YuHZatTVORe7NQpOVLvOTmP5Hk0cESBC3IOSnQ758D8wJBAMJ8UlmVviOWq6La+zbn7/3g2ebMnbYVNy39ZyDHREzhvGQ4YcdAUzBM7qhh2ku5JN6G3FSZIEM+OW59wi3rXKECQQDUGffbLme2M4F0+96AoB5PKo+bRzahBwZWZH+PmpCkR8XAdxZ8GZGkeX+BuleXq9xNua0AcxhT+Zu/X8OIsPObAkAizPg9SqtBwH/70lqsFaBoztH5WRUyUr2R9K6dz3YgobyFeRn5RncqSEKuS+1TPfe+gHUU19guB3SrQDyOwnW7',
+ 		rsaPubKey: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDaB47goSEhfGLUf+XPy4ll0tTpohnYiTF5kny8zVLvkeJZRr/Gw9G/3WRzBHy4UJmeDBkrXV+hU9PtHRAeQ2fkhJCUJMxXinAstcupjVuen6hxb5AKDce/stLnjj+PA/nzm2W5pIry4AH4O5VhLIqF55I227JEvJk7SV1tYP1AwwIDAQAB',
+ 		notifyURL: notify_url
+ 	}, function(ret, err) {
+ 		if (ret) {
+ 			if (ret.status) { //进行支付
+ 				aliPay.pay({
+ 					subject: subject,
+ 					body: body,
+ 					amount: 0.01,//price,
+ 					tradeNO: tradeNO
+ 				}, function(ret, err) {
+ 				
+ 					if (ret.statusCode == 9000 || ret.code == 9000) { //支付成功，保存到数据库
+ 						_toast('支付成功',function(){
+ 							paySuccess(tradeNO);
+ 						},1500);
+ 					} else {
+ 						if (ret.code == 4000) {
+ 							_toast('订单支付失败');
+ 						} else if (ret.code == 6001) {
+ 							_toast('取消支付');		
+ 						} else if (ret.code == 4006) {
+ 							_toast('订单支付失败');
+ 						} else {
+ 							_toast('订单支付失败');
+ 						}
+ 					}
+
+ 				});
+ 			}
+ 		} else {
+ 			_toast("配置错误");
+ 		}
+
+ 	});
+ }
+
+
+ /**
+  * 微信支付 wxPay()
+  */
+ function wxPay() {
+
+	api.setFrameAttr({
+		 name: 'cart_body',
+		 hidden:true
+	});
+	
+	var pay_id = $("input[name='pay']:checked").val();
+	//var notify_url = ajax_url+"Index/Pay/orderPayNotify?order_sn="+order_sn+"&uid="+userinfo.uid+"&pay_type="+pay_notify_type+"&pay_id="+pay_id;
+	
+	
+	
+ 	var random =parseInt(Math.random()*10000)+10000;
+ 	var timestamp = new Date().getTime();
+ 	var tradeNO = timestamp +"" +random ;
+ 	var subject = paybody;
+ 	var body = subject;
+ 	var wxPay = api.require('wxPay');
+ 	wxPay.config({
+ 		apiKey: 'wx967c2d25800a08ae',
+ 		mchId: '1430124402',
+ 		partnerKey: 'b36a5b2f763c76ef2af4ea389eb39f8e',
+ 		notifyUrl: notify_url
+ 	}, function(info, err) {
+ 		if (info.status) {
+ 			var order_amount = parseFloat(price) * 100;
+ 			wxPay.pay({
+ 				description: body,
+ 				totalFee: 1,//order_amount,
+ 				tradeNo: timestamp,
+ 				detail: body,
+ 				attach: timestamp,
+ 				feeType: 'CNY'
+ 			}, function(ret, err) {
+ 				
+ 				if (ret.status) {
+ 					paySuccess();
+ 					_toast('支付成功');
+ 				} else {
+ 					_toast('支付失败');
+ 				}
+ 			});
+ 		} else {
+ 			_toast( err.msg);
+ 		}
+ 	});
+
+ }
+</script>
+</body>
+</html>

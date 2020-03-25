@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>022新增惠通卡关联账户</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<!--中间内容-->
+		<!--<div class="jtzh_banner clearfloat">
+			<span class="fl">家庭账户余额：<span id="money_all">0元</span></span>
+			<span class="fr">可用积分：<span id="integral">0分</span></span>
+			<div class="jtzhTouxiang">
+				<div class="touxiang">
+					<img id="portrait" src="../../images/account/shouye01.jpg"/>
+				</div>
+			</div>
+			<p class="jtzhAddr" id="address"></p>
+			<ul class="dibuliebiao clearfloat">
+				<li class="click after">家庭账户</li>
+				<li class="after">家庭账户</li>
+				<li>家庭账户</li>
+			</ul>
+		</div>-->
+		<div class="wanshanxinxi">
+			<div class="jtzhTit quMr_20 clearfloat">
+				<div>
+					<i class="xian"></i>
+					<span>新增惠通卡关联账户</span>
+				</div>
+			</div>
+			<div class="chongzhiMoney quBorder">
+				<div class="topchongzhi clearfloat">
+					<div class="fl">
+						<span>账户号：&nbsp;&nbsp;</span>
+						<input type="text" id="username" placeholder="输入惠通卡开卡手机号"/>
+					</div>
+					<!--<span class="styleSpan colorRed">*用户号不存在，请核实后重新输入</span>-->
+				</div>
+			</div>
+			<div class="chongzhiMoney quBorder">
+				<div class="topchongzhi clearfloat">
+					<div class="fl">
+						<span>账户名：&nbsp;&nbsp;</span>
+						<input type="text" id="real_name" placeholder="输入账户名"/>
+					</div>
+					
+				</div>
+			</div>
+			<!--<div class="chongzhiMoney quBorder addSelect">
+				<div class="topchongzhi clearfloat">
+					<div class="fl clearfloat">
+						<span class="fl">账户类型：</span>
+						<div class="xialaxiaoguo fl">
+							<input id="card_type" class="input_select" type="text" value="请选择" readonly/> 
+							<ul> 
+								<li><a href="#none" val='1' rel="2">普通账户</a></li> 
+								<li><a href="#none" val='2' rel="3">惠通卡账户</a></li> 
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>-->
+			<div class="chongzhiMoney quBorder addSelect">
+				<div class="topchongzhi clearfloat">
+					<div class="fl clearfloat">
+						<span class="fl">家庭身份：</span>
+						<!--点击支付方式对应内容-->
+						<div class="xialaxiaoguo1 fl">
+							<input id="relationship" class="input_select1" type="text" value="请选择" readonly/> 
+							<ul> 
+								<li><a href="#none" rel="2">子女</a></li> 
+								<li><a href="#none" rel="3">父母</a></li>
+								<li><a href="#none" rel="4">亲友</a></li>  
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="outCzanniu">
+			<div class="czBtn">
+				<button onclick="addRelation();">保存</button>
+			</div>
+		</div>
+		<!--保存-->
+		<div class="mark hide_">
+			<div class="chongzhicg">
+				<div class="bagimg"></div>
+				<p class="czp">关联成功</p>
+				<div class="czclose">关闭</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		function bodyScroll(event){
+			event.preventDefault();
+		}
+		$(function(){
+			$(".dibuliebiao li").on("click",function(){
+				$(".dibuliebiao li").removeClass("click");
+				$(this).addClass("click");
+			});
+			/*点击button*/
+			$(".botchongzhi>div div span").on("click",function(){
+				var index_ = $(this).index();
+				$(".botchongzhi>div div span").children(".sel").removeClass("yessel");
+				$(".botchongzhi>div div span").children(".sel").addClass("nosel");
+				$(this).children(".sel").addClass("yessel");
+			});
+			/*点击保存按钮*/
+			/*$(".czBtn").on("click",function(){
+				$(".mark").removeClass("hide_");
+				$("body").css("overflow-y","hidden");
+				document.body.addEventListener('touchmove',bodyScroll,true);
+				var scroll_ = $(document).scrollTop();
+				$(".mark").css("top",scroll_);
+			})*/
+			/*点击关闭按钮*/
+			$(".czclose").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+				document.body.removeEventListener('touchmove',bodyScroll,false);
+				
+				api.closeWin();
+			});
+			
+			
+			/*下拉列表效果*/
+			$(".input_select").click(function(event){ 
+				event.stopPropagation();
+				var ul = $(".xialaxiaoguo ul"); 
+				if(ul.css("display")=="none"){ 
+					ul.slideDown("fast"); 
+				}else{ 
+					ul.slideUp("fast"); 
+				} 
+			});
+			$(document).click(function(){
+				var ul = $(".xialaxiaoguo ul"); 
+				ul.slideUp("fast"); 
+			});
+			//获取数据
+			$(".xialaxiaoguo ul li a").click(function(){ 
+				var val = $(this).attr('val'); 
+				var txt = $(this).text(); 
+				$(".input_select").val(val); 
+				var value = $(this).attr("rel"); 
+				$(".xialaxiaoguo ul").hide(); 
+				$("#result").html("您选择了"+txt+"，值为："+value); 
+			}); 
+			
+			/*下拉列表效果*/
+			$(".input_select1").click(function(event){ 
+				event.stopPropagation();
+				var ul = $(".xialaxiaoguo1 ul"); 
+				if(ul.css("display")=="none"){ 
+					ul.slideDown("fast"); 
+				}else{ 
+					ul.slideUp("fast"); 
+				} 
+			});
+			$(document).click(function(){
+				var ul = $(".xialaxiaoguo1 ul"); 
+				ul.slideUp("fast"); 
+			});
+			//获取数据
+			$(".xialaxiaoguo1 ul li a").click(function(){ 
+				var txt = $(this).text(); 
+				$(".input_select1").val(txt); 
+				var value = $(this).attr("rel"); 
+				$(".xialaxiaoguo1 ul").hide(); 
+				$("#result").html("您选择了"+txt+"，值为："+value); 
+			}); 
+		});
+		
+		
+		
+		//初始化用户Id
+		var uid = localStorage.getItem("uid");
+		apiready = function(){
+			
+			
+			//获取用户信息
+			getAccountInfo();
+		};
+		
+		
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+				if(ret.status ==1){
+					$("#address").text(ret.user.address);
+					$("#integral").text(ret.user.integral + "分");
+					$("#money_all").text(ret.user.money_all + "元");
+					$("#portrait").attr('src',ret.user.portrait);
+					//监听是否有未读消息
+					api.sendEvent({
+	                    name:'read_msg',
+	                    extra:{
+	                    	read_msg:ret.user.read_msg
+	                    }
+                    });
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		
+		
+		function addRelation(){
+		
+			var username  = $("#username").val();
+			var real_name  = $("#real_name").val();
+			
+			if(!username){
+				_toast('请输入账户号');
+				return false;
+			}
+			
+			if(!real_name){
+				_toast('请输入账户名');
+				return false;
+			}
+			var card_type = 2;//$("#card_type").val();
+			var relationship = $("#relationship").val();
+//			if(card_type =='请选择'){
+//				_toast('请选择账户类型');
+//				return false;
+//			}
+			
+			if(relationship =='请选择'){
+				_toast('请选择家庭身份');
+				return false;
+			}
+			
+			
+			_ajax(ajax_url+"Index/Family/addRelation" ,{'uid':uid,'card_type':card_type,'relationship':relationship,'real_name':real_name,'username':username},'post',function(ret){
+				if(ret.status ==1){
+					$(".mark").removeClass("hide_");
+					$("body").css("overflow-y","hidden");
+					document.body.addEventListener('touchmove',bodyScroll,true);
+					var scroll_ = $(document).scrollTop();
+					$(".mark").css("top",scroll_);
+					
+					//刷新关联用户
+					api.sendEvent({
+	                    name:'refe_relation'
+                    });
+			
+					
+					api.closeToWin({
+	                    name: 'jiatingzhanghu'
+                    });
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+	</script>
+</html>

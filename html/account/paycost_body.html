@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+        <meta charset="UTF-8">
+        <title>007充值</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+        <style>
+            .erweima{
+                width:100%;
+                height:100%;            
+                text-align: center;
+                margin-top:8%;
+            }
+            .erweima img{
+                width:300px;
+                height:300px;   
+            }
+        </style>
+    </head>
+    <body>      
+        <div class="erweima">
+            <img id="weixinimg" src="111.png" alt="" />
+        </div>          
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>      
+    <script>
+        var uid='';
+        var order_sn='';
+        var pay_code='';
+        var tab_type = '';
+        apiready = function(){
+            pay_code = api.pageParam.pay_code;
+            order_sn = api.pageParam.order_sn;
+            tab_type = api.pageParam.tab_type;
+            we_type  = api.pageParam.we_type;//水电区分
+            
+            uid=localStorage.getItem("uid");
+            
+            $('#weixinimg').attr('src',pay_code);
+            
+            //获取用户信息
+            getAccountInfo();
+        };
+        
+        //获取用户信息
+        function getAccountInfo(){
+            _ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'post',function(ret){
+                if(ret.status ==1){
+                    //监听是否有未读消息
+                    api.sendEvent({
+                        name:'read_msg',
+                        extra:{
+                            read_msg:ret.user.read_msg
+                        }
+                    });
+                    
+                    setTimeout(function() {
+                        checkOrder();
+                    }, 2000);
+                }
+            });
+        }
+        
+        //开启长轮询
+        var wait = 0;
+        function checkOrder(){
+            _ajax(ajax_url+"Index/Water/checkOrder",{order_sn:order_sn, tab_type:tab_type},'post',function(ret) {
+                if(ret.status==1){
+                    if(ret.type==1){
+                    
+                        //监听刷新物业费页面
+                        api.sendEvent({
+                            name:'pay_property_cost_ok',
+                            extra:{
+                                msg:'ok',
+                                we_type:we_type
+                            }
+                        });
+                        
+                        _toast('充值成功！',function(){
+                            api.closeWin();
+                        },1500);
+
+                    }else if(ret.type==-1 && wait >= 30){
+                        _toast('充值超时！',function(){
+                            api.closeWin();
+                        },1500);    
+
+                    }else if(ret.type==-1 && wait < 30){ 
+                        wait++;
+                        setTimeout(function() {
+                            checkOrder();
+                        }, 2000);
+                    }
+                }  
+            });         
+        }
+    </script>
+</html>

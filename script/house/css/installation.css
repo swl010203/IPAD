@@ -1,0 +1,57 @@
+.head {
+  overflow: hidden;
+  height: 0.85rem;
+  line-height: 0.85rem;
+}
+.head .back {
+  margin-top: 0.2rem;
+  margin-left: 0.28rem;
+}
+.head .back a {
+  display: block;
+}
+.head .back a img {
+  width: 0.21rem;
+  height: 0.38rem;
+  margin-top: 0.05rem;
+}
+.head .word {
+  font-size: 0.36rem;
+  color: #d12a18;
+  margin-left: 2.2rem;
+}
+.bg {
+  width: 100%;
+  height: 10px;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #E0E0E0;
+  border-top: 1px solid #E0E0E0;
+  overflow-x: hidden;
+}
+.edu {
+  padding: 20px;
+  overflow: hidden;
+  border-bottom: 1px solid #E0E0E0;
+}
+.edu ul {
+  float: left;
+  font-size: 18px;;
+}
+.edu ul p {
+  font-size: 18px;
+  color: #282828;
+  margin-bottom: 0.05rem;
+}
+.edu .col {
+  color: #d12a18;
+}
+.edu .col02 {
+  color: #d17218;
+}
+.edu .col03 {
+  color: #116f81;
+}
+.edu .col04 {
+  color: #129e31;
+}
+/*# sourceMappingURL=installation.css.map */

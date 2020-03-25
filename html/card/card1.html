@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+	.card_imgnum{ top: 1.8rem; left: 0.4rem;    font-family: '隶书';}
+	.bound_cardedtabli a{width:1.5rem;}
+	
+	/*添加二维码*/
+.card_img .erweima_click{ width: 0.8rem;height: 0.8rem; position: absolute; right: 0.5rem; top: 0.5rem;}
+.card_img .erweima_click img{width: 0.8rem;height: 0.8rem;}
+.erweima_window{ background: #fff; padding: 0.2rem; text-align: center; }
+.erweima_windowtxm img{ width: 100%; height: 1.2rem; }
+.erweima_windowtxt{ color: #000;     font-family: '宋体';}
+.erweima_windowtxm{ padding: 0 0.2rem;}
+.erweima_windower{ padding:0.2rem;}
+.erweima_windower img{ width: 3rem; height: 3rem;}
+.food_windowwrap{ position: absolute; top: 30%; width: 90%; left: 5%;}
+
+</style>
+</head>
+<body class="bg_fff " style="background-color: #f2f2f2;">
+<div class="list">
+
+</div>
+<!-- 登录内容 -->
+<!--<div class="wp_100">
+<div class="card_img">
+	<img src="../../images/card.jpg">
+	<span class="card_imgnum" style="color:#fff">
+	<p>卡号：</p>
+	<p>233445663242354325</p></span>
+</div>
+	<div class="payDtailinfor">
+		<p class="payDtailinforp">卡号：NO.1234455677</p>
+		<p class="payDtailinforp">余额：10.00元</p>
+		<p class="payDtailinforp">姓名：张三 生日：09.10</p>
+		<p class="payDtailinforp">学校：昌平中学</p>
+		<p class="payDtailinforp">地址：北京市昌平区</p>
+		
+	</div>
+	<div class="bound_carded" style="padding-top:0.2rem; padding-bottom:0.5rem;">
+		<div class="bound_cardedtab">
+			<div class="bound_cardedtabli" style="text-align:right;"><a href="惠通卡充值.html" class="btn02" style="width:1.3rem;text-align: center; background:#dd1b40;">充值</a></div>
+			<div class="bound_cardedtabli"><a href="惠通卡交易记录.html" class="btn02" style="background:#dd1b40;">查看交易记录</a></div>
+		</div>
+	</div>
+</div>
+<div class="wp_100">
+<div class="card_img">
+	<img src="../../images/card.jpg">
+	<span class="card_imgnum" style="color:#fff">
+	<p>卡号：233445663242354325</p>
+	<p>卡类：</p>
+	</span>
+</div>
+	<div class="payDtailinfor">
+		<p class="payDtailinforp">卡号：NO.1234455677</p>
+		<p class="payDtailinforp">余额：10.00元</p>
+		<p class="payDtailinforp">姓名：张三 生日：09.10</p>
+		<p class="payDtailinforp">学校：昌平中学</p>
+		<p class="payDtailinforp">地址：北京市昌平区</p>
+		
+	</div>
+	<div class="bound_carded" style="padding-top:0.2rem;padding-bottom:0.5rem;">
+		<div class="bound_cardedtab">
+			<div class="bound_cardedtabli" ><a href="惠通卡充值.html" class="btn02" style="width:1.3rem; background:#dd1b40;   text-align: center;">充值</a></div>
+			<div class="bound_cardedtabli"><a href="惠通卡交易记录.html" class="btn02" style="background:#dd1b40;">查看交易记录</a></div>
+		</div>
+		<div class="bound_cardedtab">
+			<div class="bound_cardedtabli" ><a href="惠通卡充值.html" class="btn02" style="width:1.3rem; background:#dd1b40;   text-align: center;">sdsd充值</a></div>
+			<div class="bound_cardedtabli"><a href="惠通卡交易记录.html" class="btn02" style="background:#dd1b40;">查看交易记录</a></div>
+		</div>
+		
+		<div class="bound_cardedtab" >
+			<div class="bound_cardedtabli" ><a href="惠通卡充值.html" class="btn02" style="width:1.3rem; background:#dd1b40;   text-align: center;">sdsd充值</a></div>
+			<div class="bound_cardedtabli" ><a href="惠通卡充值.html" class="btn02" style="width:1.3rem; background:#dd1b40;   text-align: center;">sdsd充值</a></div>
+		</div>
+		
+	</div>
+</div>-->
+
+
+<style>
+	.layui-m-layercont{ padding: 0;}
+</style>
+<!-- 二维码弹窗 -->
+<div class="maskBg" style=""></div>
+<div class="food_windowwrap" style="display:none">
+	<div class="erweima_window" >
+		<p class="erweima_windowtxt">1250 &nbsp;3365 &nbsp;0608&nbsp; 943637</p>
+		<p class="erweima_windowtxm"><img class="txm_img" src="../../images/card.jpg"></p>
+		<p class="erweima_windower" ><img class="qr_img" src="../../images/card.jpg"></p>
+		
+		<!--<p class="erweima_windowtxt">9966113120100000069</p>
+		<p class="erweima_windowtxm"><img class="txm_img" src="/var/mobile/Containers/Data/Application/91BDC61E-3F75-4D83-A622-345A6782C82D/Documents/uzfs/A6935939887951/baralbum.png"></p>
+		<p class="erweima_windower" style="background: #f00"><img class="qr_img" src="/var/mobile/Containers/Data/Application/91BDC61E-3F75-4D83-A622-345A6782C82D/Documents/uzfs/A6935939887951/qralbum.png"></p>
+	-->
+	</div>
+</div>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/layer_mobile/layer.js"></script>
+<script type="text/javascript">
+	
+	//$(document).on('click','.erweima_click',function(){
+	function erweima(){
+		//$(".txm_img").attr('src',bar_img);
+//		 layer.open({
+//		 	anim: 'up',
+//		 	content: $('.erweima_window').html()
+//		 })
+		$('.maskBg').show();
+		$('.food_windowwrap').show();
+
+}
+    $('.maskBg').click(function(){
+				$('.maskBg').hide();
+			$('.food_windowwrap').hide();
+		})
+		
+	
+</script>
+
+
+<script type="text/javascript">
+	
+
+var userinfo ="";
+apiready=function(){
+	userinfo = $api.getStorage('userinfo');
+	api.addEventListener({
+	    name:'cardpaysuccess_refresh'
+    },function(ret,err){
+    	//coding...
+    	ready();
+    });
+
+	loading('card');
+   	ready();
+   	
+};
+
+
+function ready(){
+	_ajax(ajax_url +"Index/User/getUserCard",{'uid':userinfo.uid,'token':userinfo.token},'post',function(ret){
+		var strVar = "";
+		if(ret.status  ==1){
+			var strVar = "";
+			$.each(ret.data,function(k,v){
+				cardno = v['cardNo'];
+			    strVar += "<div class=\"wp_100\">";
+			    strVar += "	<div class=\"card_img\"  onclick=\"openQrcode('"+cardno+"');\">";
+			    strVar += "		<img src=\"../../images/card.jpg\">";
+			    strVar += "<div onclick=\"\" class=\" erweima_click\"><img class='qr_img' src=\"../../images/card.jpg\"></div>";
+			    strVar += "		<span class=\"card_imgnum\" style=\"color:#fff\">";
+			    strVar += "		<p>";
+			    strVar += "			卡号：";
+			    strVar += v['cardNo'];
+			    
+			    
+			    strVar += "		<\/p>";
+			    strVar += "		<p>";
+			    strVar += "			卡类：";
+			    strVar += v['cardTypeName'];
+			    strVar += "		<\/p>";
+			    strVar += "		<\/span>";
+			    strVar += "	<\/div>";
+			    strVar += "	<div class=\"payDtailinfor\">";
+			    strVar += "		<p class=\"payDtailinforp\">";
+			    strVar += "			卡号："+v['cardNo'];
+			    strVar += "		<\/p>";
+			    strVar += "		<p class=\"payDtailinforp\">";
+			    strVar += "			余额："+v['info']['cardTotalMoney']+"元";
+			    strVar += "		<\/p>";
+			    strVar += "		<p class=\"payDtailinforp\">";
+			    strVar += "			积分："+v['info']['cardTotalPoint'];
+			    strVar += "		<\/p>";
+			    strVar += "		<p class=\"payDtailinforp\">";
+			    strVar += "			姓名："+v['name'];
+			    strVar += "		<\/p>";
+			    strVar += "	<\/div>";
+			    strVar += "	<div class=\"bound_carded\" style=\"padding-top:0.2rem; padding-bottom:0.5rem;\">";
+			    strVar += "		<div class=\"bound_cardedtab\">";
+			    strVar += "			<div class=\"bound_cardedtabli\" style=\"\">";
+			    strVar += "				<a onclick=\"recharge('"+v['cardNo']+"')\" href=\"javascript:void(0)\" class=\"btn02\" style=\"text-align: center; background:#dd1b40;\">充值<\/a>";
+			    strVar += "			<\/div>";
+			    strVar += "			<div class=\"bound_cardedtabli\">";
+			    strVar += "				<a onclick=\"openCardLog('card_log','card/card_log','"+v['cardNo']+"',1)\" href=\"javascript:void(0)\" class=\"btn02\" style=\"background:#dd1b40;\">金额消费记录<\/a>";
+			    strVar += "			<\/div>";
+
+			    strVar += "		<\/div>";
+			    strVar += "		<div class=\"bound_cardedtab\" style=\"padding-top:0.2rem;\"  >";
+			    strVar += "			<div class=\"bound_cardedtabli\">";
+			    
+			    strVar += "				<a onclick=\"openCardLog('card_log','card/card_log','"+v['cardNo']+"',2)\" href=\"javascript:void(0)\" class=\"btn02\" style=\"background:#dd1b40;\">金额变动记录<\/a>";
+			    strVar += "			<\/div>";
+			    strVar += "			<div class=\"bound_cardedtabli\">";
+			    strVar += "				<a onclick=\"openCardLog('card_log','card/card_log','"+v['cardNo']+"',3)\" href=\"javascript:void(0)\" class=\"btn02\" style=\"background:#dd1b40;\">积分记录<\/a>";
+			    strVar += "			<\/div>";
+			    strVar += "		<\/div>";
+			    
+			    strVar += "		<div class=\"bound_cardedtab\" style=\"padding-top:0.2rem;\"  >";
+			    strVar += "			<div class=\"bound_cardedtabli\"  >";
+			    strVar += "				<a onclick=\"openEditCardPwd('"+v['cardNo']+"',"+v['info']['card_default_pwd']+")\" href=\"javascript:void(0)\" class=\"btn02\" style=\"background:#dd1b40;\">修改支付密码<\/a>";
+			    strVar += "			<\/div>";
+				strVar += "			<div class=\"bound_cardedtabli\"  >";
+			    strVar += "				<a  href=\"javascript:void(0)\" class=\"btn02\" style=\"background:#fff;\"><\/a>";
+			    strVar += "			<\/div>";
+			    strVar += "		<\/div>";
+			    strVar += "	<\/div>";
+			    strVar += "<\/div>";
+	
+			});
+			 
+			   
+			   $(".erweima_windowtxt").html(cardno);
+			     openScanner(cardno);
+		}else{
+			_toast(ret.msg);
+		}
+	    $(".list").html(strVar);
+		closeloading();
+	})
+}
+
+var bar_img="";
+var qr_img="";
+
+
+function openQrcode(cardno){
+	_openWinByUrl('qrcode_window_head','../window_head',{'cardno':cardno,'furl':'card/qrcode','frame':'qrcode','title':'二维码'});
+}
+
+/**
+ * 二维码 
+ */
+function openScanner(cardno){
+	//return false;
+	var FNScanner = api.require('FNScanner');
+	
+	
+	FNScanner.encodeImg({
+	    content: cardno,//'http://www.apicloud.com/',
+	    saveToAlbum: false,
+	    type:'qr_image',
+	    saveImg: {
+	        path: 'fs://qr_image.png',
+	        w: 400,
+	        h: 400
+	    }
+	}, function(res, err) {
+	    if (res.status) {
+	        qr_img = res.imgPath;
+	      	$(".qr_img").attr('src',qr_img);
+	    }
+	});
+	
+	FNScanner.encodeImg({
+	    content: cardno,//'http://www.apicloud.com/',
+	    saveToAlbum: false,
+	    type:'bar_image',
+	    saveImg: {
+	        path: 'fs://bar_image.png',
+	        w: 250,
+	        h: 40
+	    }
+	}, function(ret, err) {
+	    if (ret.status) {
+	        //alert(JSON.stringify(ret));
+			bar_img = ret.imgPath;
+			$(".txm_img").attr('src',bar_img);
+		
+	    }
+	});
+
+$('.erweima_window').show();
+
+}
+
+
+function diag(){
+
+
+	 var dialogBox = api.require('dialogBox');
+			dialogBox.discount({
+			    rect: {
+			        w: 300,
+			        h: 300
+			    },
+			    styles: {
+			        bg: '#FFF',
+			        image: {
+			            path: bar_img,//'widget://image/image.png',
+			            marginB: 100
+			        },
+			        cancel: {
+			            icon:'../../images/guanbi.png',
+			            w: 50,
+			            h: 50,
+			           textColor: '#000'                      //（可选项）字符串类型；取消按钮的字体颜色，支持#、rgb、rgba；默认：#000 
+			        }
+			    }
+			}, function(ret) {
+			   // alert(JSON.stringify(ret));
+			    if (ret.eventType == 'cancel') {
+			        dialogBox.close({
+			            dialogName: 'discount'
+			        });
+			    }
+			});
+	    
+}
+
+//修改卡密码
+function openEditCardPwd(cardno,type){
+	var redirect_url = api.pageParam.redirect_url;
+	//_openWinByUrl('card_pwd_window_head','../window_head',{'type':type,'cardno':cardno,'furl':'card/card_pwd','frame':'card_pwd','title':'修改支付密码'});
+	_openWinByUrl('card_editpwd_window_head','../window_head',{'redirect_url':redirect_url,'type':type,'cardno':cardno,'furl':'card/editphone','frame':'editphone','title':'验证手机号'});
+}
+
+//打开 交易记录
+function openCardLog(name,url,cardno,type){
+	_openWinByUrl(name+'_window_head','../window_head',{'type':type,'cardno':cardno,'furl':url,'frame':name,'title':'交易记录'});
+
+}
+
+
+//充值
+function recharge(cardno){
+
+	_openWinByUrl('card_money_window_head','../window_head',{'cardno':cardno,'furl':'card/card_money','frame':'card_money','title':'充值'});
+
+}
+</script>
+</body>
+</html>

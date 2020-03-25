@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>032装修业务</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+       
+        <!--中间内容-->
+        <div class="outZhuangxiuDiv ">
+            <div class="jtzhTit clearfloat mar_t">
+                <div>
+                    <i class="xian"></i>
+                    <span>请选择您需要的服务</span>
+                </div>
+            </div>
+            <!--显示内容部分-->
+            <div class="zhuangxiuApply">
+                <ul class="huaLine" id='styleList'>
+                    <!--<li>
+                        <div class="huaBtn click">全部</div>
+                    </li>
+                    <li>
+                        <div class="huaBtn">全部</div>
+                    </li>
+                    <li>
+                        <div class="huaBtn">全部</div>
+                    </li>
+                    <li>
+                        <div class="huaBtn">全部</div>
+                    </li>
+                    <li>
+                        <div class="huaBtn">全部</div>
+                    </li>
+                    <li>
+                        <div class="huaBtn">地中海风格</div>
+                    </li>
+                    <li>
+                        <div class="huaBtn">全部</div>
+                    </li>
+                    <li>
+                        <div class="huaBtn">地中海风格</div>
+                    </li>-->
+                </ul>
+                <ul class="tuWenshow clearfloat" id="List">
+                   <!-- <li>
+                        <a href="#">
+                            <img src="../../images/account/3201.jpg" alt="" />
+                            <div>
+                                <p>欧式风格</p>
+                                <p class="dy_dd">尽享复古奢华，低调又有内涵，温馨又</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="../../images/account/3201.jpg" alt="" />
+                            <div>
+                                <p>欧式风格</p>
+                                <p class="dy_dd">尽享复古奢华，低调又有内涵，温馨又</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="../../images/account/3201.jpg" alt="" />
+                            <div>
+                                <p>欧式风格</p>
+                                <p class="dy_dd">尽享复古奢华，低调又有内涵，温馨又</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="../../images/account/3201.jpg" alt="" />
+                            <div>
+                                <p>欧式风格</p>
+                                <p class="dy_dd">尽享复古奢华，低调又有内涵，温馨又</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="../../images/account/3201.jpg" alt="" />
+                            <div>
+                                <p>欧式风格</p>
+                                <p class="dy_dd">尽享复古奢华，低调又有内涵，温馨又</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="../../images/account/3201.jpg" alt="" />
+                            <div>
+                                <p>欧式风格</p>
+                                <p class="dy_dd">尽享复古奢华，低调又有内涵，温馨又</p>
+                            </div>
+                        </a>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+        
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    
+    <script type="text/javascript" >
+    		
+    		
+    	var page =1;
+    	var is_page = true;
+    	var style_id = 0;
+    	apiready = function(){
+    		//监听滚动条是否到底部
+			api.addEventListener({
+			    name:'scrolltobottom',
+			    extra:{
+			        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+			    }
+			}, function(ret, err){        
+			     if(is_page){
+			         page++;
+				     decorate();
+			     }
+			});
+			
+    		//获取装修风格
+    		getStyle();
+    	};
+    	
+    	function getStyle(){
+    		_ajax(ajax_url+"Index/Decorate/style" ,{},'get',function(ret){
+				var strVar = "";
+				strVar += "<li>\n";
+			    strVar += "<div onclick=\"setStyle(0,this)\" class=\"huaBtn click\">全部<\/div>\n";
+			    strVar += "<\/li>\n";
+				if(ret.status ==1){
+					
+			   		$(ret.data).each(function(k,v){
+			   			strVar += "<li>\n";
+					    strVar += "<div onclick=\"setStyle("+v['id']+",this)\" class=\"huaBtn\">"+v['name']+"<\/div>\n";
+					    strVar += "<\/li>\n";
+			   		})
+				}
+				
+				$("#styleList").html(strVar);
+				
+				//获取装修展示数据
+				decorate();
+			});
+    	}
+    	
+    	
+    	function setStyle(id , el){
+    		style_id = id;
+    		
+    		$("#styleList li .huaBtn").removeClass('click');
+    		$(el).addClass('click');
+    		
+    		is_page = true;
+    		page = 1;
+    		decorate();
+    	}
+    	
+    	
+    	function decorate(  ){
+    		_ajax(ajax_url+"Index/Decorate/decorate" ,{'sid':style_id,'p':page},'get',function(ret){
+				var strVar = "";
+				
+				if(ret.status ==1){
+					datalen = ret.data.list.length;
+					if(datalen > 0){
+						$(ret.data.list).each(function(k,v){
+							strVar += "<li>\n";
+						    strVar += "    <a >\n";
+						    strVar += "        <img src=\""+v['pic']+"\" alt=\"\" />\n";
+						    strVar += "        <div>\n";
+						    strVar += "            <p>"+v['style']+"<\/p>\n";
+						    strVar += "            <p class=\"dy_dd\">"+v['desc']+"<\/p>\n";
+						    strVar += "        <\/div>\n";
+						    strVar += "    <\/a>\n";
+						    strVar += "<\/li>\n";
+					    });
+					}else{
+						is_page = false;
+					}
+					if(page ==1){
+				   		$("#List").html(strVar);
+				   	}else{
+				   		$("#List").append(strVar);
+				   	}
+				}else{
+					is_page = false;
+					if(page ==1){
+						$("#List").html(strVar);
+					}else{
+						_toast(ret.info);
+					}
+				}
+				
+				
+			});
+			
+    	}
+    </script>
+    
+    
+</html>

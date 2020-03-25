@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<!-- 内容 -->
+	<div class="wp_100">
+	<div id="wrapper" class="wrapperList">
+		<div class="listBox">
+			<!-- 左侧菜单 -->
+			<div id="leftMenu" class="leftMenu" style="top: 0; bottom: 0;height:100%">
+				<div id="scroller" class="scrollerStyle">
+					<ul class="leftUl" id="cateList">
+						<!--<li class="scrollerli scrollerlicur">
+							<a href="javascript:;" class="scrollerlia">进口商品</a>
+						</li>
+						<li class="scrollerli">
+							<a href="javascript:;" class="scrollerlia">食品饮料</a>
+						</li>-->
+
+					</ul>
+				</div>
+			</div>
+			<!-- 右侧菜单 -->
+			<div class="rightMenuwrap">
+				<div id="rightMenu" class="rightMenu" style="top: 0; bottom: 0;">
+				<div id="scroller2" class="scrollerStyle2">
+					<ul id="cateInfoList">
+						<!--<li class="scrollerStyle2li">
+							<h1 class="rightMenuh1">生鲜水果</h1>
+							<div class="rightMenulist">
+								<a href="044_分类商铺列表.html" class="rightMenulista"><img src="images/fenlei_img01.jpg">
+									<span class="rightMenulistspan dy_dd">进口橙子</span>
+								</a>
+							</div>
+						</li>-->
+					</ul>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+	
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+	$(function(){
+		// 分类切换
+		$('.leftUl li').click(function(){
+			$(this).addClass('scrollerlicur').siblings().removeClass('scrollerlicur');
+		})
+	})
+</script>
+
+<script type="text/javascript" charset="utf-8">   
+	$(function() {   		
+		//菜单框架自动获取高度
+		var doc_H=$(document).height();
+		var docTop=$('.header_top').height();
+		var docBot=$('.footer_01').height();		
+		$('.listBox').height(doc_H-docTop-docBot);
+		window.onresize=function(){
+			var doc_H=$(document).height();	
+			$('.listBox').height(doc_H-docTop-docBot);
+		}
+	});
+	
+	
+	apiready = function(){
+		//加载状态
+		loading('super_category');
+		
+		getCateOne();
+	};
+	
+	/**
+	 * 获取一级分类 
+	 */
+	function getCateOne(){
+		_ajax(ajax_url + "Index/Super/getCateOne",{},'get',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+				var n =1;
+				$.each(ret.cate,function(k,v){
+					if(n==1){
+						strVar += "<li class=\"scrollerli scrollerlicur\" onclick=\"switchCate("+v['id']+",this)\"  >";
+						getCateTwo(v['id']);
+					}else{
+						strVar += "<li class=\"scrollerli\"  onclick=\"switchCate("+v['id']+",this)\" >";
+					}
+					
+				    strVar += "<a href=\"javascript:;\" class=\"scrollerlia\">"+v['title']+"<\/a>";
+				    strVar += "<\/li>";
+				    n++;
+				});
+	
+	
+			}else{
+				_toast(ret.msg);
+			}
+			$("#cateList").html(strVar);
+			    
+			closeloading();
+		});
+	}
+	
+	/**
+	 * 切换分类 
+	 */
+	function switchCate(id,el){
+		$("#cateList li").removeClass('scrollerlicur');
+		$(el).addClass('scrollerlicur');
+		getCateTwo(id);
+	}
+		
+	/**
+	 * 获取二级分类与三级分类 
+	 * @param id 一级分类id
+	 */
+	function getCateTwo(id){
+	
+		_ajax(ajax_url + "Index/Super/getCateTwo",{'cate1':id},'get',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+				$.each(ret.cate2,function(k,v){
+					
+				    strVar += "<li class=\"scrollerStyle2li\">";
+				    strVar += "<h1 class=\"rightMenuh1\">"+v['title']+"<\/h1>";
+				    strVar += "<div class=\"rightMenulist\">";
+				    if(v['cate3'] != -1){
+					    //三级分类
+					    $.each(v['cate3'],function(key,val){
+					    	strVar += "	<a href=\"javascript:void(0);\" onclick=\"getList("+val['id']+")\" class=\"rightMenulista\"><img src=\""+val['cate_img']+"\">";
+						    strVar += "	<span class=\"rightMenulistspan dy_dd\">"+val['title']+"<\/span>";
+						    strVar += "	<\/a>";
+					    })
+				    }
+				    
+				    strVar += "<\/div>";
+				    strVar += "<\/li>";
+				});
+
+			}else{
+				_toast(ret.msg);
+			}
+			$("#cateInfoList").html(strVar);
+			
+		});
+	}
+	
+	/**
+	 * 根据分类获取店铺列表信息
+	 * @param id 三级分类 
+	 */
+	function getList(id){
+		api.openWin({
+			name : 'super',
+			url :  'super.html',
+			allowEdit:App.allowEdit ,
+			useWKWebView:App.useWKWebView,
+			delay:0,
+			pageParam :{'category_id':id},
+			slidBackEnabled:false,
+			reload:true
+		});
+		//_openWinByUrl('super','super',{'category_id':id});
+	}
+</script>
+</body>
+</html>

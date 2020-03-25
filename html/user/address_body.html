@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+	<style>
+	.addrListtop{
+		border-bottom:none;
+		padding-bottom:0;
+	}
+		/*.duo_checkbox03 + label{
+			height:30px;
+			border:1px solid red;
+			
+		}
+		.duo_checkbox03:checked + label:after{
+			height:30px;
+			border:1px solid red;
+		}*/
+	</style>
+</head>
+<body>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="addrListwrap" id="list">
+<!--	<div class="addrList">
+		<div class="addrListtop">
+			<p class="addrListtop01">吕品 &nbsp;  185****0152</p>
+			<p class="addrListtop02">北京昌平区六环以内北京市昌平区回龙观镇育新小
+区B088</p>
+		</div>
+		<div class="addrListcon">
+			<div class="addrListconl">
+				<input id="a_pl3" type="radio" name="test" value="3" class="duo_checkbox03">
+			<label for="a_pl3" style="color: #717171;">默认地址</label>
+			</div>
+			<div class="addrListconr">
+				
+				<a href="#" class="addrListconr"><i class="addrDelicon"></i>删除</a>
+				<a href="030_新增收货地址.html" class="addrListconr"><i class="addrEditicon"></i>编辑</a>
+			</div>
+		</div>
+	</div>-->
+	
+	</div>
+	
+</div>
+<div class="wp_100">
+	<div class="botH"></div>
+</div>
+<!-- 底部 -->
+<footer class="addrFooter">
+<div style="padding: 0 0.2rem;">
+	<a href="javascript:void(0);" class="btn01" onclick=openaddress('addaddress','user/addaddress','新增地址')>+新增收货地址</a>
+</div>
+</footer>
+<script>
+	var page =1;  //分页 page
+	var is_page =true;
+	var userinfo = "";
+	apiready = function(){
+			 	//进行监听
+		api.sendEvent({
+				name : 'arrress_head',
+				extra : {
+					key1 : 'success',
+					title: '地址管理',
+				}
+			});
+		userinfo = $api.getStorage('userinfo');
+		//加载状态
+		loading();
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+		    page =1;
+			ready();
+		});
+
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page == true){
+		       page++;
+			   ready();
+		     }
+			  
+		});
+	     api.addEventListener({
+			    name: 'addaddress'
+			}, function(ret, err) {
+			    if(ret && ret.value){
+						if (ret.value.key1 == 'success') {	
+						     page =1;			     	
+						     ready();					 
+						}
+					}
+			});
+			 api.addEventListener({
+			    name: 'updateaddress'
+			}, function(ret, err) {
+			    if(ret && ret.value){
+						if (ret.value.key1 == 'success') {	
+						     page =1;			     	
+						     ready();					 
+						}
+					}
+			});
+		
+		ready();
+	};
+	
+	
+	function ready(){
+		
+		_ajax(ajax_url+"Index/User/address",{'uid':userinfo.uid,'p':page},'post',function(ret){
+			api.refreshHeaderLoadDone();
+			closeloading();
+			if(ret.code==1){
+				
+				if(ret.data.length==0  && page !=1){
+					is_page=false;
+					console.log(ret.data.length);
+					return true;
+				}
+				
+				var strVar = "";
+				$.each(ret.data,function(k,v){
+					strVar += "<div class=\"addrList\">";
+				    strVar += "	<div onclick=\"sureAddress("+v['address_id']+",'"+v['mobile']+"')\" class=\"addrListtop\">";
+				    strVar += "		<p class=\"addrListtop01\">";
+				    strVar += 			v['consignee']+' &nbsp;  '+v['mobile'];
+				    strVar += "		<\/p>";
+				    strVar += "		<p class=\"addrListtop02\">";
+				    strVar += v['province_info']+v['city_info'] +v['area_info']+v['country_info'] + v['address'];
+				    strVar += "		<\/p>";
+				    strVar += "	<\/div>";
+//				    strVar += "	<div class=\"addrListcon\">";
+//				    strVar += "		<div class=\"addrListconl\">";
+//				    if(v['is_default'] ==1){
+//				    	strVar += "			<input id=\"a_p"+v['address_id']+"\" type=\"radio\" onclick=setdefault('"+v['address_id']+"') checked name=\"test\" value=\""+v['address_id']+"\" class=\"duo_checkbox03\">";
+//				    }else{
+//				    	strVar += "			<input id=\"a_p"+v['address_id']+"\" type=\"radio\" onclick=setdefault('"+v['address_id']+"') name=\"test\" value=\""+v['address_id']+"\" class=\"duo_checkbox03\">";
+//				    }
+//				    strVar += "			<label for=\"a_p"+v['address_id']+"\" style=\"color: #717171;line-height: 60px;\">默认地址<\/label>";
+//				    strVar += "		<\/div>";
+					if(v['is_default'] !=1){
+					    strVar += "		<div class=\"addrListconr\">";
+					    strVar += "			<a href=\"javascript:void(0);\" class=\"addrListconr\" onclick=deladdress('"+v['address_id']+"')><i class=\"addrDelicon\"><\/i>删除<\/a>";
+					    strVar += "			<a href=\"javascript:void(0);\" onclick=openaddress('updateaddress','user/updateaddress','修改地址','"+v['address_id']+"') class=\"addrListconr\"><i class=\"addrEditicon\"><\/i>编辑<\/a>";
+					    strVar += "		<\/div>";
+				    }else{
+				    	strVar += "		<div class=\"addrListconr\">";
+					    strVar += "			<a href=\"javascript:void(0);\" onclick=openaddress('updateaddress','user/updateaddress','修改地址','"+v['address_id']+"') class=\"addrListconr\"><i class=\"addrEditicon\"><\/i>编辑<\/a>";
+					    strVar += "		<\/div>";
+				    }
+//				    strVar += "	<\/div>";
+				    strVar += "<\/div>";
+				});
+			    
+			
+				if(page =1){
+					$("#list").html(strVar);
+				}else{
+					$("#list").append(strVar);
+				}
+			}else{
+				_toast(ret.msg);
+			}
+			
+			
+		});
+	}
+	
+	/**
+	 * 选择地址 
+	 * @param address_id  地址id
+	 */
+	function sureAddress(address_id,mobile){
+	
+		if(mobile && mobile.length>10){//手机号存在
+			api.sendEvent({
+		   	    name: 'sureaddress',
+			    extra: {
+			        address_id: address_id
+			    }
+			});
+			//关闭窗口
+			api.closeWin();
+		}else{
+			_toast("请完善地址信息");
+		}
+		
+	}
+	/*
+	 * 设置默认地址
+	 */
+	function setdefault(id){
+	         api.ajax({
+				    url: ajax_url+'Index/User/defaultAddress',
+				    dataType: "json",
+				    method: 'post',
+						 data: {
+				        values: { 
+				          uid:localStorage.getItem("uid"),
+				          id:id
+				        },       
+		             }
+				},function(ret, err){
+				 if(ret){
+				  if(ret.status){
+				  }else{
+				  _toast(ret.msg);
+				  }
+				 }else{
+				 _alert('网络连接失败,请稍后重试');
+				 }
+				})
+	}
+	/*
+	 * 删除地址
+	 */
+	function deladdress(id){
+	  		 api.confirm({
+		    title: '地址',
+		    msg: '您确定要删除该地址吗?',
+		    buttons: ['确定', '取消']
+		},function( ret, err ){	
+		  if(ret){
+		  if(ret.buttonIndex==1){
+		         api.ajax({
+				    url: ajax_url+'Index/User/delAddress',
+				    dataType: "json",
+				    method: 'post',
+						 data: {
+				        values: { 
+				        id:id
+				        },       
+		             }
+				},function(ret, err){
+				  if(ret){
+				   if(ret.code){
+				     page =1;			     	
+					 ready();	
+				    _toast(ret.msg);
+				   }else{
+				    _toast(ret.msg);
+				   }
+				  }else{
+				  _alert('网络连接失败,请稍后重试');
+				  }
+				})
+		  }
+		  }
+		})
+	}
+	function openaddress(name,url,title,id){
+	 _openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title,'id':id});
+	}
+</script>
+</body>
+</html>

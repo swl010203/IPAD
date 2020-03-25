@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>004家庭账户</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+		<style>
+			input.jtzh_btn:focus{
+				border:none;
+				background: -webkit-linear-gradient(left, #df6711 , #d12a18);
+				background: -o-linear-gradient(right, #df6711, #d12a18);
+				background: -moz-linear-gradient(right, #df6711, #d12a18);
+				background: linear-gradient(to right, #df6711 , #d12a18);
+			}
+			
+			.yezhuInfo li{width:50%;height: 50px;line-height: 50px;}
+		</style>
+	</head>
+	<body>
+		
+		<!--中间内容-->
+		<div class="jtzh_banner clearfloat">
+			<span class="fl">家庭账户余额：<span id="money_all">0元</span></span>
+			<span class="fr" style="display: none;">可用积分：<span id="integral">0分</span></span>
+			<div class="jtzhTouxiang">
+				<div class="touxiang" onclick="touxiang();">
+					<img id="portrait" src=""/>
+				</div>
+			</div>
+			<p class="jtzhAddr" id="address"></p>
+			<ul class="dibuliebiao clearfloat">
+				<li class="click after">家庭账户</li>
+				<li class="after" >水表账户</li>
+				<li>电表账户</li>
+			</ul>
+		</div>
+		<!--完善信息前显示-->
+		<!--<div class="weiwanshanxinxi ">
+			<div class="jtzhTit clearfloat">
+				<div class="fl">
+					<i class="xian"></i>
+					<span>账户信息</span>
+				</div>
+				<div class="fr">
+					您还未完善业主信息，<span class="clickQuwanshan"><a href="javascript:;">去完善</a></span>
+				</div>
+			</div>
+		</div>-->
+
+		<!--家庭账户-->
+		<div class="zhanghuTab">
+			
+			<!--完善信息后显示-->
+			<div class="wanshanxinxi">
+				<div class="jtzhTit quMr_20 clearfloat">
+					<div style="height: 48px;" class="fl">
+						<i class="xian"></i>
+						<span>家庭信息</span>
+					</div>
+					<div class="fr wanshanuser">
+						<!-- <span class="clickQuwanshan"><a href="javascript:;">编辑信息</a></span> -->
+					</div>
+				</div>
+				<!-- <div class=""> -->
+					<ul class="yezhuInfo clearfloat ">
+						<!-- <li>
+							<i class="yuandian"></i>
+							<span>业主姓名：<span id="username"></span></span>
+						</li> -->
+						<!-- <li>
+							<i class="yuandian"></i>
+							<span>手机号：<span id="mobile"></span></span>
+						</li> -->
+						
+						<li>
+							<i class="yuandian"></i>
+							<span>IP：<span id="ip_address"></span></span>
+						</li>
+						<li style="display: none;">
+							<i class="yuandian"></i>
+							<span>车牌号：<span id="cart_no"></span></span>
+						</li>
+						<li>
+							<i class="yuandian"></i>
+							<span>家庭地址：<span class="address"></span></span>
+						</li>
+					</ul>
+				<!-- </div> -->
+					
+			</div>
+	
+			
+			<div class="jtzhTit quMr_20 clearfloat">
+				<div>
+					<i class="xian"></i>
+					<span>惠通卡关联账户</span>
+				</div>
+			</div>
+			<div class="jtzh_liebiao">
+				<table border="0" cellspacing="0" cellpadding="0" >
+					<tr>
+						<th>账户名</th>
+						<th>账户类型</th>
+						<th>账户号</th>
+						<!--<th>关联情况</th>-->
+						<th>家庭身份</th>
+					</tr>
+					<tbody id="relationInfo">
+					<!--<tr>
+						<td>张先生</td>
+						<td>惠通卡账户</td>
+						<td>188-9868-18888</td>
+						<td>相互关联</td>
+						<td>子女</td>
+					</tr>-->
+	
+					</tbody>
+				</table>
+			</div>
+			<div class="jtzhAllanniu">
+				<button onclick="_openWinByUrl('congzhi','congzhi',{'frame':'congzhi','furl':'congzhi','title':'家庭账户充值'})">家庭账户充值</button>
+				<!--<button onclick="_openWinByUrl('zhuanzhang','account_head',{'frame':'zhuanzhang_body','furl':'zhuanzhang_body','title':'家庭账户转账'})">家庭账户转账</button>-->
+				<button onclick="_openWinByUrl('jiaofei','account_head',{'frame':'jiaofei_body','furl':'jiaofei_body','title':'生活缴费'})">生活缴费</button>
+				<button onclick="_openWinByUrl('zhifumima','account_head',{'frame':'zhifumima_body','furl':'zhifumima_body','title':'设置支付密码'})">支付密码</button>
+				<button onclick="_openWinByUrl('xiaofeijilu_head','xiaofeijilu_head',{'frame':'xiaofeijilu','furl':'xiaofeijilu','title':'消费记录'})">消费记录</button>
+				<button onclick="_openWinByUrl('guanlianzhanghu','account_head',{'frame':'guanlianzhanghu_body','furl':'guanlianzhanghu_body','title':'惠通卡关联账户'})">惠通卡关联账户</button>
+				<!--<button onclick="_openWinByUrl('order_list','../users/order_list')">全部订单</button>-->
+			
+			</div>
+		
+		</div>
+		<!--水表账户-->
+		<div class="zhanghuTab hide_">
+			<!--完善信息前显示-->
+			<!--<div class="weiwanshanxinxi">
+				<div class="jtzhTit clearfloat">
+					<div class="fl">
+						<i class="xian"></i>
+						<span>水表账户信息</span>
+					</div>
+					<div class="fr">
+						您还未完善业主信息，<span class="clickQuwanshan"><a href="javascript:;">去完善</a></span>
+					</div>
+				</div>
+			</div>-->
+			<!--完善信息后显示-->
+			<div class="wanshanxinxi ">
+				<div class="jtzhTit quMr_20 clearfloat">
+					
+					<div style="height: 48px;" class="fl">
+						<i class="xian"></i>
+						<span>水表账户信息</span>
+					</div>
+					<div class="fr wanshanuser">
+						<!-- <span class="clickQuwanshan"><a href="javascript:;">编辑信息</a></span> -->
+					</div>
+					
+				</div>
+				<ul class="yezhuInfo clearfloat shuibiaoInfo">
+					<!-- <li>
+						<i class="yuandian"></i>
+						<span>业主姓名：<span class="username"></span></span>
+					</li> -->
+					<li>
+						<i class="yuandian"></i>
+						<span>单元楼号：<span class="address"></span></span>
+					</li>
+					<li>
+						<i class="yuandian"></i>
+						<span>水表号：<span id="water_meter"></span></span>
+					</li>
+					<!-- <li>
+						<i class="yuandian"></i>
+						<span>剩余金额：<span>105元</span></span>
+					</li> -->
+				</ul>
+			</div>
+			<div class="jtzhAllanniu shuibiaoDiv dbzh">
+				<button onclick="_openWinByUrl('jiaofei','account_head',{'frame':'jiaofei_body','furl':'jiaofei_body', 'pay_tab':'water'})">缴费</button>
+				<button onclick="_openWinByUrl('watercheck_body','account_head',{'frame':'watercheck_body','furl':'watercheck_body', 'pay_tab':'water'})">缴费记录</button>
+				<button onclick="_openWinByUrl('waterinfo_body','account_head',{'frame':'waterinfo_body','furl':'waterinfo_body', 'pay_tab':'water'})">用水量查询</button>
+			</div>
+		</div>
+		<!--电表账户-->
+		<div class="zhanghuTab hide_">
+			<!--完善信息前显示-->
+			<!--<div class="weiwanshanxinxi">
+				<div class="jtzhTit clearfloat">
+					<div class="fl">
+						<i class="xian"></i>
+						<span>电表账户信息</span>
+					</div>
+					<div class="fr">
+						您还未完善业主信息，<span class="clickQuwanshan"><a href="javascript:;">去完善</a></span>
+					</div>
+				</div>
+			</div>-->
+			<!--完善信息后显示-->
+			<div class="wanshanxinxi ">
+				<div class="jtzhTit quMr_20 clearfloat">
+					
+					<div style="height: 48px;" class="fl">
+						<i class="xian"></i>
+						<span>电表账户信息</span>
+					</div>
+					<div class="fr wanshanuser">
+						<!-- <span class="clickQuwanshan"><a href="javascript:;">编辑信息</a></span> -->
+					</div>
+				</div>
+				<ul class="yezhuInfo clearfloat shuibiaoInfo">
+					<!-- <li>
+						<i class="yuandian"></i>
+						<span>业主姓名：<span class="username"></span></span>
+					</li> -->
+					<li>
+						<i class="yuandian"></i>
+						<span>单元楼号：<span class="address"></span></span>
+					</li>
+					<li>
+						<i class="yuandian"></i>
+						<span>电表号：<span id="electric_meter"></span></span>
+					</li>
+					<!-- <li>
+						<i class="yuandian"></i>
+						<span>剩余金额：<span>105元</span></span>
+					</li> -->
+				</ul>
+			</div>
+			<div class="jtzhAllanniu shuibiaoDiv dbzh">
+				<button onclick="_openWinByUrl('jiaofei','account_head',{'frame':'jiaofei_body','furl':'jiaofei_body', 'pay_tab':'electric'})">缴费</button>
+                <button onclick="_openWinByUrl('watercheck_body','account_head',{'frame':'watercheck_body','furl':'watercheck_body', 'pay_tab':'electric'})">缴费记录</button>
+                <button onclick="_openWinByUrl('waterinfo_body','account_head',{'frame':'waterinfo_body','furl':'waterinfo_body', 'pay_tab':'electric'})">用电量查询</button>
+			</div>
+		</div>
+		
+		<!--点击去完善-->
+		<div class="mark hide_" style="position: fixed;">
+			<div class="quwanshan" style='overflow-y: auto;'>
+				<div class="jtzhTit quMr_20 clearfloat">
+					<div>
+						<i class="xian"></i>
+						<span>完善信息</span>
+					</div>
+					<form class="jtzhForm" action="">
+						<input type="text" id="Inusername"  placeholder="业主姓名"/>
+						<input type="text" id="Inmobile"    placeholder="手机号"/>
+						<input type="text" id="Incart_no"   placeholder="车牌号"/>
+						<input type="text" id="Incart_no2"  placeholder="车牌号"/>
+						<!--<input type="text" id="Water_no"  placeholder="水表号"/>
+						<input type="text" id="Electric_no"  placeholder="电表号"/>-->
+						<input type="text" id="ipaddress"  placeholder="ipAddress"/>
+						<div class="jtahAnniu">
+							<input type="button" onclick="perfectFamily();" class="jtzh_btn" value="完成"/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		function bodyScroll(event){
+			event.preventDefault();
+		}
+		$(function(){
+//			$(".dibuliebiao li").on("click",function(){
+//				$(".dibuliebiao li").removeClass("click");
+//				$(this).addClass("click");
+//			})
+			$(".dibuliebiao li").on("click",function(){
+				$(".dibuliebiao li").removeClass("click");
+				$(this).addClass("click");
+				var index_1 = $(this).index();
+				$(".zhanghuTab").addClass("hide_");
+				$(".zhanghuTab").eq(index_1).removeClass("hide_");
+			});
+			/*点击去完善*/
+			$(".clickQuwanshan").on("click",function(){
+				$(".mark").removeClass("hide_");
+				$("body").css("overflow-y","hidden");
+				document.body.addEventListener('touchmove',bodyScroll,true);
+//				var scroll_ = $(document).scrollTop();
+//				$(".mark").css("top",scroll_);
+			
+			});
+			/*点击完成*/
+			/*$(".jtzh_btn").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");;
+				$(".wanshanxinxi").removeClass("hide_");
+				$(".weiwanshanxinxi").addClass("hide_");
+			})*/
+			/*点击button*/
+			$(".jtzhAllanniu button").on("click",function(){
+				$(".jtzhAllanniu button").removeClass("click");
+				$(this).addClass("click");
+			})
+		});
+		
+		
+		//初始化用户Id
+		var uid = localStorage.getItem("uid");
+		var relationUids = "";  //当前关联用户
+		apiready = function(){
+			api.addEventListener({
+	            name:'refe_relation'
+            },function(ret,err){
+            	getAccountInfo();
+            });
+			
+			//获取用户信息
+			getAccountInfo();
+		};
+		
+		
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+				if(ret.status ==1){
+					$("#address").text(ret.user.address);
+					$(".address").text(ret.user.address);
+					$("#integral").text(ret.user.integral + "分");
+					$("#money_all").text(ret.user.money_all + "元");
+					$("#portrait").attr('src',ret.user.portrait);
+					
+					
+					
+					//监听是否有未读消息
+					api.sendEvent({
+	                    name:'read_msg',
+	                    extra:{
+	                    	read_msg:ret.user.read_msg
+	                    }
+                    });
+					
+					relationUids = ret.user.uids;
+					//判断是否已经完善信息
+					real_name = ret.user.real_name;
+					mobile = ret.user.mobile;
+					cart_no = ret.user.cart_no;
+					cart_no2 = ret.user.cart_no2;
+					
+					electric_meter = ret.user.electric_meter;//电表
+					water_meter    = ret.user.water_meter;   //水表
+					ip_address     = ret.user.ip_address;    //硬件id
+					
+					if(real_name  &&  mobile  &&  electric_meter  &&  water_meter  && ip_address){
+						//$(".wanshanuser").hide();
+					}
+						$(".wanshanxinxi").show();
+						
+						$("#username").text(real_name);
+						$(".username").text(real_name);
+						$("#mobile").text(mobile);
+						$("#cart_no").text(cart_no);
+						$("#cart_no2").text(cart_no2);
+						$("#water_meter").text(water_meter);
+						$("#electric_meter").text(electric_meter);
+						$("#ip_address").text(ip_address);
+						
+						$("#Inusername").val(real_name);
+						$("#Inmobile").val(mobile);
+						$("#Incart_no").val(cart_no);
+						$("#Electric_no").val(electric_meter);
+						$("#Water_no").val(water_meter);
+						$("#ipaddress").val(ip_address);
+						$("#Incart_no2").val(cart_no2);
+					
+					
+					//获取关联账户
+					getrelationInfo();
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		//获取关联账户
+		function getrelationInfo(){
+			_ajax(ajax_url+"Index/Family/relationInfo" ,{'uids':relationUids},'get',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(ret.user).each(function(k , v){
+						strVar += "<tr>\n";
+					    strVar += "<td>"+v['real_name']+"<\/td>\n";
+					    if(v['card_type'] ==1){
+					    	var card_type = '普通账户';
+					    }else{
+					    	var card_type = '惠通卡账户';
+					    }
+					    strVar += "<td>"+card_type+"<\/td>\n";
+					    strVar += "<td>"+v['username']+"<\/td>\n";
+					    strVar += "<td>"+v['relationship']+"<\/td>\n";
+
+					    strVar += "<\/tr>\n";
+					});
+				    
+				}else{
+					$(".jtzh_liebiao").hide();
+				}
+				$("#relationInfo").html(strVar);
+			});
+		}
+		
+		
+		
+		//完善个人信息
+		function perfectFamily(){
+			var Inusername = $("#Inusername").val();
+			var Inmobile   = $("#Inmobile").val();
+			var Incart_no  = $("#Incart_no").val();
+			var Incart_no2  = $("#Incart_no2").val();
+			var Electric_no = $("#Electric_no").val();
+			var Water_no = 	$("#Water_no").val();
+			var ip_address = $("#ipaddress").val();
+			
+			
+			if(!Inusername){
+				_toast('请输入姓名');
+				return false;
+			}
+			if(!Inmobile){
+				_toast('请输入手机号');
+				return false;
+			}
+			
+			if(!_isPhone(Inmobile)){
+				_toast('手机号格式不正确');
+				return false;
+			}
+			
+			if(!ip_address){
+				_toast('请填写设备ip');
+				return false;
+			}
+			
+			console.log("设备ip："+ip_address);
+			
+			api.sendEvent({
+                name:'ipAddress',
+                extra:{
+                	ipAddress:ip_address
+                }
+            });
+						
+			_ajax(ajax_url+"Index/Family/perfectFamily" ,{'ip_address':ip_address,'electric_meter':Electric_no,'water_meter':Water_no,'uid':uid , 'real_name':Inusername,'mobile':Inmobile,'cart_no':Incart_no,'cart_no2':Incart_no2},'post',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					
+					$(".mark").addClass("hide_");
+					$("body").css("overflow-y","auto");
+					document.body.removeEventListener('touchmove',bodyScroll,true);
+					$(".wanshanxinxi").removeClass("hide_");
+					$(".weiwanshanxinxi").addClass("hide_");
+					
+					getAccountInfo();
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		
+		function touxiang(){
+			_actionSheet('请选择类型',['推荐','相机','相册'],function(ret,index){
+			if(index ==4){
+				return true;
+			}
+			if(index ==1){
+				_openWinByUrl('headimg','../user/headimg');return;
+			}
+			if(index ==2){
+				var sourceType = 'camera';
+			}
+			if(index ==3){
+				var sourceType = 'album  ';
+			}
+			
+			api.getPicture({
+				sourceType : sourceType,
+				encodingType : 'jpg',
+				destinationType : 'url',
+				targetWidth : 300,
+				targetHeight : 300,
+				saveToPhotoAlbum: false
+			}, function(ret, err) {
+				if (ret) {
+					if (ret.data != null && ret.data != "unfefined" && ret.data != "") {
+						_ajax(ajax_url +"Index/File/uploadPicture",{},'post',function(data){
+							//api.alert({msg:data});
+							if(data.code ==1){
+								userinfo = $api.getStorage('userinfo');
+								//更新用户头像信息
+								_ajax(ajax_url +"Index/User/upTouX",{'uid':userinfo.uid,'token':userinfo.token,'pic':data.data.photo.id},'post',function(result){
+									if(result.status ==1){
+										userinfo.portrait = picture_url + data.data.photo.path;
+										$api.setStorage('userinfo',userinfo);
+										//广播更新用户信息
+										api.sendEvent({
+										    name: 'refresh_userinfo',
+										    extra: {
+										        userinfo:userinfo
+										    }
+										});
+										
+										$("#portrait").attr('src',picture_url + data.data.photo.path);
+									}else{
+										_toast(result.msg);
+									}
+								});
+								
+							}else{
+								_toast(data.msg);
+							}
+						},'json',{'photo':ret.data})
+					}
+				} else {
+
+}
+            });
+			
+			
+		});
+		}
+	</script>
+</html>

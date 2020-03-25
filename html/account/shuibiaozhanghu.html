@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>水表账户</title>
+		<link rel="stylesheet" type="text/css" href="../../css/account/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/account/newAllStyle.css"/>
+	</head>
+	<body>
+		<!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" id="back">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon">
+				账户中心
+			</div>
+			<div class="fr" onclick="_openWinByUrl('message','message')">
+				<i class="youxinxi"></i>
+			</div>
+		</header>
+		
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+        
+    
+        apiready = function(){
+            api.addEventListener({
+                name:'read_msg'
+            },function(ret,err){
+                
+                read_msg = +ret.value.read_msg;
+            
+                if(read_msg){
+                    $("header .fr i").removeClass('meixinxi');
+                    $("header .fr i").addClass('youxinxi');
+                }else{
+                    
+                    $("header .fr i ").addClass('meixinxi');
+                    $("header .fr i ").removeClass('youxinxi');
+                }
+            });
+            api.parseTapmode();
+                    
+            var header = $api.dom('header');
+            //$api.fixStatusBar(header); 
+            var headerPos = $api.offset(header);
+            var body_h = $api.offset($api.dom('body')).h;
+    
+    
+            api.openFrame({
+                name: 'shuibiaozhanghu_body',
+                url: 'shuibiaozhanghu_body.html',
+                bounces: false,
+                rect: {
+                    x: 0,
+                    y: headerPos.h,
+                    w: headerPos.w,
+                    h: 'auto'
+                },
+                pageParam:api.pageParam
+            });
+            
+        }
+        
+
+    </script>
+</html>

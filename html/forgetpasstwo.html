@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+
+</head>
+<body>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="pad_20">
+		<div class="inputContainer">
+			<i class="vereistIcon">*</i>
+			<input class="loginInpt loginInpt01" placeholder="请输入新密码" autocomplete="off" name="password" type="password">
+		</div>
+		
+		
+		
+		
+		<div style="padding-top: 2rem;">
+		<a href="javascript:void(0);" onclick="submit();" class="btn01">确认</a>
+		</div>
+	
+	</div>
+	
+</div>
+<script type="text/javascript">
+ function submit(){
+  var mobile=api.pageParam['mobile'];//手机号码
+  var password=$("input[name=password]").val();//密码
+  if(!password){
+   _toast('请输入密码');
+   return false;
+  }
+   api.ajax({
+		url : ajax_url + 'Index/User/findPass',
+		method : 'post',
+		data : {
+			values : {
+				mobile:mobile,
+				password:password
+			},
+		}
+	}, function(ret, err) {
+	  if(ret){
+	   if(ret.status==1){
+	   _toast(ret.msg,function(){
+	   	api.closeToWin({
+	           name: 'login'
+           });
+	   });
+	   }else{
+	   _toast(ret.msg);
+	   }
+	  }
+	})
+ }
+ 
+ 
+ 
+</script>
+</body>
+</html>

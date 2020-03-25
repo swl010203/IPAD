@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+    	头部bar的样式-->
+	<title>预约看房</title>
+	<link rel="stylesheet" href="../../script/house/css/style.css" />
+	<link rel="stylesheet" href="../../script/house/css/015_reservation.css" />
+	<script src="../../script/jquery_2_1_4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/iscroll.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<style>
+		.information li:last-child{
+			border-bottom:none;
+		}
+	</style>
+</head>
+<body>
+	<div class="information w_100bfb">
+			<li>您的姓名：
+				<input type="text" id="username" name="username"/>
+			</li>
+			<li>联系电话：
+				<input type="tel" id="mobile" name="tel" />
+			</li>
+			<li>
+				<a class="timer">
+					看房时间：<input type="hidden" id="appointTime" /><input type="text" class="timers" name="time" readonly="readonly" /><i></i>
+				</a>
+			</li>
+			<li>
+				<a class="homer">
+					选择户型：<input type="hidden" id="appointHome" /><input type="text" class="homers" name="home" readonly="readonly"/><i></i>
+				</a>
+			</li>
+			<div style="width: 100%;background: white;border-bottom: 1px solid #e0e0e0;" class="clearfloat">
+				<li class="protocol" style="background-color: #fff;width:2%;float:left;border-bottom: none;">
+					<label><span></span></label>
+				</li>
+				<li style="width:86%;float:left;background-color: #fff;"><a href="javascript:argreement();">我同意并遵守<span style="color:#d12a18;">服务协议</span></a></li>
+			</div>
+	</div>
+	<!--表单信息-->
+	<div class="time-box">
+		<div class="box">
+			<ul class="tit">
+				<li class="fl closes">取消</li>
+				选择看房时间
+				<li class="fr finshs">完成</li>
+			</ul>
+			<div id="wapper1" class="clearfloat">
+				<ul class="time-list">
+					<li >
+						<input class="datatime0" type="hidden" value="" />
+						<p class="fl"></p>
+						<p class="fr time0" onclick="timeList(0);"></p>
+					</li>
+					<li >
+						<input class="datatime1" type="hidden" value="" />
+						<p class="fl"></p>
+						<p class="fr time1" onclick="timeList(1);"></p>
+					</li>
+					<li >
+						<input class="datatime2" type="hidden" value="" />
+						<p class="fl"></p>
+						<p class="fr time2" onclick="timeList(2);"></p>
+					</li>
+					<li>
+						<input class="datatime3" type="hidden" value="" />
+						<p class="fl"></p>
+						<p class="fr time3"  onclick="timeList(3);"></p>
+					</li>
+					<li>
+						<input class="datatime4" type="hidden" value="" />
+						<p class="fl"></p>
+						<p class="fr time4"  onclick="timeList(4);"></p>
+					</li>
+					<li >
+						<input class="datatime5" type="hidden" value="" />
+						<p class="fl"></p>
+						<p class="fr time5" onclick="timeList(5);"></p>
+					</li>
+					<li >
+						<input class="datatime6" type="hidden" value="" />
+						<p class="fl"></p>
+						<p class="fr time6" onclick="timeList(6);"></p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--时间-->
+	
+	
+	<div class="home-box">
+		<div class="box">
+			<ul class="tit">
+				<li class="fl close">取消</li>
+				选择户型
+				<li class="fr finsh">完成</li>
+			</ul>
+			<div id="wrapper" class="clearfloat">
+				<ul class="home-list">
+					<!--<li>
+						<p class="fl">两室一厅</p>
+						<p class="fr"></p>
+					</li>
+					<li>
+						<p class="fl">三室两厅</p>
+						<p class="fr"></p>
+					</li>
+					<li>
+						<p class="fl">复式住宅</p>
+						<p class="fr"></p>
+					</li>
+					<li>
+						<p class="fl">独栋别墅</p>
+						<p class="fr"></p>
+					</li>
+					<li>
+						<p class="fl">独栋别墅</p>
+						<p class="fr"></p>
+					</li>
+					<li>
+						<p class="fl">独栋别墅</p>
+						<p class="fr"></p>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+	</div>
+	<!--户型-->
+	<div class="sub">
+			<input type="button" onclick="submit();" value="确定"/>	
+	</div>		
+	<!--提交按钮-->
+	</body>
+</html>
+<script>
+	//默认执行
+	var hid='';
+	apiready = function(){
+		hid=api.pageParam.hid;
+		
+		//获取户型
+		model();	
+	};
+	
+	//获取户型
+    function model(){
+    	//加载状态
+		loading('index_body');
+		_ajax(ajax_url+"Index/House/model",{id:hid},'post',function(ret){
+			//关闭加载状态
+			closeloading();
+			
+			if(ret.status==1){				
+				//户型
+				var html='';
+				
+				for(var i in ret.data){
+					html+='<li>'+
+					'<p class="fl">'+ret.data[i].name+'</p>'+
+					'<p onclick="homeLists('+ret.data[i].id+');" class="fr home'+ret.data[i].id+'"></p>'+
+					'</li>';
+				}
+				
+				$('.home-list').html(html);
+			}
+			
+		});
+    }
+    
+    //选择户型
+    function homeLists(id){
+    	var home=$('#appointHome').val();
+    	if($(".home"+id).is('.active')){
+    		$(".home"+id).removeClass("active");
+    		var homes=home.split(",");
+    		var ids=[];
+    		var j=0;
+    		for(var i in homes){
+    			if(homes[i]!=id){
+    				ids[j]=homes[i];
+    				j++;
+    			}
+    		}
+    		
+    		home=ids.join(",");
+    		$('#appointHome').val(home);
+    					
+		}else{
+			$(".home"+id).addClass("active");
+			if(!home){
+				$('#appointHome').val(id);
+			}else{
+				$('#appointHome').val(home+','+id);
+			}
+			
+
+		}		
+	}
+	
+	
+	 //选择看房时间
+    function timeList(id){
+		$(".time-list li .fr").removeClass("active");
+		$(".time"+id).addClass("active");
+		var time=$('.datatime'+id).val();		
+		//alert(time);
+		$('#appointTime').val(time);
+	
+	}
+	
+	//提交预约
+	var start=1;
+	function submit(){
+		var name=$('#username').val();
+		var mobile=$('#mobile').val();
+		var time=$('#appointTime').val();
+		var model=$('#appointHome').val();
+		
+		if(!name){
+			_toast('请填写您的姓名！');return;
+		}
+		
+		if(!mobile){
+			_toast('请填写您的联系电话！');return;
+		}
+		var pattern = /^1[34578]\d{9}$/;  
+        if(!pattern.test(mobile)){
+            _toast('手机号格式错误！');return;
+        }
+		if(!time){
+			_toast('请选择您的看房时间！');return;
+		}
+		
+		if(!model){
+			_toast('请选择您需要的户型！');return;
+		}
+		if($(".protocol").is('.active')==false){
+			_toast('请先阅读并勾选服务协议！');return;
+		}
+		if(start==2){
+			return;		
+		}else{
+			start=2;
+		}
+		//加载状态
+		loading('index_body');
+		_ajax(ajax_url+"Index/House/reserve",{
+			uid:localStorage.getItem("uid"),
+			username:name,
+			mobile:mobile,
+			hid:hid,
+			look_time:time,
+			type_id:model
+		},'post',function(ret){
+			//关闭加载状态
+			closeloading();
+			
+			if(ret.status==1){	
+			
+				//向首页发送监听信息
+				api.sendEvent({
+			        name:'index',
+			        extra: {
+					    key1: 'success',
+					    pagename:'member',
+					}
+		        });
+		        			
+				_toast(ret.info,function(){
+					_openWinByUrl('order_list','../users/order_list',{'channel':1});
+				});
+				
+				
+		        
+		         
+		         /*
+		        //关闭到首页
+		        api.closeToWin({
+			        name: 'root'
+		        });*/
+			}
+			
+		});
+	}
+	$('.protocol').on('click',function(){
+		if($(this).is('.active')==false){
+			$(this).find('span').css('border','none');
+		}else{
+			$(this).find('span').css('border','1px solid #999');
+		}
+	});
+	function argreement(){
+		if($('.protocol').is('.active')==false){
+			_openWinByUrl('argreement_window_head','./window_head',{'frame':'argreement','furl':'argreement','title':'服务协议'});
+		}
+	}
+</script>
+<script src="../../script/house/js/common.js" type="text/javascript" charset="utf-8"></script>

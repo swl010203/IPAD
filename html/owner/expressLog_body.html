@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>托管记录</title>
+		<link rel="stylesheet" type="text/css" href="../../css/property/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/property/allStyle.css"/>
+	</head>
+	<body>
+		<div id="list"></div>
+		
+		<!--<ul class="mt_20 pl_20 pr_20 managerRecordUl">
+			<li class="titLi clearfloat border-b">
+				<span class="fl">托管类型：物品托管</span>
+				<span class="fr redColor">托管中</span>
+			</li>
+			<li class="border-b">
+				<p class="clearfloat">
+					<span class="fl">托管时间:07-25 14:00-15:00</span>
+					<span class="fr">托管天数：一周</span>
+				</p>
+				<p>
+					<span>提交时间:07-25 14:00-15:00</span>
+				</p>
+			</li>
+			<li>备注：麻烦妥善管理照顾好我的小猫 十分感谢</li>
+		</ul>
+		<ul class="mt_20 pl_20 pr_20 managerRecordUl">
+			<li class="titLi clearfloat border-b">
+				<span class="fl">托管类型：物品托管</span>
+				<span class="fr">已结束</span>
+			</li>
+			<li class="border-b">
+				<p class="clearfloat">
+					<span class="fl">托管时间:07-25 14:00-15:00</span>
+					<span class="fr">托管天数：一周</span>
+				</p>
+				<p>
+					<span>提交时间:07-25 14:00-15:00</span>
+				</p>
+			</li>
+			<li>备注：麻烦妥善管理照顾好我的小猫 十分感谢</li>
+		</ul>
+		<ul class="mt_20 pl_20 pr_20 managerRecordUl">
+			<li class="titLi clearfloat border-b">
+				<span class="fl">托管类型：物品托管</span>
+				<span class="fr">已结束</span>
+			</li>
+			<li class="border-b">
+				<p class="clearfloat">
+					<span class="fl">托管时间:07-25 14:00-15:00</span>
+					<span class="fr">托管天数：一周</span>
+				</p>
+				<p>
+					<span>提交时间:07-25 14:00-15:00</span>
+				</p>
+			</li>
+			<li>备注：麻烦妥善管理照顾好我的小猫 十分感谢</li>
+		</ul>-->
+	</body>
+	<script type="text/javascript" src="../../script/property/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/property/index.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+		var uid='';
+    	var page=1;
+    	var is_page=true;
+		apiready = function(){
+			
+			uid=localStorage.getItem("uid");
+			//获取托管记录
+			expressLog();
+			//监听滚动条是否到底部
+			api.addEventListener({
+			    name:'scrolltobottom',
+			    extra:{
+			        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+			    }
+			}, function(ret, err){        
+			     if(is_page){
+				     expressLog();
+			     }
+			});
+		};
+		
+		
+		//获取托管记录
+		function expressLog(){
+			_ajax(ajax_url+"Index/Family/getLogisticsList"  ,{'uid':uid,'p':page},'post',function(ret){
+				var strVar = "";
+				if( ret.status ==1 ){
+					$(ret.data).each(function(k,v){
+					
+					
+					    strVar += "<ul class=\"mt_20 pl_20 pr_20 managerRecordUl\">\n";
+					    strVar += "    <li class=\"titLi clearfloat border-b\">\n";
+					    strVar += "        <span class=\"fl\">预约单号："+v['order_sn']+"<\/span>\n";
+					    if(v['status'] == 1){
+					    	typeinfo = '待处理';
+					    } else {
+					    	typeinfo = '已处理';
+					    }
+					    strVar += "        <span class=\"fr redColor\">"+typeinfo+"<\/span>\n";
+					    strVar += "    <\/li>\n";
+					    strVar += "    <li class=\"border-b\">\n";
+					    strVar += "        <p class=\"clearfloat\">\n";
+					    strVar += "            <span class=\"fl\">预约时间:"+_formatDate(v['add_time']*1000 , true)+"<\/span>\n";
+//					    strVar += "            <span class=\"fr\">托管天数：一周<\/span>\n";
+					    strVar += "        <\/p>\n";
+					    strVar += "        <p>\n";
+					    strVar += "            <span>发件人:"+v['name']+"|"+v['phone']+"<\/span>\n";
+					    strVar += "        <\/p>\n";
+					    strVar += "        <p>\n";
+					    strVar += "            <span>收件人:"+v['receive_name']+"|"+v['receive_phone']+"<\/span>\n";
+					    
+					    strVar += "        <\/p>\n";
+					    strVar += "        <p>\n";
+					    strVar += "            <span>收件人地址:"+v['receive_address']+"<\/span>\n";
+					    strVar += "        <\/p>\n";
+					    if( v['status']  != 1){
+						    strVar += "        <p>\n";
+						    strVar += "            <span>物流单号:"+v['logistics_sn']+"<\/span>\n";
+						    strVar += "        <\/p>\n";
+					    }
+					    strVar += "    <\/li>\n";
+					    strVar += "    <li>备注："+v['desc']+"<\/li>\n";
+					    strVar += "<\/ul>\n";
+				    
+				    });
+				    console.log(strVar);
+				    if( page ==1 ){
+				    	$("#list").html(strVar);
+				    } else {
+				    	$("#list").append(strVar);
+				    }
+				} else {
+					_toast(ret.info);
+				}
+			});
+		}
+		
+		
+		/**
+		 * 物流查询 
+		 */
+		function express(logistics_sn,code ){
+
+			if(logistics_sn ==''){
+				_toast('请输入物流单号');
+				return false;
+			}else{
+				_openWinByUrl('expressResult','expressResult',{'no':logistics_sn,'com':code});
+			}
+		}
+		
+		/**
+		 * 查看物流单号
+		 */
+		function getReceiveSn(sn){
+			_openWinByUrl('expressSn','expressSn',{sn:sn});
+		}
+	</script>
+</html>

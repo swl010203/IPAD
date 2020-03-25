@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+ .hinfor_lir{margin-left:0rem;}
+ .yidu{
+ 	width: auto;
+	position: absolute;
+	top: 10px;
+	right: 5px;
+ }
+ li{position: relative;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="hinfor_wrap mt15">
+		<ul class="hinfor_ul list">
+			<!--<li><a href="javascript:void(0);" onclick=opendetail("messagedetail","user/messagedetail","消息详情","'+data[i]['message_id']+'"); class="hinfor_lia">			
+				<div class="hinfor_lir">
+					<p class="hinfor_lirp01">'+data[i]['title']+'</p>
+					<p class="hinfor_lirp01 yidu">已读</p>
+					<p class="hinfor_lirp02">'+data[i]['message']+'</p>
+				</div>
+			</a></li>
+			<li><a href="javascript:void(0);" onclick=opendetail("messagedetail","user/messagedetail","消息详情","'+data[i]['message_id']+'"); class="hinfor_lia">			
+				<div class="hinfor_lir">
+					<p class="hinfor_lirp01">'+data[i]['title']+'</p>
+					<p class="hinfor_lirp01 yidu">已读</p>
+					<p class="hinfor_lirp02">'+data[i]['message']+'</p>
+				</div>
+			</a></li>-->	
+		</ul>
+	</div>
+	
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+var page=1;
+var totalpage=0;
+  apiready=function(){  
+  	api.addEventListener({
+    name:'scrolltobottom',
+    extra:{
+        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+    }
+	}, function(ret, err){        
+	    if(page<totalpage){
+	     page=page+1;
+	     getinfo();
+	    }else{
+	     return false;
+	    }
+	});
+	loading('message');
+   getinfo();
+   
+   api.addEventListener({
+	    name: 'messageyidu'
+	}, function(ret, err) {
+	    if(ret && ret.value.key1=='success'){
+			var id=ret.value.id;																
+			if(id){					
+				$('#sms'+id).text('已读');
+			}			 						
+		}
+	});     
+  };
+function  getinfo(){
+   api.ajax({
+		    url: ajax_url+'Index/Sms/getSmsList',
+		    dataType: "json",
+		    method: 'post',
+				 data: {
+		        values: { 
+		            uid:localStorage.getItem("uid"),
+		            p:page		           
+		        },       
+             }
+		},function(ret, err){
+		 if(ret){
+		  if(ret.status){
+		    var data=ret.info;
+		    totalpage=ret.totalpage;
+		    var html='';
+		    if(data!=null && data.length>0){
+		     for(var i in data){
+		      html+='<li><a href="javascript:void(0);" onclick=opendetail("messagedetail","user/messagedetail","消息详情","'+data[i]['message_id']+'"); class="hinfor_lia">'+			
+				'<div class="hinfor_lir">'+
+					'<p class="hinfor_lirp01">'+data[i]['title']+'</p>';
+					if(data[i]['s_readed']==1){
+						html+='<p class="hinfor_lirp01 yidu">已读</p>';
+					}else{
+						html+='<p class="hinfor_lirp01 yidu" id="sms'+data[i]['message_id']+'">未读</p>';
+					}
+					html+='<p class="hinfor_lirp02">'+data[i]['message']+'</p>'+
+				'</div>'+
+			'</a></li>';
+		     }
+		    }
+		    if(page==1){
+		    $(".list").html(html);
+		    }else{
+		    $(".list").append(html);
+		    }
+		    
+		  }else{
+		  _toast(ret.msg);
+		  return false;
+		  }
+		  closeloading();
+		 }else{
+		 closeloading();
+		 _alert('网络连接失败,请稍后重试');
+		 }
+		
+})
+}
+function opendetail(name,url,title,id){	
+	 _openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title,'id':id});
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>购物车</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    </head>
+
+    <body>
+        <div class="outer_cartDiv pl_20 pr_20 box-s border-b" id="cart_list">
+            <!--最外层  店铺分类-->
+            <!-- <ul id="outer_cartDiv_ul_0" class="outer_cartDiv_ul">
+                <li class="outer_cartDiv_ul_tit clearfloat">
+                    <i onclick="outer_spanClick(this,0)" class="fl outer_icon_select icon_selectN icon_selectY"></i>
+                    <a href="#">
+                        <p class="outer_cartDiv_ul_tit_p clearfloat fl">
+                            <span class="fl outer_cartDiv_ul_tit_span">蓝色港湾水果（北京店）</span>
+                            <i class="fl right_arrow"></i>
+                        </p>
+                    </a>
+                    <span id="edit_dp_0" onclick="editDp(this,0)" class="editor_span editor_spanN fr"></span>
+                </li>
+                <li class="outer_cartDiv_ul_con">
+                    <ul id="dp_ul_0" class="inner_cartDiv_ul">
+                        <li class="clearfloat mb_30">
+                            <i id="dp_ul_0_li_0" onclick="innerSpan_click(this,0,0)" class="fl inner_icon_select icon_selectN icon_selectY"></i>
+                            <div class="fl inner_imgDiv">
+                                <img src="img/502.jpg" alt="" />
+                            </div>
+                            <div class="fl inner_contentDiv">
+                                <p class="foods_name">水果拼盘</p>
+                                <p class="clearfloat">
+                                    <span class="fl">x1</span>
+                                    <span class="fr red">￥<span id="dp_ul_0_myPrice_0">30</span></span>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="outer_cartDiv_ul_footer">
+                    <p class="clearfloat">
+                        <span class="fl">包装费</span>
+                        <span class="fr red">￥<span class="baozhuangfei">10</span></span>
+                    </p>
+                    <div class="preferential_div">
+                        <p class="clearfloat">
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red">-￥<span class="lijianMoney">15</span></span>
+                        </p>
+                        <p class="outer_cartDiv_ul_footer_p">
+                            <span>满20减5,满40减15,满60减50,满100减60</span>
+                            <span onclick="bjClick(this)" class="fr preferential_click"><span>2</span>个活动<i class="down_arrow arrow_p fr"></i></span>
+                        </p>
+                        <p class="clearfloat">
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red">-￥15</span>
+                        </p>
+                    </div>
+                    <p class="clearfloat sumNum_p">总计￥
+                        <span id="total_price_0" class="red"></span>
+                        <span id="dp_del_0" class="btn_span hide_ fr">全部删除</span>
+                        <span id="dp_js_0" class="btn_span fr">结算(<span id="num_span_0" class="num_span">0</span>)</span>
+                    </p>
+                </li>
+            </ul>
+            <ul id="outer_cartDiv_ul_1" class="outer_cartDiv_ul">
+                <li class="outer_cartDiv_ul_tit clearfloat">
+                    <i onclick="outer_spanClick(this,1)" class="fl outer_icon_select icon_selectN icon_selectY"></i>
+                    <a href="#">
+                        <p class="outer_cartDiv_ul_tit_p clearfloat fl">
+                            <span class="fl outer_cartDiv_ul_tit_span">蓝色港湾水果（北京店）</span>
+                            <i class="fl right_arrow"></i>
+                        </p>
+                    </a>
+                    <span id="edit_dp_1" onclick="editDp(this,1)" class="editor_span editor_spanN fr"></span>
+                </li>
+                <li class="outer_cartDiv_ul_con">
+                    <ul id="dp_ul_1" class="inner_cartDiv_ul">
+                        <li class="clearfloat mb_30">
+                            <i id="dp_ul_1_li_0" onclick="innerSpan_click(this,1,0)" class="fl inner_icon_select icon_selectN icon_selectY"></i>
+                            <div class="fl inner_imgDiv">
+                                <img src="img/502.jpg" alt="" />
+                            </div>
+                            <div class="fl inner_contentDiv">
+                                <p class="foods_name">水果拼盘</p>
+                                <p class="clearfloat">
+                                    <span class="fl">x1</span>
+                                    <span class="fr red">￥<span id="dp_ul_1_myPrice_0">45</span></span>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="clearfloat mb_30">
+                            <i id="dp_ul_1_li_1" onclick="innerSpan_click(this,1,1)" class="fl inner_icon_select icon_selectN icon_selectY"></i>
+                            <div class="fl inner_imgDiv">
+                                <img src="img/502.jpg" alt="" />
+                            </div>
+                            <div class="fl inner_contentDiv">
+                                <p class="foods_name">水果拼盘</p>
+                                <p class="clearfloat">
+                                    <span class="fl">x1</span>
+                                    <span class="fr red">￥<span id="dp_ul_1_myPrice_1">22</span></span>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="outer_cartDiv_ul_footer">
+                    <p class="clearfloat">
+                        <span class="fl">包装费</span>
+                        <span class="fr red">￥<span class="baozhuangfei">10</span></span>
+                    </p>
+                    <div class="preferential_div">
+                        <p class="clearfloat">
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red">-￥<span class="lijianMoney">15</span></span>
+                        </p>
+                        <p class="outer_cartDiv_ul_footer_p">
+                            <span>满20减5,满40减15,满60减50,满100减60</span>
+                            <span onclick="bjClick(this)" class="fr preferential_click"><span>2</span>个活动<i class="down_arrow arrow_p fr"></i></span>
+                        </p>
+                        <p class="clearfloat">
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red">-￥15</span>
+                        </p>
+                    </div>
+                    <p class="clearfloat sumNum_p">总计￥
+                        <span id="total_price_1" class="red"></span>
+                        <span id="dp_del_1" onclick="delDpSp(1)" class="btn_span hide_ fr">全部删除</span>
+                        <span id="dp_js_1" class="btn_span fr">结算(<span id="num_span_1" class="num_span">0</span>)</span>
+                    </p>
+                </li>
+            </ul>
+            <ul id="outer_cartDiv_ul_2" class="outer_cartDiv_ul">
+                <li class="outer_cartDiv_ul_tit clearfloat">
+                    <i onclick="outer_spanClick(this,2)" class="fl outer_icon_select icon_selectN icon_selectY"></i>
+                    <a href="#">
+                        <p class="outer_cartDiv_ul_tit_p clearfloat fl">
+                            <span class="fl outer_cartDiv_ul_tit_span">蓝色港湾水果（北京店）</span>
+                            <i class="fl right_arrow"></i>
+                        </p>
+                    </a>
+                    <span id="edit_dp_2" onclick="editDp(this,2)" class="editor_span editor_spanN fr"></span>
+                </li>
+                <li class="outer_cartDiv_ul_con">
+                    <ul id="dp_ul_2" class="inner_cartDiv_ul">
+                        <li class="clearfloat mb_30">
+                            <i id="dp_ul_2_li_0" onclick="innerSpan_click(this,2,0)" class="fl inner_icon_select icon_selectN icon_selectY"></i>
+                            <div class="fl inner_imgDiv">
+                                <img src="img/502.jpg" alt="" />
+                            </div>
+                            <div class="fl inner_contentDiv">
+                                <p class="foods_name">水果拼盘1</p>
+                                <p class="clearfloat">
+                                    <span class="fl">x1</span>
+                                    <span class="fr red">￥<span id="dp_ul_2_myPrice_0">15</span></span>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="clearfloat mb_30">
+                            <i id="dp_ul_2_li_1" onclick="innerSpan_click(this,2,1)" class="fl inner_icon_select icon_selectN icon_selectY"></i>
+                            <div class="fl inner_imgDiv">
+                                <img src="img/502.jpg" alt="" />
+                            </div>
+                            <div class="fl inner_contentDiv">
+                                <p class="foods_name">水果拼盘2</p>
+                                <p class="clearfloat">
+                                    <span class="fl">x1</span>
+                                    <span class="fr red">￥<span id="dp_ul_2_myPrice_1">26</span></span>
+                                </p>
+                            </div>
+                        </li>
+                        <li class="clearfloat mb_30">
+                            <i id="dp_ul_2_li_2" onclick="innerSpan_click(this,2,2)" class="fl inner_icon_select icon_selectN icon_selectY"></i>
+                            <div class="fl inner_imgDiv">
+                                <img src="img/502.jpg" alt="" />
+                            </div>
+                            <div class="fl inner_contentDiv">
+                                <p class="foods_name">水果拼盘3</p>
+                                <p class="clearfloat">
+                                    <span class="fl">x1</span>
+                                    <span class="fr red">￥<span id="dp_ul_2_myPrice_2">13</span></span>
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="outer_cartDiv_ul_footer">
+                    <p class="clearfloat">
+                        <span class="fl">包装费</span>
+                        <span class="fr red">￥<span class="baozhuangfei">10</span></span>
+                    </p>
+                    <div class="preferential_div">
+                        <p class="clearfloat">
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red">-￥<span class="lijianMoney">15</span></span>
+                        </p>
+                        <p class="outer_cartDiv_ul_footer_p">
+                            <span>满20减5,满40减15,满60减50,满100减60</span>
+                            <span onclick="bjClick(this)" class="fr preferential_click"><span>2</span>个活动<i class="down_arrow arrow_p fr"></i></span>
+                        </p>
+                        <p class="clearfloat">
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red">-￥15</span>
+                        </p>
+                    </div>
+                    <p class="clearfloat sumNum_p">总计￥<span id="total_price_2" class="red"></span>
+            
+                        <span id="dp_del_2" onclick="delDpSp(2)" class="btn_span hide_ fr">全部删除</span>
+                        <span id="dp_js_2" class="btn_span fr">结算(<span id="num_span_2" class="num_span">0</span>)</span>
+                    </p>
+                </li>
+            </ul> -->
+        </div>
+    </body>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script type="text/javascript">
+        //单个商品的选中和不选中
+        function innerSpan_click(obj, dp_index, sp_index) {
+            if( $('#edit_dp_'+dp_index).hasClass( 'editor_spanY' ) ) {
+                //编辑
+                if( $(obj).hasClass('icon_selectY') ) {
+                    $(obj).removeClass( 'icon_selectY' );//不选中
+                } else {
+                    $(obj).addClass( 'icon_selectY' );//选中
+                }
+                //根据店铺ID索引设置全选按钮的状态
+                isInnerSpan_clickAll(dp_index);
+            } else {
+                var select = 1;
+                if( $(obj).hasClass('icon_selectY') ) {
+                    $(obj).removeClass( 'icon_selectY' );//不选中
+                    select = 2;
+                } else {
+                    $(obj).addClass( 'icon_selectY' );//选中
+                    select = 1;
+                }
+                var cid = $(obj).attr( 'data-cart-id' );
+                selectCart( dp_index, cid, select );
+                //getCart();
+            }
+
+        }
+        
+        //根据店铺ID索引设置全选按钮的状态
+        function isInnerSpan_clickAll(dp_index) {
+            var cishu = 0;
+            var dp_iList = $("#dp_ul_" + dp_index).find("i");
+            //          alert(dp_iList.length);
+            for(var i = 0; i < dp_iList.length; i++) {
+                if(dp_iList[i].classList.contains("icon_selectY")) {
+                    cishu++;
+                    //全部不选中的时候
+                }
+            }
+            if(cishu == dp_iList.length) { //点击勾选按钮的时候，第一次点击前，页面是全部勾选的状态，因此，我点击某个按钮的时候，会将全选按钮 不选，第如果店铺里是全选的i标签，在给外层全选
+                $("#outer_cartDiv_ul_" + dp_index).find("i.outer_icon_select").addClass("icon_selectY");
+            } else {
+                $("#outer_cartDiv_ul_" + dp_index).find("i.outer_icon_select").removeClass("icon_selectY");
+            }
+        }
+        
+        //全选和全不选统计
+        function outer_spanClick(obj, dp_index) {
+            if( $('#edit_dp_'+dp_index).hasClass( 'editor_spanY' ) ) {
+                //编辑
+                if( $(obj).hasClass('icon_selectY') ) {
+                    $(obj).removeClass( 'icon_selectY' );//不选中
+                    $('#outer_cartDiv_ul_'+dp_index).find('.inner_icon_select').each(function() {
+                        //所有商品都设置为不选中状态
+                        $(this).removeClass( 'icon_selectY' );
+                    });
+                } else {
+                    $(obj).addClass( 'icon_selectY' );//选中
+                    $('#outer_cartDiv_ul_'+dp_index).find('.inner_icon_select').each(function() {
+                        //所有商品都设置为选中状态
+                        $(this).addClass( 'icon_selectY' );
+                    });
+                }
+            } else {
+                var select = 1;
+                if( $(obj).hasClass('icon_selectY') ) {
+                    $(obj).removeClass( 'icon_selectY' );//不选中
+                    select = 2;
+                } else {
+                    $(obj).addClass( 'icon_selectY' );//选中
+                    select = 1;
+                }
+                var cidArr = [];
+                $('#outer_cartDiv_ul_'+dp_index).find('.inner_icon_select').each(function() {
+                    cidArr.push( $(this).attr( 'data-cart-id' ) );
+                });
+                var cid = cidArr.join(',');
+                selectCart( dp_index, cid, select );
+            }
+
+        }
+        
+        //点击活动展开收起效果
+        function bjClick(obj) {
+            if(obj.classList.contains("click_")) {
+                $(obj).parent().parent(".preferential_div").css("height", "1rem");
+                $(obj).removeClass("click_");
+            } else {
+                $(obj).parent().parent(".preferential_div").css("height", "auto");
+                $(obj).addClass("click_");
+            }
+        }
+
+        /**
+         * 点击编辑按钮事件
+         * @param {Object} obj this
+         * @param {Object} dp_index  店铺索引
+         */
+        function editDp(obj, dp_index) {
+            // 1：判断当前编辑按钮是否是编辑状态， 如果不是编辑状态，改成编辑状态(变红)，将删除按钮显示，结算按钮隐藏
+            // 如果是编辑状态，改编辑状态(变灰)，将删除按钮隐藏，结算按钮显示
+            if($("#edit_dp_" + dp_index).get(0).classList.contains("editor_spanY")) {
+                $(obj).addClass("editor_spanN");
+                $(obj).removeClass("editor_spanY");
+                $("#dp_js_" + dp_index).removeClass("hide_");
+                $("#dp_del_" + dp_index).addClass("hide_");
+
+                $('#total_text_'+dp_index).show();
+                $('#total_price_'+dp_index).show();
+            } else { //不是编辑状态
+                $(obj).addClass("editor_spanY");
+                $("#dp_del_" + dp_index).removeClass("hide_");
+                $("#dp_js_" + dp_index).addClass("hide_");
+                
+                $('#total_text_'+dp_index).hide();
+                $('#total_price_'+dp_index).hide();
+            }
+        }
+        
+        /**
+         * 全部删除方法
+         * @param {Object} dp_index 店铺索引
+         */
+        function delDpSp_bak(dp_index) {
+            var oneBoxPrice = 0;//getOneBoxPrice(dp_index);//获取一个店铺的一个包装盒费用
+            var allGoodsNum = 0;//总商品数量
+            var allGoodsPrice = 0;//商品总价
+            var num = 0;
+            var selectNum = 0;
+            $('#outer_cartDiv_ul_'+dp_index).find('.inner_icon_select').each(function() {
+                if( !$(this).hasClass('icon_selectY') ) {
+                    //获取所有没有选中的计算
+                    var oneGoodsNum   = $(this).attr('data-goods-num');//单个商品的数量
+                    var oneGoodsPrice = $(this).attr('data-one-goods-price');//单个商品的总价格
+                    allGoodsNum += parseInt( oneGoodsNum );
+                    allGoodsPrice += parseFloat( oneGoodsPrice );
+                    num++;
+                    $(this).addClass( 'icon_selectY' );
+                } else {
+                    selectNum++;
+                    $(this).parent().remove();
+                }
+            });
+            
+            var allNum = $('#outer_cartDiv_ul_'+dp_index).find('.inner_icon_select').length;//总选中商品数量
+            if( allNum == 0 ) {
+                $('#outer_cartDiv_ul_'+dp_index).remove();
+                return false;
+            }
+            
+            if( selectNum == 0 ) {
+                _toast( '请选择商品' );
+            }
+            
+            $('#outer_cartDiv_ul_'+dp_index).find('.outer_icon_select').addClass( 'icon_selectY' );
+            var allBoxPrice = 0;//oneBoxPrice*allGoodsNum;//总餐盒费
+            var totalPrice = parseFloat( allGoodsPrice )+parseFloat( allBoxPrice );//总餐盒费+总商品价格
+            
+            //$('#all_box_price_'+dp_index).text( parseFloat( allBoxPrice ).toFixed(2) );//总餐盒费
+            $('#total_price_'+dp_index).text( parseFloat( totalPrice ).toFixed(2) );//总金额
+            $('#num_span_'+dp_index).text( parseInt(num) );//总数量
+            
+            $("#dp_js_" + dp_index).removeClass("hide_");
+            $("#dp_del_" + dp_index).addClass("hide_");
+            $("#edit_dp_"+dp_index).removeClass("editor_spanY");
+        }
+    </script>
+    <script>
+    var uid = localStorage.getItem( "uid" );
+    apiready = function() {
+        uid = localStorage.getItem( "uid" );
+        getCart();
+    };
+    
+    //获取购物车信息
+    function getCart() {
+        loading( 'cart_body', 'rgba(0,0,0,0)' );
+        _ajax(ajax_url+"Index/TakeoutOrder/getCart" ,{uid:uid},'post',function(ret) {
+            closeloading();
+            $('#cart_list').html( '' );
+            if(ret.status ==1){
+                var cart_html = '';
+                $.each(ret.data, function(key, val) {
+                    //是否全选
+                    var allSelect = '';
+                    if( val.select_all == 'all' ) {
+                        allSelect = 'icon_selectY';
+                    }
+                    cart_html += '<ul id="outer_cartDiv_ul_'+key+'" data-one-box-price="'+val.box_fee+'" class="outer_cartDiv_ul">';
+                    cart_html += '    <li class="outer_cartDiv_ul_tit clearfloat">';
+                    cart_html += '        <i onclick="outer_spanClick(this,'+key+')" class="fl outer_icon_select icon_selectN '+allSelect+'"></i>';
+                    cart_html += '        <a href="javascript:void(0);">';
+                    cart_html += '            <p class="outer_cartDiv_ul_tit_p clearfloat fl">';
+                    cart_html += '                <span class="fl outer_cartDiv_ul_tit_span">'+val.shop_name+'</span>';
+                    cart_html += '                <i class="fl right_arrow"></i>';
+                    cart_html += '            </p>';
+                    cart_html += '        </a>';
+                    cart_html += '        <span id="edit_dp_'+key+'" onclick="editDp(this,'+key+')" class="editor_span editor_spanN fr"></span>';
+                    cart_html += '    </li>';
+                    cart_html += '    <li class="outer_cartDiv_ul_con">';
+                    cart_html += '        <ul id="dp_ul_'+key+'" class="inner_cartDiv_ul">';
+                    $.each(val.goods_list, function(k, v) {
+                    //是否选择
+                    var isSelect = '';
+                    if( v.is_select == 1 ) {
+                        isSelect = 'icon_selectY';
+                    }
+                    cart_html += '            <li class="clearfloat mb_30">';
+                    cart_html += '                <i id="dp_ul_'+key+'_li_'+k+'" data-goods-num="'+v.goods_num+'" data-one-goods-price="'+v.price+'" data-cart-id="'+v.cart_id+'" onclick="innerSpan_click(this,'+key+','+k+')" class="fl inner_icon_select icon_selectN '+isSelect+'"></i>';
+                    cart_html += '                <div class="fl inner_imgDiv">';
+                    cart_html += '                    <img src="'+v.goods_img+'" alt="" />';
+                    cart_html += '                </div>';
+                    cart_html += '                <div class="fl inner_contentDiv">';
+                    cart_html += '                    <p class="foods_name">'+v.goods_name+'</p>';
+                    cart_html += '                    <p class="clearfloat">';
+                    cart_html += '                        <span class="fl">x'+v.goods_num+'</span>';
+                    cart_html += '                        <span class="fr red">￥<span id="dp_ul_'+key+'_myPrice_'+k+'">'+v.price+'</span></span>';
+                    cart_html += '                    </p>';
+                    cart_html += '                </div>';
+                    cart_html += '            </li>';
+                    });
+                    cart_html += '        </ul>';
+                    cart_html += '    </li>';
+                    cart_html += '    <li class="outer_cartDiv_ul_footer">';
+                    //cart_html += '        <p class="clearfloat">';
+                    //cart_html += '            <span class="fl">包装费</span>';
+                    //cart_html += '            <span class="fr red">￥<span class="baozhuangfei" id="all_box_price_'+key+'" >'+val.box_fee_all+'</span></span>';
+                    //cart_html += '        </p>';
+                    cart_html += '        <div class="preferential_div">';
+                    if( val.is_new_user ) {
+                    //新用户
+                    cart_html += '            <p class="clearfloat">';
+                    cart_html += '                <span class="fl">新用户立减</span>';
+                    cart_html += '                <span class="fr red">-￥<span class="lijianMoney">'+val.new_user_cheap+'</span></span>';
+                    cart_html += '            </p>';
+                    }
+                    if( val.activity != '' ) {
+                    cart_html += '            <p class="outer_cartDiv_ul_footer_p">';
+                    cart_html += '                <span>'+val.activity+'</span>';
+                    //cart_html += '                <span onclick="bjClick(this)" class="fr preferential_click"><span>2</span>个活动<i class="down_arrow arrow_p fr"></i></span>';
+                    cart_html += '                <span onclick="bjClick(this)" class="fr preferential_click"><span></span>活动</span>';
+                    cart_html += '            </p>';
+                    }
+                    //cart_html += '            <p class="clearfloat">';
+                    //cart_html += '                <span class="fl">新用户立减</span>';
+                    //cart_html += '                <span class="fr red">-￥15</span>';
+                    //cart_html += '            </p>';
+                    cart_html += '        </div>';
+                    cart_html += '        <p class="clearfloat sumNum_p"><span id="total_text_'+key+'">总计￥</span>';
+                    cart_html += '            <span id="total_price_'+key+'" class="red">'+val.cart_amount_all+'</span>';
+                    cart_html += '            <span id="dp_del_'+key+'" onclick="delDpSp('+key+')" class="btn_span hide_ fr">全部删除</span>';
+                    cart_html += '            <span id="dp_js_'+key+'" onclick="orderOk(this,'+key+');" class="btn_span fr">结算(<span id="num_span_'+key+'" class="num_span">'+val.cart_num+'</span>)</span>';
+                    cart_html += '        </p>';
+                    cart_html += '    </li>';
+                    cart_html += '</ul>';
+                });
+                $('#cart_list').html( cart_html );
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //清空操作
+    function submit() {
+        if( $.trim( $('#cart_list').text() ) ) {
+            delDpSp('all');
+        }
+    }
+    
+    //删除
+    function delDpSp(dp_index) {
+        if( dp_index == 'all' ) {
+            //清空购物车
+            var cartIdStr = '';
+            var type      = 1;
+        } else {
+            var selectLength = $('#dp_ul_'+dp_index).find( '.icon_selectY' ).length;
+            if( selectLength == 0 ) {
+                _toast( '请选择商品' );
+                return false;
+            }
+            var cartIdObj = [];
+            $('#dp_ul_'+dp_index).find( '.icon_selectY' ).each(function() {
+                cartIdObj.push( $(this).attr( 'data-cart-id' ) );
+            });
+            var cartIdStr = cartIdObj.join(',');
+            if( !cartIdStr || cartIdStr == '' ) {
+                _toast( '请选择商品' );
+                return false;
+            }
+            var type = '';
+        }
+        
+        _ajax(ajax_url+"Index/TakeoutOrder/delCart" ,{uid:uid, cid:cartIdStr, type:type},'post',function(ret) {
+            if(ret.status ==1){
+                getCart();
+                return;
+                if( dp_index == 'all' ) {
+                    //清空购物车
+                    $('#cart_list').html( '' );
+                } else {
+                    var oneBoxPrice = 0;//getOneBoxPrice(dp_index);//获取一个店铺的一个包装盒费用
+                    var allGoodsNum = 0;//总商品数量
+                    var allGoodsPrice = 0;//商品总价
+                    var num = 0;
+                    var selectNum = 0;
+                    $('#outer_cartDiv_ul_'+dp_index).find('.inner_icon_select').each(function() {
+                        if( !$(this).hasClass('icon_selectY') ) {
+                            //获取所有没有选中的计算
+                            var oneGoodsNum   = $(this).attr('data-goods-num');//单个商品的数量
+                            var oneGoodsPrice = $(this).attr('data-one-goods-price');//单个商品的总价格
+                            allGoodsNum += parseInt( oneGoodsNum );
+                            allGoodsPrice += parseFloat( oneGoodsPrice );
+                            num++;
+                            $(this).addClass( 'icon_selectY' );
+                        } else {
+                            selectNum++;
+                            $(this).parent().remove();
+                        }
+                    });
+                    
+                    var allNum = $('#outer_cartDiv_ul_'+dp_index).find('.inner_icon_select').length;//总选中商品数量
+                    if( allNum == 0 ) {
+                        $('#outer_cartDiv_ul_'+dp_index).remove();
+                        return false;
+                    }
+                    
+                    $('#outer_cartDiv_ul_'+dp_index).find('.outer_icon_select').addClass( 'icon_selectY' );
+                    var allBoxPrice = 0;//oneBoxPrice*allGoodsNum;//总餐盒费
+                    var totalPrice = parseFloat( allGoodsPrice )+parseFloat( allBoxPrice );//总餐盒费+总商品价格
+                    
+                    //$('#all_box_price_'+dp_index).text( parseFloat( allBoxPrice ).toFixed(2) );//总餐盒费
+                    $('#total_price_'+dp_index).text( parseFloat( totalPrice ).toFixed(2) );//总金额
+                    $('#num_span_'+dp_index).text( parseInt(num) );//总数量
+                    
+                    $("#dp_js_" + dp_index).removeClass("hide_");
+                    $("#dp_del_" + dp_index).addClass("hide_");
+                    $("#edit_dp_"+dp_index).removeClass("editor_spanY");
+                }
+                _toast( '操作成功' );
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //选择
+    function selectCart( sid, cid, select ) {
+        _ajax(ajax_url+"Index/TakeoutOrder/selectCart" ,{uid:uid, sid:sid, cid:cid, select:select},'post',function(ret) {
+            if(ret.status ==1){
+                getCart();
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //订单确认
+    function orderOk(obj, dp_index) {
+        var cartIdArr = [];
+        $('#dp_ul_'+dp_index).find( '.icon_selectY' ).each(function() {
+            var cart_id = $(this).attr( 'data-cart-id' );
+            cartIdArr.push( cart_id );
+        });
+        var cart_id = cartIdArr.join(',');
+        if( cart_id == '' || !cart_id || typeof cart_id == 'undefined' ) {
+            _toast('请选择商品');
+            return false;
+        }
+        console.log("cart_id:"+cart_id);
+        //跳转下单页面 确认订单页面
+        _openWinByUrl('sureorder','../sureorder',{cart_id:cart_id});
+//      _openWinByUrl('order_head','order_head',{cart_id:cart_id});
+    }
+    </script>
+</html>

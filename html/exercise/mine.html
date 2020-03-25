@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">我的</h1>
+			<a class="mui-pull-right iconfont icon-info icon-youxiaoxi fs24Icon colorRed mt20" onclick="_openWinByUrl('message','message')"></a>
+		</header>
+		<div class="mui-content">
+			<div class="my_top">
+				<div class="my_top_outer">
+					<div class="my_top_head">
+						<img src="../../images/my1.jpg" id="minephoto"/>
+					</div>
+				</div>
+				<p class="mui-text-center colorWhite fs30 mt30 font_weightB" id="minename"></p>
+			</div>
+			<div class="my_center bgwhite fs26 mui-text-center">
+				<div class="mui-row">
+					<div class="mui-col-xs-6 mui-col-sm-6 pb40 border_b" onclick="_openWinByUrl('myAppoint', 'myAppoint')">
+						<span class="iconfont icon-yuyue colorRed"></span>
+						<p class="mt10">我的预约</p>
+					</div>
+					<div class="mui-col-xs-6 mui-col-sm-6 pb40 border_b" onclick="_openWinByUrl('mineAssess', 'mineAssess');">
+						<span class="iconfont icon-pingjia colorZise"></span>
+						<p class="mt10">我的评价</p>
+					</div>
+					<div class="mui-col-xs-6 mui-col-sm-6 pb40 border_b" onclick="_openWinByUrl('mineOrder', 'mineOrder');">
+						<span class="iconfont icon-74wodedingdan colorGreen"></span>
+						<p class="mt10">我的订单</p>
+					</div>
+					<div class="mui-col-xs-6 mui-col-sm-6 pb40 border_b" onclick="_openWinByUrl('consumeLog', 'consumeLog');">
+						<span class="iconfont icon-xiaofeijilu colorBlue"></span>
+						<p class="mt10">消费记录</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+		var userinfo = '';
+	    apiready = function(){
+	        api.addEventListener({
+	            name: 'yidu'
+	        }, function(ret, err){
+	            wdnum();
+	        });
+	
+	        userinfo = $api.getStorage('userinfo');
+	        $('#minephoto').attr('src',userinfo.portrait);
+	        $('#minename').html(userinfo.nickname);
+	        wdnum();
+	    };
+	
+	    function wdnum(){
+	        _ajax(ajax_url+'Index/Exercise/notRead',{'uid':userinfo.uid},'post',function(ret,err){
+	            if(ret.status == 1){
+	                $('.icon-info').addClass('icon-youxiaoxi');
+	            }else{
+	                $('.icon-info').removeClass('icon-youxiaoxi');
+	            }
+	        });
+	    }
+	</script>
+</html>

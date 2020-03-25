@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<security>
+<item name="aliPay_partner" value="2088521528292839"/>
+<item name="aliPay_seller"  value="hangjia_sye@163.com"/>
+<item name="aliPay_rsaPriKey" value="MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANoHjuChISF8YtR/5c/LiWXS1OmiGdiJMXmSfLzNUu+R4llGv8bD0b/dZHMEfLhQmZ4MGStdX6FT0+0dEB5DZ+SEkJQkzFeKcCy1y6mNW56fqHFvkAoNx7+y0ueOP48D+fObZbmkivLgAfg7lWEsioXnkjbbskS8mTtJXW1g/UDDAgMBAAECgYEAjj98ImY9/WDwAgBn6Yi73ekN7FhMUJBB7TV7mJrFT3R4nxKfsIi14l4JWVlGHeLINuthyH8lE1Zj4EGj8Hq93o+YKq9EbNj0FGE6343uDMDg0T2A5R+WGlFGvpfNdiOpgfDkkIE4lglxyQL8jry/nzd+T9nJAMBCIywHUgfPFUECQQDyCMETiF/egCgaPmOMAgRTWCbZU67Zxq7X6t51a0qtptAlb1c3uqv98H9ZohNL/0OUI3srkrSG5oBgttyeYpPxAkEA5pw3FKvqkDw9JIsHkOzPvwG3ADhXUhCAWibRY5Kl02YuHZatTVORe7NQpOVLvOTmP5Hk0cESBC3IOSnQ758D8wJBAMJ8UlmVviOWq6La+zbn7/3g2ebMnbYVNy39ZyDHREzhvGQ4YcdAUzBM7qhh2ku5JN6G3FSZIEM+OW59wi3rXKECQQDUGffbLme2M4F0+96AoB5PKo+bRzahBwZWZH+PmpCkR8XAdxZ8GZGkeX+BuleXq9xNua0AcxhT+Zu/X8OIsPObAkAizPg9SqtBwH/70lqsFaBoztH5WRUyUr2R9K6dz3YgobyFeRn5RncqSEKuS+1TPfe+gHUU19guB3SrQDyOwnW7"/>
+<item name="aliPay_rsaPubKey" value="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDaB47goSEhfGLUf+XPy4ll0tTpohnYiTF5kny8zVLvkeJZRr/Gw9G/3WRzBHy4UJmeDBkrXV+hU9PtHRAeQ2fkhJCUJMxXinAstcupjVuen6hxb5AKDce/stLnjj+PA/nzm2W5pIry4AH4O5VhLIqF55I227JEvJk7SV1tYP1AwwIDAQAB"/>
+<item name="aliPay_notifyURL" value="http://123.57.10.203:8094/index.php"/>
+
+<item name="wxPay_appId" value="wx967c2d25800a08ae"/>
+<item name="wxPay_mchId" value="1430124402"/>
+<item name="wxPay_partnerKey" value="b36a5b2f763c76ef2af4ea389eb39f8e"/>
+<item name="wxPay_notifyUrl" value="http://123.57.36.71:8094/index.php/"/>
+
+</security>

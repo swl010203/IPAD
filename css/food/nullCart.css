@@ -1,0 +1,56 @@
+header{
+	overflow: hidden;
+	border-bottom: 1px solid #e0e0e0;
+	background: white;
+}
+header .back a img{
+	width: 0.21rem;
+	height: 0.38rem;
+	margin-top: 0.05rem;
+}
+header .word{
+	font-size: 0.36rem;
+	color: #d12a18;
+	margin-left: 2.29rem;
+}
+header .bianji{
+	font-size: 0.25rem;
+	margin-top: 0.06rem;
+}
+header .bianji a{
+	color: #d12a18;
+}
+.bigBox{
+	width: 4rem;
+	margin: 2rem auto;
+}
+.bigBox img{
+	width: 100%;
+}
+.pImg{
+	width: 2.06rem;
+	height: 1.8rem;
+	margin: 0 auto;
+	margin-bottom: 0.8rem;
+}
+.pWord{
+	text-align: center;
+	font-size: 0.23rem;
+}
+.pBtn{
+	width: 2.2rem;
+	height: 0.7rem;
+	background: url(../img/cartBackground.png);
+	text-align: center;
+	line-height: 0.7rem;
+	margin: 0 auto;
+	background-size: 100% 100%;
+	border-radius: 0.1rem;
+	font-size: 0.25rem;
+}
+.pBtn a{
+	color: white;
+}
+.pWord{
+	margin-bottom: 2rem;
+}

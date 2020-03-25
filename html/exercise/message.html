@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+        <link href="../../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../css/common.css" />
+    </head>
+
+    <style>
+    	.show{
+    		display: block;
+    	}
+
+    	.hide{
+    		display: none;
+    	}
+    	.span-title{
+    		display: inline-block;height: 40px;line-height: 40px;
+    	}
+    </style>
+
+    <body>
+        <header id="header" class="mui-bar mui-bar-nav bgRed">
+            <h1 class="mui-title">消息中心</h1>
+            <button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" onclick="allRead()">全部已读</button>
+            <input type="hidden" name="noReadId" class="noReadId" value="" />
+            <a class="mui-icon mui-icon-back colorRed"></a>
+        </header>
+        <div class="mui-content">
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell mui-media" onclick="exscript('ymessage','message','./exercise/messagetype','消息')">
+                    <a href="javascript:">
+                            <div class="mui-pull-left mr20 xiaoxiDivimg">
+                                <img class="mui-media-object" src="../../images/xiaoxi1.jpg">
+                                <div class="xiaoxiDivState hide smsPoint" id="classAppoint"></div>
+                            </div>
+                        <div class="mui-media-body">
+                            <p class="clearfloat">
+                            	<span class="span-title">课程预约</span>
+                            	<!-- <span class="fs24 colorHui999 mui-pull-right">今天</span> -->
+                            </p>
+                            <p class='mui-ellipsis fs24 colorHui999'></p>
+                        </div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media" onclick="exscript('jmessage','message','./exercise/messagetype','消息')">
+                    <a href="javascript:">
+                            <div class="mui-pull-left mr20 xiaoxiDivimg">
+                                <img class="mui-media-object" src="../../images/xiaoxi1.jpg">
+                                <div class="xiaoxiDivState hide smsPoint" id="place"></div>
+                            </div>
+                        <div class="mui-media-body">
+                            <p class="clearfloat">
+                            	<span class="span-title">健身房</span>
+                            	<!-- <span class="fs24 colorHui999 mui-pull-right">今天</span> -->
+                            </p>
+                            <p class='mui-ellipsis fs24 colorHui999'></p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript">
+        mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+
+		var userinfo ="";
+		var cardNo = '';
+        var wdnum = '';
+		apiready=function(){
+			userinfo = $api.getStorage('userinfo');
+
+            api.addEventListener({
+    		    name: 'yidu'
+    		}, function(ret, err){
+    		    ready();
+    		});
+        checkIsFamily();
+			ready();
+		};
+
+
+        function checkIsFamily(){
+            var showType = '';
+            is_family_account_str = localStorage.getItem("is_family");
+            if (typeof is_family_account_str != 'undefined' && is_family_account_str != '' && is_family_account_str != null) {
+                $('.isFShow').removeClass('mui-hidden');
+            } else {
+                $('.isFShow').addClass('mui-hidden');
+            }
+        }
+
+		// 获取用户卡信息 && 获取未读消息数量
+		function ready(){
+				// 获取用户未读消息
+				_ajax(ajax_url +"Index/Exercise/notRead",{'uid':userinfo.uid},'post',function(ret){
+                        wdnum  = ret.data;
+						if(ret.status == 1){
+                            if(ret.ynum > 0){
+                                $('#classAppoint').removeClass('hide');
+								$('#classAppoint').addClass('show');
+                            }
+
+							if(ret.jnum > 0){
+								$('#place').removeClass('hide');
+								$('#place').addClass('show');
+							}
+
+							$('.noReadId').val(ret.data);
+						}else if(ret.status == -1){
+							if($('.smsPoint').hasClass('show')){
+								$('.smsPoint').removeClass('show');
+								$('.smsPoint').addClass('hide');
+							}
+							$('.noReadId').val('');
+						}
+				});
+		}
+
+		// 全部变为已读
+		function allRead(){
+			if( typeof userinfo == 'undefined' || userinfo == '' || userinfo == null ){
+				_openWinByUrl('login','login');
+				return false;
+			}else{
+                if(wdnum == 0){
+                    _toast('暂无未读信息');
+                    return false;
+                }
+				_ajax(ajax_url +"Index/Exercise/setAllRead",{'uid':userinfo.uid},'post',function(ret){
+					if(ret.status != 0){
+						_toast(ret.msg);
+						 // 发送全部已读消息监听
+						if(ret.status == 1){
+							api.sendEvent({
+							    name: 'exerciseAllRead',
+							    extra: {
+							        status: ret.status,
+							    }
+							});
+						}
+					}else if(ret.status == 0){
+						// 去登录
+						_toast(ret.msg);
+						_openWinByUrl('login','login');
+						return false;
+					}
+				});
+			}
+		}
+
+        function exscript(fname,name,url,title){
+			if(typeof userinfo == 'undefined' || userinfo == '' || userinfo == null){
+				_openWinByUrl('login','login');
+				return false;
+			}
+            if(fname == 'jmessage'){
+                type = 2;
+            }else{
+                type = 1;
+            }
+			_openWinByUrl('_window_head','../window_head',{'frame':name,'furl':url,'title':title,'type':type});
+	    }
+    </script>
+</html>

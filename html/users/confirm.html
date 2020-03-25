@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html style="background: none;">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+		<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+		<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>我的收藏</title>
+		<link rel="stylesheet" href="../../css/user/style.css" />
+		<link rel="stylesheet" href="../../css/user/allStyle.css">
+		<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+		<script type="text/javascript" src="../../script/user/index.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<style>
+			#content{
+				width: 100%;
+				text-align:center;
+			}
+		</style>
+	</head>
+	<body style="background: none;">		
+		<div class="mark">
+			<div class="queren">
+				<div>
+					<img src="../../images/user/031flowe.png" alt="" />
+				</div>
+				<div id="content"></div>
+				<div>
+					<button class="sure">确定</button>
+					<button class="noSure">取消</button>
+				</div>
+			</div>
+		</div>
+	</body>	
+	
+	<script>
+		apiready = function() {	
+			$('#content').text(api.pageParam.content);
+		};
+		
+		$(".queren button").click(function(){
+			var btnClass = $(this).attr("class");
+			if(btnClass=="sure"){
+				api.sendEvent({
+					name: 'confirm',
+					extra: {
+						key1: 'success',
+						type:1
+					}
+				});
+				api.closeFrame({name: 'confirm'});
+			}else{
+				api.sendEvent({
+					name: 'confirm',
+					extra: {
+						key1: 'success',
+						type:2
+					}
+				});
+				//$(".mark").addClass("hide_");
+				api.closeFrame({name: 'confirm'});
+			}
+		})
+	</script>
+</html>

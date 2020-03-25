@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+	</head>
+
+	<body class="mui-android mui-android-8 mui-android-8-0">
+		<header id="header" class="mui-bar mui-bar-transparent" style="background-color: rgba(230, 60, 37, 0);">
+			<a class="mui-pull-left back_icon"></a>
+			<h1 class="mui-title headerTit">苹果</h1>
+			<a class="mui-pull-right share_icon fenxiang_click"></a>
+		</header>
+		<div class="mui-content">
+			<div class="mui-slider mui_slider mui_slider_shangpin bgwhite">
+				<div class="mui-slider-group mui-slider-loop">
+					<!--第四个内容区-->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<img src="../../images/index2.jpg" />
+					</div>
+					<!--第一个内容区容器-->
+					<div class="mui-slider-item">
+						<img src="../images/pingguo.jpg" />
+					</div>
+					<!--第二个内容区-->
+					<div class="mui-slider-item">
+						<img src="../images/pingguo2.jpg" />
+					</div>
+					<!--第三个内容区-->
+					<div class="mui-slider-item">
+						<img src="../images/index1.jpg" />
+					</div>
+					<!--第四个内容区-->
+					<div class="mui-slider-item">
+						<img src="../images/index2.jpg" />
+					</div>
+					<!--第一个内容区容器-->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<img src="../images/pingguo.jpg" />
+					</div>
+				</div>
+			</div>
+			<div class="shopInfoDiv bgwhite">
+				<div>
+					<div class="msInfo_div pt10 pb10 mb20 pl20 pr20 box-s">
+						<p>
+							<span class="fs24">￥</span>
+							<span class="fs36">29</span> 
+							<span class="fs32">.99</span>
+							<span class="fs24 oldPrice">￥35</span>
+						</p>
+						<div class="djs_div">
+			        			<span>01</span> :
+			        			<span>01</span> :
+			        			<span>01</span>
+			        		</div>
+					</div>
+					<div class="pl20 pr20 box_s">
+						<p class="fs28">花牛苹果/蛇果 12个 单果约130g-180g 总重约2kg</p>
+						<div class="shopDiv_infoPrice mui-row">
+							<div>
+								<div class="shop_label colorHei888 fs24 mt10">
+									<span class="mr20"><i class="duihao_icon mr10"></i>当日达</span>
+									<span class="mr20"><i class="duihao_icon mr10"></i>正品保障</span>
+									<span class="mr20"><i class="duihao_icon mr10"></i>支持七天无理由退货</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="shopInfoCon_tit colorHei888"><span>浏览图文详情</span></div>
+			<div class="pl20 pr20 box_s">
+				此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容此处是富文本内容
+			</div>
+			<div style="height: 80px;"></div>
+			<footer class="shopFooter">
+				<div class="mui-row">
+					<div class="mui-col-sm-1 mui-col-xs-1">
+						<div class="cart_blackIcon"><span class="mui-badge mui_badge">12</span></div>
+						<p class="fs24 mui-text-center">购物车</p>
+					</div>
+					<div class="mui-col-sm-3 mui-col-xs-3 shoucangN_iconClick">
+						<div class="shoucangN_icon"></div>
+						<p class="fs24 mui-text-center">收藏</p>
+					</div>
+					<div class="mui-col-sm-4 mui-col-xs-4">
+						<div class="addCart fs32">加入购物车</div>
+					</div>
+					<div class="mui-col-sm-4 mui-col-xs-4">
+						<div class="buyNow fs32">立即购买</div>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		//点击分享出来弹层
+		$(".fenxiang_click").on("tap",function(){
+			share();
+			$(".mark_common").removeClass("mui-hidden");
+			$(".mark_share").slideDown();
+			show_mark();
+		});
+		setTimeout(function(){
+		    var gallery = mui('.mui-slider');
+		    gallery.slider({
+		         interval:1800//自动轮播周期，若为0则不自动播放，默认为0；
+		    });
+		},300);
+	     window.onscroll = window.ontouchmove = function() {
+	        var scrollY = $(document).scrollTop();// 获取垂直滚动的距离，即滚动了多少
+	        if (scrollY > 1){ //如果滚动距离大于550px则隐藏，否则删除隐藏类
+	            $("header").find(".headerTit").css("opacity",1);
+	            $("header .back_icon").css("background","rgba(170,171,173,0) url(../images/back_icon.png) center center no-repeat");
+	            $("header .share_icon").css("background","rgba(170,171,173,0) url(../images/share_icon.png) center center no-repeat");
+	        } 
+	        else{
+	        		$("header").find(".headerTit").css("opacity",0);
+				$("header .back_icon").css("background","rgba(170,171,173,1) url(../images/back_icon.png) center center no-repeat");
+				$("header .share_icon").css("background","rgba(170,171,173,1) url(../images/share_icon.png) center center no-repeat");
+	        }
+	    };
+	    $(".shoucangN_iconClick").on("tap",function(){
+	    		if($(this).find(".shoucangN_icon").hasClass("shoucangY_icon")){
+	    			$(this).find(".shoucangN_icon").removeClass("shoucangY_icon");
+	    			mui.toast("取消成功")
+	    		}else{
+	    			$(this).find(".shoucangN_icon").addClass("shoucangY_icon");
+	    			mui.toast("收藏成功")
+	    		}
+	    })
+	</script>
+</html>

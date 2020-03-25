@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>021惠通卡关联账户</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		
+		<!--中间内容-->
+		<!--<div class="jtzh_banner clearfloat">
+			<span class="fl">家庭账户余额：<span id="money_all">0元</span></span>
+			<span class="fr">可用积分：<span id="integral">0分</span></span>
+			<div class="jtzhTouxiang">
+				<div class="touxiang">
+					<img id="portrait" src="../../images/account/shouye01.jpg"/>
+				</div>
+			</div>
+			<p class="jtzhAddr" id="address"></p>
+			<ul class="dibuliebiao clearfloat">
+				<li class="click after">家庭账户</li>
+				<li class="after">家庭账户</li>
+				<li>家庭账户</li>
+			</ul>
+		</div>-->
+		
+		<div class="jtzhTit quMr_20 clearfloat">
+			<div class="fl">
+				<i class="xian"></i>
+				<span>惠通卡关联账户</span>
+			</div>
+			<div class="fr" onclick="_openWinByUrl('add_guanlian','account_head',{'frame':'add_guanlian_body','furl':'add_guanlian_body'})">
+				<span class="colorRed">+新增惠通卡关联账户</span>
+			</div>
+		</div>
+		<div class="jtzh_liebiao">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th>账户名</th>
+					<th>账户类型</th>
+					<th>账户号</th>
+					<!--<th>关联情况</th>-->
+					<th>家庭身份</th>
+					<th>操作</th>
+				</tr>
+				<tbody id="list">
+					<!--<tr>
+						<td>张先生</td>
+						<td>惠通卡账户</td>
+						<td>188-9868-18888</td>
+						<td>相互关联</td>
+						<td>子女</td>
+						<td>
+							<span class="blueGRed">编辑&nbsp;&nbsp;</span>
+							<span class="colorRed">删除</span>
+						</td>
+					</tr>-->
+				</tbody>
+				
+				
+			</table>
+		</div>
+
+
+		
+		
+		<!--删除-->
+		<div class="mark hide_">
+			<div class="chongzhicg">
+				<div class="bagimg"></div>
+				<p class="czp">您确定要删除此惠通卡关联账户？</p>
+				<div class="tanchuceng" class="clearfloat">
+					<div class="czclose fl yes" onclick="subDelRelation();">是</div>
+					<div class="czclose fr no">否</div>
+				</div>
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		function bodyScroll(event){
+			event.preventDefault();
+		}
+		$(function(){
+			$(".dibuliebiao li").on("click",function(){
+				$(".dibuliebiao li").removeClass("click");
+				$(this).addClass("click");
+			});
+			/*点击删除出现弹出层*/
+			$(".colorRed1").on("click",function(){
+				$(".mark").removeClass("hide_");
+				$("body").css("overflow-y","hidden");
+				document.body.addEventListener('touchmove',bodyScroll,true);
+				var scroll_ = $(document).scrollTop();
+				$(".mark").css("top",scroll_);
+				
+			});
+			$(".yes").on("click",function(){
+				
+				
+				
+			});
+			$(".no").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+				document.body.removeEventListener('touchmove',bodyScroll,false);
+			})
+		});
+		
+		
+		
+		//初始化用户Id
+		var uid = localStorage.getItem("uid");
+		
+		var relationUids = "";  //当前关联用户
+		apiready = function(){
+			
+			api.addEventListener({
+	            name:'refe_relation'
+            },function(ret,err){
+            	getAccountInfo();
+            });
+			//获取用户信息
+			getAccountInfo();
+		};
+		
+		
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+				if(ret.status ==1){
+					$("#address").text(ret.user.address);
+					$("#integral").text(ret.user.integral + "分");
+					$("#money_all").text(ret.user.money_all + "元");
+					$("#portrait").attr('src',ret.user.portrait);
+					//监听是否有未读消息
+					api.sendEvent({
+	                    name:'read_msg',
+	                    extra:{
+	                    	read_msg:ret.user.read_msg
+	                    }
+                    });
+					relationUids = ret.user.uids;
+					
+					//判断是否已经完善信息
+					real_name = ret.user.real_name;
+					mobile = ret.user.mobile;
+					cart_no = ret.user.cart_no;
+					if(real_name  &&  mobile ){
+						
+						$(".wanshanxinxi").show();
+						$(".weiwanshanxinxi").hide();
+						
+						$("#username").text(real_name);
+						$("#mobile").text(mobile);
+						$("#cart_no").text(cart_no);
+					}else{
+						$("#Inusername").val(real_name);
+						$("#Inmobile").val(mobile);
+						$("#Incart_no").val(cart_no);
+					}
+					
+					//获取关联账户
+					getrelationInfo();
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		//获取关联账户
+		function getrelationInfo(){
+			_ajax(ajax_url+"Index/Family/relationInfo" ,{'uids':relationUids},'get',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(ret.user).each(function(k , v){
+						strVar += "<tr>\n";
+					    strVar += "<td>"+v['real_name']+"<\/td>\n";
+					    
+					    if(v['card_type'] ==1){
+					    	var card_type = '普通账户';
+					    }else{
+					    	var card_type = '惠通卡账户';
+					    }
+					    
+					    strVar += "<td>"+card_type+"<\/td>\n";
+					    strVar += "<td>"+v['username']+"<\/td>\n";
+					    strVar += "<td>"+v['relationship']+"<\/td>\n";
+//					    strVar += "<td>子女<\/td>\n";
+					    strVar += "<td>\n";
+					    strVar += "<span onclick=\"editRelation("+v['uid']+")\"  class=\"blueGRed\">编辑&nbsp;&nbsp;<\/span>\n";
+					    strVar += "<span onclick=\"delRelation("+v['uid']+")\" class=\"colorRed colorRed1\">删除<\/span>\n";
+					    strVar += "<\/td>\n";
+					    strVar += "<\/tr>\n";
+					});
+				    $(".jtzh_liebiao").show();
+				}else{
+					$(".jtzh_liebiao").hide();
+				}
+//				alert(strVar);
+				$("#list").html(strVar);
+			});
+		}
+		
+		
+		var that_relation_id = "";  //当前操作关联用户id
+		//删除关联账户
+		function delRelation(relation_id){
+			$(".mark").removeClass("hide_");
+			$("body").css("overflow-y","hidden");
+			document.body.addEventListener('touchmove',bodyScroll,true);
+			var scroll_ = $(document).scrollTop();
+			$(".mark").css("top",scroll_);
+			
+			that_relation_id = relation_id;
+		}
+		
+		
+		function subDelRelation(){
+			_ajax(ajax_url+"Index/Family/delRelation" ,{'uid':uid,'uids':that_relation_id},'post',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					getAccountInfo();
+					that_relation_id="";
+					
+					$(".mark").addClass("hide_");
+					$("body").css("overflow-y","auto");
+					document.body.removeEventListener('touchmove',bodyScroll,false);
+				}else{
+					_toast(ret.msg);
+				}
+			});
+			
+		}
+		
+		//编辑
+		function editRelation(id){
+			_openWinByUrl('edit_guanlian','account_head',{'frame':'edit_guanlian_body','furl':'edit_guanlian_body','relation_id':id});
+		}
+		
+	</script>
+</html>

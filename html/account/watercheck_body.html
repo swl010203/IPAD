@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>用水量查询</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--中间内容-->
+        <div class="wanshanxinxi">
+            <div class="jtzhTit quMr_20 clearfloat">
+                <div>
+                    <i class="xian"></i>
+                    <span>缴费查询</span>
+                </div>
+            </div>
+            <div class="caozuoriqi clearfloat">
+                <div class="fl">
+                    <span>起始时间：</span>
+                    <input class="qishiTime" id="start" onchange="endChange();" type="date" placeholder="请选择开始日期"/>
+                    <span class="zhi">至</span>
+                    <input class="jeisuTime" id="end" onchange="endChange();" type="date" placeholder="请选择结束日期"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="jtzh_liebiao czjlDiv xiaofeijiluTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th>订单号</th>
+                    <th>付款方式</th>
+                    <th>缴费金额</th>
+                    <!-- <th>支付状态</th> -->
+                    <th>缴费时间</th>
+                </tr>
+                <tbody id="list">
+                </tbody>
+                <!-- <tr>
+                    <td>123123123</td>
+                    <td>支付宝</td>
+                    <td>68元</td>
+                    <td>2017-02-13 16:23:00</td>
+                </tr> -->
+            </table>
+        </div>
+        
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script>
+        var uid  = localStorage.getItem("uid");
+        var page = 1;
+        var is_page = true;
+        var type = 0;
+        apiready = function(){
+        
+            pay_tab  = api.pageParam.pay_tab;//跳转区分
+            if( pay_tab == 'water' ) {
+                type = 2;//水费记录
+            } else if( pay_tab == 'electric' ) {
+                type = 1;//电费记录
+            } else if( pay_tab == 'property' ) {
+                type = 3;//物业费记录
+            }
+        
+            //监听滚动条是否到底部
+            api.addEventListener({
+                name:'scrolltobottom',
+                extra:{
+                    threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+                }
+            }, function(ret, err){        
+                 if(is_page){
+                     page++;
+                     getPayLog();
+                 }
+            });
+            
+            getAccountInfo();
+            
+            getPayLog();
+        };
+        
+        //用户信息
+        function getAccountInfo(){
+            _ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+                if(ret.status ==1){
+                    //监听是否有未读消息
+                    api.sendEvent({
+                        name:'read_msg',
+                        extra:{
+                            read_msg:ret.user.read_msg
+                        }
+                    });
+                    
+                }else{
+                    //_toast(ret.msg);
+                }
+            });
+        }
+        
+        function endChange(){
+            page    = 1;
+            is_page = true;
+            getPayLog();
+        }
+        
+        function getPayLog(){
+            var start = $('#start').val();
+            var end   = $('#end').val();
+            //var type  = 2;
+            _ajax(ajax_url+"Index/Water/getPayLog" ,{type:type, uid:uid, start:start, end:end, p:page},'get',function(ret){
+                var html = '';
+                if(ret.status ==1){
+                    if( ret.data.length > 0 ) {
+                        $.each(ret.data, function(key, val) {
+                            html += '<tr>';
+                            html += '<td>'+val.order_sn+'</td>';
+                            html += '<td>'+val.pay_name+'</td>';
+                            html += '<td>'+val.money+'</td>';
+                            //html += '<td>'+val.pay_status+'</td>';
+                            html += '<td>'+val.ctime+'</td>';
+                            html += '</tr>';
+                        });
+                    } else {
+                        is_page = false;
+                        _toast( '没有更多记录了' );
+                    }
+                    if( page > 1 ) {
+                        $('#list').append( html );
+                    } else {
+                        $('#list').html( html );
+                    }
+                }else{
+                    
+                }
+            });
+        }
+    </script>
+</html>

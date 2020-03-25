@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>016缴费</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+        <style>
+            #pay_money:focus{
+                background:#f2f2f2;
+                border:1px solid #E9E9E9;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <div class="wanshanxinxi">
+            <div class="jtzhTit quMr_20 clearfloat">
+                <div>
+                    <i class="xian"></i>
+                    <span>缴费</span>
+                </div>
+            </div>
+            <div class="chongzhiMoney">
+                <div class="topchongzhi clearfloat">
+                    <div class="fl">
+                        <span>缴费金额：</span>
+                        <input type="number" id="pay_money" value="" readonly="readonly" placeholder="输入您要充值的金额"/>
+                    </div>
+                </div>
+                <div class="botchongzhi">
+                    <div class="clearfloat">
+                        <span class="fl">缴费方式：</span>
+                        <div class="fl">
+                            <span><i class="nosel sel weixuan" data-type="zhifubao"></i><label for="zhifubao">支付宝</label></span>
+                            <span><i class="nosel sel weixuan" data-type="weixin"></i><label for="weixin">微信</label></span>
+                            <span><i class="nosel sel weixuan" data-type="yue"></i><label for="weixin">账户余额</label></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="outCzanniu">
+                <div class="czBtn" onclick="pay_order();">
+                    <button>充值</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- <div class="chongzhiMoney glzh_chongzhiMoney">
+            <div class="topchongzhi clearfloat">
+                <div class="fl">
+                    <span>缴费金额：</span>
+                    <input type="hidden" value="" id="water_collectid" />
+                    <input type="hidden" value="" id="water_meter" />
+                    <input type="number" id="water_price" placeholder="输入您要充值的金额"/>
+                </div>
+            </div>
+            <span class="glzzSpan">1元钱为1方水</span>
+        </div>
+        <div class="outCzanniu">
+            <div class="czBtn">
+                <button onclick="water_order();">充值</button>
+            </div>
+        </div> -->
+        
+        
+         <!--浮动层-->
+		<div class="ftc_wzsf">
+		  <div class="srzfmm_box">
+		    	<div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>	    
+			    <ul class="mm_box">
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			      <li pwd=""></li>
+			    </ul>
+		  </div>
+		  <div class="numb_box">
+		    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+		    <ul class="nub_ggg">
+		      <li><a href="javascript:void(0);">1</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+		      <li><a href="javascript:void(0);">3</a></li>
+		      <li><a href="javascript:void(0);">4</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+		      <li><a href="javascript:void(0);">6</a></li>
+		      <li><a href="javascript:void(0);">7</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+		      <li><a href="javascript:void(0);">9</a></li>
+		      <li><span></span></li>
+		      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+		      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+		    </ul>
+		  </div>
+		  <div class="hbbj"></div>
+		</div>	
+        
+        
+        
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".dibuliebiao li").on("click",function(){
+                $(".dibuliebiao li").removeClass("click");
+                $(this).addClass("click");
+            });
+            /*点击button*/
+            $(".jtzhAllanniu button").on("click",function(){
+                $(".jtzhAllanniu button").removeClass("click");
+                $(this).addClass("click");
+            });
+            
+            $(".botchongzhi>div div span").on("click",function(){
+                var index_ = $(this).index();
+                $(".botchongzhi>div div span").children(".sel").removeClass("yessel");
+                $(".botchongzhi>div div span").children(".sel").addClass("nosel");
+                $(this).children(".sel").addClass("yessel");
+                $(".tabQiehuan").addClass("hide_");
+                $(".tabQiehuan").eq(index_).removeClass("hide_");
+            });
+            
+//          /*点击充值完成按钮*/
+//          $(".czBtn").on("click",function(){
+//              $(".mark").removeClass("hide_");
+//              $("body").css("overflow-y","hidden");
+//              var scroll_ = $(document).scrollTop();
+//              $(".mark").css("top",scroll_);
+//          })
+//          /*点击关闭按钮*/
+//          $(".czclose").on("click",function(){
+//              $(".mark").addClass("hide_");
+//              $("body").css("overflow-y","auto");
+//          })
+            
+            
+        })
+    </script>
+    
+    <script>
+       //初始化用户Id
+        var uid = localStorage.getItem("uid");
+        
+        var money  = 0;
+        var itemid = 0;
+        apiready = function(){
+            money  = api.pageParam.money;
+            itemid = api.pageParam.itemid;
+            $('#pay_money').val( money );
+            
+            api.addEventListener({
+		        name:'setPayPwdSuccess'
+	        },function(ret,err){
+	        	default_pwd = 1;
+	        });
+	        
+            getAccountInfo();
+        };
+        
+        //用户信息
+        function getAccountInfo(){
+            _ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+                if(ret.status ==1){
+                	default_pwd = ret.user.paypassword;
+                    //监听是否有未读消息
+                    api.sendEvent({
+                        name:'read_msg',
+                        extra:{
+                            read_msg:ret.user.read_msg
+                        }
+                    });
+                    
+                }else{
+                    //_toast(ret.msg);
+                }
+            });
+        }
+        
+        var order_sn ="";
+        //付费
+        function pay_order() {
+           //支付方式
+            var paytype=$('.yessel').attr('data-type');
+            
+            var pay_type = 0;
+            if( paytype == 'zhifubao' ) {
+                pay_type = 1;
+            } else if( paytype == 'weixin' ) {
+                pay_type = 2;
+            } else if( paytype == 'yue' ) {
+            	if(default_pwd != 1 ){
+					_toast('请先设置支付密码' , function(){
+						_openWinByUrl('zhifumima' , './account_head' , {'frame':'zhifumima_body' , 'furl':'zhifumima_body'});
+						return false;
+					});
+					return false;
+				}
+				
+                pay_type = 4;
+            } else {
+                _toast( '请选择支付方式' );
+                return false;
+            }
+            
+            var type = 3;
+            var tab_type = 'property_pay';
+            
+           _ajax(ajax_url+"Index/PayCost/payQrpay" ,{uid:uid, item_id:itemid, pay_type:pay_type, type:type},'get',function(ret){
+                if(ret.status ==1){
+                	order_sn = ret.data.order_sn;
+                	if( pay_type == 4){
+                		$(".ftc_wzsf").show();
+                	}else{
+                    	_openWinByUrl('paycost','paycost',{'frame':'paycost_body','furl':'paycost_body','pay_code':ret.data.code,'order_sn':ret.data.order_sn, tab_type:tab_type});
+                    }
+                }else{
+                    _toast(ret.info);
+                }
+            });
+       }
+       
+       
+       
+       /**
+		 * 清除支付密码 
+		 */
+		function clearPayPwd(){
+			paypassword="";
+			$(".mm_box li").attr('pwd','');
+			$(".mm_box li").removeClass("mmdd");
+			i1 = 0;
+			is_pay_status = 1;
+		}
+		var i1 = 0;	
+		$(function(){
+			//关闭浮动  清除支付密码
+			$(".close").click(function(){
+				$(".ftc_wzsf").hide();
+				i = 0;
+				clearPayPwd();
+			});
+			//----
+			var i = 0;
+			$(document).on('touchstart',".nub_ggg li", function(){
+				$(this).css('background','#e0e0e0');
+			});
+			$(document).on('touchend',".nub_ggg li a", function(){
+				$(this).css('background','#f5f5f5');
+			});
+			$(document).on('touchend',".nub_ggg li a", function(){
+				i1++;
+				var pwd =$(this).parent("li").index()+1;
+				if(pwd ==11){
+					pwd =0 ;
+				}
+				if(i1<6){
+					$(".mm_box li").eq(i1-1).addClass("mmdd");
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					}else{
+						$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+						$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+						if(i1>6){
+							i1=6;
+						}
+						setTimeout(function(){
+							//验证支付密码 并支付
+							var paypassword="";
+							$(".mm_box li").each(function(){
+								paypassword+=$(this).attr('pwd');
+							});
+							point(paypassword);					
+						},10);
+				 	} 
+			});
+	 		$(document).on('touchend',".nub_ggg li .del", function(){
+				if(i1>0){
+					i1--;
+					$(".mm_box li").eq(i1).removeClass("mmdd");
+					$(".mm_box li").eq(i1).attr("pwd","");
+					i1==0;
+				}
+			}); 
+		});
+		
+		
+		/**
+		 * 关联账户充值 如果cardno 有内容则是惠通卡卡号充值
+		 */
+		function point(paypassword){
+			_ajax(ajax_url+"Index/Water/familyPayNotify" ,{'uid':uid ,'order_sn':order_sn , 'password':paypassword },'post',function(ret){
+				if(ret.status==1){		
+                    clearPayPwd();
+                    $(".ftc_wzsf").hide();
+                    api.sendEvent({
+	                    name:'refe_relation',
+	                    extra:{
+	                    	type:1
+	                    }
+                    });
+                    _toast('充值成功！',function(){
+//                      api.closeWin();
+                    },1500);
+
+				}else{					
+					_toast(ret.msg);
+					clearPayPwd();
+					//$(".ftc_wzsf").hide();
+
+				}
+			});
+		}
+    </script>
+</html>

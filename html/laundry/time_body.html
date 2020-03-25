@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+	<title>选择时间</title>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/06_time.css"/>
+	
+	<style>
+		.period li a{display:block;}
+		
+		
+		
+		
+	</style>
+	<script src="../../script/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/swiper.min.js"></script>
+ 
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+</head>
+<body>
+
+	<!--顶部结束-->
+	<div class="datatime">
+		<ul class="swiper-container swiper1 " id="date">
+			<li>
+				<p class="wek"></p>
+				<p class="mon"></p>
+			</li>
+			<li>
+				<p class="wek"></p>
+				<p class="mon"></p>
+				<i><img src="../../images/icon/arrow.png"/></i>				
+			</li>
+			<li>
+				<p class="wek"></p>
+				<p class="mon"></p>
+			</li>
+			<li>
+				<p class="wek"></p>
+				<p class="mon"></p>
+			</li>
+			<li>
+				<p class="wek"></p>
+				<p class="mon"></p>
+			</li>
+			<li>
+				<p class="wek"></p>
+				<p class="mon"></p>
+			</li>
+		</ul>
+	</div>	
+	<!--日期-->
+	<div class="period">
+		<ul class="clearfloat" id="times">
+			<!--<li class="bl">09:00-10:00</li>
+			<li>10:00-11:00</li>
+			<li>11:00-12:00</li>
+			<li class="bl">12:00-13:00</li>
+			<li>13:00-14:00</li>
+			<li>14:00-15:00</li>
+			<li class="bl">15:00-16:00</li>
+			<li>16:00-17:00</li>
+			<li>17:00-18:00</li>
+			<li class="bl">18:00-19:00</li>
+			<li>19:00-20:00</li>
+			<li>20:00-21:00</li>-->
+		</ul>
+	</div>
+	<!--时间段-->
+	<div class="btn">
+		<a href="javascript:" onclick="sureSubmit();">确 定</a>
+	</div>
+	
+	
+	
+	<script src="../../script/laundry/style.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+	
+		//日期点击切换
+		//$(".datatime li").click(function (){
+		$(document).on("click",".datatime a",function (){
+			$(".datatime li").removeClass('now');
+			$(".datatime li i").empty();
+			$(this).find("li").append("<i><img src='../../images/icon/arrow.png'/></i>");
+			$(this).find("li").addClass('now');
+			
+			date = $(this).find("li").attr('data-date');  //定义日期
+			date_info = $(this).find("li").attr('data-info');  //定义日期
+			times="";
+			//判断时间是否可选
+			getTimesColor();
+		});
+		
+	
+		$(document).on("click",".period li a",function (){
+		
+			var data_day_sta =$(this).attr('data-day-sta');
+			
+			//判断当前时间如果不可选 则重置times 
+			if(data_day_sta ==0 && default_date ==date){
+				times="";
+				//alert(times);
+				return false;
+			}
+			$(".period img").remove('li img');
+			
+			//判断时间是否可选
+			getTimesColor();
+			$(this).append("<img src='../../images/icon/sanjiao.png'/>");
+			$(this).css("color","#116f81");
+			
+			times = $(this).attr('data-times');  //定义日期
+		});
+		
+		
+		//判断时间是否可选
+		function getTimesColor(){
+			$(".period li a").each(function(){
+			
+				
+					var data_day_sta = $(this).attr('data-day-sta');
+					if(default_date == date){
+						if(data_day_sta==1){
+							$(this).css('color',"#333");
+						}else{
+							times="";
+							$(this).css('color',"#999");
+						}
+					}else{
+						$(this).css('color',"#333");
+					}
+				
+				
+			});
+			$(".period img").remove('li img');
+		}
+//		
+//		function drag2 (){
+//			
+//			var oW = document.getElementsByClassName("datatime")[0];
+//		
+//			var oU = oW.getElementsByTagName("ul")[0];
+//			var disX,moveX,L,starX,starXEnd;       
+//		    oU.addEventListener('touchstart',function(e){			
+//		            disX = e.touches[0].clientX - this.offsetLeft;
+//		            starX = e.touches[0].clientX;
+//		    });
+//		    oU.addEventListener('touchmove',function(e){
+//		    	
+//		            L = e.touches[0].clientX - disX ;
+//		            starXEnd = e.touches[0].clientX - starX;
+//		            var winWidth = $('.datatime ul li').width() * 1.9;
+//		            
+//		            //alert(winWidth);
+//		            //alert(divWidth);
+//		              //console.log(L);
+//		            L < -winWidth ? L = -winWidth : L;
+//		            L>0 ? L=0 : L;
+//		            this.style.left = L+"px";
+//		            
+//		    });
+//		    window.addEventListener('touchend',function(e){
+//		
+//		    });
+//		}
+//		drag2();
+		
+		
+
+	function resizeSwiper(cls){
+			var mySwiper = new Swiper(cls, {
+					freeMode: true,
+					freeModeMomentumRatio: 0.5,
+					slidesPerView: 'auto',
+				
+				});
+
+		}
+
+		
+		var default_date = 0; //当天时间
+		var date = 0;  //当前时间
+		var date_info = "";  //当前时间
+		var times = "";  //当前日期
+		apiready = function(){
+		
+			var param_date = api.pageParam.date;
+			var param_times = api.pageParam.times;
+				
+			loading('time_body');
+			//获取日期时间
+			getTakeTime(param_date,param_times);
+		};
+		
+		function getTakeTime(param_date , param_times){
+			_ajax(ajax_url + "Index/Laundry/getTakeTime",{},'get',function(ret){
+				var n = 1;
+				var m = 1;
+				if(ret.code==1){
+				console.log(param_date);
+					var strVar = "";
+					var strVar2= "";
+					$(ret.data).each(function(k,v){
+					
+						 //默认日期和时间信息
+						if(n==1){
+					    	date = v['date']; 
+							default_date = v['date'];
+							date_info = v['date_info'];
+					    }
+						//判断是否存在已选内容 如果已选择则默认选择已选择的日期否则选择第一个
+						if(param_date !=undefined && param_date !=''){
+							if(param_date == v['date']){
+								date = v['date'];  //默认日期
+								date_info = v['date_info'];
+								strVar += "<a class='swiper-wrapper' ><li  data-info='"+v['date_info']+"' data-date='"+v['date']+"' class='now' >\n";
+							}else{
+								strVar += "<a class='swiper-wrapper'><li data-info='"+v['date_info']+"' data-date='"+v['date']+"' >\n";
+							}
+						}else{
+							//如果没有已选时间则默认第一个选中
+							if(n==1){
+						    	strVar += "<a class='swiper-wrapper'><li  data-info='"+v['date_info']+"' data-date='"+v['date']+"' class='now' >\n";
+						    }else{
+						    	strVar += "<a class='swiper-wrapper'><li  data-info='"+v['date_info']+"' data-date='"+v['date']+"' >\n";
+						    }
+						}	
+					    strVar += "<p class=\"wek\">\n";
+					    strVar += v['date_week']+"<\/p>\n";
+					    strVar += "<p class=\"mon\">\n";
+					    strVar += v['date_info']+"<\/p>\n";
+					    //判断是否存在已选内容
+						if(param_date !=undefined && param_date !=''){
+							if(param_date == v['date']){
+								strVar += "<i><img src=\"../../images/icon/arrow.png\"/><\/i>\n";
+							}
+						}else{
+							if(n==1){
+						    	strVar += "<i><img src=\"../../images/icon/arrow.png\"/><\/i>\n";
+						    }
+						}
+					    strVar += "<\/li></a>\n";
+					    n++;
+					});
+					$("#date").html(strVar);
+					
+				//	resizeSwiper('.swiper1');
+				
+					$(ret.times).each(function(k1,v1){
+						
+						strVar2 += "<li  class=\"bl\">";
+						//判断是否有已选时间 有责默认选择
+						if(param_times !=undefined && param_times !=''){
+							//当前时间等于已选择时间时 默认选中
+							if(v1['date_str'] ==param_times){
+								times = v1['date_str'];
+								strVar2 +="	<a style='color:#116f81;'  data-day-sta='"+v1['day_sta']+"'  data-times-end='"+v1['date_end']+"' data-times='"+v1['date_str']+"' >"+v1['date_str']+"<img src='../../images/icon/sanjiao.png'/></a>";
+							}else{
+								//判断是否为当天时间 如果为当前则判断是否可选
+								if(default_date ==date){
+									if(v1['day_sta']==1){
+										strVar2 +="	<a data-day-sta='"+v1['day_sta']+"' data-times-end='"+v1['date_end']+"' data-times='"+v1['date_str']+"' >"+v1['date_str']+"</a>";
+									}else{
+										strVar2 +="	<a style='color:#999;' data-day-sta='"+v1['day_sta']+"' data-times-end='"+v1['date_end']+"' data-times='"+v1['date_str']+"' >"+v1['date_str']+"</a>";
+									}
+								}else{
+									strVar2 +="	<a data-day-sta='"+v1['day_sta']+"' data-times-end='"+v1['date_end']+"' data-times='"+v1['date_str']+"' >"+v1['date_str']+"</a>";
+								}
+								
+							}
+						}else{
+							if(v1['day_sta']==1){
+								strVar2 +="	<a data-day-sta='"+v1['day_sta']+"' data-times-end='"+v1['date_end']+"' data-times='"+v1['date_str']+"' >"+v1['date_str']+"</a>";
+							}else{
+								strVar2 +="	<a style='color:#999;' data-day-sta='"+v1['day_sta']+"' data-times-end='"+v1['date_end']+"' data-times='"+v1['date_str']+"' >"+v1['date_str']+"</a>";
+							}
+						}
+						strVar2 +="	<\/li>\n";
+						
+					});
+					$("#times").html(strVar2);
+					
+				}
+				
+				closeloading();
+			});
+		}
+		
+		
+		/**
+		 * 确定时间 
+		 */
+		function sureSubmit(){
+			
+			if(date ==0  ||  times ==""){
+				_toast('请选择取件时间');
+				return false;
+			}
+			
+			api.sendEvent({
+	            name:'laundry_time',
+	            extra:{
+	            	times:times,
+	            	date:date,
+	            	date_info:date_info
+	            }
+            });
+            
+            api.closeWin();
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">商品列表</h1>
+			<a href="javascript:void(0)" onclick="_openWinByUrl('mall_category_window_head','../window_head',{'furl':'mall/mall_category','frame':'mall_category','title':'分类列表'});" class="headerRight">
+				<span class="busifenlei_icon"></span>
+			</a>
+		</div>
+	</header>
+
+
+<script type="text/javascript">
+	$(function(){
+	
+
+
+	});
+
+
+	apiready = function(){
+		api.parseTapmode();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		
+        api.openFrame({
+            name: 'mall_goods_list_body',
+            url: 'mall_goods_list_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: 'auto'
+            },
+            reload:true,
+			pageParam:api.pageParam
+        });
+
+
+	}
+	
+	
+	
+
+</script>
+</body>
+</html>

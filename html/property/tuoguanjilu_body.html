@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>038托管记录</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<!--中间内容-->
+		<div class="jiagemingxiDiv">
+			<p class="tit bor_b">
+				<span>业主信息：<i id="address"></i><i class="mar_l20" id="real_name"></i></span>
+			</p>
+			<div class="con bor_b">
+				<table border="0" cellspacing="0" cellpadding="0" class="tgjlTable" id='list'>
+					<!--<tr>
+						<th>托管类型</th>
+						<th>托管时间</th>
+						<th>托管天数</th>
+						<th>提交时间</th>
+						<th>备注</th>
+						<th>状态</th>
+					</tr>
+					<tr>
+						<td>物品托管</td>
+						<td>07-22&nbsp;13:00-14:00</td>
+						<td>2017-11-11 11:11-2017-11-11 11:11</td>
+						<td>07-22&nbsp;13:00-14:00</td>
+						<td>
+							<div class="tableDiv">麻烦好好看护，不可以吃太不可以吃太</div>
+						</td>
+						<td class="colorRed">托管中</td>
+					</tr>
+					<tr>
+						<td>物品托管</td>
+						<td>07-22&nbsp;13:00-14:00</td>
+						<td>1天</td>
+						<td>07-22&nbsp;13:00-14:00</td>
+						<td>
+							<div class="tableDiv">麻烦好好看护，不可以吃太</div>
+						</td>
+						<td>已结束</td>
+					</tr>-->
+				</table>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script>
+    	var uid='';
+    	var p=1;
+    	var is_page=true;
+		apiready = function(){
+			
+			uid=localStorage.getItem("uid");
+			//获取用户信息
+			getAccountInfo();
+			
+			//获取托管记录
+			trusteeshipLog();
+			
+			//监听滚动条是否到底部
+			api.addEventListener({
+			    name:'scrolltobottom',
+			    extra:{
+			        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+			    }
+			}, function(ret, err){        
+			     if(is_page){
+				     trusteeshipLog();
+			     }
+			});
+		};
+		
+		//获取用户信息
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'post',function(ret){
+				if(ret.status ==1){
+					$('#address').text(ret.user.address);
+					$('#real_name').text(ret.user.real_name);
+				}
+			});
+		}
+		
+		//获取托管记录
+		function trusteeshipLog(){
+			_ajax(ajax_url+"Index/Trusteeship/trusteeshipLog" ,{'uid':uid,'p':p},'post',function(ret){
+				if(ret.status ==1){
+					var html='';
+					if(p==1){
+						html+='<tr><th>托管类型</th><th>托管时间</th><th>托管天数</th><th>提交时间</th><th>备注</th><th>状态</th></tr>';
+					}
+					for(var i in ret.log){
+						html+='<tr>';
+							if(ret.log[i].category_id==1){
+								html+='<td>物品托管</td>';
+								html+='<td>'+ret.log[i].addtime+'</td>';
+							}else{
+								html+='<td>房屋托管</td>';
+								html+='<td>'+ret.log[i].timeslot+'</td>';
+							}														
+							html+='<td>'+ret.log[i].days_start+'至'+ret.log[i].days_end+'</td>';
+							html+='<td>'+ret.log[i].addtime+'</td>';
+							html+='<td><div class="tableDiv">'+ret.log[i].remark+'</div></td>';
+							if(ret.log[i].status==1){
+								html+='<td>已结束</td>';
+							}else{
+								html+='<td>托管中</td>';
+							}
+						html+='</tr>';
+					}
+					
+					if(p==1){
+						$('#list').html(html);
+					}else{
+						$('#list').append(html);
+					}
+					p++;
+				}else{
+					is_page=false;
+					_toast(ret.msg);
+				}
+			});
+		}
+    </script>
+</html>

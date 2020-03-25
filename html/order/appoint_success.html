@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+.pay_jieguo01{ text-align: center; padding-top: 1rem;}
+.pay_jieguo01 img{ width: 5.03rem; height: 4.39rem;}
+.pay_jieguo01txt{ font-size: 0.26rem; color: #666; text-align: center; padding-top: 0.2rem;}
+.pay_jieguobtn{ width: 2.2rem; height: 0.6rem;border-radius: 5px; display: inline-block; background: #f75800; line-height: 0.6rem; text-align: center; color: #fff;}
+.pay_jieguo01btn {text-align: center; margin-top: 1rem;}
+.pay_jieguo01btn a{ margin-right: 0.2rem;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+			<a href="#" class="headerLeft" id="" onclick="index();">
+				<span class="backBefor"></span>
+			</a>
+				<h1 class="header_h1">订单提示</h1>
+		</div>
+	</header>
+
+<div class="clear"></div>
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="reg_fail" >
+		<p class="reg_failimg"><img src="../../images/sucess_icon.png"></p>
+		<p class="reg_failtxt info">预约成功</p>
+	</div>
+	<p class="pay_jieguo01btn">
+		<span href="#" onclick="index();" class="pay_jieguobtn findex">返回首页</span>
+	</p>
+	
+	
+</div>
+<script type="text/javascript">
+
+	apiready = function (){
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        
+        var content = api.pageParam.content;
+        if( typeof content != 'undefined'  && content !=''  && content != null ){
+        	$(".info").html( content );
+        }
+        
+        api.addEventListener({
+		    name: 'keyback'
+		}, function(ret, err) {
+		    index();
+		});
+	};
+	function index(){					
+//		api.closeToWin({
+//          name: 'root'
+//      });
+        api.closeWidget();
+    }
+
+</script>
+</body>
+</html>

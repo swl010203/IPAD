@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="mui-android mui-android-8 mui-android-8-0">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">全部户型</h1>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right bianjiClick">编辑</button>-->
+			<div class="mui-pull-left iconfontDiv fanhui_btn" style="background-color: #fff;">
+				<span class="iconfont icon-fanhui colorRed"></span>
+			</div>
+			<!--<a class="mui-icon mui-icon-back colorRed fanhui_btn"></a>-->
+		</header>
+		<div class="mui-content">
+			<div class="huxing_tit dichan_divBottom_maodian bgwhite border_b">
+				<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+				    <div class="mui-scroll">
+				        <a href="javascript:void(0);" class="mui-control-item mui-active" data-id="0">
+				            全部
+				        </a>
+				        <a href="javascript:void(0);" class="mui-control-item" data-id="1">
+				            一居室
+				        </a>
+				        <a href="javascript:void(0);" class="mui-control-item" data-id="2">
+				            二居室
+				        </a>
+				        <a href="javascript:void(0);" class="mui-control-item" data-id="3">
+				            三居室
+				        </a>
+				         <a href="javascript:void(0);" class="mui-control-item" data-id="4">
+				            四居室
+				        </a>
+				    </div>
+				</div>
+			</div>
+			<ul class="huxing_ul pt30 bgwhite pl20 pr20 box_s">
+				<!--<li>
+					<div  class="huxing_ul_img">
+						<img src="../../images/hx1.jpg"/>
+					</div>
+					<p class="fs28 pt30 pb20">3室2厅 / 120㎡ / 南北通透</p>
+					<div class="pb30 fs24">
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">户型方正</span>
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">主卧朝南</span>
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">名厨</span>
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">南北通透</span>
+					</div>
+				</li>
+				<li>
+					<div  class="huxing_ul_img">
+						<img src="../../images/hx1.jpg"/>
+					</div>
+					<p class="fs28 pt30 pb20">3室2厅 / 120㎡ / 南北通透</p>
+					<div class="pb30 fs24">
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">户型方正</span>
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">主卧朝南</span>
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">名厨</span>
+						<span class="pl20 pr20 pt10 pb20 bgFen labelSpanIb mr10 mb10">南北通透</span>
+					</div>
+				</li>-->
+			</ul>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/common.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/app.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$('.fanhui_btn').on('click',function(){
+			api.closeWin();
+		});
+		var hid = 0;
+		var sid = 0;
+		var dataId = 0;
+		var room = 0;
+		apiready = function(){
+			hid = api.pageParam.hid;
+			sid = api.pageParam.sid;
+			houseSonType(hid,sid,room);
+		};
+		$('.mui-scroll a').on('tap',function(){
+			room = $(this).attr('data-id');
+			houseSonType(hid,sid,room);
+		});
+
+		function houseSonType(hid,sid,room){
+			_ajax(ajax_url+'Index/House/houseType',{'hid':hid,'sid':sid,'type':2,'room':room},'post',function(ret){
+				if(ret.status ==1){
+						var strVar = '';
+						$.each(ret.data,function(k,v){
+							strVar += '<li data-id="'+v.id+'">';
+							strVar += '	<div  class="huxing_ul_img">';
+							strVar += '		<img src="'+v.type_pic+'"/>';
+							strVar += '	</div>';
+							strVar += '	<p class="fs28 pt20 pb10">'+(v.room ? v.room+'室':'')+''+(v.hall ? v.hall+'厅':'')+' / '+(v.area ? v.area+'㎡' :'')+' / 南北通透</p>';
+							strVar += '	<div class="pb20 fs24">';
+							$.each(v.houseTypeTag,function(key,val){
+								strVar += '		<span class="pl20 pr20 pt10 pb10 bgFen labelSpanIb mr10 mb10">'+val.name+'</span>';
+							});
+							// var strVar = '		<span class="pl20 pr20 pt10 pb10 bgFen labelSpanIb mr10 mb10">主卧朝南</span>';
+							// var strVar = '		<span class="pl20 pr20 pt10 pb10 bgFen labelSpanIb mr10 mb10">名厨</span>';
+							// var strVar = '		<span class="pl20 pr20 pt10 pb10 bgFen labelSpanIb mr10 mb10">南北通透</span>';
+							strVar += '	</div>';
+							strVar += '</li>';
+						});
+						$('.huxing_ul').html(strVar);
+						// $('.huxing_ul li').on('tap',function(){
+						// 	id = $(this).attr('data-id');
+						// 	_openWinByUrl('new_house_detail','new_house_detail',{'id':id,'hid':hid,'sid':sid});
+						// });
+					}else{
+						$('.huxing_ul').html('');
+						_toast('暂无数据');
+						return false;
+					}
+			});
+		}
+	</script>
+</html>

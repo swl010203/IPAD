@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+.pay_jieguo01{ text-align: center; padding-top: 1rem;}
+.pay_jieguo01 img{ width: 5.03rem; height: 4.39rem;}
+.pay_jieguo01txt{ font-size: 0.26rem; color: #666; text-align: center; padding-top: 0.2rem;}
+.pay_jieguobtn{ width: 2.2rem; height: 0.3rem;border-radius: 5px; display: inline-block; background: #f75800; line-height: 0.3rem; text-align: center; color: #fff;font-size:18px;}
+.pay_jieguo01btn {text-align: center; margin-top: 0.5rem;}
+.pay_jieguo01btn a{ margin-right: 0.2rem;}
+
+.null_h{height:0.6rem;}
+
+</style>
+</head>
+<body>
+<!-- 头部 -->
+<div class="wp_100">
+	<div class="null_h"></div>
+</div>
+<div class="clear"></div>
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="reg_fail">
+	<p class="reg_failimg"><img src="../../images/sucess_icon.png"></p>
+	<p class="reg_failtxt info">充值成功！</p>
+	<p class="reg_failtxt " id="">余额:<em id="money">0.00元</em></p>
+	</div>
+	<p class="pay_jieguo01btn">
+		<a href="#" onclick="index();" class="pay_jieguobtn findex">返回首页</a>
+		<!--<a href="#" onclick="lazyGo();" class="pay_jieguobtn checks" style="background:#dd1b40;">查看余额</a>-->
+	</p>
+	
+</div>
+
+<script type="text/javascript">
+
+	var uid = "";
+	apiready = function(){
+			
+		uid=localStorage.getItem("uid");
+		//获取用户信息
+		getAccountInfo();
+			
+	};
+		
+	//获取用户信息
+	function getAccountInfo(){
+		_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'post',function(ret){
+			if(ret.status ==1){
+				$('#money').text(ret.user.money_all+'元');
+			}
+			
+		});
+	}
+	
+	
+
+	
+	//跳转链接
+	function link(type,ids){
+		if(type=='food'){
+			openWinOrderList('food','../food/food',{'sid':ids});return;
+		}
+		if(type=='mall'){
+			openWinOrderList('mall','../mall/mall_shop',{'id':ids});return;
+		}
+		if(type=='super'){
+			openWinOrderList('super','../super/super',{'sid':ids});return;
+		}
+		if(type=='hotel'){
+			openWinOrderList('hotel','../hotel/hotel',{'sid':ids});return;
+		}
+		if(type=='house'){
+			openWinOrderList('house','../house/house',{'sid':ids});return;
+		}
+		if(type=='laundry'){
+			openWinOrderList('laundry','../laundry/laundry',{'sid':ids});return;
+		}
+		if(type=='foodpackage'){
+			openWinOrderList('packag_detail_body','../food/packag_detail_body',{'id':ids});return;
+		}
+		if(type=='mallgoods'){
+			openWinOrderList('mall_goodsdetail','../mall/mall_goodsdetail',{'goods_id':ids});return;
+		}
+		if(type=='supergoods'){
+			openWinOrderList('super_goodsdetail','../super/super_goodsdetail',{'goods_id':ids});
+		}
+	}
+	
+	function index(){					
+//		api.closeToWin({
+//          name: 'root'
+//      });	
+		api.closeWidget();
+    }
+    /**
+	 * 个人中心判断是否登陆 跳转页面 
+	 */
+	function openWinOrderList(name,url,param){
+		_openWinByUrl(name,url,param);
+	}
+	</script>
+</body>
+</html>

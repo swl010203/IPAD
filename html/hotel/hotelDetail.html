@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+	<link rel="stylesheet" href="../../css/hotel/bootstrap.css"> 
+	<link rel="stylesheet" href="../../css/hotel/wangting/common.css">
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<title>酒店信息</title>
+</head>
+<body>
+	<header id="header" style="background-color:#fff; ">
+		<div class="gxyhead">
+			<div class="headtitle" style="height:56px;line-height:46px;">
+				<div class="mbank newMbank"><a style="padding-left:20px" href="javascript:bank();"><img src="../../images/hotel/bank_03.png"  class="thumbnail aNew" alt="" style="height:28px"></a></div>
+				<div class="name" style="line-height:46px;font-size:20px">酒店信息</div>
+			</div>			
+		</div>	
+	</header>
+	<script type="text/javascript">
+		apiready = function(){
+			api.parseTapmode();
+			
+			//获取div元素的高
+			var header = $api.byId('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			//var footer_h = $api.offset($api.dom('footer')).h;
+			//引入iframe页面
+	        api.openFrame({
+	            name: 'hotelDetail_body',
+	            url: 'hotelDetail_body.html',
+	            bounces: true,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+1,
+	                w: headerPos.w,
+	                h: body_h-headerPos.h-1
+	            },
+	            reload:true,
+				pageParam:api.pageParam
+	        });
+	        	        
+		};
+		
+		//返回上一页
+		function bank(){
+			api.closeWin();
+		}		
+	</script>
+</body>
+</html>

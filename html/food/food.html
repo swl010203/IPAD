@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/index.css"/>
+		<style>
+
+		</style>
+		<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../../script/food/index.js"></script>
+        <script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+	</head>
+	<body style="height:100%;">	
+		
+		<header id="header">
+			<ul class="fl back">
+				<a href="javascript:bank();"><img src="../../images/food/break.png"/></a>
+			</ul>
+			<ul class="fl word" id="shopname"></ul>
+			<ul class="fr phone">
+				<a id="mobile" href="javascript:"><img src="../../images/food/phone.png"/></a>
+			</ul>
+		</header>
+		
+		<footer class="clearfloat">
+			<div class="leftFoot">
+				<div class="cart">
+					<div class="cartInner" onclick="order();">
+						<img src="../../images/food/cart.png"/>
+						<div class="num znum">0</div>
+					</div>
+					<span class="red pricePosi zprice">￥0</span>
+				</div>
+			</div>
+			<div onclick="order();" class="rightFoot">去结算</div>
+		</footer>			
+	</body>
+	<script>
+		//默认加载
+		var sid='28';
+		apiready = function(){
+			addEventUserInfo();
+			//店铺id 
+			shop_id=api.pageParam.sid;
+		
+			if(typeof shop_id !=undefined  &&  shop_id !=""  && shop_id!= null){
+				sid = shop_id;
+			}
+		
+			
+			api.parseTapmode();
+			
+			//获取div元素的高
+			var header = $api.byId('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			var footer_h = $api.offset($api.dom('footer')).h;
+			//引入iframe页面
+	        api.openFrame({
+	            name: 'index_body',
+	            url: 'index_body.html',
+	            bounces: true,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+1,
+	                w: headerPos.w,
+	                h: body_h-headerPos.h-footer_h-1
+	            },
+	            reload:true,
+				pageParam:api.pageParam
+	        });
+	        
+	        //获取店铺手机号
+	        getPhone(sid);
+	        
+	        api.addEventListener({
+	            name:'getCartInfo'
+            },function(ret,err){
+            	//coding...
+            	getCartInfo();
+            });
+	        
+	        //获取购物车信息
+	        getCartInfo();
+		};
+		
+		//返回上一页
+		function bank(){
+			api.closeWin();
+		}
+		
+		//获取店铺手机号
+		function getPhone(sid){
+			//sid=28;
+			_ajax(ajax_url+"Index/Food/getPhone",{sid:sid},'post',function(ret){
+				if(ret.status==1){
+					$('#mobile').attr('href','javascript:alert('+ret.mobile+');');
+					$('#shopname').text(ret.name);
+				}
+			});
+		}
+		
+		
+		//获取购物车信息
+		function getCartInfo(){
+			uid = localStorage.getItem("uid");
+			if(typeof uid ==undefined || uid ==''  || uid ==null){
+				return false;
+			}
+			
+			_ajax(ajax_url+"Index/Food/getCartInfo",{'uid':uid,'sid':sid},'post',function(ret){
+				if(ret.status==1){
+					$(".znum").html(ret.data.znum);
+					$(".zprice").html("￥"+ret.data.zprice);
+				}
+			});
+			
+		}
+		
+		/**
+		 * 去结算 
+		 */
+		function order(){
+			
+			var header = $api.byId('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+	        
+			api.openFrame({
+	            name: 'food_cart_body',
+	            url: 'food_cart_body.html',
+	            bounces: false,
+	            rect: {
+					x: 0,
+	                y: headerPos.h,
+	                w: headerPos.w,
+	                h: body_h-headerPos.h
+	            },
+	            pageParam:{
+	            	sid:sid
+	            },
+	            reload:false
+            });
+			// _openWinByUrl('food_cart','./food_cart',{'is_hide':1,'sid':sid});
+		}
+		
+		
+	</script>
+</html>

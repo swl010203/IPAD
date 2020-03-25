@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>011充值记录</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		
+		<!--中间内容-->
+		<!--<div class="jtzh_banner clearfloat">
+			<span class="fl">家庭账户余额：<span id="money_all">0元</span></span>
+			<span class="fr">可用积分：<span id="integral">0分</span></span>
+			<div class="jtzhTouxiang">
+				<div class="touxiang">
+					<img id="portrait" src="../../images/account/shouye01.jpg"/>
+				</div>
+			</div>
+			<p class="jtzhAddr" id="address"></p>
+			<ul class="dibuliebiao clearfloat">
+				<li class="click after">家庭账户</li>
+				<li class="after">家庭账户</li>
+				<li>家庭账户</li>
+			</ul>
+		</div>-->
+		
+		<div class="wanshanxinxi">
+			<div class="jtzhTit quMr_20 clearfloat">
+				<div>
+					<i class="xian"></i>
+					<span>充值记录</span>
+				</div>
+			</div>
+			<div class="caozuoriqi clearfloat">
+				<div class="fl">
+					<span>起始时间：</span>
+					<input class="qishiTime" onchange="endChange();" id="start_time" type="date" placeholder="请选择开始日期"/>
+					<span class="zhi">至</span>
+					<input class="jeisuTime" onchange="endChange();"  id="end_time" type="date" placeholder="请选择结束日期"/>
+				</div>
+				<!--充值状态-->
+				<div class="fr xialachongzhi">
+					<span>充值状态：</span>
+					<input id="" class="input_select" type="text" value="请选择" readonly/> 
+					<ul> 
+						<li><a href="#none" rel="1">失败</a></li> 
+						<li><a href="#none" rel="2">成功</a></li> 
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="jtzh_liebiao czjlDiv">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<th>充值单号</th>
+					<th>充值时间</th>
+					<th>充值金额</th>
+					<th>充值状态</th>
+					<th>充值方式</th>
+					<th>操作</th>
+				</tr>
+				<tbody id="list">
+					<!--<tr>
+						<td>654846411666548698</td>
+						<td>2017-07-21</td>
+						<td>1000元</td>
+						<td>充值成功</td>
+						<td>关联账户-刘女士</td>
+						<td>删除</td>
+					</tr>-->
+				</tbody>
+			</table>
+		</div>
+		
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".dibuliebiao li").on("click",function(){
+				$(".dibuliebiao li").removeClass("click");
+				$(this).addClass("click");
+			});
+			
+			/*下拉列表效果*/
+			$(".input_select").click(function(event){ 
+				event.stopPropagation();
+				var ul = $(".xialachongzhi ul"); 
+				if(ul.css("display")=="none"){ 
+					ul.slideDown("fast"); 
+				}else{ 
+					ul.slideUp("fast"); 
+				} 
+			});
+			$(document).click(function(){
+				var ul = $(".xialachongzhi ul"); 
+				ul.slideUp("fast"); 
+			});
+			//获取数据
+			$(".xialachongzhi ul li a").click(function(){ 
+				var txt = $(this).text(); 
+				$(".input_select").val(txt); 
+				var value = $(this).attr("rel"); 
+				type = value;
+				
+				endChange();
+				$(".xialachongzhi ul").hide(); 
+				$("#result").html("您选择了"+txt+"，值为："+value); 
+			}); 
+		});
+		
+		
+		
+		//初始化用户Id
+		var uid = '';
+		
+		var page = 1;
+		var type = "";
+		var is_page = true;
+		apiready = function(){
+			uid = localStorage.getItem("uid");
+			//监听滚动条是否到底部
+			api.addEventListener({
+			    name:'scrolltobottom',
+			    extra:{
+			        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+			    }
+			}, function(ret, err){        
+			     if(is_page){
+			         page++;
+				     getczLog();
+			     }
+			});
+			
+			//获取用户信息
+			getAccountInfo();
+			
+			//获取充值记录
+			getczLog();
+		};
+		
+		
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+				if(ret.status ==1){
+					$("#address").text(ret.user.address);
+					$("#integral").text(ret.user.integral + "分");
+					$("#money_all").text(ret.user.money_all + "元");
+					$("#portrait").attr('src',ret.user.portrait);
+					//监听是否有未读消息
+					api.sendEvent({
+	                    name:'read_msg',
+	                    extra:{
+	                    	read_msg:ret.user.read_msg
+	                    }
+                    });										
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		function endChange(){
+			page=1;
+			is_page = true;
+			getczLog();
+		}
+		
+		
+		function getczLog(){
+			var start_time = $("#start_time").val();
+			var end_time = $("#end_time").val();			
+			_ajax(ajax_url+"Index/Family/czLog" ,{'uid':uid,'p':page,'start_time':start_time,'end_time':end_time,'type':type},'post',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(ret.list).each(function(k , v){
+					    strVar += "<tr>\n";
+					    strVar += "<td>"+v['order_sn']+"<\/td>\n";
+					    strVar += "<td>"+v['addtime']+"<\/td>\n";
+					    strVar += "<td>"+v['money']+"元<\/td>\n";
+					    strVar += "<td>"+v['typename']+"<\/td>\n";
+					    strVar += "<td>"+v['pay_name']+"<\/td>\n";
+					    strVar += "<td onclick='del("+v['id']+");'>删除<\/td>\n";
+					    strVar += "<\/tr>\n";
+				    });
+				    if(page==1){
+				    	$(".czjlDiv").show();
+				    	$("#list").html(strVar);
+				    }else{
+				    	$("#list").append(strVar);
+				    }
+				}else{
+					if(page==1){
+						$(".czjlDiv").hide();
+				    	$("#list").html('');
+				    }
+					is_page = false;
+					_toast(ret.msg);
+				}
+			});
+		}
+		
+		//删除充值记录
+		function del(id){
+			_ajax(ajax_url+"Index/Family/delczlog" ,{'id':id},'post',function(ret){
+				if(ret.status==1){
+					endChange();
+					_toast(ret.msg);
+
+				}else{
+					_toast(ret.msg);
+				}
+			});			
+		}
+	</script>
+</html>

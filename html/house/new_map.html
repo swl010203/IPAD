@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/owneruser/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/owneruser/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+        <header id="header" class="mui-bar mui-bar-nav bgwhite">
+			<h1 class="mui-title">周边配套</h1>
+			<div class="mui-pull-left iconfontDiv fanhui_btn" style="background-color: #fff;">
+				<span class="iconfont icon-fanhui colorRed"></span>
+			</div>
+			<!--<a class="mui-icon mui-icon-back colorRed fanhui_btn"></a>-->
+		</header>
+		<div class="mui-content">
+
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/app.js"></script>
+
+	<script>
+    apiready = function(){
+        api.parseTapmode();
+        var header = $api.byId('header');
+        $api.fixStatusBar(header);
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+
+        api.openFrame({
+            name: 'new_map_body',
+            url: 'new_map_body.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: headerPos.w,
+                h: body_h-headerPos.h
+            },
+            pageParam:api.pageParam
+        });
+    };
+    $('#fanhui_btn').on('click',function(){
+        api.closeWin();
+    });
+	</script>
+</html>

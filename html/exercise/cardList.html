@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">购卡</h1>
+		</header>
+		<div class="mui-content">
+			<ul id="cartList" class="pl20 pr20 box_s">
+				<!--<li class="buyCart_li">
+					<div class="clearfloat buyCart_li_tit">
+						<span>年卡</span>
+						<span class="mui-pull-right pl20 pr20">期限卡</span>
+					</div>
+					<div class="colorWhite fs24 pt30 pb30">
+						<p>限制：仅在器械区，不可用于游泳</p>
+						<p class="mt10">简介：使用一年（这块限制15字以内）</p>
+						<p class="clearfloat mt10">
+							<span>适用场馆：安国市突魄健身会所</span>
+							<span class="iconfont icon-jiantou mui-pull-right font_weightB"></span>
+						</p>
+					</div>
+				</li>
+				<li class="buyCart_li">
+					<div class="clearfloat buyCart_li_tit">
+						<span>季度卡</span>
+						<span class="mui-pull-right pl20 pr20">期限卡</span>
+					</div>
+					<div class="colorWhite fs24 pt30 pb30">
+						<p>限制：仅在器械区，不可用于游泳</p>
+						<p class="mt10">简介：使用一年（这块限制15字以内）</p>
+						<p class="clearfloat mt10">
+							<span>适用场馆：安国市突魄健身会所</span>
+							<span class="iconfont icon-jiantou mui-pull-right font_weightB"></span>
+						</p>
+					</div>
+				</li>
+				<li class="buyCart_li">
+					<div class="clearfloat buyCart_li_tit">
+						<span>月卡</span>
+						<span class="mui-pull-right pl20 pr20">期限卡</span>
+					</div>
+					<div class="colorWhite fs24 pt30 pb30">
+						<p>限制：仅在器械区，不可用于游泳</p>
+						<p class="mt10">简介：使用一年（这块限制15字以内）</p>
+						<p class="clearfloat mt10">
+							<span>适用场馆：安国市突魄健身会所</span>
+							<span class="iconfont icon-jiantou mui-pull-right font_weightB"></span>
+						</p>
+					</div>
+				</li>
+				<li class="buyCart_li">
+					<div class="clearfloat buyCart_li_tit">
+						<span>次卡</span>
+						<span class="mui-pull-right pl20 pr20">期限卡</span>
+					</div>
+					<div class="colorWhite fs24 pt30 pb30">
+						<p>限制：仅在器械区，不可用于游泳</p>
+						<p class="mt10">简介：使用一年（这块限制15字以内）</p>
+						<p class="clearfloat mt10">
+							<span>适用场馆：安国市突魄健身会所</span>
+							<span class="iconfont icon-jiantou mui-pull-right font_weightB"></span>
+						</p>
+					</div>
+				</li>-->
+			</ul>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		var sid = '98';
+	    apiready = function () {
+	        api.addEventListener({
+	            name: 'keyback'
+	        }, function(ret, err){
+	            fanhui();
+	        });
+	
+	        api.addEventListener({
+	            name: 'viewappear'
+	        }, function (ret, err) {
+	            // 获取卡片列表
+	            getcardList();
+	        });
+	    };
+	
+	    //	获取卡片列表
+	    function getcardList(){
+	        _ajax(ajax_url + 'Index/Exercise/getCardList', {'sid': sid}, 'get', function (ret) {
+	            if (ret.status == 1) {
+	                var cartListData = ret.data;
+	                var cartList_html = '';
+					$.each(cartListData, function(k,v){
+						if(v.restrict == null){
+							v.restrict = "无";
+						}
+						if(v.summary == null){
+							v.summary = "无";
+						}
+						cartList_html += '<li class="buyCart_li" onclick="goBuyCart('+v.id+')">'+
+								            '<div class="clearfloat buyCart_li_tit">'+
+								                '<span>'+v.cname+'</span>'+
+								                '<span class="mui-pull-right pl20 pr20">期限卡</span>'+
+								            '</div>'+
+								            '<div class="colorWhite fs24 pt30 pb30">'+
+								                '<p>限制：'+v.restrict+'</p>'+
+								                '<p class="mt10">简介：'+v.summary+'</p>'+
+								                '<p class="clearfloat mt10">'+
+								                    '<span>适用场馆：'+v.place+'</span>'+
+								                    '<span class="iconfont icon-jiantou mui-pull-right font_weightB"></span>'+
+								                '</p>'+
+								            '</div>'+
+								        '</li>';
+					});
+					$("#cartList").html(cartList_html);
+	            }
+	        });
+	    }
+	
+	    //跳转到购买卡片页面
+	    function goBuyCart(kid){
+	        _openWinByUrl('buyCard', 'buyCard', {'kid': kid});
+	    }
+	
+	    $('.mui-action-back').on('tap',function(){
+	        fanhui();
+	    });
+	    function fanhui(){
+	        api.closeWin();
+	    }
+	</script>
+</html>

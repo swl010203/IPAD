@@ -1,0 +1,832 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/weekDate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei fs36 colorHui999">
+				<span class="colorRed mr20 click tuanke" onclick="getClassType(1);">团课</span>
+				<span onclick="getClassType(2);" class="sijiao">私教</span>
+			</h1>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right week_head">9月</button>
+		</header>
+		<div id='container'></div>
+		<div class="mui-content yk_div">
+			<!--团课-->
+			<!--没课-->
+			<div class="null_ss mui-hidden">
+				<div class="null_ss_bg"></div>
+				<p class="mui-text-center fs28 colorHui666">很抱歉，目前没有任何课程</p>
+			</div>
+			<!--有课-->
+			<div class="yueke_tap">
+				<ul class="pl20 pr20 box_s bgwhite mt20 fs28 classList">
+					<!--<li class="pb20 pt20 border_b">
+						<div class="clearfloat tk_div_top">
+							<div class="mui-pull-left tk_div_top_con">
+								<p class="colorBlack font_weightB">印度瑜伽</p>
+								<p class="mt10">教练：李佳</p>
+								<p>09:00-11:00（20/20）</p>
+							</div>
+							<div class="mui-pull-left">
+								<div class="tk_div_top_img">
+									<img src="../../images/yk1.jpg"/>
+								</div>
+							</div>
+						</div>
+						<div class="clearfloat">
+							<div class="mui-pull-left tk_div_bottom">
+								<span class="iconfont icon-dizhi"></span>
+								<span class="colorHui999">瑜伽室</span>
+							</div>
+							<div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+						</div>
+					</li>
+					<li class="pb20 pt20 border_b">
+						<div class="clearfloat tk_div_top">
+							<div class="mui-pull-left tk_div_top_con">
+								<p class="colorBlack font_weightB">印度瑜伽</p>
+								<p class="mt10">教练：李佳</p>
+								<p>09:00-11:00（20/20）</p>
+							</div>
+							<div class="mui-pull-left">
+								<div class="tk_div_top_img">
+									<img src="../../images/yk1.jpg"/>
+								</div>
+							</div>
+						</div>
+						<div class="clearfloat">
+							<div class="mui-pull-left tk_div_bottom">
+								<span class="iconfont icon-dizhi"></span>
+								<span class="colorHui999">瑜伽室</span>
+							</div>
+							<div class="mui-pull-right yk_btn buyNow click_yuyue">预约</div>
+						</div>
+					</li>
+					<li class="pb20 pt20 border_b">
+						<div class="clearfloat tk_div_top">
+							<div class="mui-pull-left tk_div_top_con">
+								<p class="colorBlack font_weightB">印度瑜伽</p>
+								<p class="mt10">教练：李佳</p>
+								<p>09:00-11:00（20/20）</p>
+							</div>
+							<div class="mui-pull-left">
+								<div class="tk_div_top_img">
+									<img src="../../images/yk1.jpg"/>
+								</div>
+							</div>
+						</div>
+						<div class="clearfloat">
+							<div class="mui-pull-left tk_div_bottom">
+								<span class="iconfont icon-dizhi"></span>
+								<span class="colorHui999">瑜伽室</span>
+							</div>
+							<div class="mui-pull-right yk_btn bgcolorCcc">约满</div>
+						</div>
+					</li>-->
+				</ul>
+			</div>
+			<!--私教-->
+			<div class="yueke_tap mui-hidden">
+				<ul class="pl20 pr20 box_s jlList_ul yk_list bgwhite mt20 privateClass">
+					<!--<li class="pt20 pb20 border_b">
+						<div class="mui-row">
+							<div class="mui-col-sm-3 mui-col-xs-3">
+								<div class="jlList_img">
+									<img src="../../images/bwm4.jpg"/>
+								</div>
+							</div>
+							<div class="mui-col-sm-5 mui-col-xs-5">
+								<div class="jlList_con">
+									<p class="font_weightB fs28 colorBlack">刘教练</p>
+								</div>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4 mui-text-right colorHui999 click_info fs28">
+								<span>课程详情</span>
+								<span class="mui-icon mui-icon-arrowup fs32 font_weightB"></span>
+							</div>
+						</div>
+						<div>
+							<div class="mui-row">
+								<div class="mui-col-sm-3 mui-col-xs-3"></div>
+								<div class="mui-col-sm-9 mui-col-xs-9">
+									<div class="ykShow_info fs28">
+										<div class="tk_div_top">
+											<p class="colorBlack font_weightB">印度瑜伽</p>
+											<p class="mt10">09:00-11:00（20/20）</p>
+										</div>
+										<div class="clearfloat">
+											<div class="mui-pull-left tk_div_bottom">
+												<span class="iconfont icon-dizhi"></span>
+												<span class="colorHui999">瑜伽室</span>
+											</div>
+											<div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="mui-row">
+								<div class="mui-col-sm-3 mui-col-xs-3"></div>
+								<div class="mui-col-sm-9 mui-col-xs-9">
+									<div class="ykShow_info fs28">
+										<div class="tk_div_top">
+											<p class="colorBlack font_weightB">印度瑜伽</p>
+											<p class="mt10">09:00-11:00（20/20）</p>
+										</div>
+										<div class="clearfloat">
+											<div class="mui-pull-left tk_div_bottom">
+												<span class="iconfont icon-dizhi"></span>
+												<span class="colorHui999">瑜伽室</span>
+											</div>
+											<div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</li>
+					<li class="pt20 pb20 border_b">
+						<div class="mui-row">
+							<div class="mui-col-sm-3 mui-col-xs-3">
+								<div class="jlList_img">
+									<img src="../../images/bwm4.jpg"/>
+								</div>
+							</div>
+							<div class="mui-col-sm-5 mui-col-xs-5">
+								<div class="jlList_con">
+									<p class="font_weightB fs28 colorBlack">刘教练</p>
+								</div>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4 mui-text-right colorHui999 click_info fs28">
+								<span>课程详情</span>
+								<span class="mui-icon mui-icon-arrowup fs32 font_weightB"></span>
+							</div>
+						</div>
+						<div>
+							<div class="mui-row">
+								<div class="mui-col-sm-3 mui-col-xs-3"></div>
+								<div class="mui-col-sm-9 mui-col-xs-9">
+									<div class="ykShow_info fs28">
+										<div class="tk_div_top">
+											<p class="colorBlack font_weightB">印度瑜伽</p>
+											<p class="mt10">09:00-11:00（20/20）</p>
+										</div>
+										<div class="clearfloat">
+											<div class="mui-pull-left tk_div_bottom">
+												<span class="iconfont icon-dizhi"></span>
+												<span class="colorHui999">瑜伽室</span>
+											</div>
+											<div class="mui-pull-right yk_btn buyNow">预约</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="pt20 pb20 border_b">
+						<div class="mui-row">
+							<div class="mui-col-sm-3 mui-col-xs-3">
+								<div class="jlList_img">
+									<img src="../../images/bwm4.jpg"/>
+								</div>
+							</div>
+							<div class="mui-col-sm-5 mui-col-xs-5">
+								<div class="jlList_con">
+									<p class="font_weightB fs28 colorBlack">刘教练</p>
+								</div>
+							</div>
+							<div class="mui-col-sm-4 mui-col-xs-4 mui-text-right colorHui999 click_info fs28">
+								<span>课程详情</span>
+								<span class="mui-icon mui-icon-arrowup fs32 font_weightB"></span>
+							</div>
+						</div>
+						<div>
+							<div class="mui-row">
+								<div class="mui-col-sm-3 mui-col-xs-3"></div>
+								<div class="mui-col-sm-9 mui-col-xs-9">
+									<div class="ykShow_info fs28">
+										<div class="tk_div_top">
+											<p class="colorBlack font_weightB">印度瑜伽</p>
+											<p class="mt10">09:00-11:00（20/20）</p>
+										</div>
+										<div class="clearfloat">
+											<div class="mui-pull-left tk_div_bottom">
+												<span class="iconfont icon-dizhi"></span>
+												<span class="colorHui999">瑜伽室</span>
+											</div>
+											<div class="mui-pull-right yk_btn bgcolorCcc">约满</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+		
+		<div class="mark_common mui-hidden">
+			<div style="padding-top: 20px;" class="duihuan_mark pl20 pr20 box_s">
+				<p class="fs32 mui-text-center pb10">您确定预约</p>
+				<p class="fs32 mui-text-center pb10 font_weightB yuyueDate">09-10  09:00-11:00</p>
+				<p class="fs32 mui-text-center border_b pb30">的瑜伽课吗？</p>
+				<div class="duihuan_mark_btn clearfloat">
+					<div class="mui-pull-left small_btn border quxiao_click">取消</div>
+					<div class="mui-pull-right small_btn buyNow colorWhite">确认</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script src="../../script/weekDate.js"></script>
+	<script type="text/javascript">
+		    var sid = 98;
+    var classType = 1;
+
+    mui.init();
+
+    //		头部tap切换
+    $(".inp_muiTitle span").on("tap", function () {
+        $(".yueke_tap").addClass("mui-hidden");
+        var index_ = $(this).index();
+        $(this).addClass("colorRed click").siblings().removeClass("colorRed click");
+        $(".yueke_tap").eq(index_).removeClass("mui-hidden");
+    });
+
+    //日期调用
+    $("#container").weekCalendar({
+        /*data: [
+            {date: '2018-6-22', value: '同学聚会'},
+            {date: '2018/01/01', value: '呵呵呵'},
+            {date: '2018/07/10', value: 'hello,world'}
+        ],*/
+        selectDate: function (date, value) {
+            var selDate = $('.week_head').text().split('年');
+            var year = selDate[0];
+            var month = selDate[1].substring(-1, selDate[1].length-1);
+            if (classType == 1) {
+                selectClass(year, month, date, sid);
+            } else if (classType == 2) {
+                selectPrivate(year, month, date, sid);
+            }
+
+        }
+    });
+
+    //是否预约
+    /*$(".click_yuyue").on("tap", function () {
+        classId = $(this).attr('data-classId');     // 课程 id
+
+        var classTime = $(this).attr('data-time');  // 课程时间
+        var classDate = $(this).attr('data-date');  // 课程日期
+        classDate = classDate.split('-');
+        classDate.shift();
+        classDate = classDate.join('-');
+        $('.yuyueDate').text(classDate+'  '+classTime);
+
+        $(".mark_common").removeClass("mui-hidden");
+        show_mark();
+    });*/
+    $(".quxiao_click").on("tap", function () {
+        $(".mark_common").addClass("mui-hidden");
+        hidden_mark();
+    });
+
+    //点击展开
+    /*$(".click_info").on("tap", function () {
+        if ($(this).find("span.mui-icon").hasClass("mui-icon-arrowdown")) {
+            $(this).parents("li").css("height", "96px");
+            $(this).find("span.mui-icon").removeClass("mui-icon-arrowdown");
+        } else {
+            $(this).parents("li").css("height", "auto");
+            $(this).find("span.mui-icon").addClass("mui-icon-arrowdown");
+        }
+    });*/
+
+
+    var classId = 0;     // 课程 id
+//  var userinfo = '';
+    var uid = '-1';
+    apiready = function(){
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err){
+            fanhui();
+        });
+        
+		api.addEventListener({
+	        name:'tabType'
+        },function(ret,err){
+        	if(ret.value.appointClassType == 1){
+				$(".yueke_tap").addClass("mui-hidden");
+				$('.tuanke').addClass("colorRed click").siblings().removeClass("colorRed click");
+				$(".yueke_tap").eq(0).removeClass("mui-hidden");
+		        
+        		getClassType(ret.value.appointClassType);
+        	
+        	}else if(ret.value.appointClassType == 2){
+        	
+				$(".yueke_tap").addClass("mui-hidden");
+				$('.sijiao').addClass("colorRed click").siblings().removeClass("colorRed click");
+				$(".yueke_tap").eq(1).removeClass("mui-hidden");
+        
+        		getClassType(ret.value.appointClassType);
+        		
+        	}
+        });
+        
+        
+        api.setWinAttr({
+            slidBackEnabled : false
+        });
+
+//      userinfo = $api.getStorage('userinfo');
+//      if(typeof userinfo == 'undefined' || userinfo == ''){
+//          _toast('请先登录')
+//          return false;
+//      }
+
+        api.addEventListener({
+            name: 'viewappear'
+        }, function (ret, err) {
+            // todo 显示页面时执行的方法
+            getClass();
+        });
+        // 获取课程
+        // getClass();
+    };
+
+    /**
+     * 点击 团课 私教
+     */
+    function getClassType(type){
+        classType = type;
+        if(type == 1){
+            getClass();         // 获取团课
+        }else{
+            getPrivateCoach();  // 获取私教
+        }
+    }
+
+    // 获取团课
+    function getClass(){
+        var url = ajax_url + 'Index/Exercise/getClassList';
+        _ajax(url, {'sid': sid, 'uid': uid}, 'post', function (ret) {
+            if(ret.status == 1){
+                var class_html = '';
+                $.each(ret.data, function(k, v){
+                    class_html += '<li class="pb20 pt20 border_b">';
+                    class_html += '    <div class="clearfloat tk_div_top">';
+                    class_html += '        <div class="mui-pull-left tk_div_top_con">';
+                    class_html += '            <p class="colorBlack font_weightB">'+ v.classname +'</p>';
+                    class_html += '            <p class="mt10">教练：'+ v.coach_name +'</p>';
+                    class_html += '            <p>09:00-11:00（'+ v.join +'/'+ v.max +'）</p>';
+                    class_html += '        </div>';
+                    class_html += '        <div class="mui-pull-left">';
+                    class_html += '            <div class="tk_div_top_img">';
+                    class_html += '                <img src="'+ v.img +'"/>';
+                    class_html += '            </div>';
+                    class_html += '        </div>';
+                    class_html += '    </div>';
+                    class_html += '    <div class="clearfloat">';
+                    class_html += '        <div class="mui-pull-left tk_div_bottom">';
+                    class_html += '            <span class="iconfont icon-dizhi"></span>';
+                    class_html += '            <span class="colorHui999">'+ v.place +'</span>';
+                    class_html += '        </div>';
+                    class_html += '        <div class="mui-pull-right yk_btn bgcolorCcc">';
+                    /*if(Number(v.join)<Number(v.max)){
+                        // 判断预约状态
+                        if (v.is_appoint == 0) {
+                            class_html += '<div class="mui-pull-right yk_btn buyNow click_yuyue" data-date="'+ v.classdate +'" data-time="'+ v.classtime +'" data-classId="'+ v.id +'">预约</div>';
+                        }else{
+                            class_html += '<div class="mui-pull-right yk_btn bgcolorCcc">已预约</div>';
+                        }
+                        // class_html += '<div class="mui-pull-right yk_btn buyNow click_yuyue" data-date="'+ v.classdate +'" data-time="'+ v.classtime +'" data-classId="'+ v.id +'">预约</div>';
+                    }else{
+                        class_html += '<div class="mui-pull-right yk_btn bgcolorCcc">约满</div>';
+                    }*/
+
+                    if(v.is_appoint == 1){
+                        class_html += '<div class="mui-pull-right yk_btn bgcolorCcc">已预约</div>';
+                    }else if(typeof v.canAppoint !== 'undefined' && v.canAppoint == 0){
+                        class_html += '<div class="mui-pull-right yk_btn bgcolorCcc">不可预约</div>';
+                    }else if(v.is_appoint == 0){
+                        class_html += '<div class="mui-pull-right yk_btn buyNow click_yuyue" data-date="'+ v.classdate +'" data-time="'+ v.classtime +'" data-classId="'+ v.id +'">预约</div>';
+                    }else{
+                        switch (v.status) {
+                            case '2': class_html += '<div class="mui-pull-right yk_btn bgcolorCcc">约满</div>'; break;
+                            case '3': class_html += '<div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>'; break;
+                        }
+                    }
+
+                    class_html += '        </div>';
+                    class_html += '    </div>';
+                    class_html += '</li>';
+                });
+                $('.classList').html(class_html);
+
+                $(".click_yuyue").on("tap", function () {
+                    classId = $(this).attr('data-classId');     // 课程 id
+
+                    var classTime = $(this).attr('data-time');  // 课程时间
+                    var classDate = $(this).attr('data-date');  // 课程日期
+                    classDate = classDate.split('-');
+                    classDate.shift();
+                    classDate = classDate.join('-');
+                    $('.yuyueDate').text(classDate+'  '+classTime);
+
+                    $(".mark_common").removeClass("mui-hidden");
+                    show_mark();
+                });
+            }else{
+                $('.null_ss').removeClass('mui-hidden');
+            }
+        });
+    }
+
+    /**
+     * 检测空值
+     * @param param
+     * @returns {boolean}
+     */
+    var selectData = {};
+    function checkNull(obj){
+        obj = typeof obj !== 'undefined' ? obj : '';
+        if(obj == ''){
+            _toast('没有获取到检测的参数');
+        }
+
+        var bool = true;
+        selectData = {};
+        $.each(obj.data, function(k, v){
+            if(v.param == ''){
+                _toast(v.info, function(){
+                    bool = false;
+                });
+                return false;
+            }else{
+                selectData[v.title] = v.param;
+            }
+        });
+        return bool;
+    }
+
+    function selectClass(year, month, day, sid){
+//      if(typeof userinfo == 'undefined' || userinfo == ''){
+//          _toast('请先登录')
+//          return false;
+//      }
+
+        year = typeof year !== 'undefined' ? year : '';
+        month = typeof month !== 'undefined' ? month : '';
+        day = typeof day !== 'undefined' ? day : '';
+        sid = typeof sid !== 'undefined' ? sid : '';
+
+        var checkData = {
+            'data':[
+                {'title': 'year',  'param': year,  'info': '没有得到年份'},
+                {'title': 'month', 'param': month, 'info': '没有得到月份'},
+                {'title': 'day',   'param': day,   'info': '没有得到日期'},
+                {'title': 'sid',   'param': sid,   'info': '没有得到商户标识'},
+            ]
+        };
+
+        var checkRes = checkNull(checkData);
+        if(!checkRes){
+            return false;
+        }
+
+        selectData['uid'] = uid;
+
+        $('.classList').html('');   // 清空团课列表
+        _ajax(ajax_url + 'Index/Exercise/getSelectClass', selectData, 'get', function (ret) {
+            if(ret.status == 1){
+                var inner_html = '';
+                $.each(ret.data, function(k, v){
+                    inner_html += '<li class="pb20 pt20 border_b">';
+                    inner_html += '    <div class="clearfloat tk_div_top">';
+                    inner_html += '        <div class="mui-pull-left tk_div_top_con">';
+                    inner_html += '            <p class="colorBlack font_weightB">'+ v.classname +'</p>';
+                    inner_html += '            <p class="mt10">教练：'+ v.coach_name +'</p>';
+                    inner_html += '            <p>'+ v.classtime +'（'+ v.join +'/'+ v.max +'）</p>';
+                    inner_html += '        </div>';
+                    inner_html += '        <div class="mui-pull-left">';
+                    inner_html += '            <div class="tk_div_top_img">';
+                    inner_html += '                <img src="'+ v.img +'"/>';
+                    inner_html += '            </div>';
+                    inner_html += '        </div>';
+                    inner_html += '    </div>';
+                    inner_html += '    <div class="clearfloat">';
+                    inner_html += '        <div class="mui-pull-left tk_div_bottom">';
+                    inner_html += '            <span class="iconfont icon-dizhi"></span>';
+                    inner_html += '            <span class="colorHui999">'+ v.place +'</span>';
+                    inner_html += '        </div>';
+
+                    if(v.is_appoint == 1){
+                        inner_html += '<div class="mui-pull-right yk_btn bgcolorCcc">已预约</div>';
+                    }else if(typeof v.canAppoint !== 'undefined' && v.canAppoint == 0){
+                        inner_html += '<div class="mui-pull-right yk_btn bgcolorCcc">不可预约</div>';
+                    }else if(v.is_appoint == 0){
+                        inner_html += '<div class="mui-pull-right yk_btn buyNow click_yuyue" data-date="'+ v.classdate +'" data-time="'+ v.classtime +'" data-classId="'+ v.id +'">预约</div>';
+                    }else{
+                        switch (v.status) {
+                            case '2': inner_html += '<div class="mui-pull-right yk_btn bgcolorCcc">约满</div>'; break;
+                            case '3': inner_html += '<div class="mui-pull-right yk_btn bgcolorCcc">已结束</div>'; break;
+                        }
+                    }
+
+                    inner_html += '    </div>';
+                    inner_html += '</li>';
+                });
+                if(!$('.null_ss').hasClass('mui-hidden')){
+                    $('.null_ss').addClass('mui-hidden');   // 隐藏 无课 div
+                }
+
+                $('.classList').html(inner_html);
+
+                // 点击约课
+                $(".click_yuyue").on("tap", function () {
+                    classId = $(this).attr('data-classId');     // 课程 id
+
+                    var classTime = $(this).attr('data-time');  // 课程时间
+                    var classDate = $(this).attr('data-date');  // 课程日期
+                    classDate = classDate.split('-');
+                    classDate.shift();
+                    classDate = classDate.join('-');
+                    $('.yuyueDate').text(classDate + '  ' + classTime);
+                    $(".mark_common").removeClass("mui-hidden");
+                    show_mark();
+                });
+            }else{
+                $('.null_ss').removeClass('mui-hidden');    // 展示 无课 div
+            }
+        });
+    }
+
+    // 获取私教
+    function getPrivateCoach() {
+//      if(typeof userinfo == 'undefined' || userinfo == ''){
+//          _toast('请先登录')
+//          return false;
+//      }
+        var priCData = {'sid': sid, 'uid': uid};
+        _ajax(ajax_url + 'Index/Exercise/getPrivateCoach', priCData, 'get', function (ret) {
+            if (ret.status == 1) {
+                var private_html = '';
+                $.each(ret.data, function (k, v) {
+                        private_html +='<li class="pt20 pb20 border_b">';
+                        private_html +='    <div class="mui-row">';
+                        private_html +='        <div class="mui-col-sm-3 mui-col-xs-3">';
+                        private_html +='            <div class="jlList_img">';
+                        private_html +='                <img src="'+ v.head_pic +'"/>';
+                        private_html +='            </div>';
+                        private_html +='        </div>';
+                        private_html +='        <div class="mui-col-sm-5 mui-col-xs-5">';
+                        private_html +='            <div class="jlList_con">';
+                        private_html +='                <p class="font_weightB fs28 colorBlack">'+ v.name +'</p>';
+                        private_html +='            </div>';
+                        private_html +='        </div>';
+                        private_html +='        <div class="mui-col-sm-4 mui-col-xs-4 mui-text-right colorHui999 click_info fs28">';
+                        private_html +='            <span>课程详情</span>';
+                        private_html +='            <span class="mui-icon mui-icon-arrowup fs32 font_weightB"></span>';
+                        private_html +='        </div>';
+                        private_html +='    </div>';
+                        private_html +='    <div>';
+                    $.each(v.classInfo, function (ck, cv) {
+                        private_html +='        <div class="mui-row">';
+                        private_html +='            <div class="mui-col-sm-3 mui-col-xs-3"></div>';
+                        private_html +='            <div class="mui-col-sm-9 mui-col-xs-9">';
+                        private_html +='               <div class="ykShow_info fs28">';
+                        private_html +='                    <div class="tk_div_top">';
+                        private_html +='                        <p class="colorBlack font_weightB">'+ cv.classname +'</p>';
+                        private_html +='                        <p class="mt10">'+ cv.classtime +'（'+ cv.join +'/'+ cv.max +'）</p>';
+                        private_html +='                    </div>';
+                        private_html +='                    <div class="clearfloat">';
+                        private_html +='                        <div class="mui-pull-left tk_div_bottom">';
+                        private_html +='                            <span class="iconfont icon-dizhi"></span>';
+                        private_html +='                            <span class="colorHui999">'+ cv.place +'</span>';
+                        private_html +='                        </div>';
+
+                        if(typeof cv.canAppoint !== 'undefined' && cv.canAppoint == 0){
+                            private_html +='                        <div class="mui-pull-right yk_btn buyNow bgcolorCcc">不可预约</div>';
+                        }else{
+                            if(cv.is_appoint == 0){
+                                private_html +='                        <div class="mui-pull-right yk_btn buyNow click_yuyue" data-date="'+ cv.classdate +'" data-time="'+ cv.classtime +'" data-classId="'+ cv.id +'">预约</div>';
+                            }else if(cv.is_appoint == 1){
+                                private_html +='                        <div class="mui-pull-right yk_btn buyNow bgcolorCcc">已预约</div>';
+                            }
+                        }
+
+                        // private_html +='                        <div class="mui-pull-right yk_btn buyNow click_yuyue">预约</div>';
+                        private_html +='                    </div>';
+                        private_html +='                </div>';
+                        private_html +='            </div>';
+                        private_html +='        </div>';
+                    });
+                        private_html +='    </div>';
+                        private_html +='</li>';
+                });
+                $('.privateClass').html(private_html);
+
+                // 展开 & 关闭
+                $(".click_info").on("tap", function () {
+                    if ($(this).find("span.mui-icon").hasClass("mui-icon-arrowdown")) {
+                        $(this).parents("li").css("height", "96px");
+                        $(this).find("span.mui-icon").removeClass("mui-icon-arrowdown");
+                    } else {
+                        $(this).parents("li").css("height", "auto");
+                        $(this).find("span.mui-icon").addClass("mui-icon-arrowdown");
+                    }
+                });
+
+                $(".click_yuyue").on("tap", function () {
+                    classId = $(this).attr('data-classId');     // 课程 id
+
+                    var classTime = $(this).attr('data-time');  // 课程时间
+                    var classDate = $(this).attr('data-date');  // 课程日期
+                    classDate = classDate.split('-');
+                    classDate.shift();
+                    classDate = classDate.join('-');
+                    $('.yuyueDate').text(classDate + '  ' + classTime);
+
+                    $(".mark_common").removeClass("mui-hidden");
+                    show_mark();
+                });
+            } else {
+                $('.null_ss').removeClass('mui-hidden');    // 展示 无课 div
+            }
+        });
+    }
+
+    // 筛选 私教
+    function selectPrivate(year, month, day, sid){
+//      if(typeof userinfo == 'undefined' || userinfo == ''){
+//          _toast('请先登录')
+//          return false;
+//      }
+        year = typeof year !== 'undefined' ? year : '';
+        month = typeof month !== 'undefined' ? month : '';
+        day = typeof day !== 'undefined' ? day : '';
+        sid = typeof sid !== 'undefined' ? sid : '';
+
+        var checkData = {
+            'data':[
+                {'title': 'year',  'param': year,  'info': '没有得到年份'},
+                {'title': 'month', 'param': month, 'info': '没有得到月份'},
+                {'title': 'day',   'param': day,   'info': '没有得到日期'},
+                {'title': 'sid',   'param': sid,   'info': '没有得到商户标识'},
+            ]
+        };
+
+        var checkRes = checkNull(checkData);
+        if(!checkRes){
+            return false;
+        }
+
+        selectData['uid'] = uid;
+        $('.privateClass').html('');   // 清空团课列表
+
+        _ajax(ajax_url + 'Index/Exercise/getPrivateCoach', selectData, 'get', function (ret) {
+            if(ret.status == 1){
+                var private_html = '';
+                $.each(ret.data, function (k, v) {
+                    private_html +='<li class="pt20 pb20 border_b">';
+                    private_html +='    <div class="mui-row">';
+                    private_html +='        <div class="mui-col-sm-3 mui-col-xs-3">';
+                    private_html +='            <div class="jlList_img">';
+                    private_html +='                <img src="'+ v.head_pic +'"/>';
+                    private_html +='            </div>';
+                    private_html +='        </div>';
+                    private_html +='        <div class="mui-col-sm-5 mui-col-xs-5">';
+                    private_html +='            <div class="jlList_con">';
+                    private_html +='                <p class="font_weightB fs28 colorBlack">'+ v.name +'</p>';
+                    private_html +='            </div>';
+                    private_html +='        </div>';
+                    private_html +='        <div class="mui-col-sm-4 mui-col-xs-4 mui-text-right colorHui999 click_info fs28">';
+                    private_html +='            <span>课程详情</span>';
+                    private_html +='            <span class="mui-icon mui-icon-arrowup fs32 font_weightB"></span>';
+                    private_html +='        </div>';
+                    private_html +='    </div>';
+                    private_html +='    <div>';
+                    $.each(v.classInfo, function (ck, cv) {
+                        private_html +='        <div class="mui-row">';
+                        private_html +='            <div class="mui-col-sm-3 mui-col-xs-3"></div>';
+                        private_html +='            <div class="mui-col-sm-9 mui-col-xs-9">';
+                        private_html +='               <div class="ykShow_info fs28">';
+                        private_html +='                    <div class="tk_div_top">';
+                        private_html +='                        <p class="colorBlack font_weightB">'+ cv.classname +'</p>';
+                        private_html +='                        <p class="mt10">'+ cv.classtime +'（'+ cv.join +'/'+ cv.max +'）</p>';
+                        private_html +='                    </div>';
+                        private_html +='                    <div class="clearfloat">';
+                        private_html +='                        <div class="mui-pull-left tk_div_bottom">';
+                        private_html +='                            <span class="iconfont icon-dizhi"></span>';
+                        private_html +='                            <span class="colorHui999">'+ cv.place +'</span>';
+                        private_html +='                        </div>';
+
+                        if(cv.is_appoint == 1){
+                            private_html +='                        <div class="mui-pull-right yk_btn buyNow bgcolorCcc">已预约</div>';
+                        }else if(typeof cv.canAppoint !== 'undefined' && cv.canAppoint == 0){
+                            private_html +='                        <div class="mui-pull-right yk_btn buyNow bgcolorCcc">不可预约</div>';
+                        }else if(cv.is_appoint == 0){
+                            private_html +='                        <div class="mui-pull-right yk_btn buyNow click_yuyue" data-date="'+ cv.classdate +'" data-time="'+ cv.classtime +'" data-classId="'+ cv.id +'">预约</div>';
+                        }
+
+                        // private_html +='                        <div class="mui-pull-right yk_btn buyNow click_yuyue">预约</div>';
+                        private_html +='                    </div>';
+                        private_html +='                </div>';
+                        private_html +='            </div>';
+                        private_html +='        </div>';
+                    });
+                    private_html +='    </div>';
+                    private_html +='</li>';
+                });
+                $('.privateClass').html(private_html);
+
+                if(!$('.null_ss').hasClass('mui-hidden')){
+                    $('.null_ss').addClass('mui-hidden');
+                }
+
+                // 展开 & 关闭
+                $(".click_info").on("tap", function () {
+                    if ($(this).find("span.mui-icon").hasClass("mui-icon-arrowdown")) {
+                        $(this).parents("li").css("height", "96px");
+                        $(this).find("span.mui-icon").removeClass("mui-icon-arrowdown");
+                    } else {
+                        $(this).parents("li").css("height", "auto");
+                        $(this).find("span.mui-icon").addClass("mui-icon-arrowdown");
+                    }
+                });
+
+                $(".click_yuyue").on("tap", function () {
+                    classId = $(this).attr('data-classId');     // 课程 id
+
+                    var classTime = $(this).attr('data-time');  // 课程时间
+                    var classDate = $(this).attr('data-date');  // 课程日期
+                    classDate = classDate.split('-');
+                    classDate.shift();
+                    classDate = classDate.join('-');
+                    $('.yuyueDate').text(classDate + '  ' + classTime);
+
+                    $(".mark_common").removeClass("mui-hidden");
+                    show_mark();
+                });
+            }else{
+                $('.null_ss').removeClass('mui-hidden');    // 展示 无课 div
+            }
+        });
+    }
+
+    // 确认约课
+    $('.confirmSub').on('tap', function () {
+        $(".mark_common").addClass("mui-hidden");
+
+//      if (typeof userinfo == 'undefined' || userinfo == '') {
+//          _toast('请先登录');
+//          return false;
+//      }
+
+        var yuyueData = {
+            'uid': uid,
+            'class_id': classId,
+            'sid': sid,
+            'class_type': classType
+        };
+
+        _ajax(ajax_url + 'Index/Exercise/classAppoint', yuyueData, 'get', function (ret) {
+            if (ret.status == 1) {
+                _toast(ret.info, function () {
+                    if(classType == 1){
+                        getClass();     // 预约成功，重新加载课程
+                    }else{
+                        getPrivateCoach();
+                    }
+                });
+            } else {
+                _toast(ret.info);
+            }
+        });
+    });
+    $('.mui-action-back').on('tap',function(){
+        fanhui();
+    });
+    function fanhui(){
+        api.closeWin();
+    }
+	</script>
+</html>

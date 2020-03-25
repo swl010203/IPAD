@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
+    <!--苹果专有的,头部bar的样式-->
+    <title>会展业务</title>
+    <link rel="stylesheet" type="text/css" href="../../css/user/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/user/index.css"/>
+    <script src="../../script/user/jquery-1.12.2.js"></script>
+    <script src="../../script/user/index.js"></script>
+    <script src="../../script/user/gindex.js"></script>
+</head>
+<body style="height:100%;">
+<div style="height:100%;">
+    <!--头部-->
+        <header>
+            <ul class="fl back">
+                <a href="javascript:bank();"><img src="../../images/user/bank_03.png"/></a>
+            </ul>
+            <ul class="fl word">会展业务</ul>
+        </header>
+<!--顶部结束-->
+
+
+<!--底部按钮开始 -->
+   <div class="gbtn" id="hall_foot">
+        <div class="gpPhone">
+            <i></i>
+            <a href="javascript:void(0);" id="openPhone"><span>电话咨询</span></a>
+        </div>
+        <div class="gbutt">
+            <a href="javascript:" id="now_appointment">立即预定</a>
+        </div>
+    </div>
+<!--底部按钮结束 -->
+</div>
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+    //默认加载
+    var sid  = 0;
+    apiready = function(){
+        sid  = api.pageParam.sid;
+        var header = $api.dom('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+        var footer_h = $api.offset($api.byId('hall_foot')).h;
+        api.openFrame({
+            name: 'exhibition',
+            url: 'exhibition.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: body_h-headerPos.h-footer_h-1
+            },
+            pageParam:api.pageParam,
+            reload:true
+            
+        });
+        
+        api.addEventListener({
+            name:'hall_shop_tel'
+        },function(ret,err){
+            var tel = ret.value.tel;
+            //咨询
+            var url="tel:"+tel;
+            $('#openPhone').attr('href', "javascript:alert('"+tel+"');" );
+        });
+    };
+    
+    //返回上一页
+    function bank(){
+        api.closeWin();
+    }
+    
+    $(document).on('click', '#now_appointment', function() {
+        var uid=localStorage.getItem("uid");
+        if( uid ) {
+            _openWinByUrl('appointment','appointment',{'type':1,'sid':sid});
+        } else {
+            _toast('请先登录！');
+            _openWinByUrl('login','../login');
+        }
+    });
+    
+</script>
+
+</body>
+</html>

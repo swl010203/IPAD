@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>030报修服务</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+      
+        <!--中间内容-->
+        <div class="baoxiufuwuOuterDiv">
+            <!--<div>
+                <div class="fl leftDiv">报修类型：</div>
+                <div class="rightDiv">
+                    <span><i class="yessel sel weixuan"></i>个人报修</span>
+                    <span><i class="nosel sel weixuan"></i>公共报修</span>
+                </div>
+            </div>-->
+            <div>
+                <div class="fl leftDiv">位置信息：</div>
+                <div class="rightDiv">
+                    <span id="address"></span>
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">联系人：</div>
+                <div class="rightDiv wuxiala">
+                    <input id="name" class="input_select" type="text" txt="" value="" placeholder="请输入联系人" /> 
+                </div>
+            </div>
+            
+            <div>
+                <div class="fl leftDiv">联系方式：</div>
+                <div class="rightDiv wuxiala">
+                    <input id="mobile" class="input_select" type="text" txt="" value="" placeholder="请输入联系方式" /> 
+                </div>
+            </div>
+            
+
+            
+            <div>
+                <div class="fl leftDiv">报修种类：</div>
+                <div class="rightDiv">
+                    <div class="xialaxiaoguo heig">
+                        <input id="category_sn" class="input_select" type="text" txt="" value="" placeholder="请选择" readonly/> 
+                        <ul  id="repair_type"> 
+                            <!--<li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></ li> 
+                            <li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></ li> 
+                            <li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></ li> 
+                            <li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li> -->
+                        </ul>
+                        <span class="styleSpan colorRed">&nbsp;&nbsp;*请必须选择一样报修种类才能提交报修服务</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">预约时间：</div>
+                <div class="rightDiv wuxiala">
+                    <div class="xialaxiaoguo2 heig">
+                        <input id="pre_time" class="" type="date" value="" placeholder="请选择"/> 
+                        
+                    </div>
+                </div>
+            </div>
+           <!-- <div>
+                <div class="fl leftDiv">紧急程度：</div>
+                <div class="rightDiv">
+                    <div class="xialaxiaoguo3 heig">
+                        <input id="" class="input_select3" type="text" value="" placeholder="请选择" readonly/> 
+                        <ul> 
+                           <li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></ li> 
+                            <li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></ li> 
+                            <li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></ li> 
+                            <li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li> 
+                        </ul>
+                        <span class="styleSpan colorRed">&nbsp;&nbsp;*请必须选择一样报修种类才能提交报修服务</span>
+                    </div>
+                </div>
+            </div>-->
+            <div>
+                <div class="fl leftDiv">报修内容：</div>
+                <div class="rightDiv">
+                    <textarea id="repair_content" name="" rows="" cols="" placeholder="请输入报修内容"></textarea>
+                </div>
+            </div>
+            <!--<div>
+                <div class="fl leftDiv">备注：</div>
+                <div class="rightDiv">
+                    <textarea name="" rows="" cols="" placeholder="还有什么想嘱咐的。。。"></textarea>
+                </div>
+            </div>-->
+        </div>
+        <!--提交-->
+        <div class="btnTijiao" onclick="repairCommit();">提交</div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript">
+        /*点击button*/
+        $(".baoxiufuwuOuterDiv>div>div.rightDiv span").on("click",function(){
+            var index_ = $(this).index();
+            $(".baoxiufuwuOuterDiv>div>div.rightDiv span").children(".sel").removeClass("yessel");
+            $(".baoxiufuwuOuterDiv>div>div.rightDiv span").children(".sel").addClass("nosel");
+            $(this).children(".sel").addClass("yessel");
+        });
+        /*下拉列表效果*/
+        $("#category_sn").click(function(){ 
+                var ul = $(".xialaxiaoguo ul"); 
+                if(ul.css("display")=="none"){ 
+                    ul.slideDown("fast"); 
+                }else{ 
+                    ul.slideUp("fast"); 
+                } 
+            });
+        //获取数据
+        $(document).on('click',".xialaxiaoguo ul li a",function(){ 
+            var txt = $(this).text(); 
+           
+            var value = $(this).attr("rel"); 
+             $(".input_select").val(txt); 
+            $(".xialaxiaoguo ul").hide(); 
+            $(".input_select").attr('txt',value); 
+            $("#result").html("您选择了"+txt+"，值为："+value); 
+        });
+        /*下拉列表效果*/
+        $(".input_select2").click(function(){ 
+                /*var ul = $(".xialaxiaoguo2 ul"); 
+                if(ul.css("display")=="none"){ 
+                    ul.slideDown("fast"); 
+                }else{ 
+                    ul.slideUp("fast");
+                } */
+            });
+        //获取数据
+        $(".xialaxiaoguo2 ul li a").click(function(){ 
+            var txt = $(this).text(); 
+            $(".input_select2").val(txt); 
+            var value = $(this).attr("rel"); 
+            $(".xialaxiaoguo2 ul").hide(); 
+            $("#result").html("您选择了"+txt+"，值为："+value); 
+        }); 
+        /*下拉列表效果*/
+        $(".input_select3").click(function(){ 
+                var ul = $(".xialaxiaoguo3 ul"); 
+                if(ul.css("display")=="none"){ 
+                    ul.slideDown("fast"); 
+                }else{ 
+                    ul.slideUp("fast"); 
+                } 
+            });
+        //获取数据
+        $(".xialaxiaoguo3 ul li a").click(function(){ 
+            var txt = $(this).text(); 
+            $(".input_select3").val(txt); 
+            var value = $(this).attr("rel"); 
+            $(".xialaxiaoguo3 ul").hide(); 
+            $("#result").html("您选择了"+txt+"，值为："+value); 
+        }); 
+        
+        
+        
+        
+        var uid='';
+		var rm_id = ""; //房间id
+		var cust_id = ""; //登录账户ID
+		
+		var category_sn ="" ;// 保修类型
+		
+		apiready = function(){
+			$('.btnTijiao').attr('onclick','repairCommit();');
+			rm_id = api.pageParam.rm_id;
+			cust_id = api.pageParam.cust_id;
+			uid=localStorage.getItem("uid");
+			//获取用户信息
+			getAccountInfo();
+		};
+		
+		//获取用户信息
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Repair/homeInfo" ,{'uid':uid},'post',function(ret){
+				if(ret.status ==1){
+					$('#address').text(ret.data.address);
+					var strVar = "";
+					$(ret.data.repair_type).each(function(k,v){
+						 strVar += "<li><a href=\"#none\" rel=\""+v['id']+"\">"+v['name']+"<\/a><\/ li> \n";
+					});
+					
+					$("#repair_type").html(strVar);
+
+				}
+			});
+		}
+		
+		
+		
+		function repairCommit(){
+		
+			var name = $("#name").val();
+			var mobile = $("#mobile").val();
+			if( !name ){
+				_toast('请添加联系人');return;
+			}
+			
+			if( !mobile ){
+				_toast('请添加联系方式');return;
+			}
+			
+			if(!_isPhone(mobile)){
+				_toast('联系方式不正确');return;
+			}
+			
+			
+			var pre_time = $("#pre_time").val();
+			var repair_content = $("#repair_content").val();
+			var category_name  = $("#category_sn").val();
+			var category_sn = $("#category_sn").attr('txt');
+			
+			if(!category_sn){
+				_toast('请选择报修类型');return;
+			}
+			
+			if(!pre_time){
+				_toast('请选择报修时间');return;
+			}
+			
+			if(!repair_content){
+				_toast('请填写报修内容');return;
+			}
+			
+			$('.btnTijiao').attr('onclick','');
+			
+			_ajax(ajax_url+"Index/Repair/repairCommit" ,{
+				'uid':uid,
+				'rm_id':rm_id,
+				'cust_id':cust_id,
+				'category_sn':category_sn,
+				'category_name':category_name,
+				'pre_time':pre_time,
+				'repair_content':repair_content,
+				'repair_name':name,
+				'repair_personal_name':name,
+				'contract_telephone':mobile
+				
+			},'post',function(ret){				
+				if(ret.status ==1){
+					_toast(ret.info,function(){
+						//打开保修记录
+						_openWinByUrl('baoxiujilu','baoxiujilu')
+					});
+				}else{
+					_toast(ret.info);
+				}
+			});
+		}
+    </script>
+</html>

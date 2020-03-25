@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/takeout/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/takeout/takeOutCommon.css" />
+    <style>
+        html, body {
+            height: auto;
+        }
+    </style>
+    
+</head>
+<body>
+    <div>
+        <div class="order_tit border-b mt_20">
+            <span class="after red class_tab red_tab" data-type="1" onclick="click_tab(this);">已完成订单</span>
+            <span class="class_tab" data-type="2" onclick="click_tab(this);">未完成订单</span>
+        </div>
+        <!--未完成订单-->
+        <div class="order_innerDiv" id="order_list">
+            <!-- <ul class="order_outerUl border-b">
+                <li class="outer_cartDiv_ul_tit clearfloat pl_20 pr_20 box-s border-b">
+                    <i class="fl shop_icon"></i>
+                    <a href="#">
+                        <p class="outer_cartDiv_ul_tit_p clearfloat fl">
+                            <span class="fl outer_cartDiv_ul_tit_span">蓝色港湾水果（北京店）</span>
+                            <i class="fl right_arrow order_arrow"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="pl_20 pr_20 box-s">
+                    <ul class="order_innerUl pl_20 pr_20 box-s border-b">
+                        <li>
+                            <span>进口水晶葡萄</span>
+                            <span class="fr">x4</span>
+                        </li>
+                        <li>
+                            <span>进口水晶葡萄</span>
+                            <span class="fr">x2</span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="pl_20 pr_20 box-s order_time">
+                    <div class="border-b">
+                        <span>2018-01-08 20:00</span>
+                        <span class="fr">实付<span class="red">￥125</span></span>
+                    </div>
+                </li>
+                <li class="last_li pl_20 pr_20 box-s">
+                    <span class="red">已完成</span>
+                    <span class="btn_span fr">再来一单</span>
+                </li>
+            </ul>
+            <ul class="order_outerUl border-b">
+                <li class="outer_cartDiv_ul_tit clearfloat pl_20 pr_20 box-s border-b">
+                    <i class="fl shop_icon"></i>
+                    <a href="#">
+                        <p class="outer_cartDiv_ul_tit_p clearfloat fl">
+                            <span class="fl outer_cartDiv_ul_tit_span">蓝色港湾水果（北京店）</span>
+                            <i class="fl right_arrow order_arrow"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="pl_20 pr_20 box-s">
+                    <ul class="order_innerUl pl_20 pr_20 box-s border-b">
+                        <li>
+                            <span>进口水晶葡萄</span>
+                            <span class="fr">x4</span>
+                        </li>
+                        <li>
+                            <span>进口水晶葡萄</span>
+                            <span class="fr">x2</span>
+                        </li>
+                    </ul>
+                </li>
+                <li class="pl_20 pr_20 box-s order_time">
+                    <div class="border-b">
+                        <span>2018-01-08 20:00</span>
+                        <span class="fr">实付<span class="red">￥125</span></span>
+                    </div>
+                </li>
+                <li class="last_li pl_20 pr_20 box-s">
+                    <span class="red">已完成</span>
+                    <span class="btn_span fr">再来一单</span>
+                    <span class="btn_whiteSpan fr">写评价</span>
+                </li>
+            </ul> -->
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/takeout/index.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+    $(function(){
+        $(".order_tit>span").click(function(){
+            //$(".order_innerDiv").addClass("hide_");
+            //var index_ = $(this).index();
+            //$(".order_innerDiv").eq(index_).removeClass("hide_");
+            $(this).addClass("red").siblings().removeClass("red");
+        })
+    })
+</script>
+<script>
+    var page    = 1;
+    var is_page = true;
+    var uid = localStorage.getItem( "uid" );
+    apiready = function() {
+        uid = localStorage.getItem( "uid" );
+        
+        //评价完成监听刷新
+        api.addEventListener({
+            name: 'comments_body_over'
+        }, function(ret, err) {
+            is_page = true;
+            page=1;
+            getList();
+        });
+    
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err) {
+            is_page = true;
+            page=1;
+            getList();
+        });
+        
+        //监听滚动条是否到底部
+        api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err){
+             if(is_page){
+                 page++;
+                 getList();
+             }
+        });
+        
+        getList();
+    };
+    
+    //点击切换tab
+    function click_tab( that ) {
+        $(that).addClass("red_tab").siblings().removeClass("red_tab");
+        is_page = true;
+        page    = 1;
+        $('#order_list').html( '' );
+        getList();
+    }
+    
+    //店铺列表
+    function getList() {
+        var type = $('.red_tab').attr( 'data-type' );
+        _ajax(ajax_url+"Index/TakeoutOrder/orderList" ,{uid:uid, type:type, p:page},'post',function(ret) {
+            api.refreshHeaderLoadDone();
+            if(ret.status ==1){
+                var order_list_html = '';
+                if( ret.data.length > 0 ) {
+                    $.each(ret.data, function(key, val) {
+                        order_list_html += '<ul class="order_outerUl border-b" id="ul_order_'+val.id+'">';
+                        order_list_html += '    <li class="outer_cartDiv_ul_tit clearfloat pl_20 pr_20 box-s border-b">';
+                        order_list_html += '        <i class="fl shop_icon"></i>';
+                        order_list_html += '        <a href="javascript:void(0);" onclick="shopDetail('+val.sid+', \''+val.shop_name+'\');">';
+                        order_list_html += '            <p class="outer_cartDiv_ul_tit_p clearfloat fl">';
+                        order_list_html += '                <span class="fl outer_cartDiv_ul_tit_span">'+val.shop_name+'</span>';
+                        order_list_html += '                <i class="fl right_arrow order_arrow"></i>';
+                        order_list_html += '            </p>';
+                        order_list_html += '        </a>';
+                        order_list_html += '    </li>';
+                        order_list_html += '    <li class="pl_20 pr_20 box-s">';
+                        order_list_html += '        <ul class="order_innerUl pl_20 pr_20 box-s border-b">';
+                        if( val.goods_list.length > 0 ) {
+                            $.each(val.goods_list, function(k, v) {
+                        order_list_html += '            <li class="order_list_goods" data-goods-id="'+v.goods_id+'" data-goods-num="'+v.goods_number+'">';
+                        order_list_html += '                <span>'+v.goods_name+'</span>';
+                        order_list_html += '                <span class="fr">x'+v.goods_number+'</span>';
+                        order_list_html += '            </li>';
+                            });
+                        }
+                        order_list_html += '        </ul>';
+                        order_list_html += '    </li>';
+                        order_list_html += '    <li class="pl_20 pr_20 box-s order_time">';
+                        order_list_html += '        <div class="border-b">';
+                        order_list_html += '            <span>'+val.add_time+'</span>';
+                        order_list_html += '            <span class="fr">实付<span class="red">￥'+val.order_amount+'</span></span>';
+                        order_list_html += '        </div>';
+                        order_list_html += '    </li>';
+                        order_list_html += '    <li class="last_li pl_20 pr_20 box-s">';
+                        order_list_html += '        <span class="red">'+val.status_name+'</span>';
+                        if( val.pay_status == 2 ) {
+                        order_list_html += '        <span class="btn_span fr" onclick="logisticsDetail('+val.id+');">查看物流</span>';
+                        }
+                        order_list_html += '        <span class="btn_span fr" onclick="againOrder('+val.id+', '+val.sid+');">再来一单</span>';
+                        if( val.is_evaluation = 1 && val.status == 3 ) {
+                        order_list_html += '        <span class="btn_whiteSpan fr" onclick="goComments('+val.id+', \''+val.shop_name+'\');">写评价</span>';
+                        }
+                        order_list_html += '    </li>';
+                        order_list_html += '</ul>';
+                    });
+                } else {
+                    is_page = false;
+                    _toast( '没有更多记录了' );
+                }
+                if( page > 1 ) {
+                    $('#order_list').append( order_list_html );
+                } else {
+                    $('#order_list').html( order_list_html );
+                }
+            } else if( ret.status == 2 ) {
+                //第一次加载没有数据 不提示
+            } else{
+                is_page = false;
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //去评价
+    function goComments(oid, title) {
+        _openWinByUrl('./my/comments_head', './my/comments_head', {title:title, oid:oid});
+    }
+    
+    //店铺详情页
+    function shopDetail(id, title) {
+        _openWinByUrl('./shop/shop_detail_head','./shop/shop_detail_head',{title:title,sid:id});
+    }
+    
+    //物流详细
+    function logisticsDetail(id, title) {
+        _openWinByUrl('./order/logistics_head','./order/logistics_head',{oid:id});
+    }
+    
+    //再来一单
+    function againOrder( oid, sid ) {
+        var goodsIdArr  = [];
+        var goodsNumArr = [];
+        $('#ul_order_'+oid).find('.order_list_goods').each(function() {
+            var goods_id  = $(this).attr( 'data-goods-id' );
+            var goods_num = $(this).attr( 'data-goods-num' );
+            goodsIdArr.push( goods_id );
+            goodsNumArr.push( goods_num );
+        });
+        var goodsIdStr = goodsIdArr.join(',');//商品id
+        var goodsNumStr = goodsNumArr.join(',');//商品数量
+        if( goodsIdStr == '' || goodsNumStr == '' ) {
+            _toast( '请选择商品' );
+            return false;
+        }
+        _ajax(ajax_url+"Index/TakeoutOrder/addCart" ,{uid:uid, sid:sid, goods_id:goodsIdStr, goods_num:goodsNumStr},'post',function(ret) {
+            if(ret.status ==1){
+                //跳转购物车
+                _openWinByUrl('./order/cart_head','./order/cart_head');
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+</script>
+</html>

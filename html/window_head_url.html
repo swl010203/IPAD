@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/api.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+			
+			<a href="javascript:void(0);" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">标题</h1>
+		</div>
+	</header>
+
+
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+<script type="text/javascript">
+
+	$("#fanhui_btn").click(function(){
+		var closeToRoot = api.pageParam.closeToRoot;
+			if(closeToRoot ==1){
+				api.closeWidget();
+			}
+	});
+	apiready = function(){
+		api.parseTapmode();
+		var title = api.pageParam.title;
+		$(".header_h1").html(title);
+		
+		if(title){
+			var  bounces = true;
+			var header = $api.byId('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			var frame = api.pageParam.frame;
+			var furl  = api.pageParam.furl;
+			var parbounces = api.pageParam.bounces;
+			
+			if(typeof(parbounces) !=undefined  && parbounces !='undefined'){
+				bounces = parbounces;
+			}
+		
+	        api.openFrame({
+	            name: frame,
+	            url: furl,
+	            bounces: bounces,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+1,
+	                w: headerPos.w,
+	                h: 'auto'
+	            },
+				pageParam:api.pageParam
+	        });
+		}else{
+			var param = api.appParam;
+			var params = JSON.parse(param);
+			var title = params.title;
+			$(".header_h1").html(title);
+			
+			var  bounces = true;
+			var header = $api.byId('header');
+	        $api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+			var frame = params.frame;
+			var furl  = params.furl;
+			console.log("+++++++++++++++++++++++++++++++++++++++++++++furl:"+furl);
+		
+	        api.openFrame({
+	            name: frame,
+	            url: furl,
+	            bounces: bounces,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h+1,
+	                w: headerPos.w,
+	                h: 'auto'
+	            },
+				pageParam:param
+	        });
+		}
+	}
+
+
+</script>
+</body>
+</html>

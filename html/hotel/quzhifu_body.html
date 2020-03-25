@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="../../css/hotel/datepeo.css"/>
+	<link rel="stylesheet" href="../../css/hotel/common.css">
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/hotel/iscroll2.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="../../script/hotel/datepeo.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<title>去支付</title>
+	<style>
+		#goPay-dio{z-index: 3;position: fixed;display: none;width: 100%;height: 16rem;cursor:pointer;left:0;bottom:0;}
+		body{
+			background: #f2f2f2!important;
+		}
+		#datescroll2{line-height:30px!important;}
+	</style>
+	<script>
+	function bodyScroll(event){
+        event.preventDefault();
+    }
+    $(function(){
+//      $("#stay").click(function(){
+//          $("body,html").css("overflow-y","auto");
+//          document.body.addEventListener('touchmove',bodyScroll,false);
+//      })
+//      $("#guanbi").click(function(){
+//          $("body,html").css("overflow-y","auto");
+//          document.body.removeEventListener('touchmove',bodyScroll,true);
+//      });
+        
+//       $(".getPeo").click(function(){
+//          $("body,html").css("overflow-y","hidden");
+//          document.body.addEventListener('touchmove',bodyScroll,false);
+//      })
+    });
+
+	function choose(){
+	   var hideobj=document.getElementById("hidebg"); 
+	   hidebg.style.display="block";  //显示隐藏层 
+	   hidebg.style.height=document.body.clientHeight+"px";  //设置隐藏层的高度为当前页面高度 
+	   document.getElementById("goPay-dio").style.display="block";  //显示弹出层 
+		}
+		function choose2(){
+			 document.getElementById("hidebg").style.display="none"; 
+  			 document.getElementById("goPay-dio").style.display="none"; 
+			// $('.cmark').css('display','none');
+		}
+				
+	</script>
+
+
+</head>
+<body>
+<div  class="hidebg" id="hidebg"></div> 
+	<div class="gxyhead">				
+		<div class="gBig ggys">
+			<span class="gBig-bed" id="roomname"></span>
+			<div  class="gBig-time">
+				<span class="gBig-rz w-fl">入住：<i id="start"  style="font-style:normal"></i></span>
+				<span class="gBig-ld w-fl">离店：<i id="end"  style="font-style:normal"></i></span>
+				<span class="gBig-gj w-fr">共计：<i id="daynum"  style="font-style:normal"></i>晚</span>
+			</div>
+			
+			<div class="gBig-info">
+				<ul clas=w-fl id="select_ul">
+					<!-- <li>双床</li>
+					<li>双早</li>
+					<li>免费有线宽带</li>
+					<li class="gBig-info-no" style="color: #d12a18;">不可取消</li> -->
+				</ul>
+			</div>
+		</div>
+		<div class="gRooms ggys">
+			<div class="gRooms-txt">
+
+				<span class="w-fl">房间数：</span>
+
+				<a href="#" class="w-fr getPeo" style="color:#aaaaaa">请选择 &gt;</a>
+			</div>
+			<div id="datePlugin"></div>
+			<div  class="gRooms-txt">
+				<span class="w-fl">入住人：</span>
+				<input type="text" placeholder="请输入入住人姓名" id="consignee" class="w-fr">
+			</div>
+			<div class="gRooms-txt">
+				<span class="w-fl">联系电话：</span>
+				<input type="tel" placeholder="请输入手机号" id="mobile" class="w-fr";>
+				
+			</div>
+		</div>
+		<div class="gRoomsNum ggys">
+			<div>
+				<span>房间</span><b id="roomnum">x1</b><span class="w-fr">¥<i id="roomprice"  style="font-style:normal">0.00</i></span>
+			</div>
+			<div>
+				<span>在线支付</span><span class="w-fr">¥<i class="roomprice"  style="font-style:normal">0.00</i></span>
+			</div>
+		</div>
+		<div class="gRoomsHobby ggys"><span>住宿偏好</span>
+			<a href="javascript:" class="w-fr textA" id="stay" onclick="choose();" style="color:#aaaaaa">请选择 &gt;</a>
+		</div>
+	</div>	
+	<input type="hidden" id="zprice" value='0.00'/>	
+	<div class="goPay-dio" id="goPay-dio" style="display: none;" >
+		<div class="goPay-dio-no">
+			<div class="goPay-hobby"><i></i><span>住宿偏好</span>
+				<a href="javascript:" onclick="choose2();" id="guanbi"><img src="../../images/hotel/x.png" alt=""></a>
+			</div>
+			<ul class="goPay-hobbyno" id="stay-list">
+				<li><a>无烟房</a><i></i></li>
+				<li><a class="colorred">无要求</a><i class="coloryes"></i></li>
+				<li><a>尽量安排无烟房</a><i></i></li>
+				<li><a>尽量安排吸烟房</a><i></i></li>
+			</ul>
+		</div>
+	</div>
+</body>  
+<script type="text/javascript">
+	$('.getPeo').datepeo();
+	$("#stay-list li").click(function(){
+		$(this).children("a").addClass("colorred").parent("li").siblings().children("a").removeClass("colorred");
+		$("#stay-list li i").removeClass("coloryes");
+		$(this).children("i").addClass("coloryes");
+		var html_ = $(this).text();
+		$(".textA").html(html_);
+		$(".goPay-dio").css("display","none");
+		$(".hidebg").css("display","none");
+	});
+	$("input").focus(function(){
+		$(this).css("color","#aaaaaa");
+		 $(this).get(0).removeAttribute('placeholder')
+	});
+	$("input").blur(function(){
+		 $("input").eq(0).get(0).setAttribute('placeholder','请输入入住人姓名');
+		 $("input").eq(1).get(0).setAttribute('placeholder','请输入手机号')
+	});
+
+
+	var start='';//入住时间
+	var end='';//离开时间
+	var daynum='';//天数
+	var sid='';//酒店id
+	var hid='';//房间id 
+	var uid='';
+	apiready = function(){
+		start=parseInt(api.pageParam.start);
+		end=parseInt(api.pageParam.end);
+		daynum=parseInt(api.pageParam.num);
+		sid=api.pageParam.sid;
+		hid=api.pageParam.hid;
+		uid=localStorage.getItem('uid');		
+		
+		//时间展示
+		$('#start').text(formatDate(start));
+		$('#end').text(formatDate(end));
+		$('#daynum').text(daynum);
+		
+		//获取房间信息
+		getRoom();			
+		
+	};
+	
+	//转换时间戳
+	function   formatDate(now)   { 	
+		var time = new Date(now);	 
+      	var month = time.getMonth()+1;
+		var date = time.getDate();
+     	return month+'月'+date+'日';
+    }
+    
+    //计算价格
+    function countroomprice(datestr){
+    	var prcie=parseFloat($('#roomprice').text());
+    	var zprice=prcie*parseFloat(datestr) * daynum;  //每个房间单价 * 房间数量 * 时间天数
+    	$('#roomnum').text(datestr);
+    	$('#zprice').text(zprice);
+    	$('.roomprice').text(zprice);
+    	api.sendEvent({
+			name: 'quzhifuhead',
+			extra: {
+				key1: 'success',
+				zprice:zprice,
+			}
+		});
+    }
+ 
+	//获取店铺手机号
+	function getRoom(){
+		//sid=25;
+		_ajax(ajax_url+"Index/Hotel/getRoom",{sid:sid,hid:hid},'post',function(ret){
+			if(ret){
+				$('#roomname').text(ret.name);
+				$('#roomprice').text(ret.price);
+				$('.roomprice').text(ret.price * daynum);
+				api.sendEvent({
+					name: 'quzhifuhead',
+					extra: {
+						key1: 'success',
+						zprice:ret.price * daynum,
+					}
+				});
+				var select_ul = '';
+				$.each(ret.select, function(key, val) {
+				    select_ul += '<li>'+val+'</li>';
+				});
+				$('#select_ul').html( select_ul );
+			}
+		});
+	}
+	
+	//去支付
+	var start=1;
+	function goPay(){
+		if(!uid){
+			_toast('请先登录！');
+			_openWinByUrl('login','../login');return;
+		}
+		var price=parseFloat($('#zprice').text());
+		var num=parseFloat($('#roomnum').text());
+		var consignee=$('#consignee').val();
+		var mobile=$('#mobile').val();
+		var remarks=$('#stay').text();
+		
+		if(!num){
+			_toast('请选择房间数！');return;
+		}
+		if(!consignee){
+			_toast('请填写住宿人姓名！');return;
+		}
+		if(!mobile){
+			_toast('请填写手机号！');return;
+		}
+		if(!_isPhone(mobile)){
+			_toast('手机号格式错误！');return;
+		}
+		if(start == 2){
+			return;		
+		}else{
+			start=2;
+		}
+		
+		_ajax(ajax_url+"Index/hotel/goRoom",{'remarks':remarks,'start_time':start,'end_time':end,'mobile':mobile,'consignee':consignee,'room_id':hid,'room_num':num,'uid':uid,'order_price':price,'sid':sid},'post',function(ret){
+			if(ret.status==1){
+				//_toast(ret.msg,function(){
+					_openWinByUrl('pay_head','../order/pay_head',{'order_sn':ret.order_sn,'pay_notify_type':3});
+				//});
+
+			}else{
+				_taost(ret.msg);
+
+			}
+		});
+		
+	}
+</script>
+</html>

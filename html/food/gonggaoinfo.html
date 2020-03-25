@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/gonggao.css"/>
+		
+		<style>
+			.content img , .content table{width:100%;}
+		</style>
+	</head>
+	<body>
+		<!--头部-->
+
+		<div class="content pad">
+			<div class="title" style="height:auto;padding-bottom: 30px;">
+				<h3 class="tit"> </h3>
+				<p id='times'></p>
+			</div>
+			<div class="conWord">
+				<p id='content' style="width:100%;"></p>
+				
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../../script/food/index.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+		
+	<script type="text/javascript">
+		var id = "";
+		apiready = function(){
+			id = api.pageParam.id;
+			loading('food_gonggaoinfo');
+			ready();
+		};
+		
+		
+		function ready(){
+				_ajax(ajax_url+"Index/Food/getShopXgInfo",{'id':id},'post',function(ret){
+					var strVar = "";
+					if(ret.status==1){
+						$(".tit").text(ret.data.title);
+						var addtime = ret.data.addtime;
+						$("#times").text(_formatDate(addtime*1000,true));
+						
+						$("#content").html(ret.data.content);
+					}else{
+						_toast(ret.msg);
+					}
+					closeloading();
+				});
+		}
+		
+		
+	</script>
+</html>

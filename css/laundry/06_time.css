@@ -1,0 +1,86 @@
+.datatime {
+  margin-top: 10px;
+  border-top: 1px solid #E0E0E0;
+  background-color: #fff;
+  overflow: hidden;
+}
+.datatime ul {
+  padding: 0 20px;
+  height:100px;
+  position: relative;
+  width: 80%;
+  font-size: 20px;
+  margin:0 auto;
+}
+.datatime ul li:first-child{
+margin-left: 0px;
+}
+.datatime ul li {
+	width:20%;
+  padding-left: 20px;
+  padding-right:20px;
+  font-size: 20px;
+  color: #999;
+  text-align: center;
+  position: relative;
+  float: left;
+}
+.datatime ul li p{
+	width: 100%;
+	text-align: center;
+}
+.datatime ul li .wek {
+  margin-top: 20px;
+}
+.datatime ul li .mon {
+  margin-top: 5px;
+}
+.datatime ul i {
+  width: 20px;
+  height: 11px;
+  display: block;
+  position: absolute;
+  top: 82px;
+  left:60px;
+}
+.datatime ul i img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.datatime ul .now {
+  color: #d12a18;
+}
+.datatime ul .next {
+  color: #d17218;
+}
+.period {
+  background-color: #fff;
+  border-top: 1px solid #E0E0E0;
+}
+.period ul {
+  /*padding: 0 0.2rem;*/
+}
+.period ul li {
+  width: calc(33.333333333333336%);
+  float: left;
+  height:60px;
+  font-size: 20px;
+  line-height: 50px;
+  color: #999;
+  border-bottom: 1px solid #E0E0E0;
+  border-right: 1px solid #E0E0E0;
+  text-align: center;
+  position: relative;
+}
+.period ul li img {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.btn a {
+  background: -webkit-gradient(linear, 0 0, 70% 100%, from(#df6711), to(#d12b18));
+}
+/*# sourceMappingURL=06_time.css.map */

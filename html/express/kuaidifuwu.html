@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>049快递服务</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" id="back">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon">
+				快递服务
+			</div>
+			<div class="fr" onclick="_openWinByUrl('wodebaoguo','wodebaoguo')">
+				我的包裹
+			</div>
+		</header>
+
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+		});
+		
+		
+		apiready = function(){
+			addEventUserInfo();
+			api.parseTapmode();
+					
+			var header = $api.dom('header');
+	        //$api.fixStatusBar(header); 
+	        var headerPos = $api.offset(header);
+	        var body_h = $api.offset($api.dom('body')).h;
+	
+	
+	        api.openFrame({
+	            name: 'kuaidifuwu_body',
+	            url: 'kuaidifuwu_body.html',
+	            bounces: false,
+	            rect: {
+	                x: 0,
+	                y: headerPos.h,
+	                w: headerPos.w,
+	                h: 'auto'
+	            },
+				pageParam:api.pageParam
+	        });
+			
+		}
+	</script>
+</html>

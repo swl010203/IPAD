@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+
+<style>
+	.yhq_conspan02{font-size:0.4rem;}
+</style>
+</head>
+<body class="bg_fff">
+
+<!-- 内容 -->
+<div class="wp_100">
+
+	<div class="yhq_listwrap" id="list">
+		<!--<div class="yhq yhq01">
+			<div class="yhq_bg">
+				<div class="yhq_topbg">
+					<span class="yhq_topbgspan">商家券 | 法式牛排馆</span>
+				</div>
+				<div class="yhq_con">
+					<p class="yhq_conp01">
+						<span class="yhq_conspan01">￥</span><span class="yhq_conspan02">50.00</span>	<span class="yhq_conspan03">（满300元可用）</span>
+					</p>
+					<p class="yhq_conp01" style="padding-top: 0.2rem;">
+						2016年05月30日-2016年10月28日
+					</p>
+					<a href="#" class="yhq_checkicon"></a>
+				</div>
+			</div>
+		</div>
+		<div class="yhq yhq01">
+			<div class="yhq_bg">
+				<div class="yhq_topbg">
+					<span class="yhq_topbgspan">商家券 | 法式牛排馆</span>
+				</div>
+				<div class="yhq_con">
+					<p class="yhq_conp01">
+						<span class="yhq_conspan01">￥</span><span class="yhq_conspan02">50.00</span>	<span class="yhq_conspan03">（满300元可用）</span>
+					</p>
+					<p class="yhq_conp01" style="padding-top: 0.2rem;">
+						2016年05月30日-2016年10月28日
+					</p>
+					<a href="#" class="yhq_checkicon"></a>
+				</div>
+			</div>
+		</div>
+		<div class="yhq yhq01">
+			<div class="yhq_bg">
+				<div class="yhq_topbg">
+					<span class="yhq_topbgspan">商家券 | 法式牛排馆</span>
+				</div>
+				<div class="yhq_con">
+					<p class="yhq_conp01">
+						<span class="yhq_conspan01">￥</span><span class="yhq_conspan02">50.00</span>	<span class="yhq_conspan03">（满300元可用）</span>
+					</p>
+					<p class="yhq_conp01" style="padding-top: 0.2rem;">
+						2016年05月30日-2016年10月28日
+					</p>
+					<a href="#" class="yhq_checkicon"></a>
+				</div>
+			</div>
+		</div>
+		<div class="yhq yhq_shixiao">
+			<div class="yhq_bg">
+				<div class="yhq_topbg">
+					<span class="yhq_topbgspan">商家券 | 法式牛排馆</span>
+				</div>
+				<div class="yhq_con">
+					<p class="yhq_conp01">
+						<span class="yhq_conspan01">￥</span><span class="yhq_conspan02">50.00</span>	<span class="yhq_conspan03">（满300元可用）</span>
+					</p>
+					<p class="yhq_conp01" style="padding-top: 0.2rem;">
+						2016年05月30日-2016年10月28日
+					</p>
+					<a href="#" class="yhq_checkicon"></a>
+				</div>
+			</div>
+			<span class="yhq_shixiaoicon"><img src="../../images/yhq_shixiao.png" /></span>
+		</div>-->
+	</div>
+</div>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+		$(document).ready(function(){
+
+$('.yhq01').click(function(){
+	
+	$(this).addClass('yhqcur').siblings().removeClass('yhqcur');
+})
+});
+
+
+	var userinfo = "";
+	var page = 1;
+	var is_page = true;
+	var type =1;
+	
+	var sid = 0;//店铺id
+	var shop_price=0.00;
+	var is_order = false;
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		sid = api.pageParam.sid;
+		shop_price = api.pageParam.shop_price;
+		if(sid !='undefined'  &&  sid !=''  && sid !=0){
+			is_order = true;
+		}
+		//加载状态
+		loading('coupons_body');
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			page=1;
+			is_page = true;
+			ready();
+		});
+
+		api.addEventListener({
+		    name:'coupons_type'
+		}, function(ret, err){        
+		     type = ret.value.type; 
+		     is_page = true;
+		     page=1;
+			 ready();
+		});
+		
+		
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		         page++;
+			     ready();
+		     }
+			  
+		});
+		
+		ready();
+	};
+	
+	
+	function ready(){
+	
+		_ajax(ajax_url +"Index/Coupons/getCouponsList",{'uid':userinfo.uid,'token':userinfo.token,'p':page,'type':type,'sid':sid},'post',function(ret){
+			var strVar = "";
+			if(ret.status  ==1){
+				//判断是否还有下一页
+				if(ret.couponlist.length==0  && page !=1){
+					is_page = false;
+					return false;
+				}
+				
+				$.each(ret.couponlist,function(k,v){
+				    strVar += "<div class=\"yhq yhq01\">";
+				    strVar += "	<div class=\"yhq_bg\">";
+				    strVar += "		<div class=\"yhq_topbg\">";
+				    if( v.shop_id == 0 ) {
+				        strVar += "         <span class=\"yhq_topbgspan\">"+v['shop_name']+"<\/span>";
+				    } else {
+				        strVar += "         <span class=\"yhq_topbgspan\">商家券 | "+v['shop_name']+"<\/span>";
+				    }
+				    strVar += "		<\/div>";
+				    strVar += "		<div class=\"yhq_con\">";
+				    
+				    if(is_order ==true){
+				    	strVar += "			<p onclick=\"coupons_order("+v['coupons_id']+","+v['id']+")\" class=\"yhq_conp01\">";
+				    }else{
+				    	strVar += "			<p class=\"yhq_conp01\">";
+				    }
+				    
+				    var discount =v['info']['money'];
+					discount = (+discount);
+					//判断优惠券类型
+					if(v['info']['coupons_type'] ==3){
+						strVar += "				<span class=\"yhq_conspan01\"><\/span><span class=\"yhq_conspan02\">满￥"+v['info']['full']+"减￥"+discount+"<\/span>";
+					}else if(v['info']['coupons_type'] ==2){
+						strVar += "				<span class=\"yhq_conspan01\"><\/span><span class=\"yhq_conspan02\">"+discount+"折<\/span>";
+					}else {
+						strVar += "				<span class=\"yhq_conspan01\">￥<\/span><span class=\"yhq_conspan02\">"+discount+"<\/span>";
+					}
+					
+ 
+				    strVar += "<span class=\"yhq_conspan03\">（"+v['info']['type']+"）<\/span>";
+				    strVar += "			<\/p>";
+				    strVar += "			<p class=\"yhq_conp01\" style=\"padding-top: 0.2rem;\">";
+				    strVar += v['start_time'] + " - "+v['end_time'];
+				    strVar += "			<\/p>";
+				    strVar += "			<a href=\"#\" class=\"yhq_checkicon\"><\/a>";
+				    strVar += "		<\/div>";
+				    strVar += "	<\/div>";
+				    strVar += "<\/div>";
+				});
+			}else{
+				is_page = false;
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$("#list").html(strVar);
+		    }else{
+		    	$("#list").append(strVar);
+		    }
+			
+			sendEvent(ret.count,ret.wucount);
+			
+			closeloading();
+			api.refreshHeaderLoadDone();
+		});
+	}
+	
+	
+	/**
+	 * 计算优惠券优惠价格
+	 * @param id 优惠券id
+	 * @param shop_price  计算的价格 
+	 */
+	function coupons_order(id,user_coupons_id){
+		
+		_ajax(ajax_url +"Index/Coupons/getCouponsPrice",{'uid':userinfo.uid,'token':userinfo.token,'id':id,'price':shop_price},'post',function(ret){
+			var strVar = "";
+			if(ret.status  ==1){
+				//判断是否满足使用条件
+				if(ret.is_status ==1){
+					api.sendEvent({
+				        name:'order_coupons_event',
+				        extra : {
+				        	shop_id   :sid,
+							coupons_id:user_coupons_id,
+							coupons_val:ret.data
+						}
+			        });
+			        
+			        api.closeWin();
+				}else{
+					_toast('当前不满足优惠券使用条件');
+					return false;
+				}
+				
+			}
+		});
+	}
+	
+	/**
+	 * 数量统计 
+	 */
+	function sendEvent(count,wucount){
+		api.sendEvent({
+	        name:'coupons_count',
+	        extra : {
+				count:count,
+				wucount:wucount
+			}
+	        
+        });
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<link rel="stylesheet" type="text/css" href="../css/aui.css" />
+		<meta charset="UTF-8">
+		<title>007充值</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+		<link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+		<style>
+			.input_select{
+				width:283px;
+				background-position-x: 262px;
+			}
+			#gllist{width:283px;}
+			</style>
+	</head>
+	<body style="max-width:100%;">
+		
+		<!--中间内容-->
+		<!--<div class="jtzh_banner clearfloat">
+			<span class="fl">家庭账户余额：<span id='money'>0元</span></span>
+			<span class="fr">可用积分：<span id="jifen">0分</span></span>
+			<div class="jtzhTouxiang">
+				<div class="touxiang">
+					<img id="touxiang" src="../../images/account/shouye01.jpg"/>
+				</div>
+			</div>
+			<p class="jtzhAddr" id="address"></p>
+			<ul class="dibuliebiao clearfloat">
+				<li class="click after">家庭账户</li>
+				<li class="after">家庭账户</li>
+				<li>家庭账户</li>
+			</ul>
+		</div>-->
+		<div class="wanshanxinxi">
+			<div class="jtzhTit quMr_20 clearfloat">
+				<div>
+					<i class="xian"></i>
+					<span>充值</span>
+				</div>
+			</div>
+			<ul class="yezhuInfo clearfloat chongzhi">
+				<li>
+					<i class="yuandian"></i>
+					<span class="lanzitishi">充值账户：<span class="address"></span></span>
+				</li>
+			</ul>
+		</div>
+
+		<div class="chongzhiMoney">
+			<div class="topchongzhi clearfloat">
+				<div class="fl">
+					<span>充值金额：</span>
+					<input type="number" id="czmoney" value="" placeholder="输入您要充值的金额"/>
+				</div>
+				<div class="fl">
+					<button onclick="selectMoney('500');">500元</button>
+					<button onclick="selectMoney('1000');">1000元</button>
+					<button onclick="selectMoney('3000');">3000元</button>
+					<button onclick="selectMoney('5000');">5000元</button>
+				</div>
+			</div>
+			<div class="botchongzhi">
+				<div class="clearfloat">
+					<span class="fl" style="min-width: 100px;margin-right: 5px;">充值方式：</span>
+					<div class="fl">
+						
+						<span><i class="yessel sel weixuan" id="guanlianzhanghu"></i><label for="guanlianzhanghu">关联账户</label></span>
+						<!--<span><i class="nosel sel weixuan" id="huitongka"></i><label for="huitongka">惠通卡</label></span>-->
+						<span><i class="nosel sel weixuan" id="zhifubao"></i><label for="zhifubao">支付宝</label></span>
+						<span><i class="nosel sel weixuan" id="weixin"></i><label for="weixin">微信</label></span>
+						<!--点击支付方式对应内容-->
+						<div class="tabQiehuan xialaxiaoguo">
+							
+							
+							<input id="" class="input_select" type="text" value="选择您要充值的惠通卡关联账户" readonly/>
+							<input id="uids" type="hidden" value=""/> 
+							<ul id="gllist" style="max-height: 150px;overflow-y: scroll;"> 
+								<li><a href="javascript:_openWinByUrl('add_guanlian','account_head',{'frame':'add_guanlian_body','furl':'add_guanlian_body'});">添加关联账户</a></ li>
+								<!--<li><a href="#none" rel="2">请选择您要用来充值的关联账户1</a></ li> 
+								<li><a href="#none" rel="3">请选择您要用来充值的关联账户2</a></ li> 
+								<li><a href="#none" rel="4">请选择您要用来充值的关联账户3</a></ li> 
+								<li><a href="#none" rel="5">请选择您要用来充值的关联账户4</a></ li> -->
+							</ul>
+							<!--<span class="redZi">您本次使用关联账户充值将获得500积分</span>-->
+						</div>
+						<!--<div class="tabQiehuan hide_">
+							<input type="text" id="cardno"  style="background-image: none;" class="input_select2" value="" placeholder="请输入惠通卡卡号"/><br/><br/>
+						</div>-->
+						<!--<div class="tabQiehuan hide_">
+							<div class="weixinerweima">
+								<img id="weixinimg" src="" alt="" />
+							</div>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="outCzanniu">
+			<div class="czBtn" onclick="rechargeGL();">
+				<button>充值</button>
+			</div>
+		</div>
+		<!--充值完成-->
+		<div class="mark hide_">
+			<div class="chongzhicg">
+				<div class="bagimg"></div>
+				<p class="czp">恭喜您，充值成功</p>
+				<div class="czclose">关闭</div>
+			</div>
+		</div>
+		
+		
+		<!--浮动层-->
+		<div class="ftc_wzsf">
+		  <div class="srzfmm_box">
+		    <div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入惠通卡支付密码</span> </div>
+		    <!--<div class="zfmmxx_shop">
+		      <div class="mz ordername">商品</div>
+		      <div class="wxzf_price order_amount">￥0.00</div>
+		    </div>-->
+		    
+		    <ul class="mm_box">
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		    </ul>
+		    <div class="zfmmxx_shop">
+              <div class="mz" style="color:red;">密码输入3次后冻结惠通卡</div>
+            </div>
+		  </div>
+		  <div class="numb_box">
+		    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+		    <ul class="nub_ggg">
+		      <li><a href="javascript:void(0);">1</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+		      <li><a href="javascript:void(0);">3</a></li>
+		      <li><a href="javascript:void(0);">4</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+		      <li><a href="javascript:void(0);">6</a></li>
+		      <li><a href="javascript:void(0);">7</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+		      <li><a href="javascript:void(0);">9</a></li>
+		      <li><span></span></li>
+		      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+		      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+		    </ul>
+		  </div>
+		  <div class="hbbj"></div>
+		</div>	
+					
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".dibuliebiao li").on("click",function(){
+				$(".dibuliebiao li").removeClass("click");
+				$(this).addClass("click");
+			});
+			/*点击button*/
+			$(".botchongzhi>div div span").on("click",function(){
+				var index_ = $(this).index();
+				$(".botchongzhi>div div span").children(".sel").removeClass("yessel");
+				$(".botchongzhi>div div span").children(".sel").addClass("nosel");
+				$(this).children(".sel").addClass("yessel");
+				$(".tabQiehuan").addClass("hide_");
+				$(".tabQiehuan").eq(index_).removeClass("hide_");
+			});
+			/*点击充值完成按钮*/
+//			$(".czBtn").on("click",function(){
+//				$(".mark").removeClass("hide_");
+//				$("body").css("overflow-y","hidden");
+//				var scroll_ = $(document).scrollTop();
+//				$(".mark").css("top",scroll_);
+//			})
+			/*点击关闭按钮*/
+			$(".czclose").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+			});
+			
+			/*下拉列表效果*/
+			$(".input_select").click(function(event){ 
+				event.stopPropagation();
+				var ul = $(".xialaxiaoguo ul"); 
+				if(ul.css("display")=="none"){ 
+					ul.slideDown("fast"); 
+				}else{ 
+					ul.slideUp("fast"); 
+				} 
+			});
+			$(document).click(function(){
+				var ul = $(".xialaxiaoguo ul"); 
+				ul.slideUp("fast"); 
+			});
+			//获取数据
+			$(".xialaxiaoguo ul li a").click(function(){ 
+				var txt = $(this).text();
+			
+				if(txt != '添加关联账户'){
+					$(".input_select").val(txt); 
+					var value = $(this).attr("rel"); 
+					$(".xialaxiaoguo ul").hide(); 
+					$("#result").html("您选择了"+txt+"，值为："+value); 
+				} else{
+					$(".xialaxiaoguo ul").hide(); 
+				}
+				
+			}); 
+		});
+		/**
+		 * 清除支付密码 
+		 */
+		function clearPayPwd(){
+			paypassword="";
+			$(".mm_box li").attr('pwd','');
+			$(".mm_box li").removeClass("mmdd");
+			
+			i1 = 0;
+			is_pay_status = 1;
+			
+			
+		}
+		var i1 = 0;	
+		$(function(){
+			//出现浮动层
+			$(".ljzf_but").click(function(){
+				$(".ftc_wzsf").show();
+			});
+			//关闭浮动  清除支付密码
+			$(".close").click(function(){
+				$(".ftc_wzsf").hide();
+				i = 0;
+				
+				clearPayPwd();
+			});
+			//数字显示隐藏
+			$(".xiaq_tb").click(function(){
+			//$(".numb_box").slideUp(500);
+			});
+			$(".mm_box").click(function(){
+				//$(".numb_box").slideDown(500);
+			});
+			//----
+			var i = 0;
+			$(document).on('touchstart',".nub_ggg li", function(){
+				$(this).css('background','#e0e0e0');
+			});
+	
+			$(document).on('touchend',".nub_ggg li a", function(){
+				$(this).css('background','#f5f5f5');
+			});
+			$(document).on('touchend',".nub_ggg li a", function(){
+			//$(".nub_ggg li a").change(function(){
+				i1++;
+				var pwd =$(this).parent("li").index()+1;
+				if(pwd ==11){
+					pwd =0 ;
+				}
+			
+				if(i1<6){
+					$(".mm_box li").eq(i1-1).addClass("mmdd");
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					}else{
+						$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+						$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+						if(i1>6){
+							i1=6;
+						}
+						setTimeout(function(){
+							//验证支付密码 并支付
+							var paypassword="";
+							$(".mm_box li").each(function(){
+								paypassword+=$(this).attr('pwd');
+							});
+							
+							point(paypassword);	
+												
+						},10);
+						//window.document.location="cg.html"
+				 	} 
+			});
+	 		$(document).on('touchend',".nub_ggg li .del", function(){
+				if(i1>0){
+					i1--;
+					$(".mm_box li").eq(i1).removeClass("mmdd");
+					$(".mm_box li").eq(i1).attr("pwd","");
+					i1==0;
+				}
+			}); 
+		});
+	</script>
+	<script>
+		var uid=''; 
+		var uids='';
+		var cardno = "";  //惠通卡卡号
+		apiready = function(){
+			api.addEventListener({
+	            name:'refe_relation'
+            },function(ret,err){
+            	getAccountInfo();
+            });
+			uid=localStorage.getItem("uid");
+			//获取用户信息
+			getAccountInfo();
+			
+		};
+		
+		//获取用户信息
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'post',function(ret){
+				if(ret.status ==1){
+					$('#money').text(ret.user.money_all+'元');
+					$('#jifen').text(ret.user.integral+'分');
+					$('#touxiang').attr('src',ret.user.portrait);
+					$('#address').text(ret.user.address);
+					$('.address').text(ret.user.address);
+					uids=ret.user.uids;
+					
+					//获取关联账户
+					gluser();
+					
+					//监听是否有未读消息
+					api.sendEvent({
+	                    name:'read_msg',
+	                    extra:{
+	                    	read_msg:ret.user.read_msg
+	                    }
+                    });
+				}
+			});
+		}
+		function _openWinByUrl1(){}
+		
+		//获取关联账户
+		function gluser(){
+			_ajax(ajax_url+"Index/Family/relationInfo" ,{'uids':uids},'post',function(ret){
+				if(ret.status ==1){
+					var html="<li><a rel='' href=\"javascript:_openWinByUrl('add_guanlian','account_head',{'frame':'add_guanlian_body','furl':'add_guanlian_body'});\">添加关联账户</a></ li>";
+					for(var i in ret.user){
+					    var a=i+2;
+						html+='<li><a href="javascript:selectUser('+ret.user[i].uid+');" rel="'+a+'">'+ret.user[i].real_name+'</a></ li>';
+					}
+					$('#gllist').html(html);	
+					
+					$(".xialaxiaoguo ul li a").click(function(){ 
+						var txt = $(this).text(); 
+						if(txt != '添加关联账户'){
+							$(".input_select").val(txt); 
+							var value = $(this).attr("rel"); 
+							$(".xialaxiaoguo ul").hide(); 
+							$("#result").html("您选择了"+txt+"，值为："+value); 
+						}else{
+							$(".xialaxiaoguo ul").hide(); 
+						}
+					}); 				
+				} else {
+					
+				}
+			});
+		}
+		
+		//选择关联用户
+		function selectUser(uid){
+			$('#uids').val(uid);
+		}
+		
+		
+		//选择充值金额
+		function selectMoney(num){
+			$('#czmoney').val(num);
+		}
+		
+		//关联账户充值
+		function rechargeGL(){
+			var czmoney=$('#czmoney').val();
+			
+			if(!czmoney){
+				_toast('请选择充值金额！');return;
+			}
+			
+			if(!_isznumber(czmoney)){
+				_toast('金额格式错误！');return;
+			}
+			
+			if(czmoney < 0.01){
+				_toast('最少充值一分钱！');return;
+			}
+			
+			//支付方式
+			var paytype=$('.yessel').attr('id');
+			
+			//关联账户
+			if(paytype=='guanlianzhanghu'){
+				var gluid=$('#uids').val();
+				if(gluid){
+					$(".ftc_wzsf").show();
+				}
+			}
+			
+			//惠通卡
+			if(paytype=='huitongka'){
+				cardno=$('#cardno').val();
+				if( cardno ){
+					$(".ftc_wzsf").show();
+				}else{
+					_toast('请输入惠通卡卡号');return;
+				}
+			}
+			
+			
+			//支付宝
+			if(paytype=='zhifubao'){
+				_ajax(ajax_url+"Index/Family/aliPays" ,{'uid':uid,'money':czmoney},'post',function(ret){
+					if(ret.status==1){
+						//$('#weixinimg').attr('src',ret.pay_code);
+						_openWinByUrl('erweima','erweima',{'frame':'erweima_body','furl':'erweima_body','pay_code':ret.pay_code,'order_sn':ret.order_sn});
+					}else{
+						_toast(ret.msg);
+					} 
+				});
+				
+			}
+			
+			//微信
+			if(paytype=='weixin'){
+				_ajax(ajax_url+"Index/Family/wxPay" ,{'uid':uid,'money':czmoney},'post',function(ret){
+					if(ret.status==1){
+						//$('#weixinimg').attr('src',ret.pay_code);
+						_openWinByUrl('erweima','account_head',{'frame':'erweima_body','furl':'erweima_body','pay_code':ret.pay_code,'order_sn':ret.order_sn});
+					}else{
+						_toast(ret.msg);
+					}
+				});
+			}
+		}
+		
+		/**
+		 * 关联账户充值 如果cardno 有内容则是惠通卡卡号充值
+		 */
+		function point(paypassword){
+			var gluid=$('#uids').val();
+			var czmoney=$('#czmoney').val();
+			_ajax(ajax_url+"Index/Family/glPay" ,{'uid':uid,'uids':gluid,'money':czmoney,'password':paypassword , 'cardno':cardno},'post',function(ret){
+				if(ret.status==1){
+									
+                    clearPayPwd();
+                    $(".ftc_wzsf").hide();
+                    api.sendEvent({
+	                    name:'refe_relation',
+	                    extra:{
+	                    	type:1
+	                    }
+                    });
+                    //_toast(ret.msg );
+                    _openWinByUrl('pay_success' , 'pay_success');
+                    
+                    
+
+				}else{					
+					_toast(ret.msg);
+					clearPayPwd();
+					 $(".ftc_wzsf").hide();
+
+				}
+			});
+		}
+		
+	</script>
+</html>

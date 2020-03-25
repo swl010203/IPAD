@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+	.order_windowinpt input , .set_addrtext {
+		width: 100%; 
+		height: 58px;
+		margin-left: 20px;
+	}
+	.right_arrowcom {
+		margin-top: 18px;
+	}
+	.checkin_ifor {
+		overflow: hidden;
+	}
+	.checkin_iforr {
+		overflow: hidden;
+	}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="pinpai_intr mt15">
+	
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			姓名
+		</div>
+		<div class="checkin_iforr order_windowinpt">
+		<input type="text" placeholder="请输入姓名" name="consignee">
+		</div>
+	</div>
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			联系电话
+		</div>
+		<div class="checkin_iforr order_windowinpt">
+				<input type="text" placeholder="请输入手机号码" name="mobile">
+			</div>
+	</div>
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			所在地区
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+	
+			<span class="checkin_iforrpos01 set_addrtext dy_dd region"  style="color: #999;" onclick=opencity('city','user/city','选择城市')>河北省保定市安国市区<a href="#" class="right_arrowcom" style="margin-right: 0;"></a></span>
+		</div>
+	</div>
+	
+	</div>
+	<div class="liuyan mt_15">
+		<textarea placeholder="详细地址" nama='address' id="detail"></textarea>
+	</div>
+	<!--<p class="regp01" style="overflow: hidden; padding: 0.3rem 0.2rem;">
+		<span class="reg_check">
+			<input id="a_pl2" type="checkbox" name="default" value="1" class="duo_checkbox02">
+			<label for="a_pl2">设为默认地址</label>
+		</span></p>-->
+	<div class="bqt_hallorderwrap" style="background: #f5f5f5;">
+			<div class="bqt_hallorder">
+			<a href="javascript:void(0);" onclick="saveAddress();" class="bot_btna bot_btnapay order_btnapay" style="border-radius: 5px;">保存地址</a>
+		</div>
+		</div>
+</div>
+<script type="text/javascript">
+    var province=0;
+    var city=0;
+    var district=0;
+    var country=0;
+    apiready=function(){
+     api.addEventListener({
+    name: 'city'
+}, function(ret, err) {
+    if(ret && ret.value){
+			if (ret.value.key1 == 'success') {				     	
+			     province=ret.value.province;
+			      city=ret.value.city;
+			       district=ret.value.area;	
+			       country=ret.value.district;
+			       	$(".region").html(ret.value.detail);						 
+			}
+		}
+});
+
+    getinfo();
+    };
+   function getinfo(){
+   var id=api.pageParam['id'];
+     	       api.ajax({
+		    url: ajax_url+'Index/User/upAddress',
+		    dataType: "json",
+		    method: 'post',
+				 data: {
+		        values: { 
+		            id:id,		           
+		        },       
+             }
+		},function(ret, err){
+		 if(ret){
+		  if(ret.status){
+		   var data=ret.info;
+		    province=data.province;
+            city=data.city;
+            district=data.district;
+		   $("input[name=consignee]").val(data.consignee);
+		   $("input[name=mobile]").val(data.mobile);
+		   $(".region").html(data['province_info']+data['city_info']+data['area_info']+data['country_info']);
+		   $("#detail").val(data['address']);
+		   if(data['is_default']==1){
+		   $("input[name=default]").attr("checked",true);
+		   }else{
+		   $("input[name=default]").attr("checked",false);
+		   }
+		  }else{
+		   _toast(ret.msg);
+		  }
+		 }else{
+		  _alert('网络连接失败,请稍后重试');
+		 }
+		})
+   
+   }
+   function opencity(name,url,title){
+	 _openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title});
+	}
+  	function saveAddress(){
+  	var name=$("input[name=consignee]").val();
+  	var mobile=$("input[name=mobile]").val();
+  	var detail=$("#detail").val();
+  	var is_default=$("input[name=default]:checked").val();
+  	if(!name){
+  	 _toast('请输入姓名');
+  	 return false;
+  	}
+  	if(!mobile){
+  	 _toast('请输入手机号码');
+  	 return false;  	 
+  	}else{
+  	 if(!_isPhone(mobile)){
+  	 _toast('手机号码格式不正确');
+  	 return false;
+  	 }
+  	}
+  	if(!province){
+  	 _toast('请选择省市区');
+  	 return false;
+  	}
+  	if(!detail){
+  	 _toast('请填写详细地址');
+  	 return false;
+  	}
+  	       api.ajax({
+		    url: ajax_url+'Index/User/upAddress',
+		    dataType: "json",
+		    method: 'post',
+				 data: {
+		        values: { 
+		            id:api.pageParam['id'],
+		            uid:$api.getStorage('userinfo').uid,
+		            province:province,	
+		            city:city,            
+		            district:district,
+		            country:country,
+		            address:detail,
+		            mobile:mobile,
+		            is_default:is_default,
+		            consignee:name,
+		        },       
+             }
+		},function(ret, err){
+		  if(ret){
+		   if(ret.status){
+		     api.sendEvent({
+					name: 'updateaddress',
+					extra: {key1:'success'}
+				});
+		    api.closeWin({});
+		   }else{
+		    _toast(ret.msg);
+		   }
+		  }else{
+		   _alert('网络连接失败,请稍后重试');
+		  }
+		})
+  	
+  	}		 	
+	
+</script>
+</body>
+</html>

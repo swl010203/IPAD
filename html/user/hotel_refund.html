@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style type="text/css">
+ .addImgbtn01 {width: 1.4rem;height: 1.4rem;position: relative;float: left;margin: 0px 5px;}
+ .upload_cancel{ width: 0.35rem; height: 0.35rem; background: url(../../images/sc.png) no-repeat; background-size: 0.3rem 0.3rem; position: absolute; right: -0.2rem; top: -0.1rem; display: block; }
+ .selReasontxt{height:1.5rem;}
+ .selReasontext{padding: 0.2rem 0.2rem 0.2rem;}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="siteSearchlist" style="background: #fff;">
+		<ul class="siteSearchul list">
+           		<li class="busi_fenleili">
+							<div class="busi_fenlei">
+							<a href="javascript:void(0)"class="busi_fenleia"><img  class="shoplogo" src=""></a>
+							<div class="busi_fenleir">
+								<p class="busi_fenleirtxt "><a href="javascript:void(0)" class="shopname busi_fenleirtxta dy_dd" style="width: 75%;"></a><span class="fr order_status_str" style="color: #D12A18;"></span></p>
+								<p class="busi_fenleirrice jdbusi_fenleirrice"><b class="busi_fenleirpriceb">￥</b><i class="price">0.00</i><span class="busi_fenleirpricespan romm_info"> 1晚/标间</span></p>
+								<p class="busi_fenleirrice jdbusi_fenleirrice" style="color: #999; font-size: 18px;">入住时间：<i class="start_time">111</i></p>
+							</div>
+						</div>
+					</li>
+				
+			
+			
+		</ul>
+	</div>
+	
+	
+</div>
+
+<div class="selReasontext">
+	<textarea class="selReasontxt" placeholder="请输入退款原因" id="content"></textarea>
+</div>
+<script type="text/javascript">
+var id=0;
+ apiready=function(){
+  id=api.pageParam['id'];
+  getinfo();
+ };
+ function getinfo(){
+    api.ajax({
+				    url: ajax_url+'Index/HotelOrder/getHotelOrderDetail',
+				    dataType: "json",
+				    method: 'post',
+						 data: {
+				         values: { 
+				          id:id,
+				        },       
+		             }
+				},function(ret, err){
+				  if(ret){
+				     if(ret.status==1){
+					    var data=ret.hotelOrder;
+					    	var start_date = ret.hotelOrder.start_date;
+							var end_date = ret.hotelOrder.end_date;
+							$(".romm_info").html(ret.hotelOrder.daynum+"晚/"+ret.hotelOrder.roomname);
+							$(".room_num").html(ret.hotelOrder.room_num);
+							$(".start_time").html(start_date + " - " +end_date);
+							$(".shopname").html(ret.hotelOrder.name);
+							$(".shoplogo").attr('src',ret.hotelOrder.roomimg);						
+							$(".order_status_str").html(ret.hotelOrder.hotelstatsu.msg);							
+							var add_time =+ret.hotelOrder.add_time *1000;			
+							$(".add_time").html(_formatDate(add_time,true));
+							$(".price").html(ret.hotelOrder.order_price);
+					  }else{
+					   _toast(ret.msg);
+					  }
+				  }else{
+				   _alert('网络连接失败,请稍后重试');
+				  }
+				
+				})
+ }
+	var start=1;
+	function submit(){
+	
+	 var content=$("#content").val();
+	 if(!content){
+	  _toast('请输入退单原因');
+	  return false;
+	 }
+	  if(start==2){
+	 	return;
+	 }else{
+	 	start=2;
+	 }
+	api.ajax({
+		    url: ajax_url+'Index/HotelOrder/refund',
+		    dataType: "json",
+		    method: 'get',
+				 data: {
+		         values: { 
+		          id:id,
+		          content:content	          
+		        }      
+	         }
+		},function(ret, err){
+		  if(ret){
+		   if(ret.code){
+		     _toast(ret.msg,function(){	     
+		           	api.sendEvent({
+						name : 'hotel_refundss',
+						extra : {
+							key1 : 'success',
+						}
+					});
+					api.closeWin({
+	                });
+		     })
+		   }else{
+		    _toast(ret.msg);
+		   }
+		  }else{
+		  _alert('网络连接失败,请稍后重试');
+		  }
+		})
+ 
+}
+</script>
+</body>
+</html>

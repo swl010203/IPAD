@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>米兰西典</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/index.css"/>
+		<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../../script/food/index.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+	</head>
+	<body>		
+			<div class="clearfloat quxiaoM">
+				<div class="banner">
+					<div class="milan">
+						<div onclick="openShopDetail();"><img style="border-radius: 50%;" id="shopimg" src="" alt="" /></div>
+						<p id="shopname"></p>
+					</div>
+					<div  class="gonggao" id="shop_xg" onclick="openShopXg();" style=" text-align: left;"></div>
+				</div>
+				<div class="yuding clearfloat">
+					<ul onclick="goReserve();" class="fl pos">
+						<i class="yud"></i><a href="javascript:">预定座位</a>
+					</ul>
+					<ul class="fr">
+						<a class="chexiao" href="javascript:goReserve();"><img src="../../images/food/chexiao.png"/></a>
+					</ul>
+				</div>
+			</div>
+			<div class="list">
+				<div class="listTop">
+					<i class="iIcon"></i><a>预约订餐</a>
+				</div>
+				<div class="listCon">
+					<div class="fl bagC">
+					   <ul id="cateOne">
+					   		
+
+					   </ul>
+
+					</div>
+					<div class="fr bagC showDiv">
+					    <ul id="cateTwo">
+					    	<!--<li><img src="../../images/food/bigBag.jpg"/></li>-->
+					    	<div class="goodslist categoods">
+					    		
+					    	</div>
+					    	
+					    	
+					    </ul>
+					</div>  			
+				</div>
+			</div>
+	</body>
+	<script type="text/javascript">
+	$(function(){
+		a();
+		function a(){
+			var shuliang = 0;
+			var sum=0;
+			for(var i = 0;i<$(".shuliang").length;i++){
+				var a = $(".shuliang").eq(i).html();
+				var price=$('.priceNew').text();
+				var price_ = price.substring(1,4);
+				var numPrice = parseInt(a)*parseInt(price_);
+				sum+=parseInt(a);
+				shuliang+=numPrice;
+//				console.log(shuliang)
+				$(".num").html(sum);
+				$(".pricePosi").html("￥"+shuliang);
+			}
+		}
+		$(".add").click(function(){
+			var num=parseInt($(this).parent().find('.shuliang').text());
+			var sum=parseInt($(this).parent().find('.shouchu').text().substring(3));
+			sum++;
+			num++;
+			$(this).parent().find('.shuliang').html(num);
+			$(this).parent().find('.shouchu').html("已售："+sum);
+			a();
+		});	
+		$(".listCon .fl ul li").click(function(){
+				$(this).addClass("selFontstyle red").siblings(".listCon .fl ul li").removeClass("selFontstyle red");				
+		});	
+	});
+</script>
+<script>
+	//默认加载
+	var sid='28';
+	var uid=localStorage.getItem("uid");
+	apiready = function(){
+		//店铺id 
+		shop_id=api.pageParam.sid;
+	
+		if(typeof shop_id !=undefined  &&  shop_id !=""  && shop_id!= null){
+			sid = shop_id;
+		}
+		
+		//获取店铺详情
+		getShop(sid);
+		
+		//获取一级分类
+		getCateOne(sid);
+	};
+	
+	//获取店铺详情
+	function getShop(sid){
+		_ajax(ajax_url+"Index/Food/index",{sid:sid},'post',function(ret){
+			if(ret.status==1){
+				$('#shopimg').attr('src',ret.data.logo);
+				$('#shopname').text(ret.data.name);
+				$('#shop_xg').text('公告：'+ret.data.xg);
+			}
+		});
+	}
+	
+	function openShopXg(){
+		_openWinByUrl('food_gonggao_winhead','../window_head',{'furl':'food/gonggao','frame':'food_gonggao','sid':sid,'title':'店铺公告'});
+	}
+	
+	function openShopDetail(){
+		_openWinByUrl('food_detail_winhead','../window_head',{'furl':'food/food_detail_body','frame':'food_detail_body','sid':sid,'title':'详情'});
+	}
+	
+	//获取一级分类
+	function getCateOne(sid){
+		//加载状态
+		loading('index_body');
+		_ajax(ajax_url+"Index/Food/getCategory",{'sid':sid},'post',function(ret){
+			//关闭加载状态
+			closeloading();
+			
+			if(ret.status==1){
+				var html='';
+				html+='<li onclick="getFoodPackage(this);">主题套餐</li>';
+				for(var i in ret.data){
+					if(i==0){
+						html+='<li onclick="getGoodsByCategory('+ret.data[i]['id']+',this)"  class="selFontstyle red">'+ret.data[i].label_name+'</li>';
+						//获取分类下商品
+						getGoodsByCategory(ret.data[i]['id']);
+					}else{
+						html+='<li onclick="getGoodsByCategory('+ret.data[i]['id']+',this)" >'+ret.data[i].label_name+'</li>';
+					}
+				}
+				$('#cateOne').html(html);
+			}
+		});
+	}
+	
+	
+	/**
+	 * 获取套餐 
+	 */
+	function getFoodPackage(el){
+		$("#cateOne li ").removeClass('red');
+		$("#cateOne li ").removeClass('selFontstyle');
+		$(el).addClass('selFontstyle');
+		$(el).addClass('red');
+		
+		_ajax(ajax_url+"Index/Food/getFoodPackage" ,{'sid':sid},'get',function(ret){
+			var strVar="";
+			if(ret.status==1){
+			
+				//循环商品
+			    $.each(ret.data,function(key,val){
+					strVar += "<li class='clearfloat newHeight'>\n";
+				    strVar += "<div onclick=\"packag_detail("+val['id']+");\" class=\"leftL\">\n";
+				    strVar += "<img src=\""+val['package_img']+"\"/>\n";
+				    strVar += "<\/div>\n";
+				    strVar += "<div class=\"rightR\">\n";
+				    strVar += "	<p class=\"title huanhang\">\n";
+				    strVar += val['title'];
+				    strVar += "	<\/p>\n";
+				    strVar += "	<p class=\"shouchu huanhang\">\n";
+				    strVar += "		已售："+val['sales']+"\n";
+				    strVar += "	<\/p>\n";
+				    strVar += "	<span class=\"shuliang\">0<\/span>\n";
+				    strVar += "	<p class=\"priceNew\">\n";
+				    strVar += "		<span class='newPrice huanhang'>￥"+val['new_price']+"</span>";
+				    if(typeof(val['old_value'])!=undefined  && val['old_value'] !=null){
+					    //	strVar += "<del class=\"oldPrice huanhang\">￥"+val['old_price']+"<\/del>\n";
+					    }
+					    
+				     //<del class=\"oldPrice huanhang\">￥"+val['old_price']+"<\/del>\n";
+				    strVar += "	<\/p>\n";
+				    strVar += "<\/div>\n";
+				    //strVar += "<div onclick=\"addCart("+val['id']+",2);\" class=\"add fr\">\n";
+				    strVar += "<div  data-id='"+val['id']+"' data-type='2' class=\" addCart add fr\">\n";
+//				    strVar += "	+\n";
+				    strVar += "<\/div>\n";
+				    strVar += "<\/li>\n";
+			    });
+			}
+			
+			$(".categoods").html(strVar);
+			
+		});
+	}
+	
+	
+	/**
+	 * 预约定桌 
+	 */
+	function goReserve(){
+		uid=localStorage.getItem("uid");
+		userinfo  =$api.getStorage('userinfo');
+		if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+			_openWinByUrl('login','../login');
+			return false;
+		}
+		
+		_openWinByUrl('appoint_order','appoint_order',{'sid':sid});
+	}
+	
+	/**
+	 * 获取套餐详情
+	 * @param int id 商品id 
+	 */
+	function packag_detail(id){
+	
+		_openWinByUrl('packag_detail_body','packag_detail_body',{'id':id});
+	}
+	
+	//获取分类下商品
+	function getGoodsByCategory(cate_id,el){
+		$("#cateOne li ").removeClass('red');
+		$("#cateOne li ").removeClass('selFontstyle');
+		$(el).addClass('selFontstyle');
+		$(el).addClass('red');
+	
+		
+		_ajax(ajax_url+"Index/Food/getGoodsByCategory" ,{'cid':cate_id},'get',function(ret){
+			
+			var strVar = "";
+			
+			if(ret.code !=1){
+				$(".categoods").html(strVar);
+				 return false;
+			}
+			
+			$.each(ret.data,function(k,v){
+				if(v['goods'].length >0){
+					strVar += "<li style=\"height:auto;\">\n";
+				    strVar += "<h3 style='padding-top:10px;'>"+v['label_name']+"<\/h3>\n";
+				    strVar += "<\/li>\n";
+				    strVar += "<div>\n";
+	
+				    //循环商品
+				    $.each(v['goods'],function(key,val){
+						strVar += "<li class='newHeight'>\n";
+					    strVar += "<div class=\"leftL\">\n";
+					    strVar += "	<img src=\""+val['pic_path']+"\"/>\n";
+					    strVar += "<\/div>\n";
+					    strVar += "<div class=\"rightR\">\n";
+					    strVar += "	<p class=\"title huanhang\">\n";
+					    strVar += val['name'];
+					    strVar += "	<\/p>\n";
+					    strVar += "	<p class=\"shouchu huanhang\">\n";
+					    strVar += "		已售："+val['sales']+"\n";
+					    strVar += "	<\/p>\n";
+					    strVar += "	<span class=\"shuliang\">0<\/span>\n";
+					    strVar += "	<p class=\"priceNew huanhang\">\n";
+					    strVar += "		<span class='newPrice huanhang'>￥"+val['value']+"</span>";
+					    
+					    if(typeof(val['old_value'])!=undefined  && val['old_value'] !=null){
+					    	//strVar += "<del class=\"oldPrice huanhang\">￥"+val['old_value']+"<\/del>\n";
+					    }
+					    
+					    strVar += "	<\/p>\n";
+					    strVar += "<\/div>\n";
+					    strVar += "<div  data-id='"+val['id']+"' data-type='1' class=\" addCart add fr\">\n";
+//					    strVar += "	+\n";
+					    strVar += "<\/div>\n";
+					    strVar += "<\/li>\n";
+				    });
+				    
+				    strVar += "<\/div>\n";
+				}
+			
+				
+			   
+			  });
+
+			$(".categoods").html(strVar);
+		
+
+			
+			
+			
+		});
+	}
+	
+	
+	//增加数量
+	$(document).on("touchend",'.addCart',function(){
+		addCart($(this).attr('data-id') , $(this).attr('data-type'));
+	});
+	
+	/**
+	 * 添加购物车
+	 * @param int goods_id 商品id
+	 * @param int type     类型  套餐 商品 
+	 */
+	function addCart(goods_id ,type ){
+		uid = localStorage.getItem("uid");
+		
+		if(typeof uid ==undefined || uid ==''  || uid ==null){
+			_openWinByUrl('login','../login');
+			return false;
+		}
+		
+		_ajax(ajax_url+"Index/Food/addCart",{
+			'goods_id':goods_id,
+			'type'    :type,
+			'uid'     :uid,
+			'sid'     :sid
+		},'post',function(ret){
+			if(ret.status==1){
+				//更新购物车数量
+				api.sendEvent({
+	                name:'getCartInfo'
+                });
+                //更新购物车
+                api.sendEvent({
+	                name:'refresh_food_cartinfo'
+                });
+                
+			}else{
+				
+			}
+		})
+	}
+</script>
+</html>

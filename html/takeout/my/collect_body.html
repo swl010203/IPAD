@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>我的收藏</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    </head>
+
+    <body>
+        <div class="myCollec_div bgWhite pt_10">
+            <ul class="goods_list pl_20 pr_20 box-s border-b" id="collect_list">
+                <!-- <a href="#">
+                    <li class="clearfloat border-b">
+                        <div class="fl fl_divImg">
+                            <img src="img/115.jpg" alt="" />
+                        </div>
+                        <div class="fl fr_div_con">
+                            <p class="clearfloat">
+                                <span class="fl span_tit dy_dd">蓝色港湾甜品（北京店）</span>
+                                <span class="fr span_mi">865m</span>
+                            </p>
+                            <p class="xing_p">
+                                <span class="xingxing">
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick  fl"></span>
+                                </span>
+                                <span>5.0分</span>
+                                <span>月售15679</span>
+                            </p>
+                            <p class="active_p">
+                                <span>起送￥20</span>
+                                <span>配送￥5</span>
+                                <span>人均￥40</span>
+                                <span class="fr">2个活动</span>
+                            </p>
+                            <p>满20减5,满40减15,满60减50,满100减60</p>
+                            <p>配送费限时优惠</p>
+                        </div>
+                    </li>
+                </a>
+                <a href="#">
+                    <li class="clearfloat border-b">
+                        <div class="fl fl_divImg">
+                            <img src="img/115.jpg" alt="" />
+                        </div>
+                        <div class="fl fr_div_con">
+                            <p class="clearfloat">
+                                <span class="fl span_tit dy_dd">蓝色港湾甜品（北京店）</span>
+                                <span class="fr span_mi">865m</span>
+                            </p>
+                            <p class="xing_p">
+                                <span class="xingxing">
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick icon_xing fl"></span>
+                                    <span class="icon_xingnoClick  fl"></span>
+                                </span>
+                                <span>5.0分</span>
+                                <span>月售15679</span>
+                            </p>
+                            <p class="active_p">
+                                <span>起送￥20</span>
+                                <span>配送￥5</span>
+                                <span>人均￥40</span>
+                                <span class="fr">2个活动</span>
+                            </p>
+                            <p>满20减5,满40减15,满60减50,满100减60</p>
+                            <p>配送费限时优惠5555</p>
+                        </div>
+                    </li>
+                </a> -->
+            </ul>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script>
+    var page    = 1;
+    var is_page = true;
+    var uid = localStorage.getItem( "uid" );
+    apiready = function() {
+        uid = localStorage.getItem( "uid" );
+        
+        api.setRefreshHeaderInfo({
+            visible: true,
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#ccc',
+            textColor: '#fff',
+            textDown: '下拉刷新...',
+            textUp: '松开刷新...',
+            showTime: true
+        }, function(ret, err) {
+            is_page = true;
+            page=1;
+            getList();
+        });
+        
+        //监听滚动条是否到底部
+        api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err){        
+             if(is_page){
+                 page++;
+                 getList();
+             }
+        });
+        
+        getList();
+    };
+    
+    //店铺列表
+    function getList() {
+        _ajax(ajax_url+"Index/TakeoutCollect/collectList" ,{uid:uid, p:page},'post',function(ret) {
+            api.refreshHeaderLoadDone();
+            if(ret.status ==1){
+                var collect_list_html = '';
+                if( ret.data.length > 0 ) {
+                    $.each(ret.data, function(key, val) {
+                        collect_list_html += '<a href="javascript:void(0);" onclick="shopDetail('+val.shop_id+', \''+val.shop_name+'\');">';
+                        collect_list_html += '    <li class="clearfloat border-b">';
+                        collect_list_html += '        <div class="fl fl_divImg">';
+                        collect_list_html += '            <img src="'+val.shop_logo+'" alt="" />';
+                        collect_list_html += '        </div>';
+                        collect_list_html += '        <div class="fl fr_div_con">';
+                        collect_list_html += '            <p class="clearfloat">';
+                        collect_list_html += '                <span class="fl span_tit dy_dd">'+val.shop_name+'</span>';
+                        collect_list_html += '            </p>';
+                        collect_list_html += '            <p class="xing_p">';
+                        collect_list_html += '                <span class="xingxing">';
+                        //总评分
+                        var star_html = '';
+                        var inum = val.comment_star;//星星个数
+                        if( inum > 0 ) {
+                            for( var i=1; i<=inum; i++) {
+                                collect_list_html += '<span class="icon_xingnoClick icon_xing fl"></span>';
+                            }
+                        }
+                        var jnum = 5-inum;//剩余个数
+                        if( jnum > 0 ) {
+                            for( var j=1; j<=jnum; j++) {
+                                collect_list_html += '<span class="icon_xingnoClick  fl"></span>';
+                            }
+                        }
+                        collect_list_html += '                </span>';
+                        collect_list_html += '                <span>'+val.comment_score+'分</span>';
+                        collect_list_html += '                <span>销量'+val.sales_volume+'</span>';
+                        collect_list_html += '            </p>';
+                        collect_list_html += '            <p class="active_p">';
+                        collect_list_html += '                <span>起送￥'+val.setting.start_price+'</span>';
+                        collect_list_html += '                <span>配送￥'+val.setting.cost+'</span>';
+                        collect_list_html += '                <span>人均￥'+val.setting.capita+'</span>';
+                        //collect_list_html += '                <span class="fr">2个活动</span>';
+                        collect_list_html += '            </p>';
+                        if( val.activity != '' ) {
+                        collect_list_html += '            <p>'+val.activity+'</p>';
+                        }
+                        //collect_list_html += '            <p>配送费限时优惠</p>';
+                        collect_list_html += '        </div>';
+                        collect_list_html += '    </li>';
+                        collect_list_html += '</a>';
+                    });
+                } else {
+                    is_page = false;
+                    _toast( '没有更多记录了' );
+                }
+                if( page > 1 ) {
+                    $('#collect_list').append( collect_list_html );
+                } else {
+                    $('#collect_list').html( collect_list_html );
+                }
+            }else{
+                is_page = false;
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //店铺详情页
+    function shopDetail(id, title) {
+        _openWinByUrl('../shop/shop_detail_head','../shop/shop_detail_head',{title:title,sid:id});
+    }
+    </script>
+</html>

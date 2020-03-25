@@ -1,0 +1,324 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">教练详情</h1>
+		</header>
+		<div class="mui-content bgwhite">
+			<ul class="pl20 pr20 box_s jlList_ul">
+				<li class="mui-row pt20 pb20 border_b">
+					<div class="mui-col-sm-3 mui-col-xs-3">
+						<div class="jlList_img">
+							<!--教练头像-->
+                    		<img class="coachHeadPic" src=""/>
+						</div>
+					</div>
+					<div class="mui-col-sm-9 mui-col-xs-9">
+						<div class="jlList_con">
+		                    <p class="font_weightB fs28 colorBlack coachName"></p><!--教练名称-->
+		                    <p class="mui-ellipsis colorHui999 fs24 pt10 coachSkill"></p><!--教练擅长-->
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="border_t10 pl20 pr20 box_s fs28">
+				<p class="pt20 pb20 aboutUs_tit font_weightB">个人介绍</p>
+				<div class="pt20 pb20">
+		            <p class="coachInfo"> </p>
+		            <p class="mt40">电话：<span class="coachMobile"></span></p>
+		            <p>微信：<span class="coachWeChat"></span></p>
+				</div>
+			</div>
+			<!--未评价-->
+			<div class="noPingjia">
+				<div class="border_t10 pl20 pr20 box_s">
+					<p class="pt20 pb20 aboutUs_tit font_weightB">教练评价</p>
+					<div class="mui-row fs28 pjhs_xing pt20 pb20">
+						<div class="mui-col-sm-6 mui-col-xs-6">
+							<span>态度:</span>
+							<span class="xingxing attribute">
+								<span class="iconfont icon-wujiaoxingx colorRed"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+							</span>
+						</div>
+						<div class="mui-col-sm-6 mui-col-xs-6">
+							<span>技能:</span>
+							<span class="xingxing skill">
+								<span class="iconfont icon-wujiaoxingx colorRed"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+								<span class="iconfont icon-wujiaoxingx"></span>
+							</span>
+						</div>
+					</div>
+					<textarea class="pjhs_textarea" name="" rows="" cols="" placeholder="您想对教练说点什么"></textarea>
+					<div class="clearfloat mb20 redio_pjhs">
+						<div class="fl">
+							<span class="iconfont icon-danxuankuang"></span>
+						</div>
+						<span class="fl ml10">匿名评价</span>
+					</div>
+				</div>
+				<div style="height: 50px;" class="bgwhite"></div>
+				<footer class="full_footerFixed buyNow submit_pj">提交评价</footer>
+			</div>
+			<!--已评价-->
+			<div class="mui-hidden yesPingjia">
+				<div class="bgwhite mt20 pl20 pr20 box_s border_t10">
+					<p class="pt20 pb20 aboutUs_tit fs28 font_weightB">教练评价</p>
+					<div class="pb20">
+						<ul class="assessList">
+							<!--<li class="clearfloat border_b pb20 pt20">
+								<div class="aboutUs_pingjia_left mui-pull-left">
+									<img src="../../images/gybd3.jpg"/>
+								</div>
+								<div class="aboutUs_pingjia_right mui-pull-left">
+									<p class="clearfloat"><span class="fs28 colorBlack font_weightB">隔壁的泰山</span><span class="fs24 mui-pull-right colorHui999">2018-09-29</span></p>
+									<div class="mui-row fs24">
+										<div class="mui-col-sm-6 mui-col-xs-6">
+											<span class="colorHui999">态度:</span>
+											<span class="xingxing">
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+											</span>
+										</div>
+										<div class="mui-col-sm-6 mui-col-xs-6">
+											<span class="colorHui999">技能:</span>
+											<span class="xingxing">
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+											</span>
+										</div>
+									</div>
+									<p class="fs28 pt20">哈哈，这个教练技能很强，跟着他的课，我的肌肉有了明显的变化，这样的好教练钱真没白花。</p>
+								</div>
+							</li>-->
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+		$(".xingxing span").on("tap",function(){
+			var index_ = $(this).index();
+			for(var i = 0;i<= $(".xingxing span").length;i++){
+				if(i <= index_){
+					$(this).parent("span.xingxing").find("span").eq(i).addClass("colorRed");
+				}else{
+					$(this).parent("span.xingxing").find("span").eq(i).removeClass("colorRed");
+				}
+			}
+		});
+		$(".redio_pjhs").on("tap",function(){
+			if($(this).find("span.iconfont").hasClass("icon-danxuankuangyixuan")){
+				$(this).find("span.iconfont").removeClass("icon-danxuankuangyixuan");
+			}else{
+				$(this).find("span.iconfont").addClass("icon-danxuankuangyixuan");
+			}
+		});
+//		$(".submit_pj").on("tap",function(){
+//			$(".noPingjia").addClass("mui-hidden");
+//			$(".yesPingjia").removeClass("mui-hidden");
+//		})
+
+		var coachId = '';
+	    var userinfo = '';
+	    apiready = function(){
+	        coachId = api.pageParam.coachId;
+	        userinfo = $api.getStorage('userinfo');
+	
+	        getCoachDetail();
+	    };
+
+	    // 检测 userinfo
+	    function checkUserInfo(param){
+	        param = typeof param !== 'undefined' ? param : '';
+	
+	        var checkInfo = true;
+	        if(typeof userinfo == 'undefined' || userinfo == ''){
+	            if(param == '') {
+	                _toast('请先登录');
+	            }
+	            checkInfo = false;
+	        }
+	        return checkInfo;
+	    }
+	
+	    // 获取教练详情
+	    function getCoachDetail(){
+	
+	        if(coachId == ''){
+	            _toast('没有获取到教练标识');
+	            return false;
+	        }
+	
+	        var coachData = {
+	            'coach_id': coachId
+	        };
+	        if(checkUserInfo(1)){
+	            coachData['uid'] = userinfo.uid;
+	        }
+	
+	        _ajax(ajax_url + 'Index/Exercise/getCoachDetail', coachData, 'get', function (ret) {
+	            if(ret.status == 1){
+	                var data = ret.data;
+	                $('.coachHeadPic').attr('src', data.head_pic);
+	                $('.coachName').text(data.name);
+	                $('.coachSkill').text('擅长：'+data.skill);
+	                $('.coachInfo').html(data.info);
+	                $('.coachMobile').text(data.mobile);
+	                $('.coachWeChat').text(data.wechat);
+	
+	                if(data.assessStatus == 1){
+	                    if(checkUserInfo(1)){
+	                        getAssess();
+	                    }
+	                }
+	            }else{
+	                // todo
+	            }
+	        });
+	    }
+	
+	    // 提交评价
+	    $(".submit_pj").on("tap",function(){
+	        if (!checkUserInfo()) {
+	            return false;
+	        }
+	
+	        if (typeof userinfo == 'undefined' || userinfo == '') {
+	            _toast('请先登录');
+	            return false;
+	        }
+	
+	        var attribute = 0;
+	        $('.attribute span').each(function () {
+	            if ($(this).hasClass('colorRed')) {
+	                attribute = Number(attribute) + 1;
+	            }
+	        });
+	
+	        var skill = 0;
+	        $('.skill span').each(function () {
+	            if ($(this).hasClass('colorRed')) {
+	                skill = Number(skill) + 1;
+	            }
+	        });
+	
+	        var content = $('.pjhs_textarea').val();
+	
+	        var is_true_name = 0;
+	        if ($('.icon-danxuankuang').hasClass('icon-danxuankuangyixuan')) {
+	            is_true_name = 1;
+	        }
+	
+	        var data = {
+	            'uid': userinfo.uid,
+	            'coachId': coachId,
+	            'attribute': attribute,
+	            'skill': skill,
+	            'content': content,
+	            'is_true_name': is_true_name,
+	        };
+	
+	        _ajax(ajax_url + 'Index/Exercise/assess', data, 'post', function (ret) {
+	            if(ret.status == 1){
+	                _toast(ret.info, function(){
+	                    // 展示评价内容
+	                    getAssess();
+	                });
+	            }else{
+	                _toast(ret.info);
+	            }
+	        });
+	    });
+	
+	    function getAssess(){
+	        if(!checkUserInfo()){return false;}
+	
+	        var assessData = {
+	            'uid': userinfo.uid,
+	            'coachId': coachId
+	        };
+	
+	        _ajax(ajax_url + 'Index/Exercise/getCoachAssess', assessData, 'get', function (ret) {
+	            if(ret.status == 1){
+	                var inner_html = '';
+	                $.each(ret.data, function(k, v){
+	                    inner_html += '<li class="clearfloat border_b pb20 pt20">';
+	                    inner_html += '    <div class="aboutUs_pingjia_left mui-pull-left">';
+	                    inner_html += '        <img src="'+ v.head_pic +'"/>';
+	                    inner_html += '    </div>';
+	                    inner_html += '    <div class="aboutUs_pingjia_right mui-pull-left">';
+	                    inner_html += '        <p class="clearfloat">';
+	                    inner_html += '            <span class="fs28 colorBlack font_weightB">'+ v.username +'</span>';
+	                    inner_html += '            <span class="fs24 mui-pull-right colorHui999">'+ v.add_time +'</span>';
+	                    inner_html += '        </p>';
+	                    inner_html += '        <div class="mui-row fs24">';
+	                    inner_html += '            <div class="mui-col-sm-6 mui-col-xs-6">';
+	                    inner_html += '                <span class="colorHui999">态度:</span>';
+	                    inner_html += '                <span class="xingxing">';
+	
+	                    for(var i = 0; i < v.attribute; i++){
+	                        inner_html += '                    <span class="iconfont icon-wujiaoxingx colorRed"></span>';
+	                    }
+	                    inner_html += '                </span>';
+	                    inner_html += '            </div>';
+	                    inner_html += '            <div class="mui-col-sm-6 mui-col-xs-6">';
+	                    inner_html += '                <span class="colorHui999">技能:</span>';
+	                    inner_html += '                <span class="xingxing">';
+	                    for(var i = 0; i < v.skill; i++){
+	                        inner_html += '                    <span class="iconfont icon-wujiaoxingx colorRed"></span>';
+	                    }
+	                    inner_html += '                </span>';
+	                    inner_html += '            </div>';
+	                    inner_html += '        </div>';
+	                    inner_html += '        <p class="fs28 pt20">'+ v.to_coach +'</p>';
+	                    inner_html += '    </div>';
+	                    inner_html += '</li>';
+	                });
+	                $('.assessList').html(inner_html);
+	
+	                // 评价成功之后执行
+	                $(".noPingjia").addClass("mui-hidden");
+	                $(".yesPingjia").removeClass("mui-hidden");
+	            }else{
+	                _toast(ret.info);
+	            }
+	        });
+	    }
+	</script>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<!-- 头部 -->
+
+
+<!-- 内容 -->
+<div class="wp_100" id="list">
+	
+<!--
+	<div class="siteSearchlist" style="background:#fff;">
+			<div class="cart_topicon"><img src="../../images/cart_pinpaiicon.jpg"/>柏卡姿专卖店<span class="fr" style="color:#D12A18">退款中</span></div>
+			<div class="pinpai_intrtop" style="color: #999;">订单号：468462546484631616</div>
+			<ul class="siteSearchul">
+					<li class="busi_fenleili">
+							<div class="busi_fenlei">
+							<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+							<div class="busi_fenleir">
+								<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+								<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00</p>
+							</div>
+						</div>
+						
+					</li>
+					<li class="busi_fenleili">
+							<div class="busi_fenlei">
+							<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+							<div class="busi_fenleir">
+								<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+								<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00</p>
+							</div>
+						</div>
+						
+					</li>
+			</ul>
+			<div class="orderListBot">
+				
+				<a href="#" class="orderBtn">再来一单</a>
+
+			</div>
+</div>-->
+
+
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script >
+
+	var userinfo = "";
+	var page = 1;
+	var is_page = true;
+	var type =4;
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		//加载状态
+		loading('food_order_list_body');
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			page=1;
+			is_page = true;
+			ready();
+		});
+
+		//监听类型选择
+		api.addEventListener({
+		    name:'food_order_list_type'
+		}, function(ret, err){        
+	     	param_type = ret.value.type;
+	     	//判断是否与当前相同，不相同则进行查询
+	     	if(type != param_type){
+	     		loading('food_order_list_body');
+	     		type = param_type;
+	     		page = 1;
+	     		is_page = true;
+		   		ready();
+	     	} 
+		});
+							//监听类型选择
+		api.addEventListener({
+		    name:'food_pingjia'
+		}, function(ret, err){ 
+			page = 1; 
+			type=4;
+			ready();      
+	       
+		});
+								//监听类型选择
+		api.addEventListener({
+		    name:'food_refund'
+		}, function(ret, err){ 
+			page = 1; 
+			type=4;
+			ready();      
+	       
+		});
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		         page++;
+			     ready();
+		     }
+			  
+		});
+		
+		ready();
+	};
+	
+	function ready(){
+	
+		_ajax(ajax_url +"Index/UserFoodOrder/getFoodOrderList",{'uid':userinfo.uid,'token':userinfo.token,'p':page,'type':type},'post',function(ret){
+			var strVar = "";
+			if(ret.status  ==1){
+				//判断是否还有下一页
+				if(ret.foodOrder.length==0  && page !=1){
+					is_page = false;
+					return false;
+				}
+				
+				
+				$.each(ret.foodOrder,function(k,v){
+					strVar += "<div class=\"siteSearchlist\" style=\"background:#fff;\">";
+				    strVar += "	<div class=\"cart_topicon\">";
+				    strVar += "		<img src=\""+v['logo']+"\"/>"+v['shopname']+"<span class=\"fr\" style=\"color:#D12A18\">"+v['status_wz']['msg']+"<\/span>";
+				    strVar += "	<\/div>";
+				    strVar += "	<div class=\"pinpai_intrtop\" onclick=\"orderDetail("+v['id']+");\" style=\"color: #999;\">";
+				    strVar += "		订单号："+v['order_sn'];
+				    strVar += "	<\/div>";
+				    strVar += "	<ul class=\"siteSearchul\">";
+				    //遍历商品信息
+				    $.each(v['goods'],function(key,val){
+				    	strVar += "		<li class=\"busi_fenleili\">";
+					    strVar += "		<div class=\"busi_fenlei\">";
+					    strVar += "			<a href=\"javascript:void(0);\"class=\"busi_fenleia\"><img src=\""+val['goods_img']+"\"><\/a>";
+					    strVar += "			<div class=\"busi_fenleir\">";
+					    strVar += "				<p class=\"busi_fenleirtxt\">";
+					    strVar += "					<a href=\"javascript:void(0);\" class=\"busi_fenleirtxta dy_dd\">"+val['goods_name']+"<\/a>";
+					    strVar += "				<\/p>";
+					    strVar += "				<p class=\"busi_fenleirrice\">";
+					    strVar += "					<b class=\"busi_fenleirpriceb\">￥<\/b>"+val['goods_price'];
+					    strVar += "				<\/p>";
+					    strVar += "			<\/div>";
+					    strVar += "		<\/div>";
+					    strVar += "		<\/li>";
+				    });
+				    
+				    strVar += "	<\/ul>";
+				    strVar += "	<div class=\"orderListBot\">";
+				   // strVar += "		<a href=\"#\" class=\"orderBtn\">再来一单<\/a>";
+				    //取消支付   1.未支付   //2.已支付 待接单
+				    if(v['pay_status'] !=2  && v['status'] ==0 ){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"cancel_order("+v['id']+")\" class=\"orderBtn cancel_orderbtn\">取消订单<\/a>";
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"goPay('"+v['order_sn']+"')\" class=\"orderBtn \">去支付<\/a>";
+				    }
+				    //确认送达   已支付 (已接单  || 已发货 )
+				    if(v['pay_status'] ==2  && (v['status'] ==1  || v['status'] ==2) ){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"afterMeal("+v['id']+")\" class=\"orderBtn \">确认送达<\/a>";
+				    }
+				    
+				    //待评价
+				    if(v['status'] ==3  && v['pay_status'] ==2  && v['is_evaluation'] ==0 ){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"addEvaluate("+v['id']+")\" class=\"orderBtn \">去评价<\/a>";
+				    }
+				    //查看评价
+				    if(v['status'] ==3  && v['pay_status'] ==2  && v['is_evaluation'] ==1 ){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"pingjia("+v['id']+")\" class=\"orderBtn \">查看评价<\/a>";
+				    }
+				    
+				    //商户未发货之前退单
+				    if(v['status_wz']['type']==4 || v['status_wz']['type']==5 ){
+				    	strVar += "		<a href=\"javascript:void(0);\" onclick=\"tui("+v['id']+")\" class=\"orderBtn \">退单<\/a>";
+				    }
+				    
+				    strVar += "	<\/div>";
+				    strVar += "<\/div>";
+				});
+				    
+			}else{
+				is_page = false;
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$("#list").html(strVar);
+		    }else{
+		    	$("#list").append(strVar);
+		    }
+			
+			closeloading();
+			api.refreshHeaderLoadDone();
+			
+		})
+	}
+	
+	/*
+	 * 支付
+	 * @param order_sn 订单编号
+	 */
+	function goPay(order_sn){
+		_openWinByUrl('pay_head','../order/pay_head',{'order_sn':order_sn,'pay_notify_type':4});
+	}
+	
+	
+	//订单详情
+	function orderDetail(id){
+		_openWinByUrl('food_order_detail_window_head','../window_head',{
+			'furl':'user/food_order_detail',
+			'frame':'food_order_detail',
+			'title':'订单详情',
+			'id'   :id
+		})
+	}
+	
+	
+	function openevaluation(name,url,title,id){
+	 	_openWinByUrl(name+'_head','evaluationhead',{'furl':url,'frame':name,'title':title,'order_id':id});
+	}
+	
+	function viewevaluation(name,url,title,id){
+		_openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title,'order_id':id});
+	}
+	/*
+	 * 查看评价
+	 */
+	function pingjia(order_id){
+		viewevaluation('food_pingjia','user/food_pingjia','评价',order_id);
+	}
+	/*
+	 * 评价
+	 */
+	function addEvaluate(order_id){
+	 openevaluation('food_pingjia','food_pingjia','评价',order_id);
+	}
+	
+	function tui(order_id){
+		 var name='food_refund';
+		 var url='food_refund';
+		 var title='退款';
+		 _openWinByUrl(name+'_head','aftersalehead',{'furl':url,'frame':name,'title':title,'order_id':order_id});
+ 	}	
+	/**
+	 * 取消订单
+	 * @param id  订单Id 
+	 */
+	function cancel_order(id ){
+		api.confirm({
+		    title: '取消订单',
+		    msg: '确认取消订单？',
+		    buttons: ['是', '先保留']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +"Index/UserFoodOrder/cancelFoodOrder",{'token':userinfo.token,'ids':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			ready();
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+	
+	/**
+	 * 确认收货 
+	 */
+	function afterMeal(id){
+		api.confirm({
+		    title: '确认送达',
+		    msg: '确认送达？',
+		    buttons: ['确定', '取消']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+		    if(index ==1){
+		    	_ajax(ajax_url +"Index/UserFoodOrder/afterMeal",{'token':userinfo.token,'id':id},'post',function(ret){
+		    		if(ret.status ==1){
+		    			page = 1;
+		    			ready();
+		    		}else{
+		    			_toast(ret.msg);
+		    		}
+		    	})
+		    }
+		});
+	}
+</script>
+</body>
+</html>

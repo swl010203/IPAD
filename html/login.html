@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+			
+			<a href="javascript:void(0);" class="headerLeft" id="fanhui_btn2">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">会员登录</h1>
+		</div>
+	</header>
+
+
+<!-- 内容 -->
+<script type="text/javascript">
+	
+	$("#fanhui_btn2").click(function(){
+		var redirect_url = api.pageParam.redirect_url;
+		if(redirect_url !='undefined'  && redirect_url !=null  && redirect_url !=''){
+				api.closeToWin({
+	                name: redirect_url
+	            });
+		}else{
+				api.closeWin();
+		}
+	});
+	
+	
+	apiready = function(){
+	
+		api.closeFrame({
+				name: 'launch'
+			});
+			
+		api.parseTapmode();
+
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+	
+        api.openFrame({
+            name: 'login_body',
+            url: 'login_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h,
+                w: headerPos.w,
+                h: body_h-headerPos.h
+            },
+			pageParam:api.pageParam
+        });
+		
+	}
+
+
+
+</script>
+</body>
+</html>

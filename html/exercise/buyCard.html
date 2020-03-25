@@ -1,0 +1,317 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">购买年卡</h1>
+			<a class="mui-pull-right iconfont icon-dianhua fs24Icon colorRed mt20" id="jsmobile"></a>
+		</header>
+		<div class="mui-content bgwhite">
+			<ul id="card_info" class="pl20 pr20 box_s">
+				<!--<li class="buyCart_li">
+					<div class="clearfloat buyCart_li_tit">
+						<span>次卡</span>
+						<span class="mui-pull-right pl20 pr20">期限卡</span>
+					</div>
+					<div class="colorWhite fs24 pt30 pb30">
+						<p>限制：仅在器械区，不可用于游泳</p>
+						<p class="mt10">简介：使用一年（这块限制15字以内）</p>
+						<p class="clearfloat mt10">
+							<span>适用场馆：安国市突魄健身会所</span>
+							<span class="iconfont icon-jiantou mui-pull-right font_weightB"></span>
+						</p>
+					</div>
+				</li>-->
+			</ul>
+			<div >
+				<div class="pl20 pr20 box_s">
+					<p class="pt20 pb20 aboutUs_tit fs28 font_weightB">选择规格</p>
+					<div id="card_type" class="clearfloat pt30 pb30">
+						<!--<div class="money_div click mui-pull-left">
+							<p class="fs40 font_weightB">15元</p>
+							<p class="fs24 mt5">（充值1次）</p>
+							<div class="money_div_select"></div>
+						</div>
+						<div class="money_div mui-pull-left">
+							<p class="fs40 font_weightB">150元</p>
+							<p class="fs24 mt5">（充值100次）</p>
+							<div class="money_div_select mui-hidden"></div>
+						</div>-->
+					</div>
+				</div>
+				<div class="fs28 border_t">
+					<div class="clearfloat pl20 pr20 box_s border_b gmnk_div">
+						<span class="mui-pull-left">姓名：</span>
+						<input class="mui-pull-left gmnk_div_2 name" id="username" type="text" value="" placeholder="请输入您的姓名"/>
+					</div>
+					<div class="clearfloat pl20 pr20 box_s gmnk_div">
+						<span class="mui-pull-left">电话：</span>
+						<input class="mui-pull-left gmnk_div_2 phone" id="usermobile" type="text" value="" placeholder="请输入您的电话"/>
+					</div>
+				</div>
+				<div class="fs28 border_t10">
+					<!--<div class="clearfloat pl20 pr20 box_s border_b gmnk_div">
+						<span class="mui-pull-left">支付方式：</span>
+						<input class="gmnk_click_inp payType" type="text" readonly="readonly" name="" id="" value="惠通卡余额" placeholder="请选择支付方式"/>
+						<span class="mui-pull-right iconfont icon-arrow-right"></span>
+					</div>-->
+					<div class="clearfloat pl20 pr20 box_s gmnk_div">
+						<span class="mui-pull-left">优惠券：</span>
+						<input type="text" class="coupons" readonly="readonly" name="" id="" value="" placeholder="暂无可用的优惠券" />
+						<span class="mui-pull-right iconfont icon-arrow-right"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="height: 100px;"></div>
+		<footer class="cart_footer clearfloat mui-row pl20 box_s">
+			<div class="mui-col-sm-9 mui-col-xs-9">
+				<div class="bianjiClick_div">
+					<p style="line-height: 50px;font-size: 15px;">
+						<span>应付金额:</span>
+						<span class="font_weightB payPrice"></span><!--应付金额-->
+					</p>
+				</div>
+			</div>
+			<div class="mui-col-sm-3 mui-col-xs-3">
+				<div class="buyNow colorWhite fs24 subForm">提交订单</div>
+			</div>
+		</footer>
+		<div class="mark_common mui-hidden">
+			<div style="display: none;" class="gmnk_mark bgwhite">
+				<div class="clearfloat colorRed  pl20 pr20 box_s wpzl_tit border_b">
+					<span class="mui-pull-left wpzl_titSpan mui-text-center colorHui999">请选择支付方式</span>
+					<span class="mui-pull-left click_close colorHui999 fs28">取消</span>
+				</div>
+				<ul class="zaixianzhifu_ul">
+					<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+						<div class="mui-col-xs-1 mui-col-sm-1">
+							<div class="pay_icon card_icon"></div>
+						</div>
+						<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">惠通卡余额</div>
+						<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer">
+							<div class="checkbox_div active"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+						</div>
+					</li>
+					<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+						<div class="mui-col-xs-1 mui-col-sm-1">
+							<div class="pay_icon weixinPay_icon"></div>
+						</div>
+						<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">微信支付</div>
+						<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer">
+							<div class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+						</div>
+					</li>
+					<li class="zaixianzhifu_liCon pl20 pr20 box_s border_b mui-row">
+						<div class="mui-col-xs-1 mui-col-sm-1">
+							<div class="pay_icon zhifubaoPay_icon"></div>
+						</div>
+						<div class="mui-col-xs-10 mui-col-sm-10 fs28 pl20 box_s">支付宝支付</div>
+						<div class="mui-col-xs-1 mui-col-sm-1 checkbox_div_outer">
+							<div class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+	        api.closeWin();
+	    });
+	    var phone = "";
+		function lianxi(){
+			api.alert({
+			    title: '电话',
+			    msg: phone,
+			});
+		}
+	    $('.icon-dianhua').on('tap',function(){
+			lianxi();
+		});
+		$(".zaixianzhifu_ul .checkbox_div").on("tap",function(){
+			$(".zaixianzhifu_ul .checkbox_div").removeClass("active");
+			$(this).addClass("active");
+			var pay_money = $(this).parents(".zaixianzhifu_liCon").children("div:nth-child(2)").text();
+			hidden_mark();
+			$(".gmnk_mark").slideUp(function(){
+				$(".mark_common").addClass("mui-hidden");
+				$(".gmnk_click_inp").val(pay_money);
+			});
+		});
+		$(".gmnk_click_inp").on("tap",function(){
+			$(".mark_common").removeClass("mui-hidden");
+			$(".gmnk_mark").slideDown();
+			show_mark();
+		});
+		$(".click_close").on("tap",function(){
+			hidden_mark();
+			$(".gmnk_mark").slideUp(function(){
+				$(".mark_common").addClass("mui-hidden");
+			});
+		});
+		$(".money_div").on("tap",function(){
+			$(this).addClass("click").siblings().removeClass("click");
+			$(this).find("div.money_div_select").removeClass("mui-hidden").parents().siblings().find("div.money_div_select").addClass("mui-hidden");		
+		});
+		
+		var kid = '';//卡片id
+		var card_format_id = '';
+		var pay_type = '3';
+		var uid ='';
+		var cardPrice = '';
+		var order_sn = '';
+		var order_amount = '';
+		var paybody = '';
+		var dot_type = '';          //页面来源
+		var pay_notify_type = 24;
+		var mobile = '';
+		var jsname  = '';
+		apiready = function(){
+			uid = localStorage.getItem('uid');
+	        kid = api.pageParam.kid;
+			api.addEventListener({
+			    name: 'keyback'
+			}, function(ret, err){
+			    fanhui();
+			});
+
+			//监听支付密码回调
+	        api.addEventListener({
+	            name: 'payPassword'
+	        }, function (ret, err) {
+	            point(ret.value.paypassword);
+	        });
+
+	        getCard_info();
+	    };
+	    
+	    //获取购买卡片信息
+		function getCard_info(){
+	        _ajax(ajax_url + 'Index/Exercise/getCardDetail', {'card_id': kid}, 'get', function (ret) {
+	            if (ret.status == 1) {
+	                var card_infoData = ret.cardDetail;
+	                var card_info_html = '';
+					card_info_html += '<li class="buyCart_li">'+
+							            '<div class="clearfloat buyCart_li_tit">'+
+							                '<span>'+card_infoData.cname+'</span>'+
+							                '<span class="mui-pull-right pl20 pr20">期限卡</span>'+
+							            '</div>'+
+							            '<div class="colorWhite fs24 pt30 pb30">'+
+							                '<p>限制：'+card_infoData.restrict+'</p>'+
+							                '<p class="mt10">简介：'+card_infoData.summary+'</p>'+
+							                '<p class="mt10">'+
+							                    '<span>适用场馆：'+card_infoData.place+'</span>'+
+							                '</p>'+
+							            '</div>'+
+							        '</li>';
+					$("#card_info").html(card_info_html);
+					phone = card_infoData.mobile;
+					mobile = card_infoData.mobile;
+					jsname = card_infoData.place;
+                    var card_typeData = ret.format;
+                    var card_type_html = '';
+					card_format_id = card_typeData[0].id;
+                    for(var i = 0;i < card_typeData.length;i++){
+                        if(i == 0){
+                            card_type_html += '<div class="money_div click mui-pull-left" data-id="'+card_typeData[i].id+'">';
+                            card_type_html += 		'<p class="fs40 font_weightB">'+card_typeData[i].price+'元</p>';
+                            card_type_html += 		'<p class="fs24 mt5">（'+card_typeData[i].format+'）</p>';
+                            card_type_html += 		'<div class="money_div_select"></div>';
+                            card_type_html += '</div>';
+							cardPrice = card_typeData[i].price;
+                            $('.payPrice').text('￥'+card_typeData[i].price);
+                        }else{
+                            card_type_html += '<div class="money_div mui-pull-left" data-id="'+card_typeData[i].id+'">';
+                            card_type_html += 		'<p class="fs40 font_weightB">'+card_typeData[i].price+'元</p>';
+                            card_type_html += 		'<p class="fs24 mt5">（'+card_typeData[i].format+'）</p>';
+                            card_type_html += 		'<div class="money_div_select mui-hidden"></div>';
+                            card_type_html += '</div>';
+                        }
+                    }
+                    $("#card_type").html(card_type_html);
+                    $(".money_div").on("tap",function(){
+						card_format_id = $(this).attr('data-id');
+                        $(this).addClass("click").siblings().removeClass("click");
+                        $(this).find("div.money_div_select").removeClass("mui-hidden").parents().siblings().find("div.money_div_select").addClass("mui-hidden");
+
+                        var payPrice = $(this).children().eq(0).text();
+                        payPrice = payPrice.substring(0, payPrice.length-1);
+						cardPrice = payPrice;
+                        $('.payPrice').text('￥'+payPrice);
+                    });
+	            }
+	        });
+	    }
+
+		// 提交订单
+        $('.subForm').on('tap', function(){
+            // var checkData = {};
+			createOrder();
+        });
+        
+        function createOrder(){
+			var username = $('#username').val();
+			var usermobile = $('#usermobile').val();
+			if(!username){
+				_toast('请填写姓名');
+				return false;
+			}
+			if(!usermobile){
+				_toast('请填写手机号');
+				return false;
+			}
+
+			if(!_isPhone(usermobile)){
+				_toast('请填写正确手机号');
+				return false;
+			}
+//			if(!pay_type){
+//				_toast('请选择支付方式');
+//				return false;
+//			}
+			var data ={
+				'uid':uid,
+				'price':cardPrice,
+				'pay_id':pay_type,
+				'usermobile':usermobile,
+				'username':username,
+				'cardid':kid
+			};
+			_ajax(ajax_url+'Index/Exercise/createOrder',data,'post',function(ret,err){
+				// alert(JSON.stringify(ret));return false;
+				if(ret.status == 1){
+					order_sn = ret.data;
+					getOrderInfo();
+				}else{
+					_toast('操作失败');
+					return false;
+				}
+			});
+		}
+		//获取订单信息
+		function getOrderInfo(){
+			if(!order_sn){
+				return false;
+			}
+			_openWinByUrl('pay_head','../order/pay_head',{'order_sn':order_sn,'pay_notify_type':24});
+		}
+		
+	</script>
+</html>

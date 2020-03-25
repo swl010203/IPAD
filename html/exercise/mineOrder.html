@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">我的订单</h1>
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="wddd_top bgwhite clearfloat footer_top45">
+				<span class="after active" data-type="1">全部</span>
+				<span class="after" data-type="2">待付款</span>
+				<span class="after daifahuo" data-type="3">待发货</span>
+				<span class="after" data-type="4">待收货</span>
+				<span data-type="5" class="wanchengOrder">已完成</span>
+			</div>
+			<ul class="mt_footer_top45" id="allOrder">
+				<!--<li>
+					<div class="wddd_fullDiv_li_tit clearfloat fs24 pl20 pr20 pt20 pb20 box_s border_b">
+						<span>订单编号：94862181316516313</span>
+						<span class="mui-pull-right colorRed">待发货</span>
+					</div>
+					<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+						<div class="mui-col-sm-4 mui-col-xs-4">
+							<div class="jfrd_imgDiv">
+								<img src="../../image/pingguo.jpg"/>
+							</div>
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+							<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<p class="clearfloat btn_pLine clearfloat">
+								<span class="fs28 mt10">x 10</span>
+								<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+							</p>
+						</div>
+					</div>
+					<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+						<div class="mui-col-sm-4 mui-col-xs-4">
+							<div class="jfrd_imgDiv">
+								<img src="../../image/pingguo.jpg"/>
+							</div>
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+							<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<p class="clearfloat btn_pLine clearfloat">
+								<span class="fs28 mt10">x 10</span>
+								<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+							</p>
+						</div>
+					</div>
+					<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+						<div class="mui-col-sm-4 mui-col-xs-4">
+							<div class="jfrd_imgDiv">
+								<img src="../../image/pingguo.jpg"/>
+							</div>
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+							<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<p class="clearfloat btn_pLine clearfloat">
+								<span class="fs28 mt10">x 10</span>
+								<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+							</p>
+						</div>
+					</div>
+					<div class="border_b pl20 pr20 pt20 pb20 clearfloat fs28">
+						<span class="colorHui999">2018-09-30  14:25:10</span>
+						<span class="mui-pull-right colorBlack">合计：￥<span>3990.00</span></span>
+					</div>
+				</li>
+				<li>
+					<div class="wddd_fullDiv_li_tit clearfloat fs24 pl20 pr20 pt20 pb20 box_s border_b">
+						<span>订单编号：94862181316516313</span>
+						<span class="mui-pull-right colorHui666">已取消</span>
+					</div>
+					<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+						<div class="mui-col-sm-4 mui-col-xs-4">
+							<div class="jfrd_imgDiv">
+								<img src="../../image/pingguo.jpg"/>
+							</div>
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+							<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<p class="clearfloat btn_pLine clearfloat">
+								<span class="fs28 mt10">x 10</span>
+								<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+							</p>
+						</div>
+					</div>
+					<div class="border_b pl20 pr20 pt20 pb20 clearfloat fs28">
+						<span class="colorHui999">2018-09-30  14:25:10</span>
+						<span class="mui-pull-right colorBlack">合计：￥<span>3990.00</span></span>
+					</div>
+				</li>
+				<li>
+					<div class="wddd_fullDiv_li_tit clearfloat fs24 pl20 pr20 pt20 pb20 box_s border_b">
+						<span>订单编号：94862181316516313</span>
+						<span class="mui-pull-right colorHui666">取消订单</span>
+					</div>
+					<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+						<div class="mui-col-sm-4 mui-col-xs-4">
+							<div class="jfrd_imgDiv">
+								<img src="../../image/pingguo.jpg"/>
+							</div>
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+							<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<p class="clearfloat btn_pLine clearfloat">
+								<span class="fs28 mt10">x 10</span>
+								<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+							</p>
+						</div>
+					</div>
+					<div class="border_b pl20 pr20 pt20 pb20 clearfloat fs28">
+						<span class="colorHui999">2018-09-30  14:25:10</span>
+						<span class="mui-pull-right colorBlack">合计：￥<span>3990.00</span></span>
+					</div>
+				</li>-->
+			</ul>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/app.js"></script>
+	<script src="../../script/api.js"></script>
+
+	<script type="text/javascript">
+		mui.init();
+		$(".wddd_top>span").on("tap",function(){
+			tabType = $(this).attr('data-type');
+			page = 1;
+			allOrder();
+			$(this).addClass("active").siblings().removeClass("active");
+		});
+		var closePayStatus = '';
+		var uid = '';
+		var tabType = 1;
+		var paySuccess = '';
+		var page = 1;
+		var is_page = true;
+		apiready = function(){
+			uid = localStorage.getItem('uid');
+			closePayStatus = api.pageParam.closePay;//订单未支付
+			paySuccess = api.pageParam.orderPayStatus;//订单支付成功
+			if(paySuccess == 3){
+				tabType = 3;
+				$('.daifahuo').addClass("active").siblings().removeClass("active");
+				allOrder();
+			}
+			api.addEventListener({
+			    name: 'keyback'
+			}, function(ret, err){
+			    fanhui();
+			});
+			
+			api.addEventListener({
+				name:'scrolltobottom',
+				extra: {
+					threshold: 0            //设置距离底部多少距离时触发，默认值为0，数字类型
+				}
+			},function(ret,err){
+				if(is_page){
+					page++;
+					allOrder();
+				}
+			});
+			
+			api.addEventListener({
+	            name:'cancelOrder'
+            },function(ret,err){
+            	if(ret.value.status == 'success'){
+            		allOrder();
+            	}
+            });
+            
+            api.addEventListener({
+	            name:'sureOrder'
+            },function(ret,err){
+            	if(ret.value.status == 'success'){
+            	$('.wanchengOrder').addClass("active").siblings().removeClass("active");
+            		tabType = 5;
+            		allOrder();
+            	}
+            });
+
+	        allOrder();
+
+		};
+		$('.mui-action-back').on('tap',function(){
+			fanhui();
+		});
+		function fanhui(){
+			if(closePayStatus == 'success'){
+				api.closeToWin({
+				    name: 'exercise'
+				});
+			}else{
+				api.closeWin();
+			}
+			
+		}
+		//获取全部订单
+		function allOrder(){
+			_ajax(ajax_url+'Index/ExerciseShop/allShopOrder',{'uid':uid,'tabType':tabType,'p':page},'post',function(ret){
+				if(ret.status == 1){
+					var strVar = '';
+					$.each(ret.data,function(k,v){
+						var goodsInfo = v.goodsInfo;
+						var orderInfo = v.orderInfo;
+						var orderStatus = '';
+						if( orderInfo && orderInfo.pay_status == 1){
+							if(orderInfo && orderInfo.shipping_status == 1){
+								orderStatus = '待收货';
+							}else if(orderInfo && orderInfo.shipping_status == 2){
+								orderStatus = '已完成';
+							}else{
+								orderStatus = '待发货';
+							}
+						}else{
+							orderStatus = '未支付';
+						}
+						strVar += '<li onclick="orderDetail(\''+v.order_sn+'\');">';
+						strVar += '	<div class="wddd_fullDiv_li_tit clearfloat fs24 pl20 pr20 pt20 pb20 box_s border_b">';
+						strVar += '		<span>订单编号：'+v.info_order_sn+'</span>';
+						strVar += '		<span class="mui-pull-right colorRed">'+orderStatus+'</span>';
+						strVar += '	</div>';
+						$.each(goodsInfo,function(kk,vv){
+							strVar += '	<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">';
+							strVar += '		<div class="mui-col-sm-4 mui-col-xs-4">';
+							strVar += '			<div class="jfrd_imgDiv">';
+							strVar += '				<img src="'+vv.goods_pic+'"/>';
+							strVar += '			</div>';
+							strVar += '		</div>';
+							strVar += '		<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">';
+							strVar += '			<p class="fs32 mui-ellipsis-2">'+vv.goods_name+'</p>';
+							strVar += '			<p class="clearfloat btn_pLine clearfloat">';
+							strVar += '				<span class="fs28 mt10">x '+vv.goods_number+'</span>';
+							strVar += '				<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">'+vv.goods_price+'</span></span>';
+							strVar += '			</p>';
+							strVar += '		</div>';
+							strVar += '	</div>';
+						});
+						strVar += '	<div class="border_b pl20 pr20 pt20 pb20 clearfloat fs28">';
+						strVar += '		<span class="colorHui999">'+v.addtime+'</span>';
+						strVar += '		<span class="mui-pull-right colorBlack">合计：￥<span>'+v.income+'</span></span>';
+						strVar += '	</div>';
+						strVar += '</li>';
+						});
+						is_page = true;
+					
+				}else{
+					is_page = false;
+					_toast(ret.msg);
+					if(page == 1){
+						$('#allOrder').html('');
+					}	
+				}
+				if(page == 1){
+					$('#allOrder').html(strVar);
+				}else{
+					$('#allOrder').append(strVar);
+				}
+				
+			});
+		}
+		function orderDetail(id){
+			if(!id){
+				return false;
+			}
+			_openWinByUrl('orderDetail','orderDetail',{'order_sn':id});
+		}
+	</script>
+</html>

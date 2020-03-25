@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">突破健身</h1>
+		</header>
+		<div class="mui-content">
+			<div class="ztcs_lunbo tpjs_lp">
+				<div class="mui-slider">
+					<div class="mui-slider-group mui-slider-loop shopBanner">
+						<!--<div class="mui-slider-item mui-slider-item-duplicate">
+							<div class="ztcs_topImg bgwhite">
+								<img src="../../images/wy1.jpg"/>
+							</div>
+						</div>
+						<div class="mui-slider-item">
+							<div class="ztcs_topImg bgwhite">
+								<img src="../../images/wy1.jpg"/>
+							</div>
+						</div>
+						<div class="mui-slider-item">
+							<div class="ztcs_topImg bgwhite">
+								<img src="../../images/wy1.jpg"/>
+							</div>
+						</div>
+						<div class="mui-slider-item mui-slider-item-duplicate">
+							<div class="ztcs_topImg bgwhite">
+								<img src="../../images/wy1.jpg"/>
+							</div>
+						</div>-->
+					</div>
+					<div class="mui-slider-indicator">
+					    <div class="mui-indicator mui-active"></div>
+					    <div class="mui-indicator"></div>
+					    <div class="mui-indicator"></div>
+					</div>
+				</div>
+			</div>
+			<div class="mui_content tpjs_ul">
+				<ul class="mui-table-view mui-grid-view mui-grid-9 bgwhite">
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" onclick="_openWinByUrl('bicycle', 'bicycle');">
+						<a href="#">
+							<span class="mui_icon_list mui_icon_dgdc"></span>
+							<div class="mui-media-body">动感单车</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" onclick="_openWinByUrl('exercise_shop','exercise_shop');">
+						<a href="#">
+							<span class="mui_icon_list mui_icon_shangdian"></span>
+							<div class="mui-media-body">商店</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" onclick="matchlist()">
+						<a href="#">
+							<span class="mui_icon_list mui_icon_jsxly"></span>
+							<div class="mui-media-body">赛事训练营</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" onclick="goShopInfo();">
+						<a href="#">
+							<span class="mui_icon_list mui_icon_gybd"></span>
+							<div class="mui-media-body">关于本店</div>
+						</a>
+					</li>
+				</ul>
+				<div class="mt20 bgwhite pl20 pr20 box_s">
+					<div class="estate_tit border_tXu">
+						<p class="pt20 clearfloat pb20">
+							<span class="estateSpan_lineH fs32 font_weightB">最新活动</span>
+							<span class="mui-pull-right colorHui999 estateSpan_lineH" onclick="goActiveMore();">更多<span class="iconfont icon-arrow-right"></span></span>
+						</p>
+					</div>
+					<ul class="new_active">
+						<!--<li class="border_b pb10">
+							<p class="fs28 pt20 mui-ellipsis">假期不指望瘦了，但是也别胖呀！我们一起来有氧健身</p>
+							<p class="fs24 colorHui999">2018-09-27  16:30:15</p>
+						</li>
+						<li class="border_b pb10">
+							<p class="fs28 pt20 mui-ellipsis">假期不指望瘦了，但是也别胖呀！我们一起来有氧健身</p>
+							<p class="fs24 colorHui999">2018-09-27  16:30:15</p>
+						</li>
+						<li class="border_b pb10">
+							<p class="fs28 pt20 mui-ellipsis">假期不指望瘦了，但是也别胖呀！我们一起来有氧健身</p>
+							<p class="fs24 colorHui999">2018-09-27  16:30:15</p>
+						</li>
+						<li class="border_b pb10">
+							<p class="fs28 pt20 mui-ellipsis">假期不指望瘦了，但是也别胖呀！我们一起来有氧健身</p>
+							<p class="fs24 colorHui999">2018-09-27  16:30:15</p>
+						</li>
+						<li class="border_b pb10">
+							<p class="fs28 pt20 mui-ellipsis">假期不指望瘦了，但是也别胖呀！我们一起来有氧健身</p>
+							<p class="fs24 colorHui999">2018-09-27  16:30:15</p>
+						</li>-->
+					</ul>
+				</div>
+				<div class="mt20 bgwhite pl20 pr20 box_s">
+					<div class="estate_tit border_tXu">
+						<p class="pt20 clearfloat pb20">
+							<span class="estateSpan_lineH fs32 font_weightB">本店教练</span>
+							<span class="mui-pull-right colorHui999 estateSpan_lineH" onclick="goCoachList();">更多<span class="iconfont icon-arrow-right"></span></span>
+						</p>
+					</div>
+					<div class="coach_div pt10" style="touch-action:pan-y;">
+						<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+						    <div class="mui-scroll">
+						       <ul class="xiaoquhuxing_div_ul clearfloat mt10 coachList">
+						       		<!--<li class="mui-control-item">
+						       			<div class="coach_portrait">
+						       				<div class="coach_portrait_img"><img src="../../images/dc1.jpg"/></div>
+						       			</div>
+						       			<p class="fs30 pt10 mui-ellipsis mui-text-center colorBlack">刘教练</p>
+						       			<p class="xing_p">
+											<span class="xingxing">
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx colorRed"></span>
+												<span class="iconfont icon-wujiaoxingx"></span>
+											</span>
+										</p>
+						       		</li>-->
+						       </ul>
+						    </div>
+						</div>
+					</div>
+				</div>
+				<div class="mt20 bgwhite pl20 pr20 box_s">
+					<div class="estate_tit border_tXu">
+						<p class="pt20 clearfloat pb20">
+							<span class="estateSpan_lineH fs32 font_weightB">联系我们</span>
+							<!--<span class="mui-pull-right colorHui999 estateSpan_lineH">更多
+							<span class="iconfont icon-arrow-right"></span></span>-->
+						</p>
+					</div>
+					<div class="contact_us fs28">
+						<div class="clearfloat pt20 pb20 border_b">
+							<span class="iconfont icon-dizhi mui-pull-left"></span>
+							<p class="mui-pull-left shopAddress">安国市药都新城3层突魄健身会所</p>
+						</div>
+						<div class="clearfloat pt20 pb20 border_b">
+							<span class="iconfont icon-dianhua-copy mui-pull-left colorRed"></span>
+							<p class="mui-pull-left shopPhone" style="color:#282828"></a>   <!--商户电话-->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--<div style="height: 60px;"></div>-->
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		setTimeout(function(){
+		    var gallery = mui('.ztcs_lunbo');
+		    gallery.slider({
+		         interval:1800//自动轮播周期，若为0则不自动播放，默认为0；
+		    });
+		},300);
+		
+		var uid = '-1';
+    apiready = function(){
+        api.addEventListener({
+            name: 'viewappear'
+        }, function (ret, err) {
+            // todo 显示页面时执行的方法
+        });
+        api.setWinAttr({
+            slidBackEnabled : false
+        });
+//      uid = localStorage.getItem('uid');
+        getShopTip();
+
+        api.addEventListener({
+            name: 'hasSid'
+        }, function(ret, err) {
+            // 获取轮播banner
+            getBanner();
+
+            // 获取活动列表   6个
+            getActive(6);
+
+            // 获取教练       3个
+            getCoach(3);
+
+            // 获取商户地址
+            getShopAddress();
+        });
+    };
+
+    // 获取商户标识
+    function getShopTip(){
+        _ajax(ajax_url+'Index/Exercise/getShopSid', {}, 'get', function(ret){
+            if(ret.status ==1){
+                sid = ret.data.sid;
+                api.sendEvent({
+                    name: 'hasSid',
+                    extra: {
+                        sid: sid,
+                    }
+                });
+            }else{
+                _toast(ret.info);
+            }
+        });
+    }
+
+    // 获取轮播banner
+    function getBanner(){
+        _ajax(ajax_url+'Index/Exercise/getIntroduceImg', {'sid': sid}, 'get', function(ret){
+            if(ret.status == 1){
+                // 获取宣传图成功
+                var banner_html = '';
+                var list_logo = ret.data.list_logo;
+                var logoNum = list_logo.length-1;
+
+                banner_html += '<div class="mui-slider-item mui-slider-item-duplicate">';
+                banner_html +=      '<div class="ztcs_topImg bgwhite">';
+                banner_html +=          '<img src="'+ list_logo[logoNum] +'"/>';
+                banner_html +=      '</div>';
+                banner_html +=  '</div>';
+
+                $.each(ret.data.list_logo, function(k, v){
+                    banner_html += '<div class="mui-slider-item mui-slider-item-duplicate">';
+                    banner_html +=      '<div class="ztcs_topImg bgwhite">';
+                    banner_html +=          '<img src="'+ v +'"/>';
+                    banner_html +=      '</div>';
+                    banner_html +=  '</div>';
+                });
+                banner_html += '<div class="mui-slider-item mui-slider-item-duplicate">';
+                banner_html +=      '<div class="ztcs_topImg bgwhite">';
+                banner_html +=          '<img src="'+ list_logo[0] +'"/>';
+                banner_html +=      '</div>';
+                banner_html +=  '</div>';
+                $('.shopBanner').html(banner_html);
+                setTimeout(function () {
+                    var gallery = mui('.ztcs_lunbo');
+                    gallery.slider({
+                        interval: 1800//自动轮播周期，若为0则不自动播放，默认为0；
+                    });
+                }, 300);
+            }
+        });
+    }
+
+    // 获取活动列表
+    function getActive(num){
+        num = typeof num !== 'undefined' ? num : '';
+        _ajax(ajax_url + 'Index/Exercise/getActiveList', {'sid': sid, 'num': num}, 'get', function (ret) {
+            if (ret.status == 1) {
+                var activeData = ret.data;
+                var active_html = '';
+                $.each(activeData, function (k, v) {
+                    active_html += '<li class="border_b pb10" onclick="activeDetail(' + v.id + ');">';
+                    active_html += '<p class="fs28 pt20 mui-ellipsis">' + v.title + '</p>';
+                    active_html += '<p class="fs24 colorHui999">' + v.add_time + '</p>';
+                    active_html += '</li>';
+                });
+
+                $('.new_active').html(active_html);
+            } else {
+                $('.new_active').html('暂无活动');
+            }
+        });
+    }
+
+    // 活动详情
+    function activeDetail(activeId) {
+        activeId = typeof activeId !== 'undefined' ? activeId : '';
+        if (activeId == '') {
+            _toast('没有得到活动标识');
+        } else {
+            _openWinByUrl('activeDetail', 'activeDetail', {'activeId': activeId});
+        }
+    }
+
+    // 活动列表
+    function goActiveMore(){
+        _openWinByUrl('activeMore', 'activeMore', {'sid': sid});
+    }
+
+    function getCoach(num){
+        num = typeof num !== 'undefined' ? num : '';
+        _ajax(ajax_url + 'Index/Exercise/getCoachList', {'sid': sid, 'num': num}, 'get', function (ret) {
+            if(ret.status == 1){
+                var coach_html = '';
+                $.each(ret.data, function(k, v){
+                    coach_html += '<li class="mui-control-item" attr_id="'+ v.id +'">';
+                    coach_html +=     '<div class="coach_portrait">';
+                    coach_html +=         '<div class="coach_portrait_img"><img src="'+ v.head_pic +'"/></div>';
+                    coach_html +=     '</div>';
+                    coach_html +=     '<p class="fs30 pt10 mui-ellipsis mui-text-center colorBlack">'+ v.name +'</p>';
+                    coach_html +=     '<p class="xing_p">';
+                    coach_html +=         '<span class="xingxing">';
+                    coach_html +=             '<span class="iconfont icon-wujiaoxingx colorRed"></span>';
+                    coach_html +=             '<span class="iconfont icon-wujiaoxingx colorRed"></span>';
+                    coach_html +=             '<span class="iconfont icon-wujiaoxingx colorRed"></span>';
+                    coach_html +=             '<span class="iconfont icon-wujiaoxingx colorRed"></span>';
+                    coach_html +=             '<span class="iconfont icon-wujiaoxingx"></span>';
+                    coach_html +=         '</span>';
+                    coach_html +=     '</p>';
+                    coach_html += '</li>';
+                });
+
+                $('.coachList').html(coach_html);
+            }else{
+                $('.coachList').html('');
+            }
+            
+            $('.mui-control-item').on('tap',function(){
+            	var coachId = $(this).attr("attr_id");
+				coachDetail(coachId);
+			});
+        });
+    }
+
+    // 教练详情
+    function coachDetail(coachId) {
+//         _toast(coachId);
+        coachId = typeof coachId !== 'undefined' ? coachId : '';
+        if(coachId == ''){
+            _toast('没有获取到教练标识');
+        }else{
+            _openWinByUrl('coachDetail', 'coachDetail', {'coachId': coachId});
+        }
+    }
+
+    // 教练列表
+    function goCoachList(){
+        _openWinByUrl('coachList', 'coachList', {'sid': sid});
+    }
+
+    function getShopAddress(){
+        _ajax(ajax_url+'Index/Exercise/getShopAddress', {'sid': sid}, 'get', function(ret){
+            if(ret.status == 1){
+                $('.shopAddress').text(ret.data.address);
+                $('.shopPhone').text(ret.data.telphone);
+                phone = ret.data.telphone;
+//              $('.shopPhone').attr('href','tel:'+ret.data.telphone);
+
+            }
+        });
+    }
+    
+	$('.shopPhone').on('tap',function(){
+		lianxi();
+	});
+	var phone = "";
+	function lianxi(){
+		api.alert({
+		    title: '电话',
+		    msg: phone,
+		});
+	}
+
+    // 关于本店
+    function goShopInfo(){
+        _openWinByUrl('shopInfo', 'shopInfo', {'sid': sid});
+    }
+    //赛事训练营
+    function matchlist(){
+//      if(uid == null || uid == '' || uid =='undefined'){
+//          _toast('请先登录');
+//          return false;
+//      }
+        _openWinByUrl('matchList','matchList');
+    }
+
+	$('.mui-action-back').on('tap',function(){
+		api.closeWin();
+	});
+		
+	</script>
+</html>

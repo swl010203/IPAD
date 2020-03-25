@@ -1,0 +1,225 @@
+header{
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width:100%;
+	box-sizing:border-box;
+}
+/* header .back a img{
+	width: 20px;
+	height: 24px;
+}
+header .word{
+	font-size: 0.36rem;
+	color: white;
+	margin-left: 2rem;
+	position:absolute;
+	font-size: 20px;
+	color: #d12a18;
+	width:2rem;
+	text-align:center;
+	top:-5px;
+	left:50%;
+	margin-left:-1rem;
+} */
+body{
+	font-size: 18px;
+}
+.header{
+	width: 100%;
+	position: relative;
+}
+.swiper-container{
+
+    height: 350px;
+}
+.swiper-container img{
+	width: 100%;
+}
+.conTitle{
+	height: 80px;
+	background-color: white;
+	padding-left: 20px;
+	padding-top: 10px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #e0e0e0;
+}
+.swiper-pagination{
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+}
+.yishou{
+	color:#116f81;
+	font-size:18px;
+}
+.addCart{
+	width: 160px;
+	height: 40px;
+	color: white;
+	border-radius: 0.05rem;
+	background: url(../../../images/food/cartBackground.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+	/*margin-left: 1.5rem;*/
+	position: absolute;
+	top:-18px;
+	right:20px;
+	font-size: 18px;
+}
+.conTitle>p{
+	/* line-height:40px; */
+	position: relative;
+	
+}
+.conTitle p .red,.conTitle p .oldPrice{
+	margin-right: 15px;
+}
+.taocanneirong,.shangpinxiangqing,.tuwenxiangqing{
+	margin-top: 20px;
+	background-color: white;
+	padding-left: 20px;
+	padding-right: 20px;
+	box-sizing: border-box;
+	border-top: 1px solid #e0e0e0;
+	border-bottom:1px solid #e0e0e0;
+}
+.taocanneirong li,.tuwenxiangqing li,.shangpinxiangqing li{
+	height: 60px;
+	border-bottom: 1px solid #e0e0e0;
+	line-height: 50px;
+}
+.taocanneirong li:last-child,.tuwenxiangqing li:last-child,.shangpinxiangqing li:last-child{
+	border-bottom: none;
+}
+.caiTit{
+	color: #116f81;
+}
+.caiContent{
+	overflow: hidden;
+}
+.caiName{
+	height: auto;
+}
+.caiNum{
+	width: 1rem;
+	text-align: right;
+}
+.caiPrice{
+	width: 1.5rem;
+	text-align: right;
+}
+.zhuTit{
+	padding-left: 10px;
+	box-sizing: border-box;
+	position: relative;
+}
+.zhuTit:before{
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 2px;
+    height: 30px;
+    background-color: #d12a18;
+}
+.xiangqing{
+	margin-top: 0.1rem;
+}
+.xiangqing img{
+	width: 100%;
+}
+.xiangqingLi{
+	overflow: hidden;
+	height: 100%!important;
+	background-color: white!important;
+}
+.tuwenxiangqing{
+	margin-bottom: 30px;
+}
+.shuliang{
+    width: 1.5rem;
+    height: 0.5rem;
+    margin-top: 0.95rem;
+    text-align: center;
+    line-height: 0.5rem;
+    position: absolute;
+    top: 3.73rem;
+    right: 0.35rem;
+}
+.jian,.jia{
+	width: 0.4rem;
+    height: 0.4rem;
+    border: 1px solid #d12a18;
+    border-radius: 50%;
+    color: #d12a18;
+    text-align: center;
+    line-height: 0.4rem;
+   /* margin-top: 0.65rem;*/
+    font-size: 0.5rem;
+    font-weight: bolder;
+}
+.shuliang span{
+	display: inline-block;
+	width: 0.59rem;
+	text-align: center;
+}
+
+footer{
+	background-color: white;
+	width: 100%;
+	position:fixed;
+	bottom: 0;
+	height: 0.8rem;
+	overflow: hidden;
+	line-height: 0.8rem;
+	border-top: 1px solid #d12a18;
+	font-size: 0.25rem;
+	box-sizing: border-box;
+}
+.leftFoot{
+	width: 4.48rem;
+	float: left;
+}
+.cartInner{
+	width: 0.4rem;
+	margin-top: 0.2rem;
+	margin-left:0.4rem;
+	position: relative;
+}
+.num{
+	position: absolute;
+	top: -0.1rem;
+	right: -0.09rem;
+	width: 0.25rem;
+	height: 0.25rem;
+	border-radius: 50%;
+	background-color: #d12a18;
+	color: white;
+	line-height:0.25rem;
+	text-align: center;
+	font-size: 0.15rem;
+}
+.cartInner img{
+	width: 100%;
+}
+.rightFoot{
+	height: 0.8rem;
+	width: 1.92rem;
+	float: right;
+	background: url(../../images/food/bag.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+	text-align: center;
+	color: #ffffff;
+}
+.cart{
+	position: relative;
+}
+.pricePosi{
+	position: absolute;
+	top: -0.18rem;
+	left: 1rem;
+	font-size: 0.33rem;
+	font-weight: bolder;
+}

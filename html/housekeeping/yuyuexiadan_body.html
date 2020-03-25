@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>046预约下单</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+
+<style>
+	.checkin_ifor{line-height:46px;}
+	.mm_box li.mmdd {
+    	
+    	background-size: 20%;
+    }
+</style>
+        <style>
+			
+			select{
+				height: 50px;
+				line-height: 40px;
+				border: 1px solid #f2f2f2;
+				background: #f2f2f2;
+				padding-left: 10px;
+				box-sizing: border-box;
+				font-size: 18px;
+			}
+	
+		</style>
+	</head>
+	<body>
+		
+		<!--中间内容-->
+		<div class="baoxiufuwuOuterDiv">
+			<div>
+				<div class="fl leftDiv">服务类型：</div>
+				<div class="rightDiv">
+					<span id="class_info"></span>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">服务地址：</div>
+				<div class="rightDiv">
+					<span class="address"></span>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">上门日期：</div>
+				<div class="rightDiv">
+						<input id="appoint_time" style="background-image:none;" class="input_select" type="date" value="" placeholder="请选择" /> 
+						
+						<span class="styleSpan colorRed">&nbsp;&nbsp;*请必须上门日期</span>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">上门时间：</div>
+				<div class="rightDiv">
+						
+								<select id='start_timedate'>
+									<option value="0:00">0:00</option>
+									<option value="1:00">1:00</option>
+									<option value="2:00">2:00</option>
+									<option value="3:00">3:00</option>
+									<option value="4:00">4:00</option>
+									<option value="5:00">5:00</option>
+									<option value="6:00">6:00</option>
+									<option value="7:00">7:00</option>
+									<option value="8:00">8:00</option>
+									<option value="9:00">9:00</option>
+									<option value="10:00">10:00</option>
+									<option value="11:00">11:00</option>
+									<option value="12:00">12:00</option>
+									<option value="13:00">13:00</option>
+									<option value="14:00">14:00</option>
+									<option value="15:00">15:00</option>
+									<option value="16:00">16:00</option>
+									<option value="17:00">17:00</option>
+									<option value="18:00">18:00</option>
+									<option value="19:00">19:00</option>
+									<option value="20:00">20:00</option>
+									<option value="21:00">21:00</option>
+									<option value="22:00">22:00</option>
+									<option value="23:00">23:00</option>
+								</select>
+								-
+								<select id="end_timedate">
+									<option value="0:00">0:00</option>
+									<option value="1:00">1:00</option>
+									<option value="2:00">2:00</option>
+									<option value="3:00">3:00</option>
+									<option value="4:00">4:00</option>
+									<option value="5:00">5:00</option>
+									<option value="6:00">6:00</option>
+									<option value="7:00">7:00</option>
+									<option value="8:00">8:00</option>
+									<option value="9:00">9:00</option>
+									<option value="10:00">10:00</option>
+									<option value="11:00">11:00</option>
+									<option value="12:00">12:00</option>
+									<option value="13:00">13:00</option>
+									<option value="14:00">14:00</option>
+									<option value="15:00">15:00</option>
+									<option value="16:00">16:00</option>
+									<option value="17:00">17:00</option>
+									<option value="18:00">18:00</option>
+									<option value="19:00">19:00</option>
+									<option value="20:00">20:00</option>
+									<option value="21:00">21:00</option>
+									<option value="22:00">22:00</option>
+									<option value="23:00">23:00</option>
+								</select>
+						
+						
+				</div>
+			</div>
+			
+			<div class="clearfloat bor_t pad_20">
+				<span class="fl">支付全款</span>
+				<span class="fr colorRed price">￥0</span>
+			</div>
+		</div>
+		<footer class="clearfloat yuyuedingdanFoot">
+			<div class="fl">
+				<div class="colorRed price">￥0</div>
+			</div>
+			<div class="fr querenxiadan"  onclick="order();">
+				确认下单
+			</div>
+		</footer>
+		<div class="mark hide_">
+			<div class="qixiaodingdan yuyuedingdan">
+				<ul>
+					<li class="qixiaodingdan_tit">
+						<i class="xian"></i>
+						<span>请选择支付方式</span>
+						<span class="close fr"></span>
+					</li>
+					<ul class="qixiaodingdan_innerUl">
+						<li val="4" class="clearfloat"><i class="yuezhufu"></i>余额支付<i class="yessel sel weixuan fr"></i></li>
+						<li val="2" class="clearfloat"><i class="weixinzhifu"></i>微信支付<i class="nosel sel weixuan fr"></i></li>
+					</ul>
+				</ul>
+				<div class="qixiaodingdan_fangqi">确认支付</div>
+			</div>
+		</div>
+<style>
+	.ftc_wzsf2{
+		display: none;
+		width: 100%;
+		height: 100%;
+		position: fixed;
+		z-index: 999;
+		top: 0;
+		left: 0;
+		background: #f8f8f8;
+	}
+	.srzfmm_box2{
+		position: absolute;
+		z-index: 10;
+		background: #f8f8f8;
+		top: 25px;
+		width: 100%;
+		text-align: center;
+
+	}
+	.cancel_btn{
+		position: absolute;
+		z-index: 10;
+		text-align: center;
+		width: 100%;
+		bottom: 50px;
+	}
+	.cancel_btn img{
+		width: 50px;
+		height: 50px;
+		z-index: 10;
+		background: #333;
+		border-radius: 50px;
+	}
+</style>
+<!--浮动层-->
+<div class="ftc_wzsf2">
+	<div class="srzfmm_box2">
+		<img class="pay_code" src="http://123.57.36.72:8103//Uploads//Qrcode//z201707300953302411.png" style="width:300px;height:300px; z-index: 10;" >
+	</div>
+	<div class="cancel_btn">
+		<img src="../../images/guanbi.png" >
+	</div>
+	
+</div>	
+		<div class="ftc_wzsf">
+		  <div class="srzfmm_box">
+		    <div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>
+		    <div class="zfmmxx_shop">
+		      <div class="mz ordername">商品</div>
+		      <div class="wxzf_price order_amount">￥0.00</div>
+		    </div>
+		    
+		    <ul class="mm_box">
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		      <li pwd=""></li>
+		    </ul>
+		  </div>
+		  <div class="numb_box">
+		    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+		    <ul class="nub_ggg">
+		      <li><a href="javascript:void(0);">1</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+		      <li><a href="javascript:void(0);">3</a></li>
+		      <li><a href="javascript:void(0);">4</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+		      <li><a href="javascript:void(0);">6</a></li>
+		      <li><a href="javascript:void(0);">7</a></li>
+		      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+		      <li><a href="javascript:void(0);">9</a></li>
+		      <li><span></span></li>
+		      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+		      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+		    </ul>
+		  </div>
+		  <div class="hbbj"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		function bodyScroll(event){
+				event.preventDefault();
+			}
+		$(function(){
+			
+			/*下拉列表效果*/
+			$(".input_select").click(function(){ 
+					var ul = $(".xialaxiaoguo ul"); 
+					if(ul.css("display")=="none"){ 
+						ul.slideDown("fast"); 
+					}else{ 
+						ul.slideUp("fast"); 
+					} 
+				});
+			//获取数据
+			$(".xialaxiaoguo ul li a").click(function(){ 
+				var txt = $(this).text(); 
+				$(".input_select").val(txt); 
+				var value = $(this).attr("rel"); 
+				$(".xialaxiaoguo ul").hide(); 
+				$("#result").html("您选择了"+txt+"，值为："+value); 
+			}); 
+			/*点击button*/
+			$(".qixiaodingdan_innerUl li").on("click",function(){
+				pay_id = $(this).attr('val');
+				var index_ = $(this).index();
+				$(".qixiaodingdan_innerUl li").children(".sel").removeClass("yessel");
+				$(".qixiaodingdan_innerUl li").children(".sel").addClass("nosel");
+				$(this).children(".sel").addClass("yessel");
+			});
+			/*点击确认下单出现弹出层*/
+//			$(".querenxiadan").on("click",function(){
+//				$(".mark").removeClass("hide_");
+//				$("body").css("overflow-y","hidden");
+//				document.body.addEventListener('touchmove',bodyScroll,true);
+//				var scroll_ = $(document).scrollTop();
+//				$(".mark").css("top",scroll_);
+//			
+//			})
+			/*点击关闭*/
+			$(".close").on("click",function(){
+				
+				pay_id ="";
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+				document.body.removeEventListener('touchmove',bodyScroll,true);
+				paySuccess();
+			});
+			/*点击确认支付*/
+			$(".qixiaodingdan_fangqi").on("click",function(){
+				$(".mark").addClass("hide_");
+				$("body").css("overflow-y","auto");
+				document.body.removeEventListener('touchmove',bodyScroll,true);
+				
+				
+				if(pay_id ==4){
+					$(".ftc_wzsf").show();
+				}
+				
+				if(pay_id ==2){
+					wxPay();
+				}
+			})
+		});
+		
+		
+		
+		
+	$(".cancel_btn").click(function(){
+		
+		paySuccess();
+		$('.ftc_wzsf2').hide();
+	});
+/**
+	 * 清除支付密码 
+	 */
+	function clearPayPwd(){
+		paypassword="";
+		$(".mm_box li").attr('pwd','');
+		$(".mm_box li").removeClass("mmdd");
+		
+		i1 = 0;
+		is_pay_status = 1;
+		
+		
+	}
+	var i1 = 0;
+	
+$(function(){
+	//出现浮动层
+	$(".ljzf_but").click(function(){
+		$(".ftc_wzsf").show();
+	});
+	//关闭浮动  清除支付密码
+	$(".close").click(function(){
+		$(".ftc_wzsf").hide();
+		i = 0;
+		
+		clearPayPwd();
+	});
+		//数字显示隐藏
+		$(".xiaq_tb").click(function(){
+		//$(".numb_box").slideUp(500);
+		});
+		$(".mm_box").click(function(){
+			//$(".numb_box").slideDown(500);
+		});
+		//----
+		var i = 0;
+		$(document).on('touchstart',".nub_ggg li", function(){
+			$(this).css('background','#e0e0e0');
+		});
+
+		$(document).on('touchend',".nub_ggg li a", function(){
+			$(this).css('background','#f5f5f5');
+		});
+		$(document).on('touchend',".nub_ggg li a", function(){
+		//$(".nub_ggg li a").change(function(){
+			i1++;
+			var pwd =$(this).parent("li").index()+1;
+			if(pwd ==11){
+				pwd =0 ;
+			}
+		
+			if(i1<6){
+				$(".mm_box li").eq(i1-1).addClass("mmdd");
+				$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+				}else{
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+					if(i1>6){
+						i1=6;
+					}
+					setTimeout(function(){
+						//验证支付密码 并支付
+						var paypassword="";
+						$(".mm_box li").each(function(){
+							paypassword+=$(this).attr('pwd');
+						});
+						moneyPay(paypassword);
+						
+					},10);
+			 	} 
+		});
+ 		$(document).on('touchend',".nub_ggg li .del", function(){
+		//$(".nub_ggg li .del").click(function(){
+			if(i1>0){
+				i1--;
+				$(".mm_box li").eq(i1).removeClass("mmdd");
+				$(".mm_box li").eq(i1).attr("pwd","");
+				i1==0;
+				}
+			//alert(i);
+		}); 
+});
+
+
+		//初始化用户Id
+		var uid = localStorage.getItem("uid");
+		var id = "";
+		var pay_id =4;
+		apiready = function(){
+			id = api.pageParam.id;
+			
+			$(".address").html(localStorage.getItem("address"));
+			//获取商品详情
+			getGoodsDetailById();
+		};
+		
+		function getGoodsDetailById(){
+			 _ajax(ajax_url+"Index/Housekeeping/getGoodsDetailById" ,{goods_id:id},'get',function(ret){
+                var html  = '';
+                if(ret.status ==1){
+                
+                	$(".ordername").html(ret.data.class_info);
+                    $('#class_info').html(ret.data.class_info);
+ 					$(".price").html("￥"+ret.data.value);
+                }
+            });
+		}
+		
+		
+		function order(){
+			var appoint_time = $("#appoint_time").val();
+			var start_timedate = $("#start_timedate").val();
+			var end_timedate = $("#end_timedate").val();
+			
+			if(!appoint_time){
+				_toast('请选择上门日期');return;
+			}
+			
+			if(end_timedate == '0:00'){
+				_toast('请选择上门时间');return;
+			}
+			
+			appoint_timedate = start_timedate + " - " + end_timedate;
+			
+			
+			_ajax(ajax_url+"Index/Housekeeping/order" ,{
+				'uid':uid,'goods_id':id,'appoint_time':appoint_time,'appoint_timedate':appoint_timedate
+			},'post',function(ret){
+                if(ret.status ==1){
+                	order_sn = ret.data.order_sn;
+                	$(".price").html("￥"+ret.data.price);
+                   	_openWinByUrl('pay_head','pay_head',{'order_sn':order_sn,'price':ret.data.price});
+                }else{
+                	_toast(ret.msg);
+                }
+            });
+		}
+		
+		
+		
+		
+		
+		
+		function paySuccess(){
+			_openWinByUrl('chakanjilu','chakanjilu');
+		}
+		
+		
+	</script>
+</html>

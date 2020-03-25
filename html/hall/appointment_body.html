@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，头部bar的样式-->
+    <title>预约看房</title>
+    <link rel="stylesheet" href="../../script/house/css/style.css" />
+    <link rel="stylesheet" href="../../script/house/css/015_reservation.css" />
+    <script src="../../script/house/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../script/iscroll.js"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+</head>
+<body>
+    <div class="information w_100bfb">
+            <li>您的姓名：
+                <input type="text" id="username" placeholder="你的姓名" name="username"/>
+            </li>
+            <li>联系电话：
+                <input type="tel" id="mobile" placeholder="联系电话" name="tel" />
+            </li>
+    </div>
+    
+    <div class="sub">
+            <input type="button" onclick="submit();" value="确定"/>   
+    </div>      
+    <!--提交按钮-->
+    </body>
+</html>
+<script>
+    //默认执行
+    var type = 1;
+    var sid  = 0;
+    apiready = function(){
+        sid  = api.pageParam.sid;
+        type=api.pageParam.type;
+    };
+    
+    //提交预约
+    var start=1;
+    function submit(){
+        var name   = $('#username').val();
+        var mobile = $('#mobile').val();
+        var uid    = localStorage.getItem("uid");
+        
+        if(!uid){
+            _toast('您尚未登录！');return;
+        }
+        
+        if(!name){
+            _toast('请填写您的姓名！');return;
+        }
+        
+        if(!mobile){
+            _toast('请填写您的联系电话！');return;
+        }
+        var pattern = /^1[34578]\d{9}$/;  
+        if(!pattern.test(mobile)){
+            _toast('手机号格式错误！');return;
+        }
+        if(start==2){
+			return;		
+		}else{
+			start=2;
+		}
+        //加载状态
+        //loading('index_body');
+        _ajax(ajax_url+"Index/Hotel/appointmentAdd",{
+            name:name,
+            mobile:mobile,
+            type:type,
+            sid :sid,
+            uid:uid,
+        },'post',function(ret){
+            //关闭加载状态
+            //closeloading();
+            
+            if(ret.status==1){
+            	api.sendEvent({
+                    name:'index',
+                    extra: {
+                        key1: 'success',
+                        pagename:'member',
+                    }
+                });
+                
+                _toast(ret.info, function() {
+                    //关闭到首页
+                     _openWinByUrl('order_list','../users/order_list',{'channel':1});
+                    /*api.closeToWin({
+                        name: 'root'
+                    });*/
+                }, 2000);
+                
+                
+            } else {
+                _toast( ret.info );
+            }
+            
+        });
+    }
+
+</script>
+<script src="../../script/house/js/common.js" type="text/javascript" charset="utf-8"></script>

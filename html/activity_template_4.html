@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+		<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+		<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>商家列表</title>
+		<link rel="stylesheet" href="../css/user/style.css" />
+		<link rel="stylesheet" href="../css/user/allStyle.css">
+		<script type="text/javascript" src="../script/user/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../script/user/index.js"></script>
+		<script type="text/javascript" src="../script/api.js"></script>
+		<script type="text/javascript" src="../script/app.js"></script>
+		<style>
+			.reds{
+				color:#d12a18;
+				border-bottom:1px solid #d12a18;
+			}
+			.w_graph {
+			    background-color: white;
+			    border: 1px solid red;
+			    border-radius: 0.06rem;
+			    display: inline-block;
+			    height: 10px;
+			    overflow: hidden;
+			    position: relative;
+			    vertical-align: 1px;
+			    width: 1.5rem;
+			    margin-left:5px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--头部-->
+		<ul class="clearfloat w_qiang box-s border-t border-t border-b">
+			<li id='time12' data-src='12'>
+				<p class="fon-w">12:00</p>
+				<p>抢购中</p>
+			</li>
+			<li data-src='14' id='time14'>
+				<p class="fon-w">14:00</p>
+				<p>即将开始</p>
+			</li>
+			<li data-src='16' id='time16'>
+				<p class="fon-w">16:00</p>
+				<p>即将开始</p>
+			</li>
+			<li data-src='18' id='time18'>
+				<p class="fon-w">18:00</p>
+				<p>即将开始</p>
+			</li>
+			<li data-src='20' id='time20'>
+				<p class="fon-w">20:00</p>
+				<p>即将开始</p>
+			</li>
+			<!-- <div class="w_xian"></div> -->
+		</ul>
+		<div class="w_qiangTit pl_14 pr_14 border-b">
+			<span>抢购中，先下单先得哦</span>
+			<span class="fr" style="width: 24%;">
+				<i id="startname">距结束</i>&nbsp;
+				<div class="count fl">
+					<span class="countDown hou mao">00</span>
+					<span class="sign">:</span>
+					<span class="countDown min mao">00</span>
+					<span class="sign">:</span>
+					<span class="countDown sec mao">00</span>
+				</div>
+			</span>
+		</div>
+		<ul class="w_conL pl_14 pr_14 pb_20 box-s border-b" id="list">
+			
+			<!--<li>
+				<div class="fl w_conImg">
+					<img src="../images/user/7702.png"/>
+				</div>
+				<div class="erDiv">
+					<p class="huanhang">白酒法国田螺</p>
+					<p class="red btnZhuang">
+						<span>￥388</span>
+						<button class="w_btnStyle fr">立即抢购</button>
+					</p>
+					<p>
+						<span class="del_x">￥400</span>
+						<span class="fr" id="w_outer">
+							<span class="jindutiao">已抢
+								<span class="jinNum">40</span>%
+							</span>
+							<span class="w_graph">
+								<span class="w_red"></span>
+							</span>
+						</span>
+					</p>
+				</div>
+			</li>-->
+			
+		</ul>
+	</body>	
+	<script type="text/javascript">
+	    var activity_id = 0;
+		var action = '';  //请求方法
+	    var starttime ='';
+	    var dingshiqi='';
+	    apiready = function(){
+	    	activity_id = api.pageParam.id; //活动Id
+			action = api.pageParam.action;
+			
+			//下拉刷新
+			api.setRefreshHeaderInfo({
+			    visible: true,
+			    loadingImg: 'widget://image/refresh.png',
+			    bgColor: '#ccc',
+			    textColor: '#fff',
+			    textDown: '下拉刷新...',
+			    textUp: '松开刷新...',
+			    showTime: true
+			}, function(ret, err) {
+				//默认点场
+				dianchang();
+			});
+	    	
+	    	//默认点场
+	    	dianchang();
+	    		    		    	
+	    };
+	    
+	    //默认点场
+	    function dianchang(){
+	    	var mydate=new Date();//当前时间戳
+	    	var hour=mydate.getHours();//当前小时
+	    	
+	    	$('.w_qiang li').removeClass('reds');
+	 		//点场默认设置
+	    	if(hour > 11 && hour < 14){
+	    		$('#time12').addClass('reds');
+	    		$('#time12 p').eq(1).text('抢购中');
+	    		var hours=12;
+	    	}
+	    	if(hour<12){
+	    		$('#time12').addClass('reds');
+	    		$('#time12 p').eq(1).text('即将开枪');
+	    	}
+	    	if(hour>13){
+	    		$('#time12 p').eq(1).text('已结束');
+	    	}
+	    	
+	    	if(hour > 13 && hour < 16){
+	    		$('#time14').addClass('reds');
+	    		$('#time14 p').eq(1).text('抢购中');
+	    		var hours=14;
+	    	}
+	    	if(hour<14){
+	    		$('#time14 p').eq(1).text('即将开枪');
+	    	}
+	    	if(hour>15){
+	    		$('#time14 p').eq(1).text('已结束');
+	    	}
+	    	
+	    	if(hour > 15 && hour < 18){
+	    		$('#time16').addClass('reds');
+	    		$('#time16 p').eq(1).text('抢购中');
+	    		var hours=16;
+	    	}
+	    	if(hour<16){
+	    		$('#time16 p').eq(1).text('即将开枪');
+	    	}
+	    	if(hour>17){
+	    		$('#time16 p').eq(1).text('已结束');
+	    	}
+	    	
+	    	if(hour > 17 && hour < 20){
+	    		$('#time18').addClass('reds');
+	    		$('#time18 p').eq(1).text('抢购中');
+	    		var hours=18;
+	    	}
+	    	if(hour<18){
+	    		$('#time18 p').eq(1).text('即将开枪');
+	    	}
+	    	if(hour>19){
+	    		$('#time18 p').eq(1).text('已结束');
+	    	}
+	    	
+	    	if(hour > 19){
+	    		$('#time20').addClass('reds');
+	    		$('#time20 p').eq(1).text('抢购中');
+	    		var hours=20;
+	    	}
+	    	if(hour<20){
+	    		$('#time20 p').eq(1).text('即将开枪');
+	    	}
+	    	
+	    	//获取活动商品
+	    	getGoodslist(hours);
+	    }
+	    
+	    //获取活动商品
+	    function getGoodslist(hours){
+	    	loading('activity_template_4');
+	    	hours=hours ? hours : 12;
+	    	hours=parseInt(hours);
+	    	var url = ajax_url + "Index/Activity/";
+			_ajax(url + action,{'id':activity_id,hour:hours},'post',function(ret){
+				api.refreshHeaderLoadDone();
+				closeloading();
+				
+				if(ret.status==1){
+					//获取当前时间戳
+					var mydate=new Date();
+					//获取当前小时
+	    			var hour=mydate.getHours();
+	    			//判断倒计时方式及启动计时器
+	    			if(mydate < (ret.info.time*1000)){
+	    				$('#startname').text('距开始');
+	    				starttime=ret.info.time*1000;
+	    				dingshiqi=setInterval(daojishi,1000);
+	    			}else if(mydate < (ret.info.endtime*1000)){	    				
+	    				$('#startname').text('距结束');
+	    				starttime=ret.info.endtime*1000;
+	    				dingshiqi=setInterval(daojishi,1000);
+	    			}else if(mydate > (ret.info.endtime*1000)){
+    					$('#startname').text('已结束');
+    					starttime='';
+    					dingshiqi=setInterval(daojishi,1000);
+    				}
+	    			//判断是否有商品
+	    			if(ret.list!=''){
+						var html='';
+						for(var i in ret.list){
+							html+='<li><div class="fl w_conImg"><img src="'+ret.list[i].goods_img+'"/></div>';
+							html+='<div class="erDiv">';
+							html+='<p class="huanhang">'+ret.list[i].name+'</p>';
+							html+='<p class="red btnZhuang">';
+							html+='<span>￥'+ret.list[i].price+'</span>';
+							//判断按钮显示
+							if(ret.list[i].number>0){
+								if(hour > (hours - 1) && hour < (hours + 2) && hours != 20){
+									html+='<button class="w_btnStyle fr" onclick="openDetail('+ret.list[i]['channel_id']+','+ret.list[i]['gid']+','+ret.list[i]['aid']+');">立即抢购</button>';
+								}
+								if(hour >(hours - 1) && hours > 19){
+									html+='<button class="w_btnStyle fr" onclick="openDetail('+ret.list[i]['channel_id']+','+ret.list[i]['gid']+','+ret.list[i]['aid']+');">立即抢购</button>';
+								}
+								if(hour < hours){
+									html+='<button class="w_btnStyle_ fr">即将开枪</button>';
+								}
+								
+								if(hour > (hours + 1) && hours != 20){
+									html+='<button class="w_btnStyle_ fr">已结束</button>';
+								}
+							}else{
+								html+='<button class="w_btnStyle_ fr">已被抢光</button>';
+							}				
+							html+='</p><p>';
+							html+='<span class="del_x">￥'+ret.list[i].shop_price+'</span>';
+							html+='<span class="fr" id="w_outer">';
+							html+='<span class="jindutiao">已抢';
+							html+='<span class="jinNum">'+ret.list[i].bi+'</span>%';
+							html+='</span>';
+							html+='<span class="w_graph">';
+							html+='<span class="w_red" style="width:'+ret.list[i].bi+'%;"></span>';
+							html+='</span></span></p></div></li>';
+						}
+						$('#list').html(html);
+					}else{
+						$('#list').html('');
+						_toast('没有在时间内的活动商品！');
+					}
+				}else{
+					$('#list').html('');
+					//当活动不存在是清除计时器
+					starttime='';
+					dingshiqi=setInterval(daojishi,1000);
+					_toast('没有在时间内的活动！');
+				}										
+			});
+	    }
+	    
+	    //频道信息
+		var channel_shop = [];
+		channel_shop[1] = 'mall';
+		channel_shop[2] = 'super';
+		channel_shop[3] = 'hotel';
+		channel_shop[4] = 'food';
+		channel_shop[5] = 'house';
+	
+		/**
+		 * 商品详情页 
+		 * @param aid  活动id
+		 */
+		function openDetail(channel_id,goods_id,aid){
+			var winname = channel_shop[channel_id];			
+			if(channel_id ==1  || channel_id ==2){
+				var url=winname+"/"+winname+"_a_goodsdetail";
+				_openWinByUrl(winname,url,{'aid':aid,'goods_id':goods_id});
+			}
+		}
+	    
+	    
+		// 倒计时
+		function daojishi() {
+			//当起始时间为空时为清除计时器操作否则为计时器计算过程
+			if(starttime!=''){
+		        var nowtime = new Date();
+		        var time = starttime - nowtime;
+		        var day = parseInt(time / 1000 / 60 / 60 / 24);
+		        var hour = parseInt(time / 1000 / 60 / 60 % 24);
+		        var minute = parseInt(time / 1000 / 60 % 60);
+		        var seconds = parseInt(time / 1000 % 60);
+		        if((hour+day*24)<10){
+		            hour='0'+hour;
+		        }else{
+		        	hour=hour+day*24;
+		        }
+		        if(minute<10){
+		            minute='0'+minute;
+		        }
+		        if(seconds<10){
+		            seconds='0'+seconds;
+		        }
+		        $('.hou').html(hour);
+		        $('.min').html(minute);
+		        $('.sec').html(seconds);
+		        if(hour==0 && minute==0 && seconds==0 ){
+		        	window.clearInterval(dingshiqi);
+		        	dianchang();
+		        }
+	        }else{
+	        	hour='00';
+	        	minute='00';
+	        	seconds='00';
+	        	$('.hou').html(hour);
+		        $('.min').html(minute);
+		        $('.sec').html(seconds);
+		        if(hour==0 && minute==0 && seconds==0 ){
+		        	window.clearInterval(dingshiqi);
+		        }
+	        }
+	        
+	    }	
+	    
+	    //点场切换操作
+	    $(".w_qiang li").click(function(){
+			$(this).addClass("reds").siblings().removeClass("reds");
+			var hours=$(this).attr('data-src');
+			//获取点场下的活动及其商品
+			getGoodslist(hours);						
+		});
+	</script>
+</html>

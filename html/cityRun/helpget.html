@@ -1,0 +1,524 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">帮我取</h1>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">三居室</button>-->
+			<a class="mui-icon mui-icon-back colorRed" id="fanhui_btn"></a>
+			<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" onclick="_openWinByUrl('pricerule','pricerule')">计价规则</button>
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="mui-row bwq_list colorCCC">
+				<!--<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center active">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">鲜花</p>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">蛋糕</p>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">餐饮外卖</p>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">水果生鲜</p>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">文件</p>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">数码产品</p>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">生活用品</p>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center">
+					<div class="bwq_list_icon">
+						<img src="../../images/bwm4.jpg"/>
+					</div>
+					<p class="mb20">全部</p>
+				</div>-->
+			</div>
+			<p class="mui-text-center fs32 colorHui666 bgColorf2 pt20 pb20">取货信息</p>
+			<div class="inp_div_outer inp_div_outerbwq fs28">
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>取货姓名：</span>
+					<input type="text" name="picker_name" id="picker_name" value="" placeholder="请输入取货姓名"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>取货电话：</span>
+					<input type="number" name="picker_mobile" id="picker_mobile" value="" placeholder="请输入取货电话"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>取货地址：</span>
+					<input type="text" name="picker_address" id="picker_address" value="" placeholder="请输入取货地址"/>
+				</div>
+			</div>
+			<p class="mui-text-center fs32 colorHui666 bgColorf2 pt20 pb20">收货信息</p>
+			<div class="inp_div_outer inp_div_outerbwq fs28">
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>收货姓名：</span>
+					<input type="text" name="collect_user_name" id="collect_user_name" value="" placeholder="请输入收货姓名"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>收货电话：</span>
+					<input type="number" name="collect_user_mobile" id="collect_user_mobile" value="" placeholder="请输入收货电话"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>收货地址：</span>
+					<input type="text" name="collect_user_address" id="collect_user_address" value="" placeholder="请输入收货地址"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite border_t10 box_c">
+					<span>取货时间：</span>
+					<input type="text" name="pick_time" id="pick_time" value="" readonly="readonly" placeholder="请选择取货时间" onclick="_openWinByUrl('time','../laundry/time');"/>
+					<span class="mui-icon mui-icon-forward"></span>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite wpzl_click">
+					<span>物品重量：</span>
+					<input type="text" name="good_weight" id="good_weight" value="" placeholder="请输入物品重量" readonly="readonly"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite border_t10 box_c">
+					<span>订单备注：</span>
+					<input type="text" name="order_remark" id="order_remark" value="" placeholder="请输入订单备注"/>
+				</div>
+				<div class="inp_div_inner pl20 pr20 border_b box_s bgwhite">
+					<span>添加小费：</span>
+					<input type="number" name="order_tip" id="order_tip" value="" placeholder="请输入消费金/元"/>
+				</div>
+			</div>
+			<div class="bwq_div_elcies border_t10 border_b">
+				<div class="clearfloat pl20 pr20 box_s border_b">
+					<p class="mui-pull-left">是否需要代购其他物品</p>
+					<div class="mui-pull-right swich_click">
+						<div class="mui-switch mt20">
+						  <div class="mui-switch-handle"></div>
+						</div>
+					</div>
+				</div>
+				<div class="bwq_div_elcies_inner">
+					<div class="border_b"><input type="text" name="buy_other_goods" id="buy_other_goods" value="" placeholder="请输入要代买的商品名称" /></div>
+					<div><input type="text" name="other_goods_address" id="other_goods_address" value="" placeholder="请输入要代买商品的详细地址"/></div>
+				</div>
+			</div>
+			
+			<div style="height: 200px;background: #FFFFFF;"></div>
+			<p class="pt20 pb20 box_s pl20 pr20 bgqianOrange colorBlack tishi_p">注：超过30分钟无人接单，系统将自动取消订单，在线支付金额将原路径返回</p>
+			<footer class="cart_footer clearfloat fs24 mui-row pl20 box_s">
+				<div class="mui-col-sm-8 mui-col-xs-8">
+					<div class="bianjiClick_div">
+						<p style="line-height: 50px;">
+							<span>应付金额:</span>
+							<span class="fs24 colorRed">￥</span>
+							<span class="fs36 colorRed" id="price">0</span>
+						</p>
+					</div>
+				</div>
+				<div class="mui-col-sm-1 mui-col-xs-1">
+					<span class="iconfont icon-jiantou-copy"></span>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<div class="buyNow colorWhite">提交订单</div>
+				</div>
+			</footer>
+		</div>
+		<div class="mark_common mui-hidden">
+			<div style="display: none;" class="wpzl_mar bgwhite">
+				<div class="clearfloat colorRed  pl20 pr20 box_s wpzl_tit border_b">
+					<span class="mui-pull-left click_close" data-id="1">取消</span>
+					<span class="mui-pull-left wpzl_titSpan mui-text-center colorBlack">物品重量</span>
+					<span class="mui-pull-left click_sure" data-id="2">完成</span>
+				</div>
+				<div class="mui-text-center wpzl_inp">
+					<span class="iconfont icon-jian colorCCC" onclick="jiweight(1)"></span>
+					<input type="text" name="" readonly="readonly" id="goodweight" value="1公斤" />
+					<span style="vertical-align: -6px;" class="iconfont icon-jia colorRed" onclick="jiweight(2)"></span>
+				</div>
+				<p class="pl20 pr20 pt20 pb20 box_s border_t">首重5公斤，续重每公斤加1元，限重20公斤，超重部分线下收取费用</p>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/app.js"></script>
+	<script src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script>
+		var buy_other = 0;//是否代购
+		var goodcate = 0; //快递标签
+		var picktime = ''; //取货时间
+		var newweight = 0; //物品重量
+		var uid = '-1';  //用户id
+		var Ndistance = ''; //两个地址之间的距离
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$(".bwq_list>div").on("tap",function(){
+			$(this).addClass("active").siblings().removeClass("active");
+		});
+		
+		//默认代购关闭
+		$(".bwq_div_elcies").css({"height":"55px","overflow":"hidden"});
+		$(this).find("div.mui-switch").removeClass("mui-active");
+		
+		$(".swich_click").on("tap",function(){
+			if($(this).find("div.mui-switch").hasClass("mui-active")){
+				$(this).find("div.mui-switch").addClass("mui-active");
+				$(".bwq_div_elcies").css("height","auto");
+				buy_other = 1;
+			}else{
+				$(".bwq_div_elcies").css({"height":"55px","overflow":"hidden"});
+				$(this).find("div.mui-switch").removeClass("mui-active");
+				buy_other = 0;
+			}
+		});
+		$(".wpzl_click").on("tap",function(){
+			//判断界面货物重量是否为空
+			if($('#good_weight').val() != null && $('#good_weight').val() != 'undefined' && $('#good_weight').val() != ''){
+				// 如果不为空并且重量大于1
+				$('#goodweight').val($('#good_weight').val());
+				// 如果不为空等于1
+				if(parseFloat($('#goodweight').val()) == 1){
+					$('.icon-jian').removeClass('colorRed');
+					$('.icon-jian').addClass('colorCCC');
+				}
+			}else{
+				// 如果为空，弹窗赋值并修改样式
+				$('#goodweight').val('1公斤');
+				$('.icon-jian').removeClass('colorRed');
+				$('.icon-jian').addClass('colorCCC');
+			}
+			$(".mark_common").removeClass("mui-hidden");
+			$(".wpzl_mar").slideDown();
+			show_mark();
+		});
+		$(".click_close,.click_sure").on("tap",function(){
+			var dataid = 0;
+			dataid = $(this).attr('data-id');
+			//点击确认
+			if(dataid == 2){
+				$('#good_weight').val($('#goodweight').val());
+				allprice();
+			}
+			hidden_mark();
+			$(".wpzl_mar").slideUp(function(){
+				$(".mark_common").addClass("mui-hidden");
+			});
+		});
+		
+		apiready = function(){
+			api.addEventListener({
+			    name: 'laundry_time'
+			}, function(ret, err){
+				// alert(JSON.stringify(ret));return false;
+				$('#pick_time').val(ret.value.date_info+' '+ret.value.times);
+				picktime = ret.value.date;
+			});
+			helpcategory();
+		};
+
+		//顶部分类标签
+		function helpcategory(){
+			_ajax(ajax_url + 'Index/CityRun/helpcate', {}, 'get', function (ret, err) {
+				if(ret.status == 1){
+					var strVar = '';
+					var length = ret.data.length-1;
+					goodcate = ret.data.length;
+					$.each(ret.data,function(k,v){
+						strVar +='<div class="mui-col-sm-3 mui-col-xs-3 mui-text-center '+(k == length ? 'active' : ' ')+'" data-id='+v.id+'>';
+						strVar +='	<div class="bwq_list_icon">';
+						strVar +='		<img src="'+v.image+'"/>';
+						strVar +='	</div>';
+						strVar +='	<p class="mb20">'+v.title+'</p>';
+						strVar +='</div>';
+					});
+					$('.bwq_list').html(strVar);
+					$(".bwq_list>div").on("tap",function(){
+						$(this).addClass("active").siblings().removeClass("active");
+						id = $(this).attr('data-id');
+						goodcate = id;
+					})
+				}
+			});
+		}
+		$('.buyNow').on('tap',function(){
+			buyNow();
+		});
+		function buyNow(){
+			var good_cate = goodcate;
+			var picker_name = $('#picker_name').val();//取件人名称
+			if( !picker_name ) {
+				_toast( '请填写取件人姓名' );
+				return false;
+			}
+			var picker_mobile = $('#picker_mobile').val();//取件人电话
+			if (!picker_mobile) {
+				_toast('请填写取件人电话');
+				return false;
+			} else {
+				if (!_isPhone(picker_mobile)) {
+					_toast('手机格式不正确');
+					return false;
+				}
+			}
+			var picker_address = $('#picker_address').val();//取件人地址
+			if( !picker_address ) {
+				_toast( '请填写取件人地址' );
+				return false;
+			}
+			var collect_user_name = $('#collect_user_name').val();//收件人名称
+			if( !collect_user_name ) {
+				_toast( '请填写收件人名称' );
+				return false;
+			}
+			var collect_user_mobile = $('#collect_user_mobile').val();//收件人电话
+			if (!collect_user_mobile) {
+				_toast('请填写收件人电话');
+				return false;
+			} else {
+				if (!_isPhone(collect_user_mobile)) {
+					_toast('手机格式不正确');
+					return false;
+				}
+			}
+			var collect_user_address = $('#collect_user_address').val();//收件人地址
+			if( !collect_user_address ) {
+				_toast( '请填写收件人地址' );
+				return false;
+			}
+			var pick_time = picktime;//取货时间
+			if( !pick_time ) {
+				_toast( '请选择取货时间' );
+				return false;
+			}
+			var good_weight = $('#good_weight').val();//物品重量
+			if( !good_weight ) {
+				_toast( '请选择物品重量');
+				return false;
+			}
+			var order_remark = $('#order_remark').val();//订单备注
+			var order_tip = $('#order_tip').val();//添加小费
+			if(order_tip != '' && order_tip != 'undefined' && order_tip != null){
+				if(isNaN(order_tip)){
+					_toast('请填写数字');
+					return false;
+				}
+			}
+			var buy_other = buy_other;//是否代购  0不代购  1代购
+			var buy_other_goods = $('#buy_other_goods').val();//代购商品
+			var other_goods_address = $('#other_goods_address').val();//代购商品详细地址
+			if(buy_other == 1){
+				if( !buy_other_goods ) {
+					_toast( '请填写代购商品');
+					return false;
+				}
+				if( !other_goods_address ) {
+					_toast( '请填写代购商品详细地址');
+					return false;
+				}
+			}
+			var pay_money = $('#price').html(); //订单总价格
+			if(!Ndistance){
+				_toast('请填写有效取送位置');
+				return false;
+			}
+			var data = {
+				'uid' : uid,
+				'good_cate' : good_cate,
+				'picker_name' : picker_name,
+				'picker_mobile' : picker_mobile,
+				'picker_address' : picker_address,
+				'collect_user_name' : collect_user_name,
+				'collect_user_mobile' : collect_user_mobile,
+				'collect_user_address' : collect_user_address,
+				'pick_time' : pick_time,
+				'good_weight' : good_weight,
+				'order_remark' : order_remark,
+				'order_tip' : order_tip,
+				'buy_other' : buy_other,
+				'buy_other_goods' : buy_other_goods,
+				'other_goods_address' : other_goods_address,
+				'help_type' : 2,
+				'pay_money' : pay_money,
+				'distance' : Ndistance
+			};
+			// alert(JSON.stringify(data));return false;
+			_ajax(ajax_url + 'Index/CityRun/helpget',data, 'get', function (ret, err) {
+				// alert(JSON.stringify(ret));return false;
+				if(ret.status == 1){
+					_toast(ret.msg,function(){
+						updateOrderMethod(ret.data , 21 , 1);
+						_openWinByUrl('orderpay','orderpay',{'order_sn':ret.data,'pay_notify_type':21});
+						// _openWinByUrl('orderpay','orderpay');
+
+					});
+				}else{
+					_toast(ret.msg);
+					return false;
+				}
+			});
+		}
+
+		//物品重量加减
+		function jiweight(type){
+			// type 1减  2加
+			goodweight = parseFloat($('#goodweight').val());
+			if(type == 1){
+				if(goodweight == 1){
+					return false;
+				}else if(goodweight == 2){
+					newweight = goodweight-1;
+					$('.icon-jian').removeClass('colorRed');
+					$('.icon-jian').addClass('colorCCC');
+				}else{
+					newweight = goodweight-1;
+				}
+			}
+			if(type == 2){
+				$('.icon-jian').removeClass('colorCCC');
+				$('.icon-jian').addClass('colorRed');
+				newweight = goodweight+1;
+			}
+			$('#goodweight').val(newweight+'公斤');
+		}
+
+		$('#picker_address').blur(function(){
+			getlon(1);
+		});
+		$('#collect_user_address').blur(function(){
+			getlon(2);
+		});
+
+		$('#order_tip').blur(function(){
+			if(Ndistance && endWeight){
+				allprice();
+			}else{
+				var zprice = Number(parseFloat($('#order_tip').val()).toFixed(2));
+			}
+			$('#price').html(zprice);
+		});
+		var qaddress = {lon:'',lat:''};//取货地址
+		var saddress = {lon:'',lat:''};//送货地址
+
+		//获取取货地址和送货地址的经纬度
+		function getlon(type){
+			// type 1  取货地址  2  送货地址
+			if(type == 1){
+				var picker_address = $('#picker_address').val();
+			}else if(type == 2){
+				var picker_address = $('#collect_user_address').val();
+			}
+
+
+			var map = api.require('bMap');
+			map.getCoordsFromName({
+			    // city: '北京',
+			    address: picker_address
+			}, function(ret, err) {
+			    if (ret.status) {
+					if(type == 1){
+						qaddress.lon = ret.lon;
+						qaddress.lat = ret.lat;
+					}else{
+						saddress.lon = ret.lon;
+						saddress.lat = ret.lat;
+					}
+			    }
+				//获取两个地址之间的距离
+				if(qaddress.lon && saddress.lon){
+					distance();
+				}
+			});
+
+		}
+		//两个地址之间的距离
+		function distance(){
+			var map = api.require('bMap');
+			map.searchRoute({
+			    id: 1,
+			    type: 'riding',
+			    // policy: 'ecar_fee_first',
+			    start: qaddress,
+			    end: saddress
+			}, function(ret, err) {
+			    if (ret.status) {
+					var distance = ((ret.plans[0].distance)/1000);
+					Ndistance = distance;
+					allprice();
+			    }else{
+					_toast('请填写有效位置');
+					return false;
+				}
+			});
+		}
+
+		//计算快递价格
+		function allprice(){
+			//起步价5元，三公斤以内和三公里以内，按起步价计算，每增加增加一公里或者超重一公斤加价一元
+			endWeight = parseFloat($('#good_weight').val());
+			if(Ndistance && endWeight){
+				var price = 5;
+				var newdistance = (Ndistance-3);
+				var newweight = (endWeight-3);
+				//重量和里程起步范围
+				if(newdistance <= 0 && newweight <=0){
+					price = 5;
+				}
+				//里程大于起步范围
+				if(newdistance >0){
+					price += (newdistance*1);
+				}
+				//重量大于起步范围
+				if(newweight >0 && newweight <=17){
+					price += (newweight*1);
+				}
+				//重量大于限定范围20公斤
+				if(newweight >17){
+					price +=17;
+				}
+				var xiaofei =  Number(parseFloat($('#order_tip').val()).toFixed(2));
+				//是否有小费
+				if(xiaofei){
+					price +=xiaofei;
+				}
+				price = price.toFixed(2);
+				$('#price').html(price);
+
+			}
+		}
+		$('.icon-jiantou-copy').on('tap',function(){
+			if(!Ndistance || !endWeight){
+				return false;
+			}
+			_openWinByUrl('pricedetail','pricedetail',{'Ndistance':Ndistance,'endWeight':endWeight});
+		});
+	</script>
+</html>

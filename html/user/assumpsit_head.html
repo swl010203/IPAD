@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+<!-- 头部 -->
+<div id="header"  style="background:#fff;">
+	<header>
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">我的预约</h1>
+		</div>
+	</header>
+	<div class="eval_maintop my_yuyue" style="background: #fff;">
+			<ul class="eval_topul" id="hotel_cate">
+				<li class="eval_topli eval_topli02 eval_toplicur"><a href="javascript:void(0)" onclick="selectType(1,this)" class="eval_toplia">购房</a><span class="eval_line"></span></li>
+				<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="selectType(2,this)" class="eval_toplia">宴会厅</a><span class="eval_line"></span></li>
+				<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="selectType(3,this)" class="eval_toplia">婚庆</a><span class="eval_line"></span></li>
+				<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="selectType(4,this)"class="eval_toplia">会议</a><span class="eval_line"></span></li>
+				<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="selectType(5,this)" class="eval_toplia">洗护</a></li>
+			</ul>
+		</div>
+</div>
+
+
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		// 点菜切换
+		$('.eval_topul .eval_topli').click(function(){
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			$('.tabBoxwrap .tabBox01').show().eq($(this).index()).siblings().hide();
+		});
+		});
+		
+	apiready = function(){
+		api.parseTapmode();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+
+		userinfo = $api.getStorage('userinfo');
+		
+        api.openFrame({
+            name: 'assumpsit_body',
+            url: 'assumpsit_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+3,
+                w: headerPos.w,
+                h: 'auto'
+            },
+			pageParam:api.pageParam
+        });
+        
+        
+  
+		getHotelCategory();
+	};
+	
+	function getHotelCategory(){
+		_ajax(ajax_url+"Index/Hotel/getHotel" ,{},'post',function(ret){
+			var cate="";
+			var catekey = 1;
+			cate+='<li class="eval_topli eval_topli02 eval_toplicur"><a href="javascript:void(0)" onclick="selectType(1,this)" class="eval_toplia">购房</a><span class="eval_line"></span></li>';
+			$.each(ret.HotelCategory,function(key,val){
+				if(val['id'] !=1){
+					cate += '<li  attr-id="'+val['id']+'" class="eval_topli eval_topli02 ">';
+					cate += '<a  onclick="selectType('+val['id']+',this)"  href="javascript:void(0);" class="eval_toplia">'+val['name']+'</a><span class="eval_line"></span></li>';
+					catekey++;
+				}
+
+			});
+			cate+='<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="selectType(5,this)" class="eval_toplia">洗护</a></li>';
+			
+			
+			catekey --;
+			catekey = catekey +2;
+			$("#hotel_cate").html(cate);
+			
+			if(catekey ==1){
+				$(".eval_topli").css('width','100%');
+			}
+			if(catekey ==2){
+				$(".eval_topli").css('width','50%');
+			}
+			if(catekey ==3){
+				$(".eval_topli").css('width','33.333333%');
+			}
+			if(catekey ==4){
+				$(".eval_topli").css('width','25%');
+			}
+			
+			if(catekey ==5){
+				$(".eval_topli").css('width','20%');
+			}
+			
+		});
+	}
+	
+	
+	//切换查询类型
+	function selectType(type,el){
+		$(".my_yuyue li ").removeClass('eval_toplicur');
+		$(el).parent("li").addClass('eval_toplicur');
+		api.sendEvent({
+	        name:'assumpsit_type',
+	    	extra: {
+		        type: type
+		    }
+        });
+	}	
+		
+</script>
+</body>
+</html>

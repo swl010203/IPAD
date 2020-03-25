@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>003超市</title>
+		<link rel="stylesheet" type="text/css" href="../../css/account/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/account/newAllStyle.css"/>
+	</head>
+	<body>
+		
+		<!--中间内容-->
+		<ul class="messageOut bor_t" id="list" style="display:block;">
+			<!--<li class="bor_b">
+				<a class="clearfloat click" href="">
+					<span class="fl">您已成功完善业主信息！</span>
+					<span class="fr">2017-07-22</span>
+				</a>
+			</li>
+			<li class="bor_b">
+				<a class="clearfloat" href="">
+					<span class="fl">您使用家庭账户为133-21117－3097转账成功！</span>
+					<span class="fr">2017-07-22</span>
+				</a>
+			</li>
+			<li class="bor_b">
+				<a class="clearfloat" href="">
+					<span class="fl">您已成功完善业主信息！</span>
+					<span class="fr">2017-07-22</span>
+				</a>
+			</li>-->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	
+	<script>
+		//初始化用户Id
+		var uid = localStorage.getItem("uid");
+
+		var page = 1;
+		var is_page = true;
+		apiready = function(){
+			//监听滚动条是否到底部
+			api.addEventListener({
+			    name:'scrolltobottom',
+			    extra:{
+			        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+			    }
+			}, function(ret, err){        
+			     if(is_page){
+			         page++;
+				     getMessage();
+			     }
+			});
+			
+			getMessage();
+		};
+		
+		
+		function getMessage(){
+			_ajax(ajax_url+"Index/Family/smsList" ,{'uid':uid,'p':page},'get',function(ret){
+				var strVar = "";
+				if(ret.status ==1){
+					$(ret.smsList).each(function(k , v){
+				        strVar += "<li class=\"bor_b\">\n";
+					    strVar += "	<a class=\"clearfloat\" onclick=\"_openWinHeadByUrl("+v['message_id']+")\" href=\"javascript:;\">\n";
+					    strVar += "	<span class=\"fl\">"+v['title']+"<\/span>\n";
+					    strVar += "	<span class=\"fr\">"+_formatDate(v['sent_time']*1000,true)+"<\/span>\n";
+					    strVar += "	<\/a>\n";
+					    strVar += "<\/li>\n";
+				    });
+				    
+				    $("#list").append(strVar);
+				}else{
+					is_page = false;
+					if(page ==1){
+						if(ret.smsList){
+							$("#list").show();
+							$("#list").html(strVar);
+						}else{
+							$("#list").hide();
+						}
+					}else{
+						_toast(ret.msg);
+					}
+				}
+			})
+		}
+		
+		
+		function _openWinHeadByUrl(id){
+			 _openWinByUrl(name+'_head','../window_head',{'furl':'user/messagedetail','frame':'messagedetail','title':'消息详情','id':id});
+		}
+	</script>
+</html>

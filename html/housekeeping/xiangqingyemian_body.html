@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>044查看记录</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--中间内容-->
+        <div class="xiangqingyemian clearfloat">
+            <div class="fl xiangqingyemian_img">
+                <img src="" id="pic">
+            </div>
+            <div class="xiangqingyemian_con">
+                <p class="xiangqingyemian_tit" id="name"></p>
+                <p id="desc"></p>
+                <p class="colorRed">*预约须知：请至少提前1天预约，预约预期保留10分钟</p>
+                <p class="clearfloat"><span style="font-size: 30px;" class="colorRed xiangqingyemian_span" id="price"></span><button class="quyuyue fr" id="go_order" data-id="">去预约</button></p>
+            </div>
+        </div>
+        <div class="xiangqingyemian mar_t bor_t">
+            <div class="titHeig">
+                <i class="xian"></i>
+                <span>商家详情</span>
+            </div>
+        </div>
+        <div class="tuwenzhashi">
+            <div class="clearfloat xqymtuImg" id="img_list">
+                <!-- <div class="fl"><img src="img/4502.png"/></div> -->
+            </div>
+            <div class="tuwenContent">
+                <p id="content"></p>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script type="text/javascript" >
+        var goods_id = 0;
+        apiready = function(){
+            goods_id = api.pageParam.goods_id;
+            //获取商品
+            getGoodsDetail();
+        };
+        
+        //商品详情
+        function getGoodsDetail(){
+            _ajax(ajax_url+"Index/Housekeeping/getGoodsDetailById" ,{goods_id:goods_id},'get',function(ret){
+                var html  = '';
+                if(ret.status ==1){
+                    $('#name').html(ret.data.name);
+                    $('#desc').html(ret.data.des);
+                    $('#pic').attr('src', ret.data.pic);
+                    $('#price').html('￥'+ret.data.value);
+                    $('#go_order').attr('data-id', ret.data.id);
+                    
+                    getShop( ret.data.shop_id );
+                }
+            });
+        }
+        
+        //商家详情
+        function getShop( id ){
+            _ajax(ajax_url+"Index/Housekeeping/getShopInfo" ,{id:id},'get',function(ret){
+                var html  = '';
+                if(ret.status ==1){
+                    $.each(ret.data.list_logp_path, function(k, v) {
+                        html += '<div class="fl"><img src="'+v+'"/></div>';
+                    });
+                }
+                $("#img_list").html(html);
+                $('#content').html( ret.data.detail );
+            });
+        }
+        
+        $(document).on('click', '#go_order', function() {
+            var id = $(this).attr( 'data-id' );
+            _openWinByUrl('yuyuexiadan','yuyuexiadan', {id:id});
+        });
+    </script>
+</html>

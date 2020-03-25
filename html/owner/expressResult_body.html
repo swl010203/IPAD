@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>查询结果</title>
+		<link rel="stylesheet" type="text/css" href="../../css/property/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/property/allStyle.css"/>
+	</head>
+	<style>
+		#list{
+			font-size:24px!important;
+		}
+	</style>
+	<body>
+
+		<ul class="mt_20 videoView videoView_1">
+			<li style="height: auto;color: black;">
+				<p>订单编号：<span id="number"></span></p>
+				<p>承运来源：<span id="name"></span></p>
+				<p>官方电话：<span id="tel"></span></p>
+				<p>物流状态：<span id="deliverystatus"></span></p>
+			</li>
+			<li style="color: black;">
+				<i class="xian"></i>物流状态
+			</li>
+		</ul>
+		<ul class="pl_20 pr_20 box-s queryUl" id="list">
+			<!--<li>
+				<p class="con">快件已到达 长沙星杀集散中心</p>
+				<p class="time"><span>2017-07-23</span><span class="ml_20">14:03</span></p>
+			</li>
+			<li>
+				<p class="con">快件已到达 长沙星杀集散中心</p>
+				<p class="time"><span>2017-07-23</span><span class="ml_20">14:03</span></p>
+			</li>
+			<li>
+				<p class="con">快件已到达 长沙星杀集散中心</p>
+				<p class="time"><span>2017-07-23</span><span class="ml_20">14:03</span></p>
+			</li>-->
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/property/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/property/index.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" >
+    
+    	var logistics_sn ="";
+    	apiready = function(){
+    		logistics_sn = api.pageParam.logistics_sn;
+    		expressSearch();
+    	};
+    	
+    	function expressSearch(){
+    		_ajax(ajax_url+"Index/Express/expressSearch" ,{'number':logistics_sn},'post',function(ret){
+				var strVar = "";
+			
+				if(ret.status == 1  ){
+					$("#number").html(ret.data.number);
+					$("#name").html(ret.data.courier_info.name);
+					$("#tel").html(ret.data.courier_info.tel);
+					
+					deliverystatus = ret.data.deliverystatus;
+					if(deliverystatus ==1){
+						$("#deliverystatus").html('在途中');
+					}
+					if(deliverystatus ==2){
+						$("#deliverystatus").html('派件中');
+					}
+					if(deliverystatus ==3){
+						$("#deliverystatus").html('已签收');
+					}
+					if(deliverystatus ==4){
+						$("#deliverystatus").html('派送失败');
+					}
+					
+					$(ret.data.list).each(function(k,v){
+						strVar += "<li>\n";
+					    strVar += "    <p class=\"con\">"+v['status']+"<\/p>\n";
+					    strVar += "    <p class=\"time\"><span>"+v['time']+"</span><\/p>\n";
+					    strVar += "<\/li>\n";
+					});
+					
+					$("#list").html(strVar);
+				}
+			});
+    	}
+    </script>
+</html>

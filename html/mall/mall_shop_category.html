@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+	html,body{background: rgba(0,0,0,0);}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+<!-- 分类 -->
+<div class="maskBg" style="display: none; top: 0rem;"></div>
+<div class="top_classify share_window" style="width: 2rem;top:0px; padding-top: 30px;">
+	<a href="javascript:" onclick="switchType('')" class="top_classifya"><span class="top_classifyspan01">全部</span></a>
+	<div class="top_classifylist" id="cateList">
+<!--		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装111</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装111</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装</span><span class="top_classifyspan02"></span></a>
+		<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">运动服装1</span><span class="top_classifyspan02"></span></a>-->
+	</div>
+	<div style=" padding-top: 30px;">
+	</div>
+</div>
+
+<script type="text/javascript">
+		var doc=$('header').height();
+		var docw=$('.top_classify').width();
+		$('.top_classify').css({
+			height:$(document).height()-doc
+		});
+	// 分享
+	//var flag=true;
+	function share_window(flag){
+		if (flag) {
+			$('.maskBg').show();
+			$('.top_classify').animate({
+				right:0
+			},500);
+			//flag=false;
+		}else{
+			
+			$('.top_classify').animate({
+				right:-docw
+			},500);
+			$('.maskBg').fadeOut(500);
+			flag=true;
+			//flag=true;
+		}
+    }
+        $(".maskBg").click(function(){
+		share_window(0);
+		setTimeout(function(){
+			api.setFrameAttr({
+					 name: 'mall_shop_category',
+					 hidden:true
+				})
+//			api.closeFrame({
+//				name:'mall_shop_category'
+//	        });
+
+			
+		},500); 
+		
+	});
+	share_window(1);
+	apiready = function(){
+		api.parseTapmode();
+		getCateOne();
+		
+		//监听返回键 时 不关闭窗口 而是关闭frame
+		api.addEventListener({
+			name : 'keyback'
+		}, function(ret, err) {
+			share_window(0);
+			setTimeout(function(){
+				api.closeFrame({
+					name:'mall_shop_category'
+		        });
+			},1000); 
+		});
+		
+		//监听再次打开时 执行动画效果
+		api.addEventListener({
+			name : 'mall_shop_category_refresh'
+		}, function(ret, err) {
+			share_window(1);
+		});
+	};
+
+
+	/**
+	 * 选择分类 
+	 */
+	function switchType(id){
+		api.sendEvent({
+	            name:'mall_list_switch',
+	            extra:{
+	            	category_id:id
+	            }
+        });
+        share_window(0);
+		setTimeout(function(){
+			api.setFrameAttr({
+					 name: 'mall_shop_category',
+					 hidden:true
+				})
+		},500); 
+	}
+
+	/**
+	 * 获取一级分类 
+	 */
+	function getCateOne(){
+		_ajax(ajax_url + "Index/Mall/getCateOne",{},'get',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+				var n =1;
+				$.each(ret.cate,function(k,v){
+					strVar += "<a href=\"javascript:;\" onclick=\"switchType("+v['id']+")\" class=\"top_classifya\"><span class=\"top_classifyspan01\">"+v['title']+"<\/span><span class=\"top_classifyspan02\"><\/span><\/a>";
+				   
+				});
+	
+			}else{
+				_toast(ret.msg);
+			}
+			$("#cateList").html(strVar);
+			    
+		
+		});
+	}
+
+
+
+
+</script>
+</body>
+</html>

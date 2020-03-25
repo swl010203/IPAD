@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">赛事详情</h1>
+			<!--<a class="mui-pull-right iconfont icon-fenxiang fs24Icon colorRed mt20 fenxiang_click"></a>-->
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="ssxq_top">
+				<div class="ssxq_top_img">
+					<img src="../../images/ssxq1.jpg" id="backimg"/>
+					<div class="ssxq_top_con pl20 pr20 box_s fs28">
+						<div class="border_b pt10 pb20">
+							<p class="colorHui666 pt10">报名时间</p>
+							<p class="font_weightB colorBlack pt10" id="signup"></p>
+						</div>
+						<div class="border_b pt10 pb20">
+							<p class="colorHui666 pt10">活动时间</p>
+							<p class="font_weightB colorBlack pt10" id="activeup"></p>
+						</div>
+						<div class="border_b pt10 pb20">
+							<p class="colorHui666 pt10">发起/参与人</p>
+							<p class="pt10 clearfloat">
+								<span class="font_weightB colorBlack" id="originator"></span>
+								<span class="colorHui666 mui-pull-right" id="mm"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="ssxq_con pl20 pr20 box_s fs28">
+				<div id="content">
+				</div>
+			</div>
+			<div style="height: 50px;"></div>
+			<footer class="full_footerFixed buyNow"></footer>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		//点击分享出来弹层
+		$(".fenxiang_click").on("tap",function(){
+			share();
+			$(".mark_common").removeClass("mui-hidden");
+			$(".mark_share").slideDown();
+			show_mark();
+		});
+		var id = '';
+		var uid = '';
+		var status = '';
+		var type = '';
+		var orderStatus = '';
+		var is_cancel = '';
+		apiready = function(){
+			uid = localStorage.getItem('uid');
+			id = api.pageParam.id;
+			type = api.pageParam.type;
+			matchDetail();
+		};
+		function matchDetail(){
+			if(!id){
+				return false;
+			}
+			_ajax(ajax_url+'Index/Exercise/matchDetail',{'id':id,'uid':uid,'type':type},'get',function(ret,err){
+				if(ret.status == 1){
+					$('#backimg').attr('src',ret.data.back_img);
+					$('#signup').html(ret.data.signup_start+'  —  '+ret.data.signup_end);
+					$('#activeup').html(ret.data.active_start+'  —  '+ret.data.active_start);
+					$('#originator').html(ret.data.originator);
+					$('#content').html(ret.data.content);
+					$('.buyNow').html(ret.data.status_name);
+					$('#mm').html(ret.data.memberNum+'/'+ret.data.member);
+					status = ret.data.status;
+					orderStatus = ret.data.orderStatus;
+					if(ret.data.orderInfo){
+						is_cancel = ret.data.orderInfo.is_cancel;
+					}
+
+					if(ret.data.orderStatus == 1 && ret.data.status == 2 && ret.data.orderInfo.is_cancel == 0){
+						$('.buyNow').css('background','#ccc');
+						$('.buyNow').html('已报名');
+					}
+					if(ret.data.orderStatus == 1 && ret.data.orderInfo.is_cancel == 1 && type == 2){
+						$('.buyNow').css('background','#ccc');
+						$('.buyNow').html('已退赛');
+					}
+					if(ret.data.status != 2){
+						$('.buyNow').css('background','#ccc');
+					}
+
+					// if(ret.data.status != 2){
+					// 	// $('.buyNow').attr();
+					// }
+				}
+			});
+
+		}
+		$('.buyNow').on('tap',function(){
+			if(orderStatus == 1 && is_cancel == 1 && type == 2){
+				return false;
+			}
+			if(status == 2){
+				crateMatchOrder();
+			}
+		});
+
+		function crateMatchOrder(){
+			if(uid == null || uid =='undefined' || uid == ''){
+				_toast('请先登陆');
+				return false;
+			}
+			if(!uid){
+				return false;
+			}
+			if(!id){
+				return false;
+			}
+			_ajax(ajax_url+'Index/Exercise/createMatchOrder',{'uid':uid,'matchid':id,'type':type},'post',function(ret,err){
+				if(ret.status == 1){
+					_toast(ret.msg);
+					matchDetail();
+					return false;
+				}else if(ret.status == -1){
+					_toast(ret.msg);
+					return false;
+				}else{
+					_toast('操作失败');
+					return false;
+				}
+			});
+		}
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+	</script>
+</html>

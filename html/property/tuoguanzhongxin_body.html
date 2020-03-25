@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>036托管中心</title>
+		<link rel="stylesheet" type="text/css" href="../../css/account/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/account/newAllStyle.css"/>
+		<style>
+			
+			select{
+				height: 50px;
+				line-height: 40px;
+				border: 1px solid #f2f2f2;
+				background: #f2f2f2;
+				padding-left: 10px;
+				box-sizing: border-box;
+				font-size: 18px;
+			}
+	
+		</style>
+	</head>
+	<body>
+		<!--中间内容-->
+		<div class="baoxiufuwuOuterDiv">
+			<div>
+				<div class="fl leftDiv">托管类型：</div>
+				<div class="rightDiv sel_1" id="catelist">
+					<span><i class="yessel sel weixuan" data-src='1'></i>物品托管</span>
+					<span><i class="nosel sel weixuan" data-src='2'></i>房屋托管</span>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">业主信息：</div>
+				<div class="rightDiv">
+					<span id="address"></span>
+				</div>
+			</div>
+			 
+			<div class="">
+					<div class="fl leftDiv">联系电话：</div>
+					<div class="rightDiv wuxiala">
+						<input type="text" name="phone" id="phone" value="" placeholder="请输入联系电话"/>
+					</div>
+				</div>
+			
+			<div class="fangwutuoguanTab">
+				
+				<div>
+					<div class="fl leftDiv">物品名称：</div>
+					<div class="rightDiv wuxiala">
+						<input type="text" id="name" placeholder="请输入" />
+					</div>
+				</div>
+				<div>
+					<div class="fl leftDiv">送往方式：</div>
+					<div class="rightDiv sel_2">
+						<span><i class="yessel sel weixuan" data-src='1'></i>上门取件</span>
+						<span><i class="nosel sel weixuan" data-src='2'></i>业主送往</span>
+					</div>
+				</div>
+			</div>
+			<div class="fangwutuoguanTab hide_">
+
+				<div>
+					<div class="fl leftDiv">打扫时间：</div>
+					<div class="rightDiv">
+						<textarea id="datetime" rows="" cols="" placeholder="添加打扫时间"></textarea>
+					</div>
+					<div class="fl leftDiv"></div>
+					<div class="rightDiv clearfloat wuxiala">						
+						<div class="clearfloat marL_100">
+							<div class="fl houseDiv"><input type="date" id="date" value='' placeholder="打扫日期"></div>
+							<div class="fl houseDiv">
+								<select id='start'>
+									<option value="0:00">0:00</option>
+									<option value="1:00">1:00</option>
+									<option value="2:00">2:00</option>
+									<option value="3:00">3:00</option>
+									<option value="4:00">4:00</option>
+									<option value="5:00">5:00</option>
+									<option value="6:00">6:00</option>
+									<option value="7:00">7:00</option>
+									<option value="8:00">8:00</option>
+									<option value="9:00">9:00</option>
+									<option value="10:00">10:00</option>
+									<option value="11:00">11:00</option>
+									<option value="12:00">12:00</option>
+									<option value="13:00">13:00</option>
+									<option value="14:00">14:00</option>
+									<option value="15:00">15:00</option>
+									<option value="16:00">16:00</option>
+									<option value="17:00">17:00</option>
+									<option value="18:00">18:00</option>
+									<option value="19:00">19:00</option>
+									<option value="20:00">20:00</option>
+									<option value="21:00">21:00</option>
+									<option value="22:00">22:00</option>
+									<option value="23:00">23:00</option>
+								</select>
+								-
+								<select id="end">
+									<option value="0:00">0:00</option>
+									<option value="1:00">1:00</option>
+									<option value="2:00">2:00</option>
+									<option value="3:00">3:00</option>
+									<option value="4:00">4:00</option>
+									<option value="5:00">5:00</option>
+									<option value="6:00">6:00</option>
+									<option value="7:00">7:00</option>
+									<option value="8:00">8:00</option>
+									<option value="9:00">9:00</option>
+									<option value="10:00">10:00</option>
+									<option value="11:00">11:00</option>
+									<option value="12:00">12:00</option>
+									<option value="13:00">13:00</option>
+									<option value="14:00">14:00</option>
+									<option value="15:00">15:00</option>
+									<option value="16:00">16:00</option>
+									<option value="17:00">17:00</option>
+									<option value="18:00">18:00</option>
+									<option value="19:00">19:00</option>
+									<option value="20:00">20:00</option>
+									<option value="21:00">21:00</option>
+									<option value="22:00">22:00</option>
+									<option value="23:00">23:00</option>
+								</select>
+							</div>
+							<div class="fl addBtn houseDiv" onclick='adddatetime();'>添加时间</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">托管时间：</div>
+				<div class="rightDiv">					
+					<div class="xialaxiaoguo heig">
+						<div class="rightDiv wuxiala">
+							<input type="date" id="days_start" placeholder="托管开始时间">
+							-
+							<input type="date" id="days_end" placeholder="托管结束时间">
+						</div>
+						<!--<input id="" class="input_select" type="text" value="" placeholder="请选择" readonly/> 
+						<input type="hidden" id="days" value="">
+						<ul> 
+							<li onclick="selectdays('一天');"><a href="#none" rel="2">一天</a></ li> 
+							<li onclick="selectdays('两天');"><a href="#none" rel="3">两天</a></ li> 
+							<li onclick="selectdays('三天');"><a href="#none" rel="4">三天</a></ li> 
+							<li onclick="selectdays('一周');"><a href="#none" rel="5">一周</a></ li>
+							<li onclick="selectdays('两周');"><a href="#none" rel="6">两周</a></ li> 
+							<li onclick="selectdays('一月');"><a href="#none" rel="7">一月</a></ li>  
+						</ul>-->
+						<span class="styleSpan colorRed">&nbsp;&nbsp;*托管期限内，如又急用，物品可随时取回</span>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">备注：</div>
+				<div class="rightDiv">
+					<textarea id="remark" rows="" cols="" placeholder="还有什么想嘱咐的。。。"></textarea>
+				</div>
+			</div>
+		</div>
+		<!--提交-->
+		<div class="btnTijiao" onclick="sub();">提交</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		/*点击button*/
+		$(".baoxiufuwuOuterDiv>div>div.sel_1 span").on("click",function(){
+			var index_ = $(this).index();
+			$(".baoxiufuwuOuterDiv>div>div.sel_1 span").children(".sel").removeClass("yessel");
+			$(".baoxiufuwuOuterDiv>div>div.sel_1 span").children(".sel").addClass("nosel");
+			$(this).children(".sel").addClass("yessel");
+			$(".fangwutuoguanTab").addClass("hide_");
+			$(".fangwutuoguanTab").eq(index_).removeClass("hide_");
+		});
+		$(".baoxiufuwuOuterDiv>div>div .sel_2 span").on("click",function(){
+			var index_ = $(this).index();
+			$(".baoxiufuwuOuterDiv>div>div .sel_2 span").children(".sel").removeClass("yessel");
+			$(".baoxiufuwuOuterDiv>div>div .sel_2 span").children(".sel").addClass("nosel");
+			$(this).children(".sel").addClass("yessel");
+		});
+		/*下拉列表效果*/
+		$(".input_select").click(function(){ 
+				var ul = $(".xialaxiaoguo ul"); 
+				if(ul.css("display")=="none"){ 
+					ul.slideDown("fast"); 
+				}else{ 
+					ul.slideUp("fast"); 
+				} 
+			});
+		//获取数据
+		$(".xialaxiaoguo ul li a").click(function(){ 
+			var txt = $(this).text(); 
+			$(".input_select").val(txt); 
+			var value = $(this).attr("rel"); 
+			$(".xialaxiaoguo ul").hide(); 
+			$("#result").html("您选择了"+txt+"，值为："+value); 
+		});
+	</script>
+	
+	<script>
+		var uid='';
+		var address='';
+		var real_name='';
+		apiready = function(){
+			
+			uid=localStorage.getItem("uid");
+			//获取用户信息
+			getAccountInfo();
+		};
+		
+		//获取用户信息
+		function getAccountInfo(){
+			_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'post',function(ret){
+				if(ret.status ==1){
+					address=ret.user.address;
+					real_name=ret.user.real_name;
+					$('#address').html(ret.user.address+'&nbsp;&nbsp;'+ret.user.real_name);
+				}
+			});
+		}
+		
+		//选择托管天数
+		function selectdays(data){
+			$('#days').val(data);
+		}
+		
+		//添加打扫时间
+		function adddatetime(){
+			var date=$('#date').val();
+			var start=$('#start').val();
+			var end=$('#end').val();
+			
+			if(!date){
+				_toast('请选择打扫日期！');return;
+			}
+			var datetimes='';
+			if(start=='0:00' && end=='0:00'){
+				datetimes=date+' 任意时间段\r\n';
+			}else{
+				if(end <= start){
+					_toast('结束时间必须大于开始时间！');return;
+				}
+				datetimes=date+' '+start+'-'+end+'\r\n';
+			}
+			var datetime=$('#datetime').val();
+			datetimes=datetime+datetimes;
+			$('#datetime').val(datetimes);
+		}
+		
+		//提交托管信息
+		function sub(){
+			var phone = $('#phone').val();
+			
+			if (!phone) {
+				_toast('请填写联系电话');
+				return false;
+			} else {
+				if (!_isPhone(phone)) {
+					_toast('手机格式不正确');
+					return false;
+				}
+			}
+			
+			var category_id=$('.sel_1 .yessel').attr('data-src');
+			if(category_id==1){
+				var name=$('#name').val();
+				var shipping_type=$('.sel_2 .yessel').attr('data-src');
+				
+				if(!name){
+					_toast('请填写商品名称！');return;
+				}				
+			}else{
+				var timeslot=$('#datetime').val();
+				if(!timeslot){
+					_toast('请添加打扫时间！');return;
+				}
+			}
+			var days1=$('#days_start').val();
+			var days2=$('#days_end').val();
+			var remark=$('#remark').val();
+			if(!days1 && !days2){
+				_toast('请选择托管天数！');return;
+			}
+			
+			_ajax(ajax_url+"Index/Trusteeship/subTrusteeship" ,
+			{
+				'uid':uid,
+				'name':name,
+				'phone':phone,
+				'category_id':category_id,
+				'address':address,
+				'consignee':real_name,
+				'shipping_type':shipping_type,
+				'days_start':days1,
+				'days_end':days2,
+				'timeslot':timeslot,
+				'remark':remark
+			},
+			'post',function(ret){
+				if(ret.status ==1){
+					_openWinByUrl('tuoguanjilu','tuoguanjilu');
+				}else{
+					_toast(ret.msg);
+				}
+			});
+			
+		}
+	</script>
+</html>

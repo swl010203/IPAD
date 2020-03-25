@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>取消订单</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    </head>
+
+    <body>
+        <div class="cancel_div mt_20">
+            <ul class="order_outerUl border-b">
+                <li class="outer_cartDiv_ul_tit clearfloat pl_20 pr_20 box-s border-b">
+                    <i class="fl shop_icon"></i>
+                    <a href="#">
+                        <p class="outer_cartDiv_ul_tit_p clearfloat fl">
+                            <span class="fl outer_cartDiv_ul_tit_span" id="shop_name"></span>
+                            <i class="fl right_arrow order_arrow"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="pl_20 pr_20 box-s">
+                    <ul class="order_innerUl" id="order_goods_list">
+                        <!-- <li>
+                            <span>进口水晶葡萄</span>
+                            <span class="fr red">￥30</span>
+                            <span style="width: 2rem;" class="fr">x4</span>
+                        </li>
+                        <li>
+                            <span>进口水晶葡萄</span>
+                            <span class="fr red">￥30</span>
+                            <span style="width: 2rem;" class="fr">x4</span>
+                        </li> -->
+                    </ul>
+                </li>
+            </ul>
+            <div class="cancel_div1 pl_20 pr_20 box-s bgWhite pt_10">
+                <div class="outer_cartDiv_ul_footer">
+                    <p class="clearfloat">
+                        <span class="fl">包装费</span>
+                        <span class="fr red" id="box_fee"></span>
+                    </p>
+                    <p class="clearfloat border-b">
+                        <span class="fl">配送费</span>
+                        <span class="fr red" id="shipping_fee"></span>
+                    </p>
+                    <div class="mt_20 border-b">
+                        <p class="clearfloat">
+                            <i class="icon_small icon_newUser"></i>
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red">-￥15</span>
+                        </p>
+                        <p class="outer_cartDiv_ul_footer_p">
+                            <i class="icon_small icon_integral"></i>
+                            <span>积分抵现</span>
+                            <span class="fr">剩余积分20<input class="inp_small" type="text" />可抵扣1元</span>
+                        </p>
+                        <p class="outer_cartDiv_ul_footer_p">
+                            <i class="icon_small icon_vouchers"></i>
+                            <span>代金券</span>
+                            <span class="fr">无可用代金券<i class="right_arrow fr"></i></span>
+                        </p>
+                    </div>
+                    <p class="clearfloat sumNum_p">总计<span class="red" id="order_amount"></span></p>
+                </div>
+            </div>
+        </div>
+        <footer class="footer_fixedNoscreen footer_fixedNoscreen_click">取消订单</footer>
+        <div class="mark hide_">
+            <div class="cancle_mark hide_">
+                <ul class="goods_title_ul_inner">
+                    <li class="" style="line-height:0.88rem;text-align: center;">取消原因</li>
+                    <li class="hook_i red pl_20 pr_20 box-s">在线支付遇到问题</li>
+                    <li class="pl_20 pr_20 box-s">忘记使用优惠券/码</li>
+                    <li class="pl_20 pr_20 box-s">买错商品/暂不想购买</li>
+                    <li class="pl_20 pr_20 box-s">商家缺货</li>
+                    <li class="pl_20 pr_20 box-s">无人配送</li>
+                    <li class="pl_20 pr_20 box-s no">点错了不取消</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script type="text/javascript">
+        $(".footer_fixedNoscreen_click").click(function(){
+            $(".mark").removeClass("hide_");
+            $(".cancle_mark").slideDown(500);
+        })
+        /*$(".cancle_mark li.box-s").click(function() {
+            if( !$(this).hasClass( 'no' ) ) {
+                //取消不要 选定
+                $(this).addClass("red hook_i").siblings("li").removeClass("red hook_i");
+            }
+            $(".cancle_mark").slideUp(500,function(){
+                $(".mark").addClass("hide_");
+            });
+        })*/
+    </script>
+    <script>
+    var uid = localStorage.getItem( "uid" );
+    var oid = 0;
+    apiready = function() {
+        uid = localStorage.getItem( "uid" );
+        oid  = api.pageParam.oid;
+        cancelOrderInfo();
+    };
+    //获取订单信息
+    function cancelOrderInfo() {
+        _ajax(ajax_url+"Index/TakeoutOrder/cancelOrderInfo" ,{uid:uid, oid:oid},'post',function(ret) {
+            if(ret.status ==1){
+                if( ret.data.status == 4 ) {
+                    //订单取消监听
+                    api.sendEvent({
+                        name: 'cancel_order_over',
+                        extra: {
+                            result: true,
+                        }
+                    });
+                    api.closeWin();
+                }
+                $('#shop_name').text( ret.data.shop_name );
+                
+                var order_goods_list_html = '';
+                $.each(ret.data.goods_list, function(key, val) {
+                    var price = parseFloat(val.goods_price)*val.goods_number;
+                    order_goods_list_html += '<li>';
+                    order_goods_list_html += '    <span>'+val.goods_name+'</span>';
+                    order_goods_list_html += '    <span class="fr red">￥'+price.toFixed(2)+'</span>';
+                    order_goods_list_html += '    <span style="width: 2rem;" class="fr">x'+val.goods_number+'</span>';
+                    order_goods_list_html += '</li>';
+                });
+                $('#order_goods_list').html( order_goods_list_html );
+                
+                $('#box_fee').text( '￥'+ret.data.box_fee );
+                $('#shipping_fee').text( '￥'+ret.data.shipping_fee );
+                $('#order_amount').text( '￥'+ret.data.order_amount );
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    $(document).on('click', '.cancle_mark li.box-s', function() {
+    //$(".cancle_mark li.box-s").click(function() {
+        if( !$(this).hasClass( 'no' ) ) {
+            //取消不要 选定
+            $(this).addClass("red hook_i").siblings("li").removeClass("red hook_i");
+        }
+        $(".cancle_mark").slideUp(500,function(){
+            $(".mark").addClass("hide_");
+        });
+        
+        if( !$(this).hasClass( 'no' ) ) {
+            var cause = $(this).text();//取消原因
+            _ajax(ajax_url+"Index/TakeoutOrder/cancelOrder" ,{uid:uid, oid:oid, cancel_cause:cause},'post',function(ret) {
+                if(ret.status ==1){
+                    //订单取消监听
+                    api.sendEvent({
+                        name: 'cancel_order_over',
+                        extra: {
+                            result: true,
+                        }
+                    });
+                    _toast(ret.msg, function() {
+                        api.closeWin();
+                    });
+                }else{
+                    _toast(ret.msg);
+                }
+            });
+        }
+    });
+    
+    //物流详细
+    function cancelOrder() {
+        _openWinByUrl('cancel_order_head','cancel_order_head',{oid:oid});
+    }
+    </script>
+</html>

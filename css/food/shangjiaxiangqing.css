@@ -1,0 +1,182 @@
+header{
+	overflow: hidden;
+	border-bottom: 1px solid #e0e0e0;
+	background: white;
+	margin-bottom: 0.1rem;
+}
+header .back a img{
+	width: 0.21rem;
+	height: 0.38rem;
+	margin-top: 0.05rem;
+}
+header .word{
+	font-size: 0.36rem;
+	color: #d12a18;
+	margin-left: 2rem;
+}
+body{
+	font-size: 18px;
+}
+.banner{
+	height: 264px;
+	background: url(../../images/food/037banner.jpg) 0 0 no-repeat;
+	background-size: 100% 100%;
+	color: white;
+	position: relative;
+}
+.banner>div:nth-child(2){
+	/* width: 4.5rem; */
+	position: absolute;
+	top: 0rem;
+	left: 50%;
+	margin-left: -340px;
+	margin-top: 0.3rem;
+}
+.banner>div p{
+	line-height:30px;
+	font-size: 18px;
+}
+.banner>div p:nth-child(2){
+	margin-top: 0.2rem;
+}
+.banner>div.tuImg{
+	top:50%;
+	width: 130px;
+	height: 130px;
+	position: absolute;
+	left: 20px;
+	margin-top:-65px;
+}
+.tuImg img{
+	width: 100%;
+}
+/*.list:first-child{
+	margin-top: 0;
+}*/
+.list{
+	background: white;
+	padding-left: 20px;
+	padding-right: 20px;
+	box-sizing: border-box;
+	margin-bottom: 15px;
+	border-bottom:1px solid #e0e0e0;
+}
+.list li:last-child{
+	border-bottom:none;
+}
+.list li{
+	min-height: 40px;
+	padding-top:20px;
+	padding-bottom:20px;
+	box-sizing:border-box;
+	border-bottom: 1px solid #e0e0e0;
+}
+.list li p:nth-child(2){
+	margin-left:100px;
+}
+.iconP{
+	padding-right: 0.3rem;
+	background: url(../../images/food/chexiao.png) 0.6rem 0.07rem no-repeat;
+	background-size: 0.15rem;
+	box-sizing: border-box;
+}
+.zhuTit{
+	box-sizing: border-box;
+	position: relative;
+}
+.zhuTit i{
+    display:inline-block;
+    width:2px;
+    height: 23px;
+    background-color: #d12a18;
+    vertical-align: -3px;
+}
+.list li.noHeight{
+	height: auto;
+}
+.list li.noHeight p{
+	line-height:30px;
+}
+
+
+#wrapper {
+	position: relative;
+	z-index: 1;
+	height: 0.8rem;
+	width: 100%;
+	background: white;
+	overflow: hidden;
+	-ms-touch-action: none;
+}
+#scroller {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	width: 6.5rem;
+	height: 0.8rem;
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+}
+#scroller ul {
+	list-style: none;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px solid #e0e0e0;
+	position: relative;
+}
+#scroller li {
+	width: 1.585rem;
+	height: 0.78rem;
+	float: left;
+	line-height: 0.78rem;
+	border-bottom: 1px solid #e0e0e0;
+	font-size: 0.25rem;
+	overflow: hidden;
+	text-align: center;
+}
+.xianPos{
+	position: absolute;
+	top: 0.78rem;
+	left: 0.2rem;
+	width: 1.2rem;
+	height: 1px;
+	background-color: #d43928;
+}
+.all{
+	padding-left: 0.1rem;
+	padding-right: 0.1rem;
+	box-sizing: border-box;
+}
+.all ul{
+	overflow: hidden;
+}
+.all ul li.tit{
+	height: 0.6rem;
+	line-height: 0.6rem;
+}
+.all ul li.con:first-child{
+	margin-left: 0;
+}
+.all ul li.con{
+	width: 48%;
+	margin-left: 2%;
+	margin-bottom: 0.1rem;
+}
+.all ul li.con img{
+	width: 100%;
+}
+

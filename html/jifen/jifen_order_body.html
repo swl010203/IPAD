@@ -1,0 +1,451 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../../css/wxzf.css">
+<style type="text/css">
+				.num_shul{ float: right; font-size: 0.22rem; color: #232323; }
+				.duo_checkbox03 + label{color: #232323;}
+				.payListl{left:0.2rem}
+				.payListr{padding-left:1.5rem}
+			</style>
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+<!--	<div class="pinpai_intr mt15">
+	<div class="checkin_ifor">
+		<div class="checkin_iforl">
+			用户积分
+		</div>
+		<div class="checkin_iforr checkin_iforrpos">
+			<span class="checkin_iforrpos01 score" style="color:#999;"></span>
+		</div>
+	</div>
+	</div>-->
+	<div class="pinpai_intr mt15 ">
+		<div class="checkin_ifor">
+			<div class="checkin_iforl">
+				配送方式
+			</div>
+			<div class="checkin_iforr checkin_iforrpos clearfloat">
+				<span>
+			         <input id="a_pl1" type="radio" name="deliverytype" value="1" class="duo_checkbox03" checked="checked" onclick="changeType(1);" >
+						<label for="a_pl1">线下自提</label>
+			    </span>
+				<span>
+					<input id="a_pl2" type="radio" name="deliverytype" value="2" class="duo_checkbox03" onclick="changeType(2);">
+					<label for="a_pl2">平台配送</label>
+				</span>
+			</div>
+		</div>
+	</div>
+	<div class="food_ordertop addressinfo" style="display:none;">
+			<div class="food_ordertopbg"></div>
+			<div class="food_ordercon">
+				<div class="food_ordercontop" onclick="_openWinByUrl('address_head','../user/address_head')">
+					<div class="food_ordercontoptxt" id="add_name">暂无地址,请添加地址</div>
+					<div class="food_ordercontoptxt" id="add_phone"></div>
+				</div>
+				<p class="food_orderconaddr txt2" id="add_add">
+					
+				</p>
+			</div>
+			<div class="food_ordertopbg"></div>
+	  </div>
+		<div class="pinpai_intr mt15" id="superinfo">
+			<div class="superList">
+				
+			<!--	<ul class="siteSearchul">
+							<li class="busi_fenleili">
+									<div class="busi_fenlei">
+									<a href="#"class="busi_fenleia"><img src="../../images/busi_fenlei.png"></a>
+									<div class="busi_fenleir">
+										<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">杏仁蜡菊保湿霜50g</a></p>
+										<p class="busi_fenleirrice"><b class="busi_fenleirpriceb">￥</b>88.00 <span class="num_shul">数量：X1</span></p>
+									</div>
+								</div>
+								
+							</li>							
+					</ul>-->	
+			</div>
+		</div>
+        <!--<div class="payList" style="padding-left: 0; border-bottom: 0;display: none;">
+			<div class="payListl" style="color: #232323;">卡类型：</div>
+			<div class="payListr">
+				<div class="payListrli">
+							<input id="a_pl1" type="radio" name="carttype" value="1" class="duo_checkbox03" checked="checked">
+							<label for="a_pl1">惠通卡电子卡(<span class="ecard_no">0</span>)</label>
+				</div>
+				<div class="payListrli">
+							<input id="a_pl2" type="radio" name="carttype" value="2" class="duo_checkbox03">
+							<label for="a_pl2">实体卡(<span class="entity_card">0</span>)</label>
+				</div>
+				
+			</div>
+	</div>-->
+     	<div class="pinpai_intr mt15">
+			<div class="checkin_ifor">
+				<div class="checkin_iforl">
+					添加备注
+				</div>
+				<div class="checkin_iforr checkin_iforrpos">
+					<span onclick="_openWinByUrl('jifen_note_head','../window_head',{'furl':'jifen/jifen_note','frame':'jifen_note','title':'添加备注','note':note});"  class="checkin_iforrpos01" style="color:#999;"><i class="note">立即添加</i><a class="right_arrowcom"></a></span>
+				</div>
+			</div>
+	</div>
+	</div>
+</div>
+
+
+
+<!--浮动层-->
+
+<div class="ftc_wzsf">
+  <div class="srzfmm_box">
+    <div class="qsrzfmm_bt clear_wl"> <img src="../../images/xx_03.jpg" class="tx close fl" ><span class="fl">请输入支付密码</span> </div>
+    <div class="zfmmxx_shop">
+      <div class="mz ordername"></div>
+      <div class="wxzf_price score">￥0.00</div>
+    </div>
+    
+    <ul class="mm_box">
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+      <li pwd=""></li>
+    </ul>
+  </div>
+  <div class="numb_box">
+    <div class="xiaq_tb"> <img src="../../images/jftc_14.jpg" height="10"> </div>
+    <ul class="nub_ggg">
+      <li><a href="javascript:void(0);">1</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">2</a></li>
+      <li><a href="javascript:void(0);">3</a></li>
+      <li><a href="javascript:void(0);">4</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">5</a></li>
+      <li><a href="javascript:void(0);">6</a></li>
+      <li><a href="javascript:void(0);">7</a></li>
+      <li><a href="javascript:void(0);" class="zj_x">8</a></li>
+      <li><a href="javascript:void(0);">9</a></li>
+      <li><span></span></li>
+      <li><a href="javascript:void(0);" class="zj_x">0</a></li>
+      <li><span  class="del" > <img src="../../images/jftc_18.jpg"   ></span></li>
+    </ul>
+  </div>
+  <div class="hbbj"></div>
+</div>
+
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script>
+ function changeType(type){
+     if(type==1){
+      $(".addressinfo").hide();
+     }else{
+     $(".addressinfo").show();
+     }
+    }
+	var userinfo ="";
+	var goods_id ="";  //商品id
+	var goods_num="";  //商品数量
+//	var goods_attr=""; //商品属性
+//	var goods_attr_str =""; //商品熟属性描述
+	var goods_price=""; //商品属性价格
+	var userscore=0;
+	var cartnum=0;//用户的卡数量
+	
+	var card_default_pwd=0;
+	var address_id=0;
+	var country=0;
+	var note="";        //备注
+	apiready = function(){
+		api.parseTapmode();
+		userinfo = $api.getStorage('userinfo');		
+		goods_id = api.pageParam.goods_id;
+		goods_num = api.pageParam.goods_num;
+//		goods_attr = api.pageParam.goods_attr;
+//		goods_attr_str = api.pageParam.goods_attr_str;
+		goods_price = api.pageParam.goods_price;
+		
+		$(".score").html(goods_price);
+		//加载状态
+		loading('jifen_order_body');
+		
+		//监听更新登陆信息
+		api.addEventListener({
+		    name: 'refresh_userinfo'
+		}, function(ret, err) {
+		    userinfo = ret.value.userinfo;
+		});
+		
+		
+		//去结算
+		api.addEventListener({
+	        name:'suborder'
+        },function(ret,err){
+        	payorder();
+        });
+        	//监听提交订单
+		api.addEventListener({
+		    name: 'jifen_note'
+		}, function(ret, err) {
+		    note = ret.value.note;
+		    $(".note").html('查看备注');
+		});
+		
+		//获取订单信息
+		getOrder();
+			
+		//监听收获地址
+		api.addEventListener({
+		    name: 'sureaddress'
+		}, function(ret, err) {
+			address_id = ret.value.address_id;
+		    //重新加载订单
+			getOrder();
+		});
+	};
+	
+	var total_price = 0.00;
+	//获取订单信息
+	
+	function getOrder(){
+	
+		  _ajax(ajax_url+"Index/Score/getMember",{
+    	            gid:goods_id,
+					uid :userinfo.uid,
+					address_id:address_id,
+			},'post',function(ret){	
+				api.refreshHeaderLoadDone();
+			    closeloading();		
+					    if(ret.status==1){
+					    		token = ret.token;
+							    userscore=ret.score;
+							    
+							    card_default_pwd = ret.card_default_pwd;
+							    //cartnum=userscore.cart_num;
+							    // $(".payList").show();
+							      //$(".cart").show();
+				
+							    
+							    
+							     //$(".score").html(goods_price);
+							     //地址信息
+							     	if(ret.useraddress != -1){
+									$("#add_name").html(ret.useraddress.consignee);
+									$("#add_phone").html(ret.useraddress.mobile);
+									$("#add_add").html(ret.useraddress.address);
+									address_id = ret.useraddress.address_id;
+									country=ret.useraddress.country;
+								   }
+							     //获取商品信息
+							     var goods_img=ret.goods_info.goods_img;
+							     var goods_name=ret.goods_info.goods_name;
+							     $(".ordername").html(goods_name);
+							     
+							     var html='';
+							     html+='	<ul class="siteSearchul">'+
+											'<li class="busi_fenleili">'+
+													'<div class="busi_fenlei">'+
+													'<a href="#"class="busi_fenleia"><img src="'+goods_img+'"></a>'+
+													'<div class="busi_fenleir">'+
+														'<p class="busi_fenleirtxt"><a href="#" class="busi_fenleirtxta dy_dd">'+goods_name+'</a></p>'+
+														'<p class="busi_fenleirrice"><b class="busi_fenleirpriceb jifen_icon"></b>'+goods_price+' <span class="num_shul">数量：X1</span></p>'+
+													'</div>'+
+												'</div>'+
+												
+											'</li>	'+						
+									'</ul>';
+									$(".superList").html(html);
+			    }
+			})
+		
+	}
+	
+	
+	
+	var i1 = 0;
+	
+/**
+ * 清除支付密码 
+ */
+function clearPayPwd(){
+	paypassword="";
+	$(".mm_box li").attr('pwd','');
+	$(".mm_box li").removeClass("mmdd");
+	i1 = 0;
+	is_pay_status = 1;
+}
+	
+$(function(){
+	//出现浮动层
+	$(".ljzf_but1").click(function(){
+		
+	});
+	//关闭浮动  清除支付密码
+	$(".close").click(function(){
+		$(".ftc_wzsf").hide();
+		i = 0;
+		clearPayPwd();
+	});
+		//数字显示隐藏
+		$(".xiaq_tb").click(function(){
+		//$(".numb_box").slideUp(500);
+		});
+		$(".mm_box").click(function(){
+			//$(".numb_box").slideDown(500);
+		});
+		//----
+		var i = 0;
+		$(document).on('touchend',".nub_ggg li a", function(){
+			
+		//$(".nub_ggg li a").change(function(){
+			i1++;
+			
+			var pwd =$(this).parent("li").index()+1;
+			if(pwd ==11){
+				pwd =0 ;
+			}
+		
+			if(i1<6){
+				$(".mm_box li").eq(i1-1).addClass("mmdd");
+				$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+				}else{
+					$(".mm_box li").eq(i1-1).attr("pwd",pwd);
+					$(".mm_box li").eq(i1-1).addClass("mmdd"); 
+					if(i1>6){
+						i1=6;
+					}
+					setTimeout(function(){
+						//验证支付密码 并支付
+						var paypassword="";
+						$(".mm_box li").each(function(){
+							paypassword+=$(this).attr('pwd');
+						});
+						order(paypassword);
+						
+					},10);
+					//window.document.location="cg.html"
+			 	} 
+		});
+ 		$(document).on('touchend',".nub_ggg li .del", function(){
+		//$(".nub_ggg li .del").click(function(){
+			if(i1>0){
+				i1--;
+				$(".mm_box li").eq(i1).removeClass("mmdd");
+				$(".mm_box li").eq(i1).attr("pwd","");
+				i1==0;
+				}
+			//alert(i);
+		}); 
+});
+
+	function payorder(){
+		if(userinfo  =='undefined'  ||  userinfo ==''  ||userinfo ==null){
+			_toast('请先登录',function(){
+				_openWinByUrl('login','./login');
+			});
+			return false;
+		}
+		
+		//判断用户积分
+		if(Number(userscore)<Number(goods_price)){
+		 	_toast('积分不足');
+			clearPayPwd();
+		 	return false;
+		}
+		
+		
+		//判断是否选择配送方式
+		var deliverytype=$("input[name=deliverytype]:checked").val();
+		 if(deliverytype==2){
+		   if(!address_id){
+		    _toast('请添加收货地址');
+		    return false;
+		   }else{
+		    if(country==0){
+		     _toast('您的地址不在配送范围内,请选择线下自提');
+		     return false;
+		    }
+		   }
+		 }
+		if(card_default_pwd ==1){
+			_toast('请先前往一开通修改默认密码',function(){					
+					_openWinByUrl('card_window_head','../window_head',{'redirect_url':'jifen_goodsdetail','furl':'./card/card','frame':'card','title':'惠通卡'});
+				},1500);
+				return false;
+		}
+		
+		$(".ftc_wzsf").show();
+	}
+	
+	/**
+	 * 提交订单信息
+	 */
+	function order(paypassword){
+	
+		if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+			_openWinByUrl('login','../login');
+			return false;
+		}
+
+	
+		//判断用户积分
+		if(Number(userscore)<Number(goods_price)){
+		 _toast('积分不足');
+		clearPayPwd();
+		 return false;
+		}
+		//判断是否选择配送方式
+		var deliverytype=$("input[name=deliverytype]:checked").val();
+			_ajax(ajax_url+"Index/Score/order",{
+		            gid:goods_id,
+					uid :userinfo.uid,
+					goods_amount:goods_price,
+					paypassword:paypassword,
+					address_id:address_id,
+					deliverytype:deliverytype,
+					remark:note,
+					token:token
+		},'post',function(ret){
+		   
+		   		
+			      		//进行监听
+				api.sendEvent({
+						name : 'index',
+						extra : {
+							key1 : 'success',
+							pagename : 'member',
+						}
+					});
+					if(ret.code ==1){
+						_openWinByUrl('order_pay_success','../order/pay_success',{'info':ret.msg,'channel':11});
+						
+					}else{
+						_toast(ret.msg);
+						clearPayPwd();
+					}
+					
+			    
+		})
+		
+	}
+	
+	
+</script>
+</body>
+</html>

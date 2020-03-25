@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+		<script type="text/javascript" src="../script/app.js"></script>
+<style type="text/css">
+	.window_title{
+	margin: 0 0.2rem;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    border-bottom: 1px solid #ccc;
+    color: #000;
+    font-size: 0.3rem;
+    text-align: center;}
+    .window_con{padding:0.2rem; color: #232323; line-height: 0.5rem;}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+
+
+<div class="clear"></div>
+<!-- 登录内容 -->
+<div class="wp_100">
+	<!-- <p class="window_title">《 用户协议 》</p> -->
+	<div class="window_con">
+	<!--	    TS-LOGO在此特别提醒您（用户）在<a href="#" style="color:#d12a18">注册成为用</a>户之前请认真阅读本《用户协议》（以下简称“协议”）确保您充分理解本协议中各条款。请您审慎阅读并选择接受或不接受本协议。除非您接受本协议所有条款否则您无权注册、登录或使用本协议所涉服务。您的注册、登录、使用等行为将视为对本协议的接受，并同意接受本协议各项条款的约束。<br />
+    本协议约定陌陌科技与用户之间关于“陌陌”软件服务（以下简称“服务”）的权利义务。“用户”是指注册、登录、使用本服务的个人。本协议可由陌陌科技随时更新，更新后的协议条款一旦公布即代替原来的协议条款，恕不再另行通知，用户可在本网站查阅最新版协议条款。在陌陌科技修改协议条款后，如果用户不接受修改后的条款，请立即停止使用陌陌科技提供的服务，用户继续使用陌陌科技提供的服务将被视为接受修改后的协议。
+	-->
+	</div>
+	
+</div>
+<script>
+	apiready = function(){
+		var config = $api.getStorage('config');
+		$(".window_con").html(config.register_argreement);
+		
+	}
+	
+</script>
+</body>
+</html>

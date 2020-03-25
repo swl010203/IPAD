@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的,头部bar的样式-->
+	<title>洗涤首页</title>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/style.css"/>
+	<link rel="stylesheet" type="text/css" href="../../css/laundry/washing.css"/>
+    <script src="../../script/jquery-1.10.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../../script/laundry/style.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+</head>
+<body>
+
+	<!--顶部结束-->
+	<div class="sky w-100bfb">
+		<div class="box">
+			<nav>
+				<li>
+					<a href="javascript:"><img src="../../images/washing/yuyue.png" alt="预约"/></a>
+				</li>
+				<li class="arrow"></li>
+				<li>
+					<a href="javascript:"><img src="../../images/washing/qujian.png" alt="取件"/></a>
+				</li>
+				<li class="arrow"></li>
+				<li>
+					<a href="javascript:"><img src="../../images/washing/cleaning.png" alt="清洗"/ ></a>
+				</li>
+				<li class="arrow"></li>
+				<li>
+					<a href="javascript:"><img src="../../images/washing/songhui.png" alt="送回"/></a>
+				</li>
+			</nav>
+		</div>
+	</div>
+	<!--中部流程-->
+	<div class="price w-100bfb clearfloat">
+		<ul class="head">
+			<li class="fl">
+				价格明细
+			</li>
+			<li class="fr">
+				<a href="javascript:" onclick="_openWinByUrl('price','price')">查看明细</a>
+			</li>
+		</ul>
+		<ul class="main">
+			<li class="photo"><img src="../../images/washing/yijianyuyue.png" onclick="_openWinByUrl('order','order')"  alt="一键预约"/></li>
+			<li class="desc">一键预约轻松搞定洗衣烦恼 </li>
+		</ul>
+	</div>
+	<!--一键预约-->
+	<div class="pb-10">
+		<!--<a class="teln" href="javascript:;">电话预约</a>-->
+	</div>
+    
+   
+    <script>
+    
+    
+    	apiready = function(){
+    		getShopInfo();
+    	};
+    	
+    	
+    
+    	/**
+    	 * 预约 
+    	 */
+    	function getShopInfo(){
+
+			_ajax(ajax_url+"Index/Laundry/getShopInfo",{},'get',function(ret){
+				if(ret.code==1){
+					$(".teln").attr('href','tel:'+ret.data.telphone);
+				}else{
+				
+				}
+			})
+    	}
+    </script>
+
+</body>
+</html>
+

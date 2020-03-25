@@ -1,0 +1,433 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">订单详情</h1>
+			<a class="mui-icon mui-icon-back colorRed" id="fanhui_btn"></a>
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="order_info_top border_b pb20">
+				<div class="order_info_top_map">
+					<img src="../../images/ddxq1.jpg"/>
+				</div>
+				<div class="order_info_top_btn pl20 pr20 box_s">
+					<div class="order_info_top_btn_time">05:00</div>
+					<div class="order_info_top_btn_info">
+						<p class="font_weightB fs28 mui-text-center" id="describe1">等待骑士接单</p>
+						<p class="fs28 mui-text-center mt10 colorHui999" id="describe2">骑士接单中，等待超过5分钟，将由客服为您优先派单</p>
+						<div class="order_info_top_btn_info_btn clearfloat">
+							<div class="fl" id="qxorder">取消订单</div>
+							<div class="fr addMoney_click">添加消费</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="order_info_addr pl20 pr20 box_s border_b">
+				<div class="clearfloat pt20 pb20">
+					<div class="fl order_info_addr_icon order_info_addr_icon_qu"></div>
+					<div class="fl order_info_con fs28">
+						<p id="saddress"></p>
+						<p id="smobile"></p>
+					</div>
+				</div>
+				<div class="clearfloat pt20 border_t pb20">
+					<div class="fl order_info_addr_icon order_info_addr_icon_song"></div>
+					<div class="fl order_info_con fs28">
+						<p id="qaddress"></p>
+						<p id="qmobile"></p>
+					</div>
+				</div>
+			</div>
+			<div class="order_info_num pt20 fs28 pl20 pr20 box_s">
+				<p class="clearfloat mb10">
+					<span class="colorHui999">订单号</span>
+					<span class="fr" id="order_sn"></span>
+				</p>
+				<p class="clearfloat mb10">
+					<span class="colorHui999">订单距离</span>
+					<span class="fr" id="distance"></span>
+				</p>
+				<p class="clearfloat mb10">
+					<span class="colorHui999">订单费用</span>
+					<span class="fr" id="orderprice"></span>
+				</p>
+				<p class="clearfloat mb10" id="tipprice">
+					<!--<span class="colorHui999 fr">含小费1.0元</span>-->
+				</p>
+			</div>
+			<div class="order_info_flow border_t10 pl20 pr20 box_s pb20" id="goodslist">
+				<!--<div class="mui-row fs28 pt20">
+					<div class="mui-col-sm-4 mui-col-xs-4">专人直送</div>
+					<div class="mui-col-sm-6 mui-col-xs-6">鲜花</div>
+					<div class="mui-col-sm-2 mui-col-xs-2 mui-text-right">1公斤</div>
+				</div>
+				<div class="mui-row fs28 pt20">
+					<div class="mui-col-sm-4 mui-col-xs-4">专人直送</div>
+					<div class="mui-col-sm-6 mui-col-xs-6">鲜花</div>
+					<div class="mui-col-sm-2 mui-col-xs-2 mui-text-right">1公斤</div>
+				</div>-->
+			</div>
+			<div class="order_info_beizhu pl20 pr20 box_s border_t10 fs28 pb20">
+				<p class="font_weightB pt20">订单备注</p>
+				<p class="pt20" id="order_remark"></p>
+			</div>
+		</div>
+		
+		<div class="mark_common mui-hidden">
+			<div style="display: none;" class="wpzl_mar bgwhite">
+				<div class="clearfloat colorRed  pl20 pr20 box_s wpzl_tit border_b">
+					<span class="mui-pull-left click_close" data-id="1">取消</span>
+					<span class="mui-pull-left wpzl_titSpan mui-text-center colorBlack">添加小费</span>
+					<span class="mui-pull-left click_sure" data-id="2">完成</span>
+				</div>
+				<div class="mui-text-center wpzl_inp">
+					<span class="iconfont icon-jian colorCCC" onclick="jiprice(1)"></span>
+					<input type="text" name="" readonly="readonly" id="tip_price" value="1元" />
+					<span style="vertical-align: -6px;" class="iconfont icon-jia colorRed" onclick="jiprice(2)"></span>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/app.js"></script>
+	<script src="../../script/common.js"></script>
+	<script src="../../script/api.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$(".addMoney_click").on("tap",function(){
+			$(".mark_common").removeClass("mui-hidden");
+			$(".wpzl_mar").slideDown();
+			show_mark();
+		});
+		$(".click_close,.click_sure").on("tap",function(){
+			var dataid = 0;
+			dataid = $(this).attr('data-id');
+			//点击确认
+			if(dataid == 2){
+				$('#tip_price').val($('#tip_price').val());
+				addTip();
+			}
+			hidden_mark();
+			$(".wpzl_mar").slideUp(function(){
+				$(".mark_common").addClass("mui-hidden");
+			});
+		});
+		
+		var order_sn = '';
+		var help_type = '';
+		var uid = '-1';
+		var newTipPirce = 0;
+		var jorderTime = 0;
+		var lon = 0;
+		var lat = 0;
+		var picker_address = '';
+		var pay_status = '';
+		var status = '';
+		var plon = '';
+		var plat = '';
+		apiready = function(){
+			lon = localStorage.getItem("lon");
+	        lat = localStorage.getItem("lat");
+
+//			uid = localStorage.getItem('uid');
+			order_sn = api.pageParam.order_sn;
+			help_type = api.pageParam.help_type;
+			getOrderDetail();
+			ditu();
+		};
+		$('#fanhui_btn').on('tap',function(){
+			api.closeWin();
+		});
+
+		//获取订单详情
+		function getOrderDetail(){
+			var data = {
+				'uid' : uid,
+				'order_sn' : order_sn,
+				'help_type' : help_type
+			};
+			_ajax(ajax_url+'Index/CityRun/orderDetail',data,'post',function(ret,err){
+				if(ret.status == 1){
+					$('#qaddress').html(ret.data.collect_user_address);
+					$('#qmobile').html(ret.data.collect_user_mobile);
+					$('#saddress').html(ret.data.picker_address);
+					picker_address = ret.data.collect_user_address;
+					$('#smobile').html(ret.data.picker_mobile);
+					$('#order_sn').html(ret.data.order_sn);
+					$('#distance').html(ret.data.distance+'km');
+					$('#orderprice').html('￥'+ret.data.pay_price);
+					$('#order_remark').html(ret.data.order_remark);
+					jorderTime = ret.data.jordertime;
+					pay_status = ret.data.pay_status;
+					status = ret.data.status;
+					if(pay_status == 1 && status == 0){
+						$('#describe1').html('等待骑士接单');
+						$('#describe2').html('骑士接单中，等待超过5分钟，将由客服为您优先派单');
+						djtime();
+					}else if(pay_status == 1 && status == 3){
+						$('#describe1').html('骑手：'+ret.data.qsname);
+						$('#describe2').html('联系方式：'+ret.data.qsmobile);
+						$('#describe2').append("<p class='fs28 mui-text-center mt10 colorHui999'>正在进行服务，请耐心等待</p>");
+						$(".order_info_top_btn_time").html( "已接单");
+					}
+					if(ret.data.plon){
+						plon = ret.data.plon;
+						plat = ret.data.plat;
+					}
+					if(ret.data.order_tip){
+						$('#tipprice').html('<span class="colorHui999 fr">含小费'+ret.data.order_tip+'元</span>');
+					}
+					if(ret.data.goodsinfo){
+						var goods = '';
+						$.each(ret.data.goodsinfo,function(k,v){
+							goods += '<div class="mui-row fs28 pt20">';
+							goods += '	<div class="mui-col-sm-4 mui-col-xs-4">专人直送</div>';
+							goods += '	<div class="mui-col-sm-6 mui-col-xs-6">'+v.goods_id+'</div>';
+							goods += '	<div class="mui-col-sm-2 mui-col-xs-2 mui-text-right">'+v.goods_number+'</div>';
+							goods += '</div>';
+						});
+						$('#goodslist').html(goods);
+					}
+				}else{
+					_toast('网络连接失败');
+					return false;
+				}
+			});
+		}
+
+		$('#qxorder').on('tap',function(){
+			api.confirm({
+				msg: '您确定取消订单吗？',
+				buttons: ['确定', '取消']
+				}, function(ret, err){
+					if( ret.buttonIndex == 1 ){
+						qxorder();
+					}else{
+
+					}
+			});
+		});
+		//取消订单
+		function qxorder(){
+			_ajax(ajax_url+'Index/CityRun/cancelOrder',{'order_sn':order_sn,'help_type':help_type,'uid':uid},'post',function(ret,err){
+				if(ret.status == 1){
+					_toast(ret.msg,function(){
+						api.sendEvent({
+						    name: 'tab',
+						    extra: {
+						        key1: 2
+						    }
+						});
+
+						api.closeWin();
+					});
+					return false;
+				}else{
+					_toast(ret.msg);
+					return false;
+				}
+			});
+		}
+
+		function jiprice(type){
+			// type 1减  2加
+			tipPrice = parseFloat($('#tip_price').val());
+			if(type == 1){
+				if(tipPrice == 1){
+					return false;
+				}else if(tipPrice == 2){
+					newTipPirce = tipPrice-1;
+					$('.icon-jian').removeClass('colorRed');
+					$('.icon-jian').addClass('colorCCC');
+				}else{
+					newTipPirce = tipPrice-1;
+				}
+			}
+			if(type == 2){
+				$('.icon-jian').removeClass('colorCCC');
+				$('.icon-jian').addClass('colorRed');
+				newTipPirce = tipPrice+1;
+			}
+			$('#tip_price').val(newTipPirce+'元');
+
+
+		}
+		//添加小费
+		function addTip(){
+			var data = {
+				'order_sn' : order_sn,
+				'help_type' : help_type,
+				'newTipPirce' : newTipPirce,
+				'uid' : uid
+			};
+			// alert(JSON.stringify(data));return false;
+			_ajax(ajax_url+'Index/CityRun/addTip',data,'post',function(ret,err){
+				if(ret.status == 1){
+					getOrderDetail();
+				}else{
+					_toast(ret.msg);
+					return false;
+				}
+			});
+		}
+
+
+		var result = 0;
+		var interval = 0;
+		//订单倒计时
+		function djtime(){
+			result=Math.floor(jorderTime);
+			interval=setInterval(sub,1000); //定时器 调度对象
+			/*封装减1秒的函数*/
+
+		}
+		//订单倒计时
+		function sub(){
+			if (result>0) {
+			   result = result - 1;
+			   var second = Math.floor(result % 60);     // 计算秒 ，取余
+			   var minite = Math.floor((result / 60) % 60); //计算分 ，换算有多少分，取余，余出多少秒
+				if(second < 10){
+					second = '0'+second;
+				}
+				if(minite < 10){
+					minite = '0'+minite;
+				}
+			   $(".order_info_top_btn_time").html(minite + ":" + second);
+			} else{
+				// alert("倒计时结束！");
+				$(".order_info_top_btn_time").html( "00:00");
+				window.clearInterval(interval);//这里可以添加倒计时结束后需要执行的事件
+			}
+        }
+        function ditu(){
+			var map = api.require('bMap');
+			map.open({
+	            rect: {
+	                x: 0,
+	                y: 44,
+	                w: api.winWidth,
+	                h: 200
+	            },
+	            center: {
+	                lon: lon,
+	                lat: lat
+	            },
+	            zoomLevel: 14,
+	            showUserLocation: true,
+	            fixedOn: api.frameName,
+	            fixed: true
+	        }, function(ret) {
+	            if (ret.status) {
+	                map.getLocation({
+	                    accuracy: '100m',
+	                    autoStop: true,
+	                    filter: 1
+	                }, function(ret, err) {
+	                    if (ret.status) {
+	                        nlon = ret.lon;
+	                        nlat = ret.lat;
+	                        // getRound();
+							getSaddress();
+							// luxian(plon,plat);
+	                    } else {
+	                        // alert(err.code);
+	                    }
+	                });
+	            }
+	        });
+
+		}
+
+		function getSaddress(){
+			if(pay_status == 1 && status == 0){
+				return false;
+			}
+			var map = api.require('bMap');
+			map.getCoordsFromName({
+			    // city: '北京',
+			    address: picker_address
+			}, function(ret, err) {
+			    if (ret.status) {
+					luxian(ret.lon,ret.lat);
+			    }
+
+			});
+		}
+
+		function luxian(slon,slat){
+				if(pay_status == 1 && status == 0){
+					return false;
+				}
+			var map = api.require('bMap');
+			map.searchRoute({
+			    id: 1,
+			    type: 'drive',
+			    policy: 'ecar_fee_first',
+			    start: {
+					lon: plon,
+			        lat: plat
+			    },
+			    end: {
+					lon: slon,
+			        lat: slat
+			    }
+			}, function(ret, err) {
+			    if (ret.status) {
+			        // api.alert({ msg: JSON.stringify(ret) });
+					aa(slon,slat);
+			    }
+			});
+		}
+
+		function aa(slon,slat){
+			var map = api.require('bMap');
+			map.searchRoute({
+				id:1,
+			    type: 'drive',
+			    policy: 'ecar_fee_first',
+			    start: {
+			        lon: lon,
+			        lat: lat
+			    },
+			    end: {
+			        lon: slon,
+			        lat: slat
+			    }
+			}, function(ret, err) {
+			    if (ret.status) {
+			        map.drawRoute({
+			            id: 1,
+			            autoresizing: true,
+			            index: 0,
+			            styles: {
+			                start: {
+			                    icon: 'widget://image/bmap_start.png'
+			                },
+			                end: {
+			                    icon: 'widget://image/bmap_end.png'
+			                }
+			            }
+			        }, function(ret) {
+			            // api.alert({ msg: JSON.stringify(ret) });
+			        });
+			    } else {
+			        // api.alert({ msg: JSON.stringify(err) });
+			    }
+			});
+		}
+	</script>
+</html>

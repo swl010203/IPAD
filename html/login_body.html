@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="pad_20">
+		<div class="inputContainer">
+			<input class="loginInpt" id="username" placeholder="请输入手机号" autocomplete="off">
+		</div>
+		<div class="inputContainer">
+			<input class="loginInpt" id="password" placeholder="请输入密码" type="password" autocomplete="off">
+		</div>
+		<div style="padding-top: 1rem;">
+		<a href="javascript:void(0)" onclick="login();" class="btn01">会员登录</a>
+	</div>
+	<div class="mt_15 loginBot">
+		<!--<a href="javascript:void(0);" onclick=openWinByUrl('register') class="loginBotl">免费注册</a>
+		<a href="javascript:void(0);" onclick=openforget('forgetpass','forgetpass','找回密码') class="loginBotr">忘记密码</a>-->
+	</div>
+	</div>
+	
+</div>
+
+	
+<script>
+var jpush = null;
+	apiready = function(){
+		api.parseTapmode();	
+		//jpush = api.require('ajpush');
+	};
+	
+	function login(){
+		var username =$("#username").val();
+		if(username ==''){
+			_toast('请输入手机号');
+			return false;
+		}
+		
+		if(!_isPhone(username)){
+			_toast('手机号不正确');
+			return false;
+		}
+		var password =$("#password").val();
+		if(password ==''){
+			_toast('请输入密码');
+			return false;
+		}
+		
+		_ajax(ajax_url+"Index/User/login",{'username':username,'password':password},'post',function(ret){
+			if(ret.code==1){
+				$api.setStorage('userinfo',ret.data);
+				localStorage.setItem("uid",ret.data.uid);
+				//initJPush(ret.data.uid);
+				//刷新登陆信息，可共用相同name
+				api.sendEvent({
+				    name: 'refresh_userinfo',
+				    extra: {
+				        userinfo:ret.data
+				    }
+				});
+				
+				//进行用户推送
+				
+				var redirect_url = api.pageParam.redirect_url;
+				if(redirect_url !='undefined'  && redirect_url !=null  && redirect_url !=''){
+					
+                    _toast(ret.msg,function(){
+						api.closeToWin({
+		                    name: redirect_url
+	                    });
+					},1500);
+				}else{
+					_toast(ret.msg,function(){
+						api.closeWin();
+					},1500);
+				}
+
+				
+				
+			}else{
+				_toast(ret.msg);
+			}
+		})
+	}
+	
+		
+			function bindAliasAndTags(uid){
+			//alert(uid);
+			var alias = uid;
+			var tags = 'user';
+			if(!alias && !tags){
+				alert('别名和标签至少传一个');
+				return;
+			}
+			if(!alias){
+				alias = '';
+			}
+			if(!tags){
+				tags = '';
+			}
+			tags = tags.split(',');
+			jpush.bindAliasAndTags({
+				alias:alias,
+				tags:tags
+			}, function(ret, err){
+			    
+				//alert('处理结果：\n' + JSON.stringify(ret));
+			});
+		}
+			function initJPush(uid){
+			jpush.init(function(ret, err){
+				if(ret && ret.status){
+				bindAliasAndTags(uid);
+				
+				}else{
+					
+				}
+			});
+		}
+	function openforget(name,url,title,id){
+	 _openWinByUrl(name+'_head','window_head',{'furl':url,'frame':name,'title':title,'id':id});
+	}
+</script>
+</body>
+</html>

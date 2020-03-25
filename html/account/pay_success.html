@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+.pay_jieguo01{ text-align: center; padding-top: 1rem;}
+.pay_jieguo01 img{ width: 5.03rem; height: 4.39rem;}
+.pay_jieguo01txt{ font-size: 0.26rem; color: #666; text-align: center; padding-top: 0.2rem;}
+.pay_jieguobtn{ width: 2.2rem; height: 0.6rem;border-radius: 5px; display: inline-block; background: #f75800; line-height: 0.6rem; text-align: center; color: #fff;}
+.pay_jieguo01btn {text-align: center; margin-top: 1rem;}
+.pay_jieguo01btn a{ margin-right: 0.2rem;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+		
+			<a href="#" class="headerLeft" id="" onclick="index();">
+				<span class="backBefor"></span>
+			</a>
+				<h1 class="header_h1">充值结果</h1>
+		</div>
+	</header>
+
+<script type="text/javascript">
+	apiready = function(){
+
+		api.parseTapmode();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+        api.openFrame({
+            name: 'pay_success_body',
+            url: 'pay_success_body.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: body_h-headerPos.h
+            },
+			pageParam:api.pageParam
+        });
+        
+
+	};
+	
+	function index(){					
+		api.closeWidget();
+//		api.closeToWin({
+//          name: 'root'
+//      });
+
+}
+</script>
+</body>
+</html>

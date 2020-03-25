@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+.pay_jieguo01{ text-align: center; padding-top: 1rem;}
+.pay_jieguo01 img{ width: 5.03rem; height: 4.39rem;}
+.pay_jieguo01txt{ font-size: 0.26rem; color: #666; text-align: center; padding-top: 0.2rem;}
+.pay_jieguobtn{ width: 2.2rem; height: 0.3rem;border-radius: 5px; display: inline-block; background: #f75800; line-height: 0.3rem; text-align: center; color: #fff;font-size:18px;}
+.pay_jieguo01btn {text-align: center; margin-top: 1rem;}
+.pay_jieguo01btn a{ margin-right: 0.2rem;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+	<!--<header id="header">
+		<div class="header_top">
+		
+			<a href="#" class="headerLeft" id="" onclick="index();">
+				<span class="backBefor"></span>
+			</a>
+				<h1 class="header_h1">下单结果</h1>
+		</div>
+	</header>-->
+	<div class="wp_100">
+		<div class="null_h"></div>
+	</div>
+<div class="clear"></div>
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="reg_fail">
+	<p class="reg_failimg"><img src="../../images/sucess_icon.png"></p>
+	<p class="reg_failtxt info">支付成功！</p>
+		
+	</div>
+	<p class="pay_jieguo01btn"><a href="#" onclick="index();" class="pay_jieguobtn findex">返回首页</a><a href="#" onclick="food();" class="pay_jieguobtn dingfood" style="display:none;">预约订餐</a><a href="#" onclick="lazyGo();" class="pay_jieguobtn checks" style="background:#dd1b40;">查看订单</a></p>
+	
+	
+</div>
+<style>
+	.tuijianul{
+		display: table;
+		width: 100%;
+		padding-left: 8px;
+	}
+	.tuijianlist{
+		width:25%;
+		/*height:2.5rem;*/		
+		float: left;
+		padding-right:8px;
+		-webkit-box-sizing: border-box;
+		display: table-cell;
+		-webkit-transform-style: preserve-3d;
+		margin-bottom:10px;
+	}
+	.tuijianlist:nth-child(4n){
+		padding-right:15px;
+	}
+	
+	.imgdiv{
+		width:100%;
+		height:2rem;
+	}
+	.titleimg{
+		width:100%;
+		text-align:left;
+		font-size:16px;
+		color:#333;
+	}
+	.tuijian{
+		width:100%;
+		height:0.4rem;
+		border-bottom:#999 solid 1px;
+		margin-bottom: 10px;
+		color:#292929;
+		font-size:18px;
+		text-align:center;
+		line-height:0.4rem;
+	}
+	.goodsprice{ color:#000000; font-size: 14px;}
+	.yuan_price{color:#ccc; text-decoration: line-through;}
+</style>
+<div style="background-color:#fff;margin-top:25px;width:100%;height:auto;overflow:hidden;">
+	<div class="tuijian"><h1>为您推荐</h1></div>
+	<ul id="listadv" class="tuijianul">
+		<!--<li class="tuijianlist" >
+			<div class="imgdiv"><img src="http://123.57.36.72:8094/Uploads/Seller/2017-06-28/595318d08fb4e.png" style="width:100%;height:100%;"></div>
+			<div class="titleimg">fffffffff</div>
+			<div class="goodsprice"><span class='yuan_price '>￥20.00</span> <span class='price red'>￥20.00</span> </div>
+			
+		</li>
+		<li class="tuijianlist">
+			<div class="imgdiv"><img src="http://123.57.36.72:8094/Uploads/Seller/2017-06-28/595318d08fb4e.png" style="width:100%;height:100%;"></div>
+			<div class="titleimg">fffffffff</div>
+			<div class="goodsprice"><span>11213213</span> <span>34343</span> </div>
+		</li>
+		<li class="tuijianlist">
+			<div class="imgdiv"><img src="http://123.57.36.72:8094/Uploads/Seller/2017-06-28/595318d08fb4e.png" style="width:100%;height:100%;"></div>
+			<div class="titleimg">fffffffff</div>
+		</li>
+		<li class="tuijianlist">
+			<div class="imgdiv"><img src="http://123.57.36.72:8094/Uploads/Seller/2017-06-28/595318d08fb4e.png" style="width:100%;height:100%;"></div>
+			<div class="titleimg">fffffffff</div>
+		</li>
+		<li class="tuijianlist">
+			<div class="imgdiv"><img src="http://123.57.36.72:8094/Uploads/Seller/2017-06-28/595318d08fb4e.png" style="width:100%;height:100%;"></div>
+			<div class="titleimg">fffffffff</div>
+		</li>-->
+				
+	</ul>
+	<div style="clear:both;"></div>
+</div>
+<script type="text/javascript">
+	var channel='';
+	var order_sn='';
+	var type='';
+	apiready = function (){
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        
+        channel = api.pageParam.channel;
+        order_sn = api.pageParam.order_sn;
+		type = api.pageParam.type;
+        
+        if(channel==14){
+        	$('.findex').hide();
+        	$('.dingfood').show();
+        	$('.checks').text('查看预约');
+        }else{
+        	if(type=='scan'){
+        		$('.header_h1').text('支付结果');
+        		$('.checks').hide();
+        		$('.dingfood').hide();
+        	}else{
+        		$('.findex').show();
+        		$('.dingfood').hide();
+        		$('.checks').text('查看订单');
+        	}
+        }
+        
+        //获取热情推荐
+        getadv();
+	};
+	//获取热情推荐
+	function getadv(){
+		_ajax(ajax_url+"Index/Index/rqAdv",{},'post',function(ret){
+			if(ret.status==1){
+				var html='';
+				for(var i in ret.info){
+					html+='<li class="tuijianlist" onclick="link(\''+ret.info[i].advtype+'\','+ret.info[i].ids+');">';
+					html+='<div class="imgdiv"><img src="'+ret.info[i].image+'" style="width:100%;height:100%;"></div>';
+					html+='<div class="titleimg">'+ret.info[i].name+'</div>';
+					if(ret.info[i].advtype == 'mallgoods'  || ret.info[i].advtype == 'supergoods') {
+						html+='<div class="goodsprice"><span class="yuan_price ">￥'+ret.info[i].market_price+'</span> <span class="price red">￥'+ret.info[i].shop_price+'</span> </div>';
+					}
+					html+='</li>';
+				}
+
+				$('#listadv').html(html);
+			}
+		});
+	}
+	
+	//跳转链接
+	function link(type,ids){
+		if(type=='food'){
+			openWinOrderList('food','../food/food',{'sid':ids});return;
+		}
+		if(type=='mall'){
+			openWinOrderList('mall','../mall/mall_shop',{'id':ids});return;
+		}
+		if(type=='super'){
+			openWinOrderList('super','../super/super',{'sid':ids});return;
+		}
+		if(type=='hotel'){
+			openWinOrderList('hotel','../hotel/hotel',{'sid':ids});return;
+		}
+		if(type=='house'){
+			openWinOrderList('house','../house/house',{'sid':ids});return;
+		}
+		if(type=='laundry'){
+			openWinOrderList('laundry','../laundry/laundry',{'sid':ids});return;
+		}
+		if(type=='foodpackage'){
+			openWinOrderList('packag_detail_body','../food/packag_detail_body',{'id':ids});return;
+		}
+		if(type=='mallgoods'){
+			openWinOrderList('mall_goodsdetail','../mall/mall_goodsdetail',{'goods_id':ids});return;
+		}
+		if(type=='supergoods'){
+			openWinOrderList('super_goodsdetail','../super/super_goodsdetail',{'goods_id':ids});
+		}
+	}
+	
+	function food(){
+		_ajax(ajax_url+"Index/FoodOrder/getshopid",{'order_sn':order_sn},'post',function(ret){
+			if(ret){
+				openWinOrderList('food','../food/food',{'sid':ret});
+			}
+		});
+	}
+	
+	
+	
+	
+	function index(){					
+			api.sendEvent({
+				name : 'index',
+				extra : {
+					key1 : 'success',
+					pagename : 'default',
+				}
+			});
+			api.closeWidget();
+//			api.closeToWin({
+//	            name: 'root'
+//          });
+
+}
+    function lazyGo() {
+		//0商城超市 1 预约2餐饮 3西医 4酒店 5总单  11积分
+		switch(channel){
+			case 1:var type=0;break;
+			case 2:var type=0;break;
+			case 3:var type=4;break;
+			case 14:var type=1;break;
+			case 5:var type=0;break;
+			case 6:var type=3;break;
+			case 4:var type=2;break;	
+			case 11:var type=5;break;		
+			case 26:var type=6;break;		
+		}
+		openWinOrderList('order_list','../users/order_list',{'channel':type , 'closeWinName':'root'});
+	
+	}
+	/**
+	 * 个人中心判断是否登陆 跳转页面 
+	 */
+	function openWinOrderList(name,url,param){
+	
+		_openWinByUrl(name,url,param);
+
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="mui-android mui-android-8 mui-android-8-0">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">更多配套</h1>
+			<div class="mui-pull-left iconfontDiv fanhui_btn" style="background-color: #fff;">
+				<span class="iconfont icon-fanhui colorRed"></span>
+			</div>
+			<!--<a class="mui-icon mui-icon-back colorRed fanhui_btn"></a>-->
+		</header>
+		<div class="mui-content">
+			<div class="peitao_div pl20 pr20 box_s bgwhite">
+				<div class="peitao_div_con pt30 pb30">
+					<p class="clearfloat font_weightB fs32 mt10 pb10 zhoubian"></p>
+					<!--<p class="clearfloat fs28 mt10 colorHui666"><span>安国市玉红小学</span><span class="mui-pull-right">1.2km</span></p>
+					<p class="clearfloat fs28 mt10 colorHui666"><span>被气功小学</span><span class="mui-pull-right">3km</span></p>-->
+				</div>
+			</div>
+			<div class="peitao_div_tj bgwhite mt20 pl20 pr20 box_s">
+				<div class="peitao_div_tj_tit">
+					<span class="content_span">推荐配套</span>
+				</div>
+				<div class="peitao_div_con pb30">
+					<p class="clearfloat font_weightB fs32 mt10 pb10 tjzhoubian"></p>
+					<!--<p class="clearfloat fs28 mt10 colorHui666"><span>安国市玉红小学</span><span class="mui-pull-right">1.2km</span></p>
+					<p class="clearfloat fs28 mt10 colorHui666"><span>被气功小学</span><span class="mui-pull-right">3km</span></p>-->
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/common.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/app.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$('.fanhui_btn').on('tap',function(){
+			api.closeWin();
+		});
+		
+				var map = '';
+	    var lon = '';
+	    var lat = '';
+	    var isSetInterVal = false;
+	    var interval = '';
+	    var keyword = '';
+		var zhoubian = '';
+		var tjzhoubian = '';
+		var strVar = [];
+	    apiready = function(){
+	        map = api.require('bMap');
+	        kword = api.pageParam.kword;
+			$('.zhoubian,.tjzhoubian').html('周边'+kword);
+	        map.setMapAttr({
+	            type: 'standard'
+	        });
+			api.addEventListener({
+			    name: 'addStatus'
+			}, function(ret, err){
+			    if( ret.value.status == 1 ){
+					add();
+			    }
+			});
+
+	        getUserLocation();
+	    };
+
+	    // 获取经纬度
+	    function getUserLocation(){
+	        map.getLocationServices(function(ret, err){
+	            // if(!ret.enable){
+	            //     _toast('请检查设备定位功能是否开启');
+	            //     if(!isSetInterVal){
+	            //         isSetInterVal = true;
+	            //         interval = setInterval(getUserLocation, 3000);
+	            //     }
+	            //     map.stopLocation();
+	            // }else{
+	                if(interval!=''){
+	                    clearInterval(interval);    // 清除定时器
+	                }
+	                map.getLocation({
+	                    accuracy: '100m',
+	                    autoStop: true,
+	                    filter: 1
+	                }, function(ret, err) {
+	                    if (ret.status) {
+	                        lon = ret.lon;
+	                        lat = ret.lat;
+	                        getRound();
+	                    } else {
+	                    }
+	                });
+	            // }
+	        });
+
+	    }
+
+	    function getRound(){
+	        // 自动定位到用户位置
+	        map.showUserLocation({
+	            isShow: true,
+	            trackingMode: 'none'
+	        });
+
+	        map.setCenter({
+	            coords: {
+	                lon: lon,
+	                lat: lat
+	            },
+	            animation: true
+	        });
+
+	        map.searchNearby({
+	            keyword: kword,
+	            lon: lon,
+	            lat: lat,
+	            radius: 2000
+	        }, function(ret, err) {
+	            if (ret.status) {
+	                $.each(ret.results, function(k, v){
+						map.getDistance({
+						    start: {
+						        lon: lon,
+						        lat: lat
+						    },
+						    end: {
+						        lon: v.lon,
+						        lat: v.lat
+						    }
+						}, function(rets) {
+						    if (rets.status) {
+								var dis = rets.distance;
+								distance = (dis/1000).toFixed(2);
+								var loca = {
+									name:v.name,
+									las:distance
+								};
+								strVar.push(loca);
+						    }
+						});
+
+	                });
+
+					api.sendEvent({
+					    name: 'addStatus',
+					    extra: {
+					        status: 1
+					    }
+					});
+
+
+					// zhoubian ='<p class="clearfloat fs28 mt10 colorHui666"><span>'+v.name+'</span><span class="mui-pull-right">'+distance+'km</span></p>';
+					// $('.zhoubian').append(zhoubian);
+	            } else {
+	            }
+	        });
+	    }
+		function add(){
+			var sidOrder = strVar.sort(
+			function(a, b)
+				{
+					if(a.las < b.las) return -1;
+					if(a.las > b.las) return 1;
+					return 0;
+				}
+			);
+			$.each(sidOrder,
+				function(index, val)
+				{
+					zhoubian ='<p class="clearfloat fs28 mt10 colorHui666"><span>'+val.name+'</span><span class="mui-pull-right">'+val.las+'km</span></p>';
+					$('.zhoubian').append(zhoubian);
+					if(index < 2){
+						tjzhoubian ='<p class="clearfloat fs28 mt10 colorHui666"><span>'+val.name+'</span><span class="mui-pull-right">'+val.las+'km</span></p>';
+						$('.tjzhoubian').append(tjzhoubian);
+					}
+				}
+			);
+		}
+	</script>
+</html>

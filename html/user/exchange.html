@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style type="text/css">
+.siteSearchula01lir{
+	font-size:18px!important;
+}
+ .addImgbtn01 {width: 1.4rem;height: 1.4rem;position: relative;float: left;margin: 0px 5px;}
+ .upload_cancel{ width: 0.35rem; height: 0.35rem; background: url(../../images/sc.png) no-repeat; background-size: 0.3rem 0.3rem; position: absolute; right:-5px; top: 0px; display: block; }
+	.mt_10{padding:0px;}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+<!-- 登录内容 -->
+<div class="wp_100">
+<a href="#" class="snapUptop" style="background: #fff;line-height: 0.62rem; ">编号：<span class="order_sn"></span></a>
+	<div class="siteSearchlist" style="background: #fff;">
+		<ul class="siteSearchul">
+			<li style="padding-top: 0.1rem; margin-top: 0;"> 
+				<a href="#" class="siteSearchula01">
+					<div class="siteSearchula01li">
+						<img src="" class="goods_img">
+						<div class="siteSearchula01lir">
+							<span class="siteSearchulaspan01 mt_10 goods_name"></span>
+							<span class="siteSearchulaspan02 mt_10"><em>￥</em><span class="goods_price"></span></span>
+							<span class="siteSearchulaspan02 mt_10" style="color: #1f2228;  font-size: 18px;">数量：x<span class="goods_num"></span></span>
+						</div>
+					</div>
+				</a>
+				
+			</li>
+			
+			
+		</ul>
+	</div>
+	
+	
+</div>
+
+<div class="selReasontext">
+	<textarea class="selReasontxt" placeholder="请输入换货原因" id="content"></textarea>
+</div>
+<div class="addImgbtn" >
+   <div id="img">
+
+
+   </div>
+	<div class="addImgbtn01 addpic">
+		<img src="../../images/addimg_icon.png"  onclick="picker();">
+	</div>
+</div>
+<input type="hidden" name="pic" value="" id="pic" />
+<!-- 底部 -->
+
+<script type="text/javascript">
+var money=0;
+var rec_id=0;//商品rec_id
+var type=0;//区别商城和超市
+apiready=function(){
+ rec_id=api.pageParam['rec_id'];
+ type=api.pageParam['type'];
+  getinfo(rec_id,type);
+};
+  
+  function getinfo(rec_id,type){
+   api.ajax({
+				    url: ajax_url+'Index/Aftersale/showRefund',
+				    dataType: "json",
+				    method: 'get',
+						 data: {
+				         values: { 
+				          rec_id:rec_id,
+				          type:type
+				        },       
+		             }
+				},function(ret, err){
+				  if(ret){
+				   if(ret.status==1){
+				       var good=ret.good;//商品信息
+				       var orderinfo=ret.orderinfo;//订单信息
+				       $(".order_sn").html(orderinfo['order_sn']);
+				       $(".goods_name").html(good['goods_name']);
+				       $(".goods_price").html(good['goods_price']);
+				        $(".goods_num").html(good['goods_number']);
+			            $(".goods_img").prop('src',good['img']);
+			            money=good['money'];
+				   }else{
+				   _toast(ret.msg);
+				   }
+				  }else{
+				  _alert('网络连接失败,请稍后重试');
+				  }
+				})
+  }
+     
+      function picker(){		
+		api.confirm({ 
+                title: "请选择方式",
+                msg: "", 
+                buttons:[ "相机", "相册"]
+        },function(ret,err){
+            if(ret.buttonIndex==1){
+            	var sourceType='camera';
+            }else{
+            	var sourceType='album';
+            }
+
+			api.getPicture({
+			    sourceType: sourceType,
+			    targetWidth:800,
+                targetHeight:800,
+			},function(ret, err){
+				if(ret){          
+					if(ret.data !=''){
+					api.ajax({
+				    url: ajax_url+'Index/File/uploadPicture',
+				    dataType: "json",
+				    method: 'post',
+						 data: {
+				      files:{photo:ret.data}     
+		             }
+				},function(res, err){
+									if(res){						
+										if(res.code==1){
+										var html='  <div class="addImgbtn01">'+
+														'<img src="'+ret.data+'">'+
+														'<span class="upload_cancel" onclick="removePic(this)"></span>'+
+													'</div>';
+										$("#img").append(html);
+										if($("#pic").val()){
+										var pic=$("#pic").val();
+										var str=pic+','+res.data.photo['id'];
+										$("#pic").val(str);
+										}else{
+										$("#pic").val(res.data.photo['id']);
+										}										
+										}else{
+											api.toast({
+												msg: res.msg,
+												duration:2000
+											});
+										}
+			
+									}
+							})
+		
+						
+						}
+					}
+							
+			});
+		});
+
+}
+/*
+* 删除当前节点
+*/
+function removePic(obj){
+ $(obj).parent().remove();
+}
+function submit(){
+ var content=$("#content").val();
+ if(!content){
+  _toast('请输入换货原因');
+  return false;
+ }
+api.ajax({
+	    url: ajax_url+'Index/Aftersale/exchange',
+	    dataType: "json",
+	    method: 'get',
+			 data: {
+	         values: { 
+	          rec_id:rec_id,
+	          type:type,
+	          content:content,
+	          pic:$("#pic").val()          
+	        }      
+         }
+	},function(ret, err){
+	  if(ret){
+	   if(ret.code){
+	     _toast(ret.msg,function(){
+	      if(type==2){
+	      var name='super_order_detail';
+	      }else{
+	      var name='mall_order_detail';
+	      }	       
+	      	api.sendEvent({
+	              name:'refe_order_list'
+              });
+	           	api.sendEvent({
+					name : name,
+					extra : {
+						key1 : 'success',
+					}
+				});
+				api.closeWin({
+                });
+	     })
+	   }else{
+	    _toast(ret.msg);
+	   }
+	  }else{
+	  _alert('网络连接失败,请稍后重试');
+	  }
+	})
+ 
+}
+</script>
+</body>
+</html>

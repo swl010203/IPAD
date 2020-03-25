@@ -1,0 +1,86 @@
+header{
+	overflow: hidden;
+	border-bottom: 1px solid #e0e0e0;
+	background: white;
+}
+header .back a img{
+	width: 0.21rem;
+	height: 0.38rem;
+	margin-top: 0.05rem;
+}
+header .word{
+	font-size: 0.36rem;
+	color: #d12a18;
+	margin-left: 2.09rem;
+}
+header .bianji{
+	font-size: 0.25rem;
+	margin-top: 0.06rem;
+}
+header .bianji a{
+	color: #d12a18;
+}
+.content{
+	background-color: white;
+	overflow: hidden;
+	padding: 0.15rem 0 0;
+}
+/*中间图片*/
+.bigBox{
+	
+	width: 3rem;
+	margin: 1rem auto 0;
+}
+.bigBox img{
+	width: 100%;
+}
+/*中间文字*/
+.pWord{
+	text-align: center;
+	font-size: 0.29rem;
+	line-height: 1rem;
+	font-weight:bolder;
+}
+/*中间表格*/
+.lis{
+	height: 0.66rem;
+	line-height:0.66rem;
+	padding:0 0.15rem;
+	border-top:0.01rem solid #e0e0e0;
+	overflow:hidden;
+	font-weight:bolder;
+}
+.lis span{
+	float: right;
+}
+.xiaofei span{
+	font-size: 0.27rem;
+	color:#dd5f52;
+}
+.beizhu span{
+	font-size: 0.27rem;
+}
+.jifen span{
+	color:#116f81;
+}
+.jifen{
+	border-bottom:0.01rem solid #e0e0e0;	
+}
+
+
+/*下方按钮*/
+.pBtn{
+	width: 6rem;
+	height: 0.7rem;
+	background: url(../img/041longCartBackground.png);
+	text-align: center;
+	line-height: 0.7rem;
+	margin: 0 auto;
+	background-size: 100% 100%;
+	border-radius: 0.1rem;
+	font-size: 0.25rem;
+	margin-top: 3.3rem;
+}
+.pBtn a{
+	color: white;
+}

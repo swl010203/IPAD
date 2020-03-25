@@ -1,0 +1,685 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>底部导航</title>
+    <link rel="stylesheet" type="text/css" href="css/api.css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/index.css" rel="stylesheet" type="text/css" />
+<link href="css/h_index.css" rel="stylesheet" type="text/css" />
+
+
+<script type="text/javascript" src="script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="script/common.js"></script>
+<script type="text/javascript" src="script/app.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #wrap {
+        	overflow: hidden;
+            height: 100%;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+            flex-flow: column;
+        }
+
+        #main {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+
+        #footer {
+            width: 100%;
+            text-align: center;
+            height: 56px;
+            line-height: 55px;
+            background-color: #fff;
+           position:fixed;
+           bottom: 0;
+           left:0;
+        }
+
+        ul {
+
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            border-top: 2px solid #d33524;
+        }
+
+        .cloud {
+            background-image: url(images/shouye01.png);
+        }
+
+        .client {
+            background-image: url(images/cart01.png);
+        }
+
+        .dev {
+            background-image: url(images/shoping01.png);
+        }
+
+        .doc {
+            background-image: url(images/my01.png);
+        }
+
+        #footer li {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            height: 55px;
+            position:relative;
+        }
+
+        .bottom_btn {
+            background-position-y: 4px;
+            padding-top: 10px;
+            font-size: 12px;
+            color: #323237;
+            width: 99%;
+            height: 39px;
+            background-repeat: no-repeat no-repeat;
+            background-position-x: center;
+            background-size: 30px;
+        }
+
+        .active .cloud {
+            background-image: url(images/shouye02.png);
+        }
+
+        .active .client {
+            background-image: url(images/cart02.png);
+        }
+
+        .active .dev {
+            background-image: url(images/shoping02.png);
+        }
+
+        .active .doc {
+            background-image: url(images/my02.png);
+        }
+
+        .active .bottom_btn {
+            color: #d12a18;
+            background-size: 30px;
+        }
+
+
+        .activebar {
+            display: block !important;
+        }
+        
+        .infordot{right: -0.06rem;}
+        .inforIcon{position:relative;}
+        .header_logo{width: 1.77rem;float: right;height: 0.68rem; padding-left: 0.2rem; padding-top: 0.1rem;}
+		.numIndex{
+			display:none;
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			color: white;
+			top: 4px;
+			right: 140px;
+			background: #d12a18;
+			text-align: center;
+			line-height: 18px;
+			font-size:12px;
+		}
+    </style>
+</head>
+<body>
+<div id="wrap">
+	<!--<div id="cloud"></div>-->
+	<header id="cloud" class="topbar "   style="height:0;">
+
+		
+
+	</header>
+    <header id="cart" class="topbar "  style="display: none;">
+    	<div class="header_top">
+			<a href="javascript:void(0);" class="headerLeft">
+				
+			</a>
+			<h1 class="header_h1">购物车</h1>
+			<!--<a href="javascript:void(0);" class="headerRight">
+				<span class="inforIcon"></span>
+				<b class="infordot"></b>
+			</a>-->
+		</div>
+    </header>
+    
+    <header id="dev" class="topbar "  style="display: none;">
+    	<div class="header_top">
+			<a href="javascript:void(0);" class="headerLeft">
+				
+			</a>
+			<h1 class="header_h1">闲逛</h1>
+			
+		</div>
+    </header>
+    <!--<header id="member" class="topbar"   style="display: none;height:0;padding-top:0;">
+		<div class="header_top">
+			<a onclick="exscript('member','setting','user/setting','个人设置')"  href="javascript:void(0);" class="headerLeft">
+				<span class="setIcon"></span>
+			</a>
+			<h1 class="header_h1">我的</h1>
+			<a  onclick="exscript('member','message','user/message','消息')" href="javascript:void(0);" class="headerRight">
+				<span class="inforIcon"><b class="infordot" style="display:none;"></b></span>
+				
+			</a>
+		</div>
+	</header>-->
+	
+    <div id="main">
+
+    </div>
+
+    <div id="footer">
+        <ul>
+            <li tapmode="active" class="active" onclick="randomSwitchBtn(this,'cloud',0)">
+                <a class="bottom_btn cloud">首页</a>
+            </li>
+
+            <li tapmode="active" onclick="randomSwitchBtn(this,'cart',1)">
+                <a class="bottom_btn client">购物车</a>
+                <div class="numIndex">0</div>
+            </li>
+
+            <li tapmode="active" onclick="randomSwitchBtn(this,'dev',2)">
+                <a class="bottom_btn dev ">闲逛</a>
+            </li>
+
+            <!--<li tapmode="active" onclick="randomSwitchBtn(this,'member',3)">
+                <a class="bottom_btn doc ">我的</a>
+            </li>-->
+        </ul>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript">
+	/**
+ * 获取用户卡信息 - 卡充值
+ */
+function getUserCard(){
+	userinfo  =$api.getStorage('userinfo');
+	if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+		//_openWinByUrl('login','Index/login');
+		return false;
+	}
+	
+	_ajax(ajax_url +"Index/User/getUserCard",{'uid':userinfo.uid,'token':userinfo.token},'post',function(ret){
+		var strVar = "";
+		if(ret.status  ==1){
+			$.each(ret.data,function(k,v){
+					cardno = v['cardNo'];
+			});
+			
+			api.openFrame({
+		        name: 'qrcode',
+		        url: './html/card/qrcode.html',
+		         rect: {
+			        x: 0,
+			        y: 0,
+			        w: 0,
+			        h: 0
+			    },
+				pageParam: {
+			        cardno: cardno,
+			        is_show:1,
+			    },
+	        });
+	       
+	       	api.setFrameAttr({
+	        	name:'qrcode',
+				hidden:true
+			});
+			
+		}
+		
+		
+		
+	});
+
+}
+function getAccountInfo(){
+		_ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+			if(ret.status ==1){
+				localStorage.setItem("address",ret.user.address);
+				
+			}
+		});
+	}
+	
+
+	var bMap ="";
+	var jpush = null;
+	var uid = "";  //2140
+    apiready = function () {
+    //初始化用户Id 
+
+		addEventUserInfo();
+		uid = localStorage.getItem("uid");
+		
+		api.setScreenOrientation({
+		    orientation: 'landscape_left'
+		});
+
+		getAccountInfo();
+
+//		localStorage.setItem("uid","2140");
+// 		_openWinByUrl('spike','./html/spike');
+// 		_openWinByUrl('cityRun','./html/cityRun/cityRun');
+//		return false;
+
+   		_openWinByUrl('shouye','./html/account/001shouye');
+		return false;
+// 		_openWinByUrl('goodactivity','./html/super/activity_list');
+//		return false;
+
+  	
+  		
+    	//loading();
+    	//修改状态栏
+    	api.setStatusBarStyle({
+		    style: 'light'
+		});
+		
+    var userinfo=$api.getStorage('userinfo');
+    if(userinfo){
+    	getUserCard();
+	    api.addEventListener({
+		    name:'viewappear'
+		}, function(ret, err){        
+		   noRead();
+		   getCartNum();
+		});
+
+		getCartNum();
+
+    }
+    api.addEventListener({
+	        name:'event_cart_num'
+        },function(ret,err){
+        	//coding...
+        	getCartNum();
+        });
+    //jpush = api.require('ajpush');	 
+	//initJPush();
+    //setListener();
+
+    	//$api.rmStorage('userinfo');
+        var $header = $api.dom('header');
+        
+        //$api.fixStatusBar($header);
+        var $body = $api.dom('body');
+        var $footer = $api.byId('footer');
+        var header_h = $api.offset($header).h;
+        var body_h = $api.offset($body).h;
+        var footer_h = $api.offset($footer).h;
+        var rect_h = body_h - header_h - footer_h;
+        
+       //localStorage.removeItem("launch");
+        var launch = (localStorage.getItem("launch"));
+			
+	    	
+		api.openFrameGroup({
+            name: 'group',
+            scrollEnabled: false,
+            rect: {x: 0, y: header_h, w: 'auto', h: rect_h},
+            index: 0,
+          
+            frames: [
+                {
+                    name: 'default',
+                    url: 'html/default.html'
+                },
+                {
+                    name: 'cart',
+                    url: 'html/cart.html',
+                    pageParam:{
+                    	is_notback:1,
+                    	is_hide:0
+                    } 
+                },
+                {
+                    name: 'hang',
+                    url: 'html/hang.html'
+                },
+                {
+                    name: 'member',
+                    url: 'html/member.html'
+                }
+            ]
+        }, function (ret, err) {
+        
+        });
+	    	
+	    	
+	    	
+        
+      	api.setFrameAttr({
+			 name: 'cart_body',
+			 hidden:true
+		});
+				
+		api.addEventListener({
+	        name:'frist_launch'
+        },function(ret,err){
+        	api.closeFrame({
+				name: 'launch'
+			});
+			
+			
+        	var $header = $api.dom('header');
+	        //$api.fixStatusBar($header);
+	        var $body = $api.dom('body');
+	        var $footer = $api.byId('footer');
+	        var header_h = $api.offset($header).h;
+	        var body_h = $api.offset($body).h;
+	        var footer_h = $api.offset($footer).h;
+	        var rect_h = body_h - header_h - footer_h;
+	        
+        	api.openFrameGroup({
+		            name: 'group',
+		            scrollEnabled: false,
+		            rect: {x: 0, y: header_h, w: 'auto', h: rect_h},
+		            index: 0,
+		          
+		            frames: [
+		                {
+		                    name: 'default',
+		                    url: 'html/default.html'
+		                },
+		                {
+		                    name: 'cart',
+		                    url: 'html/cart.html',
+		                    pageParam:{
+		                    	is_notback:1,
+		                    	is_hide:0
+		                    } 
+		                },
+		                {
+		                    name: 'hang',
+		                    url: 'html/hang.html'
+		                },
+		                {
+		                    name: 'member',
+		                    url: 'html/member.html'
+		                }
+		            ]
+		        }, function (ret, err) {
+		        
+		        });
+        	
+        	//coding...
+        });
+
+	
+ 		api.addEventListener({
+		    name: 'index'
+		}, function(ret, err) {
+			
+			if(ret && ret.value){
+			
+				if(ret.value.key1=='success'){
+				var num=0;
+					if(ret.value.pagename=='default'){
+						num=0;
+					}
+					if(ret.value.pagename=='cart'){
+						 num=1;
+					}
+					if(ret.value.pagename=='hang'){
+						 num=2;
+					}
+					if(ret.value.pagename=='member'){
+						 num=3;
+					}
+					
+					
+					//设置跳转页面发送监听
+					api.sendEvent({
+						name: ret.value.pagename,
+						extra: {
+						    key1: 'success'
+						}
+					});
+					
+					
+					//切换底部选中状态
+					var $footer = $api.byId('footer');
+					var $footerBar = $api.domAll($footer, 'li');
+					for (var j = 0; j < $footerBar.length; j++) {
+					    $api.removeCls($footerBar[j], 'active');
+					}
+					$api.addCls($footerBar[num], 'active');
+					
+					if(ret.value.pagename=='member'){
+						name = ret.value.pagename;
+						var $header = $api.byId(name);
+				        //$api.fixStatusBar($header);
+				        var $titleBar = $api.domAll($header, 'topbar');
+				        for (var i = 0; i < $titleBar.length; i++) {
+				            $api.removeCls($titleBar[i], 'activebar');
+				        }
+				        $(".topbar").removeClass('activebar');
+				        //$api.addCls($api.byId(name), 'activebar');
+				   		$("#"+name).addClass('activebar');
+				   		
+				   		var $body = $api.dom('body');
+						
+				        var header_h = $api.offset($header).h;
+				        var body_h = $api.offset($body).h;
+				        var footer_h = $api.offset($footer).h;
+				        var rect_h = body_h - header_h - footer_h;
+				
+				        api.setFrameGroupAttr({
+						    name: 'group',
+						    rect: {x: 0, y: header_h, w: 'auto', h: rect_h},
+						});
+						
+						api.setFrameAttr({
+								 name: 'cart_body',
+								 hidden:true
+						})
+					}
+					
+					
+					api.setFrameGroupIndex({
+					    name: 'group',
+					    index: num,
+					    scroll: true
+					});
+
+				}
+			}			
+		});
+		
+		
+		
+		
+
+		/*bMap = api.require('bMap');
+		//判断是否开启定位功能
+		bMap.getLocationServices(function(result, err) {
+		    if (result.enable) {
+		    	api.sendEvent({
+	                name:'location'
+                });
+		    } else {
+		        api.alert({msg:"未开启定位功能！"});
+		        $(".location").html('定位失败');
+		        $api.setStorage('location','定位失败');
+		    }
+		});*/
+		
+		
+    };
+    /*
+     * 获取未读数
+     */
+    function noRead(){
+         api.ajax({
+		    url: ajax_url+'Index/User/noRead',
+		    dataType: "json",
+		    method: 'post',
+				 data: {
+		        values: { 
+		            uid:localStorage.getItem("uid")		           
+		        },       
+             }
+		},function(ret, err){
+		 if(ret){
+		  if(ret.code){
+		  $(".index_topiconpoint").show();
+		  }else{
+		  $(".index_topiconpoint").hide();
+		  }
+		 }
+		})
+    }
+    // 随意切换按钮
+    function randomSwitchBtn(obj, name, index) {
+        var $header = $api.dom('header');
+        if(index!=3){
+        	//$api.fixStatusBar($header);
+		}
+        $(".topbar").removeClass('activebar');
+        $(".topbar").hide();
+        //$api.addCls($api.byId(name), 'activebar');
+   		$("#"+name).addClass('activebar');
+   		$("#"+name).show();
+        var $footer = $api.byId('footer');
+        var $footerBar = $api.domAll($footer, 'li');
+        for (var j = 0; j < $footerBar.length; j++) {
+            $api.removeCls($footerBar[j], 'active');
+        }
+        $api.addCls(obj, 'active');
+       
+    	var $body = $api.dom('body');
+		var $header = $api.byId(name);
+		if(index!=3){
+        	//$api.fixStatusBar($header);
+		}
+		var header_h = $api.offset($header).h;
+	    var body_h = $api.offset($body).h;
+	    var footer_h = $api.offset($footer).h;
+		if(name =='cart'){
+			userinfo  =$api.getStorage('userinfo');
+			if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+				_openWinByUrl('login','html/login');
+				return false;
+			}
+			api.setFrameAttr({
+					 name: 'cart_body',
+					 hidden:false
+				});
+			var rect_h = body_h - footer_h;
+			api.setFrameGroupAttr({
+			    name: 'group',
+			    rect: {x: 0, y: 0, w: 'auto', h: rect_h},
+			});
+		}else{
+			api.setFrameAttr({
+					 name: 'cart_body',
+					 hidden:true
+				});
+			var rect_h = body_h - header_h - footer_h;
+			api.setFrameGroupAttr({
+			    name: 'group',
+			    rect: {x: 0, y: header_h, w: 'auto', h: rect_h},
+			});
+		}
+
+		 api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+       // return false;
+    }
+   
+   
+    function exscript(fname,name,url,title){
+    	userinfo  =$api.getStorage('userinfo');
+    	
+		if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+			_openWinByUrl('login','html/login');
+			return false;
+		}
+		//onclick="exscript('member','message','user/message','消息')" class="headerRight">
+		//alert(1);
+		_openWinByUrl(member+'_window_head','html/window_head',{'frame':name,'furl':url,'title':title});
+	   	/*var jsfun = 'openWinBylogin("'+name+'","'+url+'","'+title+'");';
+		api.execScript({
+		    frameName: fname,
+		    script: jsfun
+		});*/
+    }
+    
+    
+    /**
+     * 获取购物车数量 
+     */
+    function getCartNum(){
+    	userinfo  =$api.getStorage('userinfo');
+    	if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+			$(".numIndex").text(0);
+			$(".numIndex").hide();
+			return false;
+		}
+		
+    	_ajax(ajax_url +"Index/Mall/getCartNum",{'uid':userinfo.uid},'post',function(ret){
+			var strVar = "";
+			if(ret.code  ==1){
+				if(ret.num > 0){
+					$(".numIndex").show();
+					$(".numIndex").text(ret.num);
+				}else{
+					$(".numIndex").hide();
+				}
+			}
+		});
+    }
+    
+    	function initJPush(){
+			jpush.init(function(ret, err){
+				if(ret && ret.status){
+					//alert('操作成功!');
+				}else{
+					//alert('操作失败!');
+				}
+			});
+		}
+   		function setListener(){
+			   jpush.setListener(function(ret, err){
+				if(ret){
+//							  var netAudio = api.require('netAudio');
+//									netAudio.play({
+//									    path: 'http://7xisq1.com1.z0.glb.clouddn.com/apicloud/0d0b81b8bd5ab81bda9ca54267eb9b98.mp3'
+//									}, function(ret, err) {
+//									    if (ret) {
+//									    //alert(1);
+//									        //alert(JSON.stringify(ret));
+//									    } else {
+//									        //alert(JSON.stringify(err));
+//									        //alert(2);
+//									    }
+//									});
+				}else{
+					
+				}
+			});
+			//alert('设置成功，收到的消息将通过此函数回调给网页，不再弹出通知到状态栏');
+		}
+</script>
+</html>

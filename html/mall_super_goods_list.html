@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<style type="text/css">
+	.siteSearchlist01{ background: #fff;}
+	.siteSearchlistcur{background: #f5f5f5; float: left; }
+	.siteSearchlistcur .multi_lineul{ background: #f5f5f5;}
+	.siteSearchlistcur .siteSearchul{ width: auto; padding: 0.2rem 0.2rem 0 0.2rem;overflow: hidden;}
+	.siteSearchlistcur .busi_fenleili{  padding: 0.2rem 0; width: 48%;float: left;background: #fff; height: 3.6rem; position: relative; margin-bottom: 0.2rem;}
+	.siteSearchlistcur .busi_fenleia{ display: block; width: auto; float: inherit;text-align: center;}
+	.siteSearchlistcur .busi_fenleia img{    width: 2.68rem; height: 2.68rem; border:0;}
+	.siteSearchlistcur .busi_fenleir{ margin-left: 0;padding: 0 0.2rem}
+	.siteSearchlistcur .busi_fenleirrice{padding-top:0.1rem;}
+	.siteSearchlistcur .siteSearchul li:nth-child(2n){    float: right;}
+</style>
+
+
+<body>
+<!-- 内容 -->
+<div class="wp_100">
+	<div class="busi_searchwrap">
+		<div class="busi_searchcon">
+			<div class="busi_searchbor">
+				<input type="text" id="keyword" placeholder="请输入要搜索的商品名称" />
+			</div>
+			<a href="javascript:void(0)" onclick="swicthList();" class="busi_searchbtn">搜索</a>
+		</div>
+	</div>
+	<div class="eval_maintop busi_listtop">
+		<ul class="eval_topul">
+			<li class="eval_topli eval_topli01"><a href="javascript:" class="eval_toplia">综合</a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_toplisalvol"><a href="javascript:" class="eval_toplia">超市</a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_topliprice"><a href="javascript:" class="eval_toplia">商城</a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_toplilast"><a href="javascript:" class="eval_toplia">多行排列</a></li>
+		</ul>
+	</div>
+	<div class="siteSearchlistwrap">
+		<div class="siteSearchlist siteSearchlist01 siteSearchlistcur" style="padding-top:3px;" >
+			<div class="pinpai_intrtop" style="color: #666;"><i class="shangpin_listicon"></i>超市</div>
+			<ul class="siteSearchul" id="goodslist">
+
+			</ul>
+			
+			<div class="pinpai_intrtop" style="color: #666;"><i class="shangpin_listicon"></i>商城</div>
+			<ul class="siteSearchul" id="goodslist2">
+				
+				
+			</ul>
+		</div>
+				
+	</div>
+					
+</div>
+<div class="wp_100">
+	<div class="botH"></div>
+</div>
+
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var doc=$('header').height();
+		var docw=$('.top_classify').width();
+// 分类的高度
+		$('.top_classify').css({
+			height:$(document).height()-doc
+		});
+		// 选中
+		$('.top_classifylist .top_classifya').click(function(){
+			$(this).addClass('top_classifyaur').siblings().removeClass('top_classifyaur');
+		});
+
+		// 销量切换
+		$('.eval_topul .eval_topli01').click(function(){
+			swicth_type =1;
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			swicthList();
+		});
+		// 多行
+		var flag=false;
+		$('.eval_topul .eval_toplilast').click(function(){
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			if (flag) {
+				$(this).find('a').text('多行排列');
+				// $('.multi_linecon').show();
+				// $('.siteSearchlist').hide();
+				$('.siteSearchlist').addClass('siteSearchlistcur');
+				flag=false
+			}else{
+				$(this).find('a').text('单行排列');
+				// $('.siteSearchlist').show();
+				// $('.multi_linecon').hide();
+				$('.siteSearchlist').removeClass('siteSearchlistcur');
+				flag=true
+			}
+			});
+			// 价格 销量
+		var flag0=true;
+		$('.eval_topul .eval_topliprice').click(function(){
+			$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+			if (flag0) {
+				$(this).find('.sales_sorticon').addClass('sales_sorticon01');
+				
+				flag0=false;
+			}else{
+				$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+				flag0=true;
+			}
+			swicth_type =2;
+			swicthList();
+		});
+		var flag1=true;
+		$('.eval_topul .eval_toplisalvol').click(function(){
+			$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+			$(this).addClass('eval_toplicur').siblings().removeClass('eval_toplicur');
+				if (flag1) {
+					
+					$(this).find('.sales_sorticon').addClass('sales_sorticon01');
+					flag1=false;
+				}else{
+					
+					$(this).find('.sales_sorticon').removeClass('sales_sorticon01');
+					flag1=true
+				}
+				swicth_type=3;
+				swicthList();
+			});
+		});
+
+
+	var category_id = 0;  //三级分类
+	var page = 1;         //当前分页 第几页
+	var is_page = true;   //是否存在下一页
+	var keyword="";
+	var swicth_type=1;    //1综合 2销量升序 3销量降序 4价格升序 5价格降序
+	apiready =function(){
+		//优化点击
+		
+		//加载状态
+		loading('mall_super_goods_list');
+
+		category_id = api.pageParam.category_id;
+		
+		var keywordparam = api.pageParam.keyword;
+		if(keywordparam !=''  && keywordparam !=undefined){
+			$("#keyword").val(keywordparam);
+		}
+		
+
+		
+
+		//获取列表
+		getGoodsList();
+	};
+	
+	/**
+	 * 筛选查询 
+	 */
+	function swicthList(){
+		page =1;
+		is_page = true;
+		getGoodsList();
+	}
+	
+	//获取列表
+	function getGoodsList(){
+		if(swicth_type ==3){
+			$(".mall_list").hide();
+			$(".super_list").show();
+			$("#goodslist2").hide();
+			$("#goodslist").show();
+		}
+		if(swicth_type ==2){
+			$(".mall_list").show();
+			$(".super_list").hide();
+			$("#goodslist").hide();
+			$("#goodslist2").show();
+		}
+		
+		var keyword= $("#keyword").val();
+		_ajax(ajax_url+'Index/Index/getGoodsSuperList',{'type':swicth_type,'name':keyword},'post',function(ret){
+			var strVar = "";
+			var strVar2 = "";
+			if(ret.status ==1){
+				if(ret.goodSuperList !=null  && ret.goodSuperList.length>0){
+				
+					$.each(ret.goodSuperList,function(k,v){
+						strVar += "<li class=\"busi_fenleili\">";
+						strVar += "<div class=\"busi_fenlei\">";
+						strVar += "	<a href=\"javascript:void(0)\" onclick=\"_openWinByUrl('super_goodsdetail','super/super_goodsdetail',{'goods_id':"+v['goods_id']+"})\"   class=\"busi_fenleia\"><img src=\""+v['goods_img']+"\"><\/a>";
+						strVar += "	<div class=\"busi_fenleir\">";
+						strVar += "		<p class=\"busi_fenleirtxt\">";
+						strVar += "			<a href=\"javascript:void(0)\" class=\"busi_fenleirtxta dy_dd\">"+v['goods_name']+"<\/a>";
+						strVar += "		<\/p>";
+						strVar += "		<p class=\"busi_fenleirrice\">";
+						strVar += "			<b class=\"busi_fenleirpriceb\">￥<\/b>"+v['shop_price']; //+"<a href=\"#\" class=\"cart_icon\" style=\"position:inherit; float:right\"><\/a>";
+						strVar += "		<\/p>";
+						strVar += "	<\/div>";
+						strVar += "<\/div>";
+						strVar += "<\/li>";
+					})
+					
+				}
+			   
+			   if(ret.goodMallList !=null  && ret.goodMallList.length>0){
+				
+					$.each(ret.goodMallList,function(k,v){
+						strVar2 += "<li class=\"busi_fenleili\">";
+						strVar2 += "<div class=\"busi_fenlei\">";
+						strVar2 += "	<a href=\"javascript:void(0)\" onclick=\"_openWinByUrl('mall_goodsdetail','mall/mall_goodsdetail',{'goods_id':"+v['goods_id']+"})\"   class=\"busi_fenleia\"><img src=\""+v['goods_img']+"\"><\/a>";
+						strVar2 += "	<div class=\"busi_fenleir\">";
+						strVar2 += "		<p class=\"busi_fenleirtxt\">";
+						strVar2 += "			<a href=\"javascript:void(0)\" class=\"busi_fenleirtxta dy_dd\">"+v['goods_name']+"<\/a>";
+						strVar2 += "		<\/p>";
+						strVar2 += "		<p class=\"busi_fenleirrice\">";
+						strVar2 += "			<b class=\"busi_fenleirpriceb\">￥<\/b>"+v['shop_price']; //+"<a href=\"#\" class=\"cart_icon\" style=\"position:inherit; float:right\"><\/a>";
+						strVar2 += "		<\/p>";
+						strVar2 += "	<\/div>";
+						strVar2 += "<\/div>";
+						strVar2 += "<\/li>";
+					})
+					
+				}
+				
+				
+			    $("#goodslist").html(strVar);
+				$("#goodslist2").html(strVar2);
+				
+			}else{
+				closeloading();
+				_toast(ret.msg);
+			}
+
+			
+			
+			closeloading();
+		    
+		})
+	}
+
+</script>
+</body>
+</html>

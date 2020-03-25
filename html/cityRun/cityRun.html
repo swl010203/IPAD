@@ -1,0 +1,291 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">保定市安国县</h1>
+			<a class="mui-icon mui-icon-back colorRed" id="fanhui_btn"></a>
+			<!--<a class="mui-pull-right iconfont icon-info fs24Icon colorRed mt20"></a>-->
+		</header>
+		<div class="mui-content bgwhite">
+			<div class="ptsy_tabDiv">
+				<ul>
+					<li class="pl20 pr20 box_s border_b pt20 pb20 clearfloat" onclick="_openWinByUrl('helpget','helpget')">
+						<div class="mui-pull-left ptsy_img ptsy_img1"></div>
+						<div class="mui-pull-left ptsy_con">
+							<p class="font_weightB fs32">帮我取</p>
+							<p class="mui-ellipsis-2 colorHui666 mt10">取蛋糕、取鲜花、取文件，专人直取，安全快捷，5公里30分钟到达</p>
+						</div>
+					</li>
+					<li class="pl20 pr20 box_s border_b pt20 pb20 clearfloat" onclick="_openWinByUrl('helpgive','helpgive')">
+						<div class="mui-pull-left ptsy_img ptsy_img2"></div>
+						<div class="mui-pull-left ptsy_con">
+							<p class="font_weightB fs32">帮我送</p>
+							<p class="mui-ellipsis-2 colorHui666 mt10">取蛋糕、取鲜花、取文件，专人直取，安全快捷，5公里30分钟到达</p>
+						</div>
+					</li>
+					<li class="pl20 pr20 box_s border_b pt20 pb20 clearfloat" onclick="_openWinByUrl('helpbuy','helpbuy')">
+						<div class="mui-pull-left ptsy_img ptsy_img3"></div>
+						<div class="mui-pull-left ptsy_con">
+							<p class="font_weightB fs32">帮我买</p>
+							<p class="mui-ellipsis-2 colorHui666 mt10">取蛋糕、取鲜花、取文件，专人直取，安全快捷，5公里30分钟到达</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="ptsy_tabDiv mui-hidden">
+				<div class="orderList">
+					<div class="orderList_tit fs24 clearfloat pl20 pr20 box_s border_b">
+						<div><span class="click" onclick="switchTab(1)">全部</span></div>
+						<div><span onclick="switchTab(2)">待支付</span></div>
+						<div><span onclick="switchTab(3)">待接单</span></div>
+						<div><span onclick="switchTab(4)">进行中</span></div>
+						<div><span onclick="switchTab(5)" id="ywc">已完成</span></div>
+						<div><span onclick="switchTab(6)">已取消</span></div>
+					</div>
+					<div class="orderList_con pl20 pr20 box_s fs28">
+						<ul id="allOrder">
+							<!--<li class="orderList_con_li pl20 pr20 box_s">
+								<p class="clearfloat pt20 pb20 border_b">
+									<span class="pl20 orderList_con_titFl">帮我送</span>
+									<span class="colorRed fr">进行中</span>
+								</p>
+								<div class="border_b pb20">
+									<p class="pt20">订单号：494354161321313</p>
+									<div class="clearfloat pt10">
+										<div class="fl order_info_addr_icon order_info_addr_icon_qu"></div>
+										<div class="fl order_info_con fs28">
+											<p>保定市安国市金融路118号药都新城售楼部</p>
+										</div>
+									</div>
+									<div class="clearfloat pt10">
+										<div class="fl order_info_addr_icon order_info_addr_icon_song"></div>
+										<div class="fl order_info_con fs28">
+											<p>保定市安国市金融路188号联通大楼10屋行家网络科技有限公司</p>
+										</div>
+									</div>
+								</div>
+								<div class="orderList_con_flow pb10 mt10">
+									<div class="clearfloat">
+										<div class="orderList_con_flowImg">
+											<img src="../../images/ddlb1.jpg"/>
+										</div>
+										<div class="orderList_con_flowImg">
+											<img src="../../images/ddlb1.jpg"/>
+										</div>
+										<div class="orderList_con_flowImg">
+											<img src="../../images/ddlb1.jpg"/>
+										</div>
+										<div class="orderList_con_flowImg">
+											<img src="../../images/ddlb1.jpg"/>
+										</div>
+									</div>
+									<p class="clearfloat">
+										<span>2018-07-12</span>
+										<span class="fr">￥11.50</span>
+									</p>
+								</div>
+							</li>
+							<li class="orderList_con_li pl20 pr20 box_s">
+								<p class="clearfloat pt20 pb20 border_b">
+									<span class="pl20 orderList_con_titFl">帮我买</span>
+									<span class="colorRed fr">进行中</span>
+								</p>
+								<div class="border_b pb20">
+									<p class="pt20">订单号：494354161321313</p>
+									<div class="clearfloat pt10">
+										<div class="fl order_info_addr_icon order_info_addr_icon_qu"></div>
+										<div class="fl order_info_con fs28">
+											<p>保定市安国市金融路118号药都新城售楼部</p>
+										</div>
+									</div>
+									<div class="clearfloat pt10">
+										<div class="fl order_info_addr_icon order_info_addr_icon_song"></div>
+										<div class="fl order_info_con fs28">
+											<p>保定市安国市金融路188号联通大楼10屋行家网络科技有限公司</p>
+										</div>
+									</div>
+								</div>
+								<div class="orderList_con_flow pb10 mt10">
+									<p class="clearfloat">
+										<span>2018-07-12</span>
+										<span class="fr">￥11.50</span>
+									</p>
+								</div>
+							</li>-->
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div style="height: 60px;"></div>
+			<div class="footer_tab_click border_t">
+				<div class="tab_click mui-row bgwhite">
+					<div class="mui-col-sm-6 mui-col-xs-6 before active">首页</div>
+					<div class="mui-col-sm-6 mui-col-xs-6">订单</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		$(".tab_click>div").on("tap",function(){
+			var index_ = $(this).index();
+			if(index_ == 1){
+				if(uid == null || uid == 'undefined' || uid == ''){
+					_toast('请登陆');
+					return false;
+				}
+			}
+			$(this).addClass("active").siblings().removeClass("active");
+			$(".ptsy_tabDiv").addClass("mui-hidden");
+			$(".ptsy_tabDiv").eq(index_).removeClass("mui-hidden");
+		});
+		$(".orderList_tit span").on("tap",function(){
+			$(this).addClass("click").parents().siblings().find("span").removeClass("click");
+		});
+		
+		var uid = '';
+		var otype = 1;
+		apiready = function(){
+			addEventUserInfo();
+			api.addEventListener({
+				name: 'tab'
+			}, function(ret, err){
+				if( ret.value.key1 == 2 ){
+					   $('#allOrder1').addClass("active").siblings().removeClass("active");
+					   $(".ptsy_tabDiv").addClass("mui-hidden");
+					   var index_ = $('#allOrder1').index();
+					   $(".ptsy_tabDiv").eq(index_).removeClass("mui-hidden");
+					   getOrder();
+				}
+			});
+			var userinfo = $api.getStorage('userinfo');
+			uid = userinfo.uid;
+			console.log('uid'+uid);
+			localStorage.setItem('uid',uid);
+			uid = localStorage.getItem('uid');
+			console.log('uid2'+uid);
+			getOrder();
+		};
+
+		function switchTab(stype) {
+			otype = stype;
+	        getOrder();
+	    }
+
+		//获取全部订单
+		function getOrder(){
+			_ajax(ajax_url+'Index/CityRun/allOrder',{'uid':uid,'type':otype},'post',function(ret,err){
+				if(ret.status == 1){
+					var strVar = '';
+					$.each(ret.data,function(k,v){
+						if(v.pay_status == 1 && v.status == 0){
+							strVar += '<li class="orderList_con_li pl20 pr20 box_s" onclick="_openWinByUrl(\'orderdetail\',\'orderdetail\',{\'order_sn\':\''+v.order_sn+'\',\'help_type\':'+v.help_type+'});">';
+						}else if(v.pay_status == 0 && v.status == 0){
+							strVar += '<li class="orderList_con_li pl20 pr20 box_s" onclick="_openWinByUrl(\'orderpay\',\'orderpay\',{\'order_sn\':\''+v.order_sn+'\',\'pay_notify_type\':'+v.pnt+',\'help_type\':'+v.help_type+'});">';
+						}else{
+							strVar += '<li class="orderList_con_li pl20 pr20 box_s">';
+						}
+						strVar += '	<p class="clearfloat pt20 pb20 border_b">';
+						strVar += '		<span class="pl20 orderList_con_titFl">'+v.help_type_name+'</span>';
+						strVar += '		<span class="colorRed fr">'+v.orderStatus+'</span>';
+						strVar += '	</p>';
+						strVar += '	<div class="border_b pb20">';
+						if(v.pay_status == 1 && v.status == 3){
+							strVar += '		<p class="pt20"  onclick="_openWinByUrl(\'orderdetail\',\'orderdetail\',{\'order_sn\':\''+v.order_sn+'\',\'help_type\':'+v.help_type+'});">订单号：'+v.order_sn+'</p>';
+						}
+						strVar += '		<div class="clearfloat pt10">';
+						strVar += '			<div class="fl order_info_addr_icon order_info_addr_icon_qu"></div>';
+						strVar += '			<div class="fl order_info_con fs28">';
+						strVar += '				<p>'+v.picker_address+'</p>';
+						strVar += '			</div>';
+						strVar += '		</div>';
+						strVar += '		<div class="clearfloat pt10">';
+						strVar += '			<div class="fl order_info_addr_icon order_info_addr_icon_song"></div>';
+						strVar += '			<div class="fl order_info_con fs28">';
+						strVar += '				<p>'+v.collect_user_address+'</p>';
+						strVar += '			</div>';
+						strVar += '		</div>';
+						strVar += '	</div>';
+						strVar += '	<div class="orderList_con_flow pb10 mt10">';
+
+						if(v.goods_pic){
+							$.each(v.goods_pic,function(k2,v2){
+								strVar += '		<div class="clearfloat">';
+								strVar += '			<div class="orderList_con_flowImg" style="float:left">';
+								strVar += '				<img src="'+v2+'"/>';
+								strVar += '			</div>';
+								strVar += '		</div>';
+							});
+						}else{
+							if(v.good_cate){
+								if(v.help_type == 3){
+									$.each(v.good_cate,function(k1,v1){
+										strVar += '		<div class="clearfloat">';
+										strVar += '			<div class="orderList_con_flowImg" style="float:left">';
+										strVar += '				<img src="'+v1+'"/>';
+										strVar += '			</div>';
+										strVar += '		</div>';
+									});
+								}else{
+									strVar += '		<div class="clearfloat">';
+									strVar += '			<div class="orderList_con_flowImg">';
+									strVar += '				<img src="'+v.good_cate+'"/>';
+									strVar += '			</div>';
+									strVar += '		</div>';
+								}
+							}
+						}
+						strVar += '		<p class="clearfloat">';
+						strVar += '			<span>'+v.add_time+'</span>';
+						strVar += '			<span class="fr">￥'+v.pay_money+'</span>';
+						if(v.status == 3){
+							strVar += '<span class="qupingdan_div_span" onclick="qrorder('+v.help_type+',\''+v.order_sn+'\')">确认收货</span>';
+						}
+						strVar += '		</p>';
+						strVar += '	</div>';
+						strVar += '</li>';
+					});
+					$('#allOrder').html(strVar);
+				}else{
+					$('#allOrder').html('');
+					// _toast('暂无数据');
+					return false;
+				}
+			});
+		}
+
+		function qrorder(help_type,order_sn){
+			// alert(help_type);alert(order_sn);return false;
+			_ajax(ajax_url+'Index/CityRun/qrorder',{'order_sn':order_sn,'help_type':help_type},'post',function(ret,err){
+				if(ret.status == 1){
+					_toast('操作成功',function(){
+						getOrder();
+						$(".orderList_tit span").removeClass('click');
+						$('#ywc').addClass('click');
+						switchTab(5);
+					});
+				}else{
+					_toast('操作失败');
+					return false;
+				}
+			});
+		}
+	</script>
+</html>

@@ -1,0 +1,87 @@
+header{
+	letter-spacing: 0.36rem;	
+}
+.sky {
+  height: 464px;
+  background: url(../../images/washing/bj.png) no-repeat;
+  background-size: 100% 364px;
+  position: relative;
+}
+.sky .box {
+  position: absolute;
+  width: 100%;
+  padding: 0 0.2rem;
+  bottom: 0.05rem;
+}
+.sky .box nav {
+  width: 100%;
+  height: 200px;
+  background-color: #fff;
+  font-size:18px;
+  border-radius: 0.05rem;
+  box-shadow: 1px 1px 2px #cecece;
+}
+.sky .box nav li {
+  float: left;
+  margin-top:30px;
+  margin-left:60px;
+}
+.sky .box nav li:first-child {
+  margin-left:27px;
+}
+/* .sky .box nav li:last-child {
+  margin-right: 40px;
+} */
+.sky .box nav li img {
+  width: 100px;
+  height: 136px;
+  display: block;
+}
+.sky .box nav .arrow {
+  float: left;
+  background: url(../../images/washing/arrow-r.png) no-repeat 10px 32px;
+  background-size: 18px 28px;
+  width: 43px;
+  height: 60px;
+}
+/*洗涤流程结束*/
+/*一键预约*/ .price .head {
+  height: 60px;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size:20px;
+  color: #282828;
+  line-height: 50px;
+}
+.price .head .fl {
+  padding-left: 46px;
+  background: url(../../images/washing/price.png) no-repeat 20px 18px;
+  background-size: 20px 24px;
+}
+.price .head .fr {
+  padding-right: 0.4rem;
+  background: url(../../images/washing/price-arr.png) no-repeat 1.2rem 0.34rem;
+  background-size: 0.11rem 0.2rem;
+}
+.price .head .fr a {
+  color: #999;
+}
+/*顶部结束*/
+.price .main .photo {
+  width: 286px;
+  height: 286px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.price .main .photo img {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+.price .main li {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 20px;
+  color: #d12a18;
+}
+/*# sourceMappingURL=washing.css.map */

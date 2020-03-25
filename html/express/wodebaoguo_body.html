@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>050我的包裹</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<div id="list"></div>
+		<!--中间内容-->
+		<!--<div class="chakanjilu mar_t">
+			<div class="inner_chakanjilu">
+				<p class="inner_chakanjilu_tit bor_b clearfloat">
+					<span class="fl">运单编号：<i>484645864846154514616546131</i></span>
+					
+				</p>
+				<div class="inner_chakanjilu_center bor_b">
+					<p>承运来源：<span>顺丰速运</span></p>
+					<p>物流状态：<span>配送中</span></p>
+				</div>
+				<div class="inner_chakanjilu_center bor_b clearfloat">
+					<div class="zhifuBtn mar_t fr mar_l20">查看物流</div>
+					<div class="addBtn mar_t fr">订单详情</div>
+				</div>
+			</div>
+		</div>
+		<div class="chakanjilu mar_t">
+			<div class="inner_chakanjilu">
+				<p class="inner_chakanjilu_tit bor_b clearfloat">
+					<span class="fl">运单编号：<i>484645864846154514616546131</i></span>
+					<span class="fr">已支付</span>
+				</p>
+				<div class="inner_chakanjilu_center bor_b">
+					<p>承运来源：<span>顺丰速运</span></p>
+					<p>物流状态：<span>配送中</span></p>
+				</div>
+				<div class="inner_chakanjilu_center bor_b clearfloat">
+					<div class="zhifuBtn mar_t fr mar_l20">查看物流</div>
+					<div class="addBtn mar_t fr">订单详情</div>
+				</div>
+			</div>
+		</div>-->
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		
+		
+		var page = 1;
+	    var is_page = true;
+		var uid = localStorage.getItem("uid");
+		apiready = function(){
+			//听滚动条是否到底部
+			api.addEventListener({
+			    name:'scrolltobottom',
+			    extra:{
+			        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+			    }
+			}, function(ret, err){        
+			     if(is_page){
+			        page = page +1;
+				    getLogisticsList();
+			     }
+				  
+			});
+			
+			getLogisticsList();	
+		};
+		
+		function getLogisticsList(){
+			_ajax(ajax_url+"Index/Family/getLogisticsList" ,{'uid':uid,'p':page},'get',function(ret){
+				var strVar = "";
+				if(ret.status == 1){
+    				$(ret.data).each(function(k,v){
+    					
+					    strVar += "<div class=\"chakanjilu mar_t\">\n";
+					    strVar += "    <div class=\"inner_chakanjilu\">\n";
+					    strVar += "        <p class=\"inner_chakanjilu_tit bor_b clearfloat\">\n";
+					    strVar += "            <span class=\"fl\">预约编号：<i>"+v['order_sn']+"<\/i><\/span>\n";
+					    strVar += "            <span class=\"fr\">";
+					    
+					    if(v['status'] ==1){
+					    	strVar += '待处理';
+					    }else{
+					    	strVar += '已处理';
+					    }
+					    
+					    strVar += "<\/span>\n";
+					    strVar += "        <\/p>\n";
+					    strVar += "        <div class=\"inner_chakanjilu_center bor_b\">\n";
+					    strVar += "            <p>快递公司：<span>"+v['courier_info']+"<\/span><\/p>\n";
+					    strVar += "            <p>联系人：<span>"+v['name']+"<\/span><\/p>\n";
+					    strVar += "            <p>地址：<span>"+v['address']+"<\/span><\/p>\n";
+					    strVar += "        <\/div>\n";
+					    
+					    if(v['status'] == 2  && v['logistics_sn'] !=null  && v['logistics_sn'] !=''){
+					    	strVar += "        <div class=\"inner_chakanjilu_center bor_b clearfloat\">\n";
+						    strVar += "            <div onclick=\"logistics('"+v['logistics_sn']+"')\" class=\"zhifuBtn mar_t fr mar_l20\">查看物流<\/div>\n";
+						    //strVar += "            <div class=\"addBtn mar_t fr\">订单详情<\/div>\n";
+						    strVar += "        <\/div>\n";
+					    }
+
+					    strVar += "    <\/div>\n";
+					    strVar += "<\/div>\n";
+    				});
+    				
+    				if(page ==1){
+    					$("#list").html(strVar);
+    				}else{
+    					$("#list").append(strVar);
+    				}
+				}else{
+					is_page = false;
+					if(page == 1){
+						$("#list").html(strVar);
+					}
+					_toast(ret.info);
+				}
+				
+				
+			});
+		}
+		
+		
+		function logistics(logistics_sn){
+			_openWinByUrl('wuliuzhuangtai','wuliuzhuangtai',{'logistics_sn':logistics_sn})
+		}
+	</script>
+</html>

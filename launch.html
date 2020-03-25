@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="./css/swiper.min.css" />
+	
+		
+		<style type="text/css">
+			html, body {
+				position: relative;
+				height: 100%;
+			}
+			body {
+				background: #eee;
+				font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+				font-size: 14px;
+				color: #000;
+				margin: 0;
+				padding: 0;
+			}
+			.swiper-container {
+				width: 100%;
+				height: 100%;
+			}
+			.swiper-slide {
+				text-align: center;
+				font-size: 18px;
+				background: #fff;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: -webkit-flex;
+				display: flex;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				-webkit-justify-content: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				-webkit-align-items: center;
+				align-items: center;
+				position: relative;
+			}
+			.swiper-wrapper .swiper-slide:nth-child(1) {
+				background: url(./image/launch1.jpg) no-repeat center center;
+				background-size: cover;
+				-webkit-background-size: cover;
+			}
+			.swiper-wrapper .swiper-slide:nth-child(2) {
+				background: url(./image/launch2.jpg) no-repeat center center;
+				background-size: cover;
+				-webkit-background-size: cover;
+			}
+	
+			#loginApp {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				width: 30px;
+				height: 30px;
+				display: -webkit-box;
+				-webkit-box-orient: horizontal;
+				-webkit-box-pack: center;
+				-webkit-box-align: center;
+				display: box;
+				box-orient: horizontal;
+				box-pack: center;
+				box-align: center;
+				z-index: 10000000;
+			}
+			#loginApp i {
+				font-size: 25px;
+				color: #fff;
+				line-height: normal;
+			}
+			.swiper-pagination-bullet-active{
+				background:#f2a109;
+			}
+			
+			body,html{height: 100%; overflow: hidden;}
+	.imgwrap{ position: relative;}
+	.skipbtn img{width: 0.91rem; height: 0.46rem; position: absolute;right: 0.4rem; top: 0.8rem; display: inline-block;}
+	.login img{width: 1.95rem; height: 1.32rem; position: absolute; left: 0.4rem; bottom: 0; display: inline-block;}
+	.regist img{width: 1.95rem; height: 1.32rem; display: inline-block;position: absolute; right: 0;bottom: 0;}
+		</style>
+	</head>
+	<body>
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+			
+				<div class="swiper-slide stop-swiping"></div>
+				<div class="swiper-slide imgwrap">
+				
+					<a href="javascript:" onclick="closeFrame();" class="skipbtn"><img src="images/skipbtn.png"></a>
+					<a href="javascript:" onclick="login('login','')" class="login"><img src="images/login_btn.png"></a>
+					<a href="javascript:" onclick="register('register')" class="regist"><img src="images/regist_btn.png"></a>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</body>
+	<script type="text/javascript" src="./script/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="script/common.js"></script>
+	<script type="text/javascript" src="./script/swiper.min.js"></script>
+	<script type="text/javascript">
+		var swiper = new Swiper('.swiper-container', {
+			//pagination : '.swiper-pagination',
+			paginationClickable : true,
+			paginationClickable : true,
+			noSwiping : true,
+
+			onSliderMove:function(swiper, event){
+				
+				if(swiper.activeIndex==1){
+					 //closeFrame();
+				}						
+			}
+		});
+		// 关闭
+		function closeFrame() {
+			
+			localStorage.setItem("launch",false);
+            api.sendEvent({
+	            name:'frist_launch'
+            });
+			api.closeFrame({
+				name: 'launch'
+			});
+		}
+			
+			
+		function login(name , redirect_url){
+			localStorage.setItem("launch",false);
+			
+            
+            api.openWin({
+	            name: 'login',
+	            url: './html/login.html',
+	            slidBackEnabled:false,
+            });
+            
+            
+            /*api.closeFrame({
+				name: 'launch'
+			});*/
+            
+			
+		}
+		
+		function register(name){
+			localStorage.setItem("launch",false);
+			api.openWin({
+	            name: 'register',
+	            url: './html/register.html',
+	            slidBackEnabled:false,
+	            pageParam:{
+	            	redirect_url:'root',
+	            	launch:1
+	            }
+            });
+            /*
+            api.sendEvent({
+	            name:'frist_launch'
+            });
+			api.closeFrame({
+				name: 'launch'
+			});*/
+		}
+		
+		apiready = function () {
+			//修改状态栏
+	    	api.setStatusBarStyle({
+			    style: 'light'
+			});
+		}
+		
+		
+	</script>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+ <meta name="format-detection" content="telephone=no">
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+
+</head>
+<body>
+<style type="text/css">
+	.shareMainwrap{ height: 1.7rem; bottom: 0; }
+	.shareMain01{    position: absolute;    width: 100%;background: #fff;    bottom: 0rem; left: 0;}
+	.shareMainli{    margin-top: 0.1rem; margin-bottom: 0.1rem;}
+	.bot_btn{ position: absolute; bottom: 0; left: 0;  z-index: 9999;}
+	.shareMain01 .shareMainli{margin-bottom: 0.95rem;}
+	.my_maincon{margin-top:0rem}
+	
+</style>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="mytopBg">
+		<div class="mytopcon">
+			<p class="mytopconp01" style="overflow: hidden;">
+				<!--<span class="mytopconspan01">余额：￥<i class="money_all">0.00</i></span>-->
+				<span class="mytopconspan02">积分：<i class="integral">0.00</i></span>
+			</p>
+			<div class="login" onclick="_openWinByUrl('login','login');">
+			<p class="mytoppic">
+				<span class="mytoppicspan"><img class="portrait" src="../images/default_portrait.png"></span>
+			</p>
+			<p class="mytoppictxt" ><i class="username">登录/注册</i></p>
+			</div>
+			
+		</div>
+	</div>
+<div class="my_maincon">
+	<!--<div class="my_mainconlist">
+		<ul class="my_mainul">
+			<li class="my_mainlicur"><a href="#" class="my_mainlia">
+				<i class="my_icon01"></i>
+				<p class="my_mainlip01">全部订单</p>
+				<span class="my_mainli_line"></span>
+			</a></li>
+			<li class=""><a href="#" class="my_mainlia">
+				<i class="my_icon02"></i>
+				<p class="my_mainlip01">待支付</p>
+				<span class="my_mainli_line"></span>
+				<b class="zhufu_dot">12</b>
+			</a></li>
+			<li class=""><a href="#" class="my_mainlia">
+				<i class="my_icon03"></i>
+				<p class="my_mainlip01">已支付</p>
+				<span class="my_mainli_line"></span>
+			</a></li>
+			<li class=""><a href="#" class="my_mainlia">
+				<i class="my_icon04"></i>
+				<p class="my_mainlip01">待评价</p>
+				<span class="my_mainli_line"></span>
+			</a></li>
+		</ul>
+	</div>-->
+	<div class="my_iconlist">
+		<ul class="my_iconul">
+			<li class="my_iconli">
+				<a href="javascript:void(0)" class="my_iconlia" onclick="openWinBylogin('card','card/card','惠通卡')"  >
+					<img src="../images/hmy_icon01.png" />
+					<p class="my_iconliap01">惠通卡</p>
+				</a>
+			</li>
+			<li class="my_iconli">
+				<a href="javascript:void(0)" class="my_iconlia" onclick="openWinOrderList('mall_order_list','user/mall_order_list');">
+					<img src="../images/hmy_icon010.png" />
+					<p class="my_iconliap01">订单</p>
+				</a>
+			</li>
+			<!--
+			<li class="my_iconli">
+				<a href="javascript:void(0)" class="my_iconlia" onclick="openWinOrderList('super_order_list','user/super_order_list');">
+					<img src="../images/hmy_icon011.png" />
+					<p class="my_iconliap01">超市订单</p>
+				</a>
+			</li>-->
+			<!--<li class="my_iconli">
+				<a href="javascript:void(0)" onclick="openWinOrderList('food_order_list','user/food_order_list');" class="my_iconlia">
+					<img src="../images/hmy_icon02.png" />
+					<p class="my_iconliap01">餐饮订单</p>
+				</a>
+			</li>
+			<li class="my_iconli">
+				<a href="javascript:void(0)" onclick="openWinOrderList('hotel_order_list','user/hotel_order_list');"  class="my_iconlia">
+					<img src="../images/hmy_icon03.png" />
+					<p class="my_iconliap01">酒店订单</p>
+				</a>
+			</li>-->
+				<li class="my_iconli">
+				<a href="javascript:void(0)" onclick=openWinBylogin('jifen','user/jifen_order_list','积分订单');  class="my_iconlia">
+					<img src="../images/score_icon.png" />
+					<p class="my_iconliap01">积分订单</p>
+				</a>
+			</li>
+			<!--<li class="my_iconli">
+				<a href="javascript:void(0)" onclick="openWinOrderList('assumpsit_head','user/assumpsit_head');"  class="my_iconlia">
+					<img src="../images/hmy_icon04.png" />
+					<p class="my_iconliap01">预约订单</p>
+				</a>
+			</li>-->
+			<li class="my_iconli">
+				<a href="javascript:void(0);" onclick=openWinBylogin('score','user/score','我的积分'); class="my_iconlia">
+					<img src="../images/hmy_icon05.png" />
+					<p class="my_iconliap01">我的积分</p>
+				</a>
+			</li>
+			<!--<li class="my_iconli">
+				<a href="javascript:void(0);" class="my_iconlia" onclick=opencollectgood();>
+					<img src="../images/hmy_icon06.png" />
+					<p class="my_iconliap01">心爱商品</p>
+				</a>
+			</li>
+			<li class="my_iconli">
+				<a href="javascript:void(0);" class="my_iconlia" onclick=opencollect();>
+					<img src="../images/hmy_icon07.png" />
+					<p class="my_iconliap01">心爱商家</p>
+				</a>
+			</li>
+			<li class="my_iconli">
+				<a href="javascript:void(0)" onclick="openWinOrderList('coupons_head','user/coupons_head');"   class="my_iconlia">
+					<img src="../images/hmy_icon08.png" />
+					<p class="my_iconliap01">优惠券</p>
+				</a>
+			</li>-->
+			<li class="my_iconli">
+				<a href="javascript:void(0)" onclick="openWinBylogin('turntable','user/turntable','中奖查询')"   class="my_iconlia">
+					<img src="../images/truntable.png" />
+					<p class="my_iconliap01">中奖查询</p>
+				</a>
+			</li>
+			<li class="my_iconli">
+				<a href="javascript:void(0)" onclick="share();" class="my_iconlia">
+					<img src="../images/hmy_icon09.png" />
+					<p class="my_iconliap01">分享给朋友</p>
+				</a>
+			</li>
+			<li class="my_iconli">
+				<a href="tel:4009008987" class="my_iconlia">
+					<img src="../images/kefu.png" />
+					<p class="my_iconliap01">客服中心</p>
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+
+</div>
+
+<div class="wp_100">
+	<div class="botH"></div>
+</div>
+<!-- 底部 -->
+<script type="text/javascript" src="../script/app.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	function share(){
+
+		var header = $api.byId('header');
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		 api.openFrame({
+            name: 'share',
+            url: 'share.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: 0,
+                w: 'auto',
+                h: 'auto'
+            },
+			pageParam:{
+				url:'www.baidu.com'
+			}
+        });
+	}
+	
+	var userinfo = "";
+	apiready = function(){	
+	
+		api.addEventListener({
+		    name:'viewappear'
+		}, function(ret, err){ 
+		userinfo =$api.getStorage('userinfo');       
+		  ready();
+		  //获取用户积分
+		  setScore();
+		});
+		
+		userinfo =$api.getStorage('userinfo');
+		console.log(userinfo);
+		ready();
+		
+		api.addEventListener({
+	        name:'loginout'
+        },function(ret,err){
+        	userinfo ="";
+			ready();
+        });
+        
+        api.addEventListener({
+	        name:'refresh_userinfo'
+        },function(ret,err){
+        	userinfo =ret.value.userinfo;
+			ready();
+        });
+        
+        
+	};
+	
+	function ready(){
+	  
+		//个人信息
+		if(userinfo  !='undefined'  &&  userinfo !='' && userinfo !=null){
+			if(userinfo.nickname  ==''  ||  userinfo.nickname ==null){
+				$(".username").html(userinfo.username);
+			}else{
+				$(".username").html(userinfo.nickname);
+			}
+			
+			$(".money_all").html(userinfo.money_all);
+			 //获取用户积分
+		     setScore();
+			//$(".integral").html(userinfo.integral);
+			$(".login").attr('onclick',"_openWinByUrl('userinfo','user/userinfo_head',{'title':'编辑个人资料'})");
+			$(".portrait").attr('src',userinfo.portrait);
+		}else{
+			$(".username").html('登录/注册');
+			$(".money_all").html(0.00);
+			$(".integral").html(0);
+			$(".login").attr('onclick',"_openWinByUrl('login','login')");
+			$(".portrait").attr('src','../images/default_portrait.png');
+		}
+		
+		
+	}
+	function setScore(){
+		if(userinfo  !='undefined'  &&  userinfo !='' && userinfo !=null){
+			 api.ajax({
+				url : ajax_url+'Index/User/score',
+				method : 'post',
+				data : {
+					values : {
+						uid : userinfo.uid
+					}
+				}
+			},function(ret, err) {
+			  if(ret){
+			   if(ret.code==1){
+			    var data=ret.data;
+			    $(".integral").html(data);
+			   }
+			  }
+			
+			})
+		}
+	
+	
+	}
+	
+	
+	/**
+	 * 个人中心判断是否登陆 跳转页面 
+	 */
+	function openWinOrderList(name,url,param){
+	
+		//判断是否登陆
+		if(userinfo  =='undefined' ||  userinfo =='' || userinfo ==null){
+			_openWinByUrl('login','login');
+			return false;
+		}
+
+		_openWinByUrl(name,url);
+
+	}
+	
+	/**
+	 * 个人中心判断是否登陆 跳转页面 
+	 */
+	function openWinBylogin(name,url,title){
+	
+		//判断是否登陆
+		if(userinfo  =='undefined'  ||  userinfo =='' || userinfo ==null){
+			_openWinByUrl('login','login');
+			return false;
+		}
+		
+		//alert(url);
+		/**
+		 * title 头部标题
+		 * furl  跳转页面地址
+		 * frame frame窗口名称
+		 */
+		_openWinByUrl(name+'_window_head','window_head',{'furl':url,'frame':name,'title':title});
+
+
+		
+	}
+	/*
+	 * 跳转到收藏商家
+	 */
+	function opencollect(){
+		if(userinfo  !='undefined'  &&  userinfo !='' && userinfo !=null){
+			_openWinByUrl('collectshop','user/collectshop');	
+		}else{
+		  _openWinByUrl('login','./login')		
+		}
+
+	}
+		/*
+	 * 跳转到收藏商品
+	 */
+	function opencollectgood(){
+		if(userinfo  !='undefined'  &&  userinfo !='' && userinfo !=null){
+			_openWinByUrl('collectgoods','user/collectgoods');	
+		}else{
+		  _openWinByUrl('login','./login')		
+		}
+
+	}
+
+</script>
+</body>
+</html>

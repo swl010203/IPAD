@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+
+</head>
+<body>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="pad_20">
+		<div class="inputContainer">
+			<i class="vereistIcon">*</i>
+			<input class="loginInpt loginInpt01" placeholder="请输入手机号" autocomplete="off" name="mobile">
+		</div>
+		
+		<div class="inputContainer">
+			<i class="vereistIcon">*</i>
+			<a href="javascript:void(0);" onclick="sms();" class="gainCode">获取验证码</a>
+			<input type="number" class="loginInpt loginInpt01" placeholder="请输入验证码" autocomplete="off" name="code">
+		</div>
+		
+		
+		<div style="padding-top: 2rem;">
+		<a href="javascript:void(0);" onclick="next();" class="btn01">下一步</a>
+		</div>
+	
+	</div>
+	
+</div>
+<script type="text/javascript">
+
+/*
+ * 发送验证码
+ */
+function sms(){
+  var mobile=$("input[name=mobile]").val();//手机号
+    if(!mobile){
+  _toast('请填写手机号码');
+  return false;  
+  }else{
+   if(!_isPhone(mobile)){
+   _toast('手机格式不正确');
+  return false;  
+   }
+  }
+ api.ajax({
+				url : ajax_url + 'Index/Base/getVerificationCode',
+				method : 'post',
+				data : {
+					values : {
+						mobile:mobile,
+					},
+				}
+			}, function(ret, err) {
+			  if(ret){
+			   if(ret.status == 1){
+			   _toast(ret.msg);
+			   	time();
+			   }else{
+			   _toast(ret.msg);
+			   }
+			  }
+			})
+}
+function next(){
+  var mobile=$("input[name=mobile]").val();//手机号
+  var code=$("input[name=code]").val();//验证码
+    if(!mobile){
+  _toast('请填写手机号码');
+  return false;  
+  }else{
+   if(!_isPhone(mobile)){
+   _toast('手机格式不正确');
+  return false;  
+   }
+  }
+  if(!code){
+   _toast('请输入验证码');
+   return false;
+  }
+   api.ajax({
+		url : ajax_url + 'Index/User/nextMobile',
+		method : 'post',
+		data : {
+			values : {
+				mobile:mobile,
+				code:code
+			},
+		}
+	}, function(ret, err) {
+	  if(ret){
+	   if(ret.status==1){
+	  		 openforget('forgetpasstwo','forgetpasstwo','找回密码',mobile);
+	   }else{
+	   		_toast(ret.msg);
+	   }
+	  }
+	})
+}
+	function openforget(name,url,title,id){
+	 _openWinByUrl(name+'_head','window_head',{'furl':url,'frame':name,'title':title,'mobile':id});
+	}
+	
+	
+	
+	//时间倒计时
+	var wait=60;
+	function time(){		
+		 if (wait == 0) {  
+           // o.removeAttribute("disabled");
+            $(".gainCode").attr('onclick','sms()');
+            $(".gainCode").html('获取验证码');                        
+            wait = 60;  
+			//time();
+        } else {  
+           // o.setAttribute("disabled", true);  
+            $(".gainCode").attr('onclick','');  
+            $(".gainCode").html(wait+'秒后重新发送');   
+           // o.value="重新发送(" + wait + ")";  
+            wait--;  
+            setTimeout(function(){
+				time();
+			},1000); 
+        }  
+	}
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">活动详情</h1>
+			<!--<a class="mui-pull-right iconfont icon-fenxiang fenxiang_click fs24Icon colorRed mt20"></a>-->
+		</header>
+		<div class="mui-content">
+			<div class="pl20 pr20 box_s bgwhite">
+				<div class="activeInfo_tit pb10">
+					<p class="fs28 mui-text-center pt20 activeTitle"></p>
+					<p class="fs24 colorHui999 mui-text-center pt20 activeDate"></p>
+				</div>
+				<div class="mt20 rich_text">
+					<img id="active_img"/>
+            		<p  class="activeContent"></p>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+		var height_ = $(window).height();
+	    $(".rich_text").height(height_-132);
+	    var activeId = '';
+	    apiready = function(){
+	        activeId = api.pageParam.activeId;
+	
+	        // 获取活动详情
+	        getActiveDetail(activeId);
+	    };
+		/**
+	     * 获取活动详情
+	     * @param activeId  活动 id
+	     */
+	    function getActiveDetail(activeId){
+	        _ajax(ajax_url + 'Index/Exercise/getActiveDetail', {'actId': activeId}, 'get', function (ret) {
+	            if(ret.status == 1){
+	                //
+	                var data = ret.data;
+	                $('.activeTitle').text(data.title);
+	                $('.activeDate').text(data.add_time);
+	                $('#active_img').attr('src',data.big_pic);
+	                $('.activeContent').html(data.content);
+	            }else{
+	                _toast(ret.info);
+	            }
+	        });
+	    }
+	</script>
+</html>

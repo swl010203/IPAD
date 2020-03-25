@@ -1,0 +1,66 @@
+/*轮播插件自定样式*/
+
+.swiper-container {
+  width: 100%;
+  height: 240px;
+}
+/*修改内部单元的宽度和高度*/
+.swiper-slide {
+  width: 600px;
+  height: 240px;
+}
+.swiper-slide img{
+	 width: 100%;
+	 height: 100%;
+}
+.pagination {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  margin:0 auto;
+  text-align:center;
+  bottom: 10px;
+}
+.swiper-pagination-switch {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background: #222;
+  margin-right: 5px;
+  opacity: 0.8;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+.swiper-active-switch {
+  background: #fff;
+}
+/*修改左右遮罩层的宽度*/
+.shadeLeft{
+	position:absolute;
+	left:0;
+	top:0;
+	width:382px;
+	height:256px;
+	z-index:30;
+	background-color:#000000;
+	filter:alpha(opacity=50);  
+  -moz-opacity:0.5;  
+  -khtml-opacity: 0.5;  
+  opacity: 0.5; 
+}
+.shadeRight{
+	position:absolute;
+	right:0;
+	top:0;
+	width:384px;
+	height:256px;
+	opacity:0.8;
+	z-index:30;
+	background-color:#000000;
+	filter:alpha(opacity=50);  
+  -moz-opacity:0.5;  
+  -khtml-opacity: 0.5;  
+  opacity: 0.5; 
+}

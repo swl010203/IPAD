@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+		<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+		<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>我的收藏</title>
+		<link rel="stylesheet" href="../../css/user/style.css" />
+		<link rel="stylesheet" href="../../css/user/allStyle.css">
+		<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+		<script type="text/javascript" src="../../script/user/index.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+	</head>
+	<style>
+	.w_conImg{width:200px!important;height:180px!important;overflow:hidden;float:left;}
+	.w_conImg>img{width:200px!important;height:180px!important;}
+	.w_conL li{padding-bottom:20px;height:100%;}
+	</style>
+	<body>
+
+		<div class="shoucangTab">
+			<ul class="w_conL pl_14 pr_14 pb_20 box-s border-b sousuoDiv" id="list">
+				<!--<li>
+					<div class="sel1 fl selD hide_" data-src="1"></div>
+					<div class="fl w_conImg">
+						<img src="../../images/user/7702.png"/>
+					</div>
+					<div>
+						<p class="huanhang">烤牛排</p>
+						<p class="red">￥388
+							<span class="fr w_jia"></span>
+						</p>
+					</div>
+				</li>
+				<li>
+					<div class="sel1 fl selD hide_" data-src="2"></div>
+					<div class="fl w_conImg">
+						<img src="../../images/user/7702.png"/>
+					</div>
+					<div>
+						<p class="huanhang">德国闲猪手</p>
+						<p class="red">￥398
+							<span class="fr w_jia"></span>
+						</p>
+					</div>
+				</li>
+				<li>
+					<div class="sel1 fl selD hide_" data-src="3"></div>
+					<div class="fl w_conImg">
+						<img src="../../images/user/7702.png"/>
+					</div>
+					<div>
+						<p class="huanhang">烤牛排</p>
+						<p class="red">￥398
+							<span class="fr w_jia"></span>
+						</p>
+					</div>
+				</li>
+			</ul>-->
+		</div>		
+		<!--尾部-->		
+	</body>	
+	<script type="text/javascript">				
+		var page = 1; //分页
+		var is_page = true; //总页数
+		apiready = function() {	
+			loading('footprint_body');
+			api.setRefreshHeaderInfo({ //下拉加载
+				visible: true,
+				loadingImg: 'widget://image/refresh.png',
+				bgColor: '#ccc',
+				textColor: '#fff',
+				textDown: '下拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				page = 1;
+				is_page = true;
+				ready();
+			});
+			api.addEventListener({
+				name: 'scrolltobottom',
+				extra: {
+					threshold: 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+				}
+			}, function(ret, err) {
+				if (is_page) {
+					page = page + 1;
+					ready();
+				}
+			});
+			//获取收藏商品
+			ready();			
+		};
+		
+		
+		//获取收藏商品
+		function ready() {
+			_ajax(ajax_url + 'Index/User/getUserFootprint',{
+						uid: localStorage.getItem("uid"),
+						p: page
+			},'post', function(ret, err) {
+				closeloading();
+				api.refreshHeaderLoadDone();
+			
+				if (ret.status == 1) {
+					var data = ret.data;
+					
+					var html = '';
+					if (data != null && data.length > 0) {
+						
+						
+						$(data).each(function(k,v){
+							
+							html += '<li style=""><div class="sel1 fl selD hide_" data-src="'+v['id']+'"></div>';
+							html += '<div class="fl w_conImg" onclick="openGoodsDetail('+v['channel']+','+v['goods_id']+');">';
+							
+						
+							//html += '<img style=\'height:1.4rem;\'  src=\''+v['goods']['good_img']+'\'></div>';
+							html += '<img style="height:1.4rem;" src="'+v['goods']['good_img']+'" /></div>  ';
+							html += "<div>\n";
+						    html += "	<p class=\"huanhang\">\n";
+						    html += v['goods']['goods_name'];
+						    html += "	<\/p>\n";
+						    html += "	<p class=\"red\">\n";
+						    html += v['goods']['shop_price'];
+						    //html += "		<span class=\"fr w_jia\"><\/span>\n";
+						    html += "	<\/p>\n";
+						    html += "<\/div><\/li>\n";
+						    
+							//html += '<div><p class="huanhang">' + v['goods']['goods_name'] + '</p><p class="red">￥' + v['goods']['shop_price'] + '</p></div></li>';
+						})
+					}
+					
+					if (page == 1) {
+						$("#list").html(html);
+					} else {
+						$("#list").append(html);
+					}
+					
+				} else {
+					if (page == 1) {
+						$(".list").html("");
+					}
+					is_page = false;
+					_toast(ret.msg);
+				}					
+			})
+		}
+		
+		
+		//跳转详情
+		function openGoodsDetail(channl,id){
+			if(channl==1){
+				var name='mall_goodsdetail';
+				var url='../mall/mall_goodsdetail';
+				var param={goods_id:id};
+			}
+			if(channl==2){
+				var name='super_goodsdetail';
+				var url='../super/super_goodsdetail';
+				var param={goods_id:id};
+			}
+			
+			_openWinByUrl(name,url,param);
+		}
+		
+	</script>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../../css/hotel/wangting/common.css">
+    <!--<link rel="stylesheet" type="text/css" href="css/bootstrap.css">-->
+    <link rel="stylesheet" type="text/css" href="../../css/hotel/swiper.min.css">
+
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/swiper.min.js"></script>
+    <title>点开房间图</title>
+    <style>
+    .gBath:last-child{border:none;}
+    </style>
+</head>
+<body>
+    <div class="gxyhead diankai">
+        <div class="aaa">
+            <div class="swiper-container">
+                <div class="swiper-wrapper" id="image_scro" style="height:264px;">
+                    <!-- <div class="swiper-slide openshow">
+                        <a href="javascript:vois(0)"><img  src="../../images/hotel/banner2.jpg" alt=""></a>
+                    </div>
+                    <div class="swiper-slide openshow">
+                        <a href="javascript:vois(0)"><img  src="../../images/hotel/banner2.jpg" alt=""></a>
+                    </div>
+                     <div class="swiper-slide openshow">
+                        <a href="javascript:vois(0)"><img  src="../../images/hotel/banner2.jpg" alt=""></a>
+                    </div>
+                     <div class="swiper-slide openshow">
+                        <a href="javascript:vois(0)"><img  src="../../images/hotel/banner2.jpg" alt=""></a>
+                    </div> -->
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <div class="headtitle">
+                <div class="mbank"><a href="javascript:bank();"><img src="../../images/hotel/034Back.png"  class="thumbnail" alt=""></a></div>
+                <div class="name" id="house_name"></div>
+            </div>
+        </div>
+        
+
+        <!-- <div class="openshow-center" style="position:auto;"> -->
+            <style>
+            .w-fl {
+                background: #fff none repeat scroll 0 0;
+                border: 0.1rem none;
+                float: left;
+                height: auto;
+                width:100%;
+                margin-bottom: 0.3rem;
+            }
+            .w-fl li {
+                float: left;
+                line-height: 1.8rem;
+                width: 45%;
+                padding-left: 1rem;
+            }
+            </style>
+            <ul class="w-fl" id="attr_list">
+                <!-- <li>35平方米</li> -->
+            </ul>
+        <!-- </div> -->
+        <div class="openshow-footer" id="facility_list">
+            <!-- <div class="gBath">
+                <span class="openshow-ft1">浴室:</span>
+                <span class="openshow-ft2">免费洗漱用品(6样以上)，24小时热水，*浴缸，*按摩浴缸，浴室，独立沐浴间，吹风机，拖鞋，*浴衣，洗浴间电话</span>
+            </div>
+            <div class="gblss">
+                <span class="openshow-ft1">便利设施:</span>
+                <span class="openshow-ft2">多种规格电源插座，单一规格电源插座，220V电压插座，遮光窗帘，手动窗帘，书桌，沙发，备用床具，床具:鸭绒被 ，衣柜/衣橱，中央空调，*普通分体空调，房间内高速上网，客户WIFI免费覆盖</span>
+            </div>
+            <div class="gmeiti">
+                <span class="openshow-ft1">媒体/科技:</span>
+                <span class="openshow-ft2">电话，有线频道，液晶电视机，电视机，游戏机</span>
+            </div> -->
+        </div>
+    </div>  
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script>
+    //默认加载
+    var sid  = 0;
+    var id   = 0;
+    apiready = function(){
+        id  = api.pageParam.id;
+        
+        detail( id );
+    };
+    
+    function detail( id ) {
+        _ajax(ajax_url+"Index/Hotel/houseDetail",{id:id},'post',function(ret) {
+            if( ret.status == 1 ) {
+                $('#house_name').html(ret.data.name);
+                
+                var pic = ret.data.pic_arr;
+                image_scro = '';
+                $.each(pic, function(key, val) {
+                    image_scro += '<div class="swiper-slide openshow" style="width:100%;"><a style="width:100%;"><img style="background-size:100%;" src="'+val+'" alt=""></a></div>';
+                });
+                $('#image_scro').html( image_scro );
+                
+                var swiper = new Swiper('.swiper-container', {
+                    pagination: '.swiper-pagination',
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    paginationType: 'fraction',
+                    paginationClickable: true,
+                    //spaceBetween: 30,
+                    centeredSlides: true,
+                    autoplay: 2500,
+                    autoplayDisableOnInteraction: false
+                });
+                
+                var attr = ret.data.attr_arr;
+                var attr_list = '';
+                $.each(attr, function(key, val) {
+                    attr_list += '<li><i class="iImg" style="background-image:url(../../images/hotel/chuang.png)"></i>'+val.name+'</li>';
+                });
+                $('#attr_list').html( attr_list );
+                
+                var facility = ret.data.facility;
+                var facility_list = '';
+                $.each(facility, function(key, val) {
+                    facility_list += '<div class="gBath">';
+                    facility_list += '    <span class="openshow-ft1">'+val.name+':</span>';
+                    facility_list += '    <span class="openshow-ft2">'+val.desc+'</span>';
+                    facility_list += '</div>';
+                });
+                $('#facility_list').html( facility_list );
+                
+                var price  = ret.data.price;//分类
+                api.sendEvent({
+                    name:'house_root_price',
+                    extra: {
+                        price: price,
+                    }
+                });
+            }
+        });
+    }
+    
+    //返回上一页
+    function bank(){
+        api.closeWin();
+    }
+</script>
+</body>
+</html>

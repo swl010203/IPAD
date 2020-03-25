@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">活动列表</h1>
+		</header>
+		<div class="mui-content">
+			<div class="activeList pl20 pr20 box_s bgwhite">
+				 <ul class="new_active">
+					<!--<li class="pt20 pb10 border_b">
+						<div class="activeList_img">
+							<img src="../../images/dc1.jpg"/>
+						</div>
+						<p class="fs28 mui-ellipsis colorBlack pt10">假期不指望瘦了，但是也别胖呀！我们一起来有氧健身</p>
+						<p class="fs24 colorHui999">2018-09-27  16:30:15</p>
+					</li>
+					<li class="pt20 pb10 border_b">
+						<div class="activeList_img">
+							<img src="../../images/dc1.jpg"/>
+						</div>
+						<p class="fs28 mui-ellipsis colorBlack pt10">假期不指望瘦了，但是也别胖呀！我们一起来有氧健身</p>
+						<p class="fs24 colorHui999">2018-09-27  16:30:15</p>
+					</li>-->
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+	    var sid = '';
+	    apiready = function(){
+	        sid = api.pageParam.sid;
+	        getActiveList();
+	    };
+	
+	    // 获取活动列表
+	    function getActiveList(){
+	        _ajax(ajax_url + 'Index/Exercise/getActiveList', {'sid': sid}, 'get', function (ret) {
+	            if (ret.status == 1) {
+	                var activeData = ret.data;
+	                var active_html = '';
+	
+	                $.each(activeData, function (k, v) {
+	                    active_html += '<li class="pt20 pb10 border_b" onclick="activeDetail('+ v.id +')">';
+	                    active_html +=      '<div class="activeList_img">';
+	                    active_html +=          '<img src="'+ v.big_pic +'"/>';
+	                    active_html +=      '</div>';
+	                    active_html +=      '<p class="fs28 mui-ellipsis colorBlack pt10">'+ v.title +'</p>';
+	                    active_html +=      '<p class="fs24 colorHui999">'+ v.add_time +'</p>';
+	                    active_html += '</li>';
+	                });
+	
+	                $('.new_active').html(active_html);
+	            } else {
+	                $('.new_active').html('暂无活动');
+	            }
+	        });
+	    }
+	
+	    // 活动详情
+	    function activeDetail(activeId) {
+	        activeId = typeof activeId !== 'undefined' ? activeId : '';
+	        if (activeId == '') {
+	            _toast('没有得到活动标识');
+	        } else {
+	            _openWinByUrl('activeDetail', 'activeDetail', {'activeId': activeId});
+	        }
+	    }
+	</script>
+</html>

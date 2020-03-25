@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script src="../../script/swiper.min.js"></script>
+<style>
+	.cartNum_widow{ position: relative;height: 0.4rem;clear: both;}
+</style>
+
+</head>
+<body>
+<!-- 头部 -->
+	<header id="header">
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">商品详情</h1>
+			<a href="javascript:void(0);" onclick="collect($(this));" class="headerRight">
+				<span class="topcollect_icon"></span>
+			</a>
+		</div>
+	</header>
+
+<script type="text/javascript">
+	var gid=''; 
+	apiready=function(){
+		api.parseTapmode();
+		gid=api.pageParam['goods_id'];
+		//获取div元素的高
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		
+		//引入iframe页面
+        api.openFrame({
+            name: 'mall_a_goodsdetail_body',
+            url: 'mall_a_goodsdetail_body.html',
+            bounces: false,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: body_h-headerPos.h-1
+            },
+            reload:true,
+			pageParam:api.pageParam
+        });
+        
+        api.addEventListener({
+		    name: 'mall_a_goodsdetailbody'
+		}, function(ret, err) {
+		    if(ret && ret.value){
+				if (ret.value.key1 == 'success') {	
+				  //商品是否收藏	
+				   if(ret.value.collectflag!=0){
+				    	$(".topcollect_icon").addClass("topcollect_iconyet");//收藏样式
+				   }else{
+				  		 $(".topcollect_icon").removeClass("topcollect_iconyet");//收藏样式
+				   }						  					   						  											 
+				}
+			}
+		});
+	};
+	
+	/*
+	 * 收藏
+	 */
+	function collect(obj){
+		if (localStorage.getItem("uid")) {
+		   if($(".topcollect_icon").is(".topcollect_iconyet")){//取消收藏
+		        api.ajax({
+					url : ajax_url + 'Index/Mall/goodsCancel',
+					method : 'post',
+					data : {
+						values : {
+							gid : gid,
+							uid:localStorage['uid']
+						},
+					}
+				}, function(ret, err) {
+					if (ret.status==1) { //收藏成功
+						$(".topcollect_icon").removeClass("topcollect_iconyet");
+						api.toast({
+							msg : ret.msg,
+							duration : 3000,
+							location : 'bottom'
+						});
+					} else {
+						api.toast({
+							msg : ret.msg,
+							duration : 3000,
+							location : 'bottom'
+						});
+					}
+				});
+		   
+		   }else{//收藏
+		     	api.ajax({
+					url : ajax_url + 'Index/Mall/collectgoods',
+					method : 'post',
+					data : {
+						values : {
+							gid : gid,
+							uid:localStorage['uid']
+						},
+					}
+				}, function(ret, err) {
+					if (ret.status==1) { //收藏成功
+						$(".topcollect_icon").addClass("topcollect_iconyet");
+						api.toast({
+							msg : ret.msg,
+							duration : 3000,
+							location : 'bottom'
+						});
+					} else {
+						api.toast({
+							msg : ret.msg,
+							duration : 3000,
+							location : 'bottom'
+						});
+					}
+				});
+		   }				
+		} else {//登陆
+			api.openWin({
+				name : 'login',
+				url : '../login.html',
+				reload : true
+			});
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>查看物流</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+    </head>
+
+    <body class="bgWhite">
+        <div class="banner_div" id="status_name"></div>
+        <div class="logistics_div">
+            <div class="track-rcol">
+                <div class="track-list">
+                    <ul id="logistics_list">
+                        <!-- <li class="first">
+                            <i class="node-icon"></i>
+                            <p class="txt">骑手小哥已取餐，配送中！</p>
+                            <p class="time">2016-03-10 18:07:15</p>
+                            <div class="map_img">
+                                <img src="img/1302.jpg"/>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="node-icon"></i>
+                            <p class="txt">骑手正在前往商家</p>
+                            <p class="time">2016-03-10 18:07:15</p>
+                            
+                        </li>
+                        <li>
+                            <i class="node-icon"></i>
+                            <p class="txt">商家已接单！</p>
+                            <p class="time">2016-03-10 18:07:15</p>
+                            
+                        </li>
+                        <li class="last">
+                            <i class="node-icon"></i>
+                            <p class="txt">您提交了订单，请等待系统确认！</p>
+                            <p class="time">2016-03-10 18:07:15</p>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <footer class="footer_fixedTwo clearfloat">
+            <span class="fl" id="cancel_order" onclick="cancelOrder();">取消订单</span>
+            <span class="fr" id="dispatch_mobile" data-mobile="" onclick="tel();">我要催单</span>
+        </footer>
+    </body>
+    <style>
+    .disable_class{
+        background: #e2e2e2;
+    }
+    </style>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script>
+    var uid = localStorage.getItem( "uid" );
+    var oid = 0;
+    apiready = function() {
+        uid = localStorage.getItem( "uid" );
+        oid  = api.pageParam.oid;
+        
+        //订单取消监听
+        api.addEventListener({
+            name: 'cancel_order_over'
+        }, function(ret, err) {
+            $('#cancel_order').css({'background':'#e2e2e2'});
+            $('#cancel_order').addClass( 'disable_class' );
+        });
+        
+        logistics();
+    };
+    //物流信息
+    function logistics() {
+        _ajax(ajax_url+"Index/TakeoutOrder/logistics" ,{uid:uid, oid:oid},'post',function(ret) {
+            if(ret.status ==1){
+                if( ret.data.status == 4 || ret.data.is_cancel == 0 ) {
+                    $('#cancel_order').css({'background':'#e2e2e2'});
+                    $('#cancel_order').addClass( 'disable_class' );
+                }
+                if( ret.data.status == 3 ) {
+                    $('#status_name').text( '订单已完成' );
+                } else {
+                    $('#status_name').text( '订单进行中' );
+                }
+                var logistics_list_html = '';
+                $.each(ret.data.list, function(key, val) {
+                    logistics_list_html += '<li>';
+                    logistics_list_html += '    <i class="node-icon"></i>';
+                    logistics_list_html += '    <p class="txt">'+val.msg+'</p>';
+                    logistics_list_html += '    <p class="time">'+val.time+'</p>';
+                    logistics_list_html += '</li>';
+                });
+                $('#logistics_list').html( logistics_list_html );
+                
+                $('#dispatch_mobile').attr( 'data-mobile', ret.data.dispatch_mobile );
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+    
+    //取消订单
+    function cancelOrder() {
+        if( $('#cancel_order').hasClass('disable_class') ) {
+            //订单已取消
+            return false;
+        }
+        _openWinByUrl('cancel_order_head','cancel_order_head',{oid:oid});
+    }
+    
+    //催单打电话
+    function tel() {
+        var mobile =  $('#dispatch_mobile').attr( 'data-mobile' );
+        if( mobile == '' || mobile == 0 ) {
+            _toast( '暂无配送员配送！' );
+            return false;
+        }
+        window.location.href = "tel:"+mobile;
+    }
+    </script>
+</html>

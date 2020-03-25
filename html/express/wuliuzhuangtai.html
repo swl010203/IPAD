@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>053物流状态</title>
+		<link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+	</head>
+	<body>
+		<!--头部-->
+		<header class="clearfloat header">
+			<div class="fl" id="back">
+				<i class="back"></i>
+				<span>返回</span>
+			</div>
+			<div class="topCon topCon_1">
+				物流状态
+			</div>
+			<!--<div class="fr">
+				<span class="sousuo_1"></span>
+			</div>-->
+		</header>
+		<!--中间内容-->
+		<div class="tupianbeijingDiv">
+			<p>订单编号：<span id="number"></span></p>
+			<p>承运来源：<span id="name"></span></p>
+			<p>官方电话：<span id="tel"></span></p>
+			<p>物流状态：<span id="deliverystatus"></span></p>
+		</div>
+		<div class="tupianbeijingDiv_1">
+			<ul id="list">
+				<!--<li>
+					<p>快件已到达长沙星杀集散中心</p>
+					<p class="time_wlzt">2017-07-23<span class="mar_l20">14:03</span></p>
+				</li>
+				<li>
+					<p>快件已到达长沙星杀集散中心</p>
+					<p class="time_wlzt">2017-07-23<span class="mar_l20">14:03</span></p>
+				</li>
+				<li>
+					<p>快件已到达长沙星杀集散中心</p>
+					<p class="time_wlzt">2017-07-23<span class="mar_l20">14:03</span></p>
+				</li>
+				<li>
+					<p>快件已到达长沙星杀集散中心</p>
+					<p class="time_wlzt">2017-07-23<span class="mar_l20">14:03</span></p>
+				</li>-->
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    
+    <script type="text/javascript" >
+    
+    	var logistics_sn ="";
+    	apiready = function(){
+    		logistics_sn = api.pageParam.logistics_sn;
+    		expressSearch();
+    	};
+    	
+    	function expressSearch(){
+    		_ajax(ajax_url+"Index/Express/expressSearch" ,{'number':logistics_sn},'post',function(ret){
+				var strVar = "";
+				if(ret.status == 1){
+					$("#number").html(ret.data.number);
+					$("#name").html(ret.data.courier_info.name);
+					$("#tel").html(ret.data.courier_info.tel);
+					
+					deliverystatus = ret.data.deliverystatus;
+					if(deliverystatus ==1){
+						$("#deliverystatus").html('在途中');
+					}
+					if(deliverystatus ==2){
+						$("#deliverystatus").html('派件中');
+					}
+					if(deliverystatus ==3){
+						$("#deliverystatus").html('已签收');
+					}
+					if(deliverystatus ==4){
+						$("#deliverystatus").html('派送失败');
+					}
+					
+					$(ret.data.list).each(function(k,v){
+						strVar += "<li>\n";
+					    strVar += "    <p>"+v['status']+"<\/p>\n";
+					    strVar += "    <p class=\"time_wlzt\">"+v['time']+"<\/p>\n";
+					    strVar += "<\/li>\n";
+					});
+					
+					$("#list").html(strVar);
+				}
+			});
+    	}
+    </script>
+</html>

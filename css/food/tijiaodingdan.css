@@ -1,0 +1,193 @@
+body{
+	font-size: 18px;
+}
+header{
+	overflow: hidden;
+	border-bottom: 1px solid #e0e0e0;
+	background: white;
+}
+/* header .back a img{
+	width: 0.21rem;
+	height: 0.38rem;
+	margin-top: 0.05rem;
+}
+header .word{
+	font-size: 0.36rem;
+	color: #d12a18;
+	margin-left: 2rem;
+} */
+label{
+	display: inline-block;
+}
+.list{
+	background: white;
+	box-sizing: border-box;
+	margin-top: 10px;
+}
+.list li{
+	height:55px;
+	/* line-height:45px; */
+	line-height:55px;
+	border-bottom: 1px solid #e0e0e0;
+}
+.list p:first-child{
+	padding-left: 20px;
+/* 	height:54px;
+	line-height: 45px; */
+	/* line-height:40px; */
+}
+.list p:last-child{
+	padding-right: 40px;
+	/* height:54px;
+	line-height: 45px; */
+	/* line-height:40px; */
+}
+.list li .selectP{
+	background: url(../../images/food/chexiao.png) 60px center no-repeat;
+	background-size: 12px;
+	box-sizing: border-box;
+}
+
+
+.list .imgDiv img{
+	width: 100%;
+	height:100%;
+}
+.list .word{
+	margin-left: 40px;
+	font-size:18px;
+}
+.list .word p{
+	padding-left: 0;
+	line-height:100px;
+	font-size: 18px;
+}
+.list .word p span:last-child{
+	float: right;
+	font-size:18px;
+}
+.list .imgDiv{
+	width: 300px;
+	height: 200px;
+	border-radius: 0.1rem;
+	overflow: hidden;
+	margin-top: 20px;
+}
+.list li.noHeight{
+	height: auto;
+	padding-left: 20px;
+	padding-right:20px;
+	box-sizing: border-box;
+	border-bottom: 1px solid #e0e0e0;
+	overflow: hidden;
+}
+.sel{
+	appearance: none;
+    -webkit-appearance: none;
+    width:24px;
+    height: 24px;
+    background: url(../../images/food/noSel.png) 0rem 0rem no-repeat;
+    background-size: 24px;
+    /*line-height: 0.55rem;*/
+  /*   margin-right:0.15rem; */
+    vertical-align:middle;  
+}
+.sel:checked{
+	background: url(../../images/food/yesSel.png) 0rem 0rem no-repeat;
+	background-size: 0.42rem;
+}
+.sel:checked{
+	background: url(../../images/food/yesSel.png) 0rem 0rem no-repeat;
+	background-size: 24px;
+}
+.userName{
+	color:#666;
+	display:inline-block;
+	/* width:5rem; */
+	height:32px;
+	line-height:22px;
+	font-size: 18px;
+	text-align: right;
+}
+
+.btnTijiao{
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-top:30px;
+}
+.btnTijiao>div{
+	height: 80px;
+	line-height: 65px;
+	background: url(../../images/food/041longCartBackground.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+	border-radius: 0.11rem;
+	font-size: 20px;
+	text-align: center;
+	color: white;
+	
+}
+
+.shuliang{
+	display:inline-block;
+	width:1.5rem;
+}
+.prise{
+	color: #d12a18;
+	font-size: 0.3rem;
+}
+
+/*button*/
+.al-toggle-button{
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    width: 1rem;
+    height: 0.55rem;
+    background: #dfdfdf;
+    border-radius: 1.5rem;
+    border: 1px solid #dfdfdf;
+    outline: 0;
+    box-sizing: border-box;
+    margin-top: 0.13rem;
+}
+.al-toggle-button:checked{
+    border-color: #d12a18;
+    background-color: #fef0ee;
+}
+.al-toggle-button:before, .al-toggle-button:after{
+    content: " ";
+    position: absolute;
+    top: 0.03rem;
+    left: 0.1rem;
+    height: 0.45rem;
+    border-radius: 0.6rem;
+    transition: transform 0.3s;
+    transition: -webkit-transform 0.3s;
+    transition: transform 0.3s, -webkit-transform 0.3s;
+    -webkit-transition: -webkit-transform 0.3s;
+}
+.al-toggle-button:before{
+    width: 0.5rem;
+    background-color: #fdfdfd;
+}
+.al-toggle-button:after{
+    width: 0.5rem;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.al-toggle-button:checked:after{
+    width: 0.5rem;
+    background-color:#d12a18;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.al-toggle-button:checked:before{
+    transform: scale(0);
+    -webkit-transform: scale(0);
+}
+.al-toggle-button:checked:after{
+    transform: translateX(0.28rem);
+    -webkit-transform: translateX(0.28rem);
+}
+#datePlugin footer#dateFooter{
+	border-top: 0!important;
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+        <title>华海地产</title>
+        <link rel="stylesheet" href="../../script/house/css/style.css" />
+        <link rel="stylesheet" href="../../script/house/css/index.css" />
+		<link rel="stylesheet" href="../../script/house/css/installation.css" />
+        <script src="../../script/jquery_2_1_4.js"></script>
+        <script src="../../script/house/js/common.js"></script>
+        <script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+		
+	</head>
+	<body id="near" style="margin-top:10px;">
+				
+	</body>
+</html>
+<script>
+	$(".tab .btn").on("click",function(){
+		var thisIndex = $(this).index();
+		$(this).addClass('active').siblings().removeClass('active');
+		$(".box>div").css("display","none");
+		$(".box>div").eq(thisIndex).css("display","block");		
+	});
+		
+	var id='';	
+	apiready = function(){
+		id=api.pageParam.id;
+		
+		//加载房产配套
+		houseNear();
+		
+		//下拉刷新
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+			//加载房产配套
+			houseNear();
+			api.refreshHeaderLoadDone();
+		});
+						
+	};
+	
+	//加载房产配套信息
+	function houseNear(){
+		//加载状态
+		loading('index_body');
+		_ajax(ajax_url+"Index/House/near",{id:id},'post',function(ret){
+			//关闭加载状态
+			closeloading();
+			if(ret.status==1){
+				//房产配套
+				var html='';
+				for(var i in ret.data){
+					//文字颜色
+					if(i==1){
+						var a='';
+					}else{
+						var a='0'+rd(2,4);
+					}
+					html+='<div class="edu" style="background-color:#FFF;"><ul class="col'+a+'" style="background-color:#FFF;">'+ret.data[i].name+'配套：</ul><ul>';
+					for(var j in ret.data[i].list){
+						html+='<p>'+ret.data[i].list[j].name+'（'+ret.data[i].list[j].distance+'米）</p>';
+					}
+					html+='</ul></div>';
+				}
+				$('#near').html(html);
+			}						    
+		});
+	}
+	
+	//随机数
+	function rd(n,m){
+	    var c = m-n+1;  
+	    return Math.floor(Math.random() * c + n);
+	}
+</script>

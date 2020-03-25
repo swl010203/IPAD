@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+	.yhq_conspan02{font-size:30px;}
+	.xg_detailcon a{ word-wrap:break-word}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+
+
+<!--详情-->
+<div class="xg_detail">
+	
+	<div class="xg_detailcon content">
+		     
+	</div>
+	<!--优惠券-->
+	<div class="yhq" style="display: block;" onclick="addCoupons();">
+		<div class="yhq_bg">
+			<div class="yhq_topbg">
+				<span class="yhq_topbgspan coupons_title">商家券 | <i class="shopname"></i></span>
+			</div>
+			<div class="yhq_con">
+				<p class="yhq_conp01">
+					<span class="yhq_conspan01"></span><span class="yhq_conspan02 discount">满100减100</span>	<span class="yhq_conspan03 yhq_info"></span>
+				</p>
+				<p class="yhq_conp01 yhq_time" style="padding-top: 0.2rem;">
+					2016年05月30日-2016年10月28日
+				</p>
+				<a href="javascript:void(0);" class="yhq_checkicon yhqlq"></a>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div class="wp_100">
+	<div class="botH"></div>
+</div>
+
+
+<script type="text/javascript" src="../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../script/common.js"></script>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/app.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".xg_img ").css({height:$(window).width()/2.75});
+	$(".xg_img img").css({height:$(window).width()/2.75});
+	
+});
+
+	var id =0;  //优惠券id
+	var sid = 0;//店铺Id
+	var userinfo = "";
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+		
+		loading('hang_detail');
+		
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+		    //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			ready();
+		});
+		
+		ready();
+	};
+	
+	function ready(){
+		 id = api.pageParam.id;
+		_ajax(ajax_url+"Index/Poster/getPosterDetail" ,{'id':id},'get',function(ret){
+		
+			if(ret.status !=1){
+				is_page = false;
+				closeloading();
+				api.refreshHeaderLoadDone();
+				return false;
+			}
+			coupons_id = ret.info.coupons_id;
+			sid = ret.info.sid;  //店铺id
+			
+			$(".content").html(ret.info.content);
+			$("img ").css({'max-width':$(window).width()});
+			//判断是否有优惠券
+			if(typeof ret.coupons  !='undefined'  &&  ret.coupons!=""){
+			    if( ret.shop_id == 0 ) {
+			        $('.coupons_title').html( '平台优惠券' );
+			    } else {
+			        $(".shopname").html(ret.shopname);
+			    }
+				$(".yhq_time").html(ret.coupons.start_time + "-" + ret.coupons.end_time);
+				var discount =ret.coupons.money;
+				//判断优惠券类型
+				if(ret.coupons.coupons_type ==3){
+					$(".discount").html("满￥"+ret.coupons.full +"减￥"+discount);
+				}else if(ret.coupons.coupons_type ==2){
+					$(".discount").html(discount+"折");
+				}else{
+					$(".discount").html("￥"+discount);
+				}
+				
+				$(".yhq_info").html("("+ret.coupons.type+")");
+				
+				$(".yhq").show();
+			}else{
+				$(".yhq").hide();
+			}
+			
+			closeloading();
+			api.refreshHeaderLoadDone();
+		});
+	}
+	
+	/**
+	 * 领取优惠券
+	 * @param id 优惠券id
+	 * @param sid 店铺Id 
+	 */
+	function addCoupons(){
+		userinfo = $api.getStorage('userinfo');
+		if(userinfo  =='undefined'  ||  userinfo ==''  ||userinfo ==null){
+			_toast('请先登录',function(){
+				_openWinByUrl('login','./login');
+			});
+			return false;
+		}
+		
+		_ajax(ajax_url +"Index/Coupons/getCoupons",{'uid':userinfo.uid,'token':userinfo.token,'Number':1,'id':coupons_id,'sid':sid},'post',function(ret){
+			var strVar = "";
+			if(ret.status  ==1){
+				$(".yhq_checkicon").show();
+				_toast(ret.msg);
+			}else{
+				$(".yhq_checkicon").hide();
+				_toast(ret.msg);
+			}
+		});
+	}
+</script>
+</body>
+</html>

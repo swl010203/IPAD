@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--苹果专有的,头部bar的样式-->
+    <title>专属服务</title>
+    <link rel="stylesheet" type="text/css" href="../../script/house/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../script/house/css/014_list.css"/>
+    <script src="../../script/jquery_2_1_4.js"></script>
+    <script src="../../script/house/js/common.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <style>
+        .main-list{
+            width: 96%;
+            margin-top: 10px;
+            background-color: #fff;
+            border-top: 1px solid #E0E0E0;
+            padding: 0 2%;
+        }
+        .box img{display:block;margin:0px;padding:0px;width:100%;}
+    </style>
+</head>
+<body>
+    <!--顶部结束-->
+    <div style="width:100%;background-color: #fff;">
+        <div class="main-list w_100bfb">
+            <div class="box">
+                <div id="list" style="overflow: hidden;">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //默认加载部分
+    var id='';  
+    apiready = function(){
+        id=api.pageParam.id;
+        type=api.pageParam.type;
+        
+        //默认加载
+        planDetial();
+    };
+    
+    //加载规划详情
+    function planDetial(){
+        //加载状态
+        loading('plandetial_body');
+        _ajax(ajax_url+"Index/House/getService",{id:id, type:type},'post',function(ret){
+            //关闭加载状态
+            closeloading();
+            if(ret.status==1){
+                //规划详情
+                var html='';
+                html+='<ul class="desc" style="bur">'+ret.data.content+'</ul>';
+                $('#list').html(html);
+                
+                var title  = ret.data.title;
+                api.sendEvent({
+                    name:'service_title',
+                    extra: {
+                        service_title: title,
+                    }
+                });
+            }
+            
+        });
+    }
+</script>

@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+	<style type="text/css">
+
+	.header_h1a a{ width: 50%; display: inline-block; float: left; color: #232323; background: none;padding-right:0;}
+	/*.listBox{ height: 4rem; }*/
+	.header_h1a a/*.header_h1acur*/{ color: #d12a18;}
+
+</style>
+<style>
+	html,body{background: rgba(0,0,0,0);}
+	input{color:#333!important;}
+	.top_nav{padding:0px;}
+	::-webkit-input-placeholder { /* WebKit browsers */
+	    color:#999!important;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	    color:#999!important;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+	   color:#999!important;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+	    color:#999!important;
+	}
+</style>
+</head>
+<body>
+
+
+<div >
+<!-- 头部 -->
+		<div class="top_nav">
+			<div class="top_navmain top_navmainfix" id="header">
+				<a href="javascript:void(0);"  id="fanhui_btn" class="topnav_iconal" style="text-align:left;padding-left: 2%;width:10%;">
+					<span class="topnav_iconl"></span>
+				</a>
+				<h2 class="top_navcon" style="width: 73%;">
+					<div class="top_navconinpt">
+						<form onsubmit ="return false;" > 
+							<input type="search" id="keyword" placeholder="请输入宝贝名称" />
+						</form>
+					</div>
+				</h2>
+				<a href="javascript:void(0);" style="width: 10%;" onclick="_openWinByUrl('mall_category_window_head','../window_head',{'furl':'mall/mall_category','frame':'mall_category','title':'分类列表','bounces':false});" class="topnav_iconar">
+					<span class="topnav_iconr"></span>
+				</a>
+			</div>
+		</div>
+
+</div>
+	
+	
+	
+
+<script type="text/javascript">
+       
+
+	apiready = function(){
+		api.parseTapmode();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+
+//      api.openFrame({
+//          name: 'mall_shop_body',
+//          url: 'mall_shop_body.html',
+//          bounces: true,
+//          rect: {
+//              x: 0,
+//              y: headerPos.h+1,
+//              w: headerPos.w,
+//              h: body_h-headerPos.h-footer_h-1
+//          },
+//			pageParam:api.pageParam
+//      });
+
+
+		document.onkeydown=function(event){
+
+          	var e = event || window.event || arguments.callee.caller.arguments[0];
+            if(e && e.keyCode==13){ // enter 键
+            	var keyword = $("#keyword").val();
+            	api.sendEvent({
+	                name:'getGoodsListByKeyword',
+	                extra:{
+	                	'keyword':keyword
+	                }
+                });
+                 //要做的事情
+            }
+        }; 
+        
+
+	};
+	
+	
+	$(document).ready(function(){
+		$(".swiper-container1 .swiper-slide").css({height:$(window).width() * 0.44});
+		$(".swiper-container1 .swiper-slide img").css({height:$(window).width() * 0.44});
+			// 头部搜索
+//		$(window).bind('scroll resize',function(){
+//		   if($(window).scrollTop()>10){
+//		        $(".top_navmain").addClass('top_navmainfix');
+//		  }else{
+//		    $(".top_navmain").removeClass('top_navmainfix');
+//		      }
+//		    });
+	});
+	
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style type="text/css">
+	.index_nav{ height: 0.6rem; background: #f5f5f5; border-top:1px solid #ccc; border-bottom: 1px solid #ccc; padding: 0 0.2rem;}
+.index_navl{ height: 0.6rem;line-height: 0.6rem; float: left; font-size: 20px; color: #232323;}
+.mt_10{padding:0px;}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 登录内容 -->
+<div class="wp_100">
+<div class="siteSearchlist" style="background: #fff;">
+		<ul class="siteSearchul">
+					<li style="padding-top: 0.1rem; margin-top: 0;"> 
+				<a href="#" class="siteSearchula01">
+					<div class="siteSearchula01li">
+						<img src="" class="goods_img">
+						<div class="siteSearchula01lir">
+							<span class="siteSearchulaspan01 mt_10 goods_name"></span>
+							<span class="siteSearchulaspan02 mt_10"><em>￥</em><span class="goods_price"></span></span>
+							<span class="siteSearchulaspan02 mt_10" style="color: #1f2228;  font-size: 18px;">数量：x<span class="goods_num"></span></span>
+						</div>
+					</div>
+				</a>
+				
+			</li>
+			
+			
+		</ul>
+	</div>
+	<div class="index_nav" style="border:0;">
+		<span class="index_navl">物流名称</span>
+		<span class="index_navr"></span>
+	</div>
+	<div class="selReasontext" style="padding-top:0.2rem;">
+	<input type="text" placeholder="" class="selReasontxt" name="user_wlname"  style="height:0.6rem; padding-top:0" />
+</div>
+	<div class="index_nav" style="border:0;">
+		<span class="index_navl">物流单号</span>
+		<span class="index_navr"></span>
+	</div>
+
+<div class="selReasontext" style="padding-top:0.2rem;">
+	<input type="text" placeholder="" class="selReasontxt"  name="user_carrier" style="height:0.6rem; padding-top:0" />
+</div>
+<div class="index_nav" style="border:0;">
+		<span class="index_navl">物流说明</span>
+		<span class="index_navr"></span>
+	</div>
+
+<div class="selReasontext">
+	<textarea class="selReasontxt" placeholder="请输入物流说明" id="content"></textarea>
+</div>
+
+	
+</div>
+<script type="text/javascript">
+var rec_id=0;//商品订单rec_id;
+var type=0;//商城1 超市2
+var tui_type=0;//退货2 换货3
+ apiready=function(){
+ rec_id=api.pageParam['rec_id'];
+ type=api.pageParam['type'];
+ tui_type=api.pageParam['tui_type'];
+ getinfo(rec_id,type);
+ };
+   function getinfo(rec_id,type){
+   api.ajax({
+				    url: ajax_url+'Index/Aftersale/showRefund',
+				    dataType: "json",
+				    method: 'get',
+						 data: {
+				         values: { 
+				          rec_id:rec_id,
+				          type:type
+				        },       
+		             }
+				},function(ret, err){
+				  if(ret){
+				   if(ret.status==1){
+				       var good=ret.good;//商品信息
+				       var orderinfo=ret.orderinfo;//订单信息
+				       $(".order_sn").html(orderinfo['order_sn']);
+				       $(".goods_name").html(good['goods_name']);
+				       $(".goods_price").html(good['goods_price']);
+				        $(".goods_num").html(good['goods_number']);
+			            $(".goods_img").prop('src',good['img']);
+			            money=good['money'];
+				   }else{
+				   _toast(ret.msg);
+				   }
+				  }else{
+				  _alert('网络连接失败,请稍后重试');
+				  }
+				})
+  }
+  function submit(){
+   var user_wlname=$("input[name=user_wlname]").val(); //物流
+   var user_carrier=$("input[name=user_carrier]").val();//物流单号
+   var content=$("#content").val();//物流说明
+   if(!user_wlname){
+    _toast('请填写物流名称');
+    return false;
+   }
+   if(!user_carrier){
+    _toast('请填写物流单号');
+    return false;
+   }
+	 _ajax(ajax_url+'Index/Aftersale/fahuo',{ 
+		          rec_id:rec_id,
+		          type:type,
+		          tui_type:tui_type,
+		          user_wlname:user_wlname,
+		          user_carrier:user_carrier,
+		          content:content
+	},'post',function(ret, err){
+		  if(ret){
+		   if(ret.code){
+		     _toast(ret.msg,function(){
+			  if(type==2){
+		      var name='super_order_detail';
+		      }else{
+		      var name='mall_order_detail';
+		      }	
+       
+	     	  api.sendEvent({
+	              name:'refe_order_list'
+              });
+	           	
+		       	api.sendEvent({
+					name : name,
+					extra : {
+						key1 : 'success',
+					}
+				});
+				api.closeWin({
+                });
+		     })
+		   }else{
+		    _toast(ret.msg);
+		    return false;
+		   }
+		  }else{
+		  _alert('网络连接失败,请稍后重试');
+		  }
+		})
+  
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>039问题反馈</title>
+		<link rel="stylesheet" type="text/css" href="../../css/account/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/account/newAllStyle.css"/>
+	</head>
+	<body>
+		<!--中间内容-->
+		<div class="baoxiufuwuOuterDiv mar_t">
+			<div>
+				<i class="xian"></i>
+				<span>问题类型</span>
+			</div>
+			<ul class="huaLine mar_t">
+				<li>
+					<div class="huaBtn click">物业管理</div>
+				</li>
+				<li>
+					<div class="huaBtn">管家中心</div>
+				</li>
+				<li>
+					<div class="huaBtn">客服人员</div>
+				</li>
+				<li>
+					<div class="huaBtn">小区保安</div>
+				</li>
+				<li>
+					<div class="huaBtn">维修人员</div>
+				</li>
+				<li>
+                    <div class="huaBtn">保洁</div>
+                </li>
+                <li>
+                    <div class="huaBtn">绿化</div>
+                </li>
+			</ul>
+		</div>
+		<div class="baoxiufuwuOuterDiv mar_t">
+			<div>
+				<div class="fl leftDiv">反馈内容：</div>
+				<div class="rightDiv">
+					<textarea id="desc" rows="" cols="" placeholder="随时聆听您的意见或建议"></textarea>
+				</div>
+			</div>
+			<div>
+				<div class="fl leftDiv">联系电话：</div>
+				<div class="rightDiv wuxiala">
+					<input type="tel" id="mobile" placeholder="请填写您的联系电话" />
+				</div>
+			</div>
+		</div>
+		<!--提交-->
+		<div class="btnTijiao" onclick="tijiao();">提交</div>
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$(".huaLine li").on("click",function(){
+				$(this).children("div").addClass("click").parent(".huaLine li").siblings().children("div").removeClass("click");
+			})
+		});
+		
+		//提交预约
+		function tijiao(){
+			var type=$('.click').text();
+    		var mobile = $("#mobile").val();
+    		var desc = $("#desc").val();
+    	
+    		if(!mobile){
+    			_toast('请填写联系电话');
+    			return false;
+    		}
+    		
+    		if(!desc){
+    			_toast('请填写反馈内容');
+    			return false;
+    		}
+    		   	
+    		
+    		_ajax(ajax_url+"Index/Feedback/subFeedback" ,{
+    			'type':type,
+    			'mobile'   :mobile,
+    			'content':desc,	
+    		},'post',function(ret){
+				if(ret.status==1){
+					_toast(ret.msg,function(){
+						api.closeWin();
+					});
+				}else{
+					_toast(ret.msg);
+				}
+			});	
+		}
+	</script>
+</html>

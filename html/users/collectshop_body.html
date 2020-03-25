@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+		<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+		<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>我的收藏</title>
+		<link rel="stylesheet" href="../../css/user/style.css" />
+		<link rel="stylesheet" href="../../css/user/allStyle.css">
+		<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+		<script type="text/javascript" src="../../script/user/index.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+	</head>
+	<body>
+		<ul class="clearfloat box-s border-b w_shoucang">
+			<li onclick="_openWinByUrl('collect','collect');">商品收藏</li>
+			<li class="red">商家收藏</li>
+			<div class="w_xian" style="left:50%;"></div>
+		</ul>
+		<div class="shoucangTab dianpu">
+			<ul class="w_conL pl_14 pr_14 pb_20 box-s border-b sousuoDiv" id="list">
+				<!--<li>
+					<div class="sel1 fl selD hide_"></div>
+					<div class="fl w_conImg">
+						<img src="../../images/user/7702.png"/>
+					</div>
+					<div>
+						<p>和大家开始发挥你的手机开发你所看见的烦恼</p>
+					</div>
+				</li>
+				<li>
+					<div class="sel1 fl selD hide_"></div>
+					<div class="fl w_conImg">
+						<img src="../../images/user/7702.png"/>
+					</div>
+					<div>
+						<p>妇女圣诞节开发设计开发环</p>
+					</div>
+				</li>-->
+			</ul>
+		</div>
+		<!--尾部-->		
+	</body>	
+	<script type="text/javascript">				
+		var page = 1; //分页
+		var totalpage = 0; //总页数
+		apiready = function() {	
+			loading('collectshop_body');
+			api.setRefreshHeaderInfo({ //下拉加载
+				visible: true,
+				loadingImg: 'widget://image/refresh.png',
+				bgColor: '#ccc',
+				textColor: '#fff',
+				textDown: '下拉刷新...',
+				textUp: '松开刷新...',
+				showTime: true
+			}, function(ret, err) {
+				page = 1;
+				ready();
+			});
+			api.addEventListener({
+				name: 'scrolltobottom',
+				extra: {
+					threshold: 0 //设置距离底部多少距离时触发，默认值为0，数字类型
+				}
+			}, function(ret, err) {
+				if (page < totalpage) {
+					page = page + 1;
+					ready();
+				} else {
+					return false;
+				}
+			});
+			
+		
+			//如监听网络连接事件
+			api.addEventListener({
+			    name: 'collectshopbody'
+			}, function(ret, err) {
+			    if(ret && ret.value.type==1){
+					$(this).addClass("hide_");
+					$("footer").removeClass("hide_");
+					$(".selD").removeClass("hide_");			 						
+				}else{
+					$(".selD").addClass("hide_");
+				}
+			});
+					
+			api.addEventListener({
+			    name: 'collectshopquan'
+			}, function(ret, err) {
+			    if(ret && ret.value){
+					var flag=ret.value.type;						
+					
+					if(flag==false){
+						$(this).addClass("selImg");
+						$(".selD").addClass("selImg");
+					}else{
+						$(this).removeClass("selImg");
+						$(".selD").removeClass("selImg");
+					}			 						
+				}
+			});
+			
+			//获取收藏商品
+			ready();			
+		};
+		
+		//重新刷新
+		function clearReady(){
+			page=1;
+			ready();
+		}
+		
+		//获取收藏商品
+		function ready() {
+			api.ajax({
+				url: ajax_url + 'Index/Collection/getCollectShopList',
+				method: 'post',
+				data: {
+					values: {
+						uid:localStorage.getItem("uid"),
+						p: page
+					},
+				}
+			}, function(ret, err) {
+				closeloading();
+				api.refreshHeaderLoadDone();
+				if (ret) {
+					if (ret.status == 1) {
+						var data = ret.collectShop;
+						totalpage = ret.totalpage; //总页数
+						var html='';
+						if(data!=null && data.length>0){
+							for (var i in data) {
+								html += '<li><div class="sel1 fl selD hide_" data-src="'+data[i]['id']+'"></div>';
+								html += '<div class="fl w_conImg" onclick="openshop('+data[i]['channel_id']+','+data[i]['shop'].id+');"><img style="height:1.4rem;" src="'+data[i]['shop']['logo']+'"/></div>';
+								html += '<div><p>'+data[i]['shop']['name']+'</p></div></li>';
+							}
+						}
+						if (page == 1) {
+							$("#list").html(html);
+						} else {
+							$("#list").append(html);
+						}
+						
+						$(".selD").click(function(){
+							if(this.classList.contains("selImg")){
+								$(this).removeClass("selImg");
+							}else{
+								$(this).addClass("selImg");
+							}
+						});
+					} else {
+						if (page == 1) {
+							$("#list").html("");
+						}
+						_toast(ret.msg);
+					}					
+				} else {					
+					_alert('网络连接失败,请稍后重试');
+				}
+			})
+		}
+		
+		//跳转详情
+		function openshop(channl,id){
+			if(channl==1){
+				var name='mall_shop';
+				var url='../mall/mall_shop';
+				var param={id:id};
+			}
+			if(channl==2){
+				var name='super';
+				var url='../super/super';
+				var param='';
+			}
+			if(channl==3){
+				var name='hotel';
+				var url='../hotel/hotel';
+				var param={sid:id};
+			}
+			if(channl==4){
+				var name='food';
+				var url='../food/food';
+				var param={sid:id};
+			}		
+			if(channl==5){
+				var name='house';
+				var url='../house/house';
+				var param={sid:id};
+			}
+			
+			_openWinByUrl(name,url,param);
+		}
+		
+		//获取所有选择项
+		function getChecked(){
+			//获取选中的值
+            var chk_value=[];
+            $('.selImg').each(function(){
+            	if($(this).attr('data-src')){    
+               		chk_value.push($(this).attr('data-src'));   
+               	} 
+            }); 
+            var ids='';
+            ids = chk_value.join(",");
+            
+            api.sendEvent({
+				name: 'collectshopChecked',
+				extra: {
+					key1: 'success',
+					ids:ids,
+					type:1
+				}
+			});
+		}
+		
+		//跳转详情
+		function openGoodsDetail(channl,id){
+		
+		}
+		
+//		$(".w_shoucang li").click(function(){
+//			$(this).addClass("red").siblings().removeClass("red");
+//			var index_ = $(this).index();
+//			var width_ = $(".w_shoucang .w_xian").width();
+//			$(".w_shoucang .w_xian").css("left",width_*index_);
+//			$(".shoucangTab").eq(index_).removeClass("hide_").siblings(".shoucangTab").addClass("hide_");
+//		})		
+		
+	</script>
+</html>

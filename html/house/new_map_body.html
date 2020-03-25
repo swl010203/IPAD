@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    	.body-div{
+    		width: 360px;
+    		height: 615px;
+    		background-color: pink;
+    	}
+    </style>
+</head>
+<body>
+	<div class="body-div"></div>
+</body>
+<script type="text/javascript" src="../../script/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script>
+    var map = '';
+    var lon = '';
+    var lat = '';
+    var isSetInterVal = false;
+    var interval = '';
+    var keyword = '';
+    apiready = function(){
+        map = api.require('bMap');
+        kword = api.pageParam.kword;
+
+        map.setMapAttr({
+            type: 'standard'
+        });
+        getUserLocation();
+    };
+
+    // 获取经纬度
+    function getUserLocation(){
+        map.getLocationServices(function(ret, err){
+            // if(!ret.enable){
+            //     _toast('请检查设备定位功能是否开启');
+            //     if(!isSetInterVal){
+            //         isSetInterVal = true;
+            //         interval = setInterval(getUserLocation, 3000);
+            //     }
+            //     map.stopLocation();
+            // }else{
+                if(interval!=''){
+                    clearInterval(interval);    // 清除定时器
+                }
+                map.getLocation({
+                    accuracy: '100m',
+                    autoStop: true,
+                    filter: 1
+                }, function(ret, err) {
+                    if (ret.status) {
+                        lon = ret.lon;
+                        lat = ret.lat;
+                        showMap();
+                    } else {
+//                         alert(err.code);
+                    }
+                });
+            // }
+        });
+
+    }
+
+    // 展示地图
+    function showMap(){
+    	console.log("1222222222:"+api.winWidth);
+    	console.log("3333333333:"+api.winHeight);
+    	console.log("lon:"+lon);
+    	console.log("lat:"+lat);
+    	console.log("api.frameName:"+api.frameName);
+        map.open({
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight
+            },
+            center: {
+                lon: lon,
+                lat: lat
+            },
+            zoomLevel: 11,
+            showUserLocation: true,
+            fixedOn: api.frameName,
+            fixed: true
+        }, function(ret) {
+            if (ret.status) {
+                   alert('地图打开成功');
+                map.getLocation({
+                    accuracy: '100m',
+                    autoStop: true,
+                    filter: 1
+                }, function(ret, err) {
+                    if (ret.status) {
+                        lon = ret.lon;
+                        lat = ret.lat;
+                        getRound();
+                    } else {
+                           alert(err.code);
+                    }
+                });
+            }
+        });
+
+        // 设置缩放级别
+        map.setZoomLevel({
+            level: 15
+        });
+
+        // 比例尺
+        map.setScaleBar({
+            show: true,
+            position: {
+                x: 0,
+                y: 0
+            }
+        });
+
+    }
+
+    function getRound(){
+        // 自动定位到用户位置
+        map.showUserLocation({
+            isShow: true,
+            trackingMode: 'none'
+        });
+
+        map.setCenter({
+            coords: {
+                lon: lon,
+                lat: lat
+            },
+            animation: true
+        });
+
+        map.searchNearby({
+            keyword: kword,
+            lon: lon,
+            lat: lat,
+            radius: 2000
+        }, function(ret, err) {
+            if (ret.status) {
+                var location = [];
+                var locationName = [];
+                $.each(ret.results, function(k, v){
+                    var NameTemp = {
+                        id : k,
+                        name : v.name
+                    };
+                    locationName.push(NameTemp);
+                    var temp = {
+                        id: k,
+                        lon: v.lon,
+                        lat: v.lat,
+                    };
+                    location.push(temp);
+                });
+                // alert(JSON.stringify(locationName));
+                // alert(JSON.stringify(location));
+                map.addAnnotations({
+                    annotations: location,
+                    icon: 'widget://',
+                    draggable: true
+                }, function(ret) {
+                    if (ret) {
+                        _toast(locationName[ret.id]['name']);
+                    }
+                });
+                map.stopLocation();
+            } else {
+                // alert(JSON.stringify(err));
+            }
+        });
+        // map.zoomIn();
+    }
+</script>
+</html>

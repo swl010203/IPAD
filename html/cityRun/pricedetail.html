@@ -1,0 +1,89 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<h1 class="mui-title">费用明细</h1>
+			<a class="mui-icon mui-icon-back colorRed" id="fanhui_btn"></a>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">计价规则</button>-->
+		</header>
+		<div class="mui-content bgwhite">
+			<div>
+				<div class="mui-row fymx_div pl20 pr20 box_s border_b">
+					<div class="mui-col-sm-4">里程费</div>
+					<div class="mui-col-sm-4 mui-text-center" id="distance"></div>
+					<div class="mui-col-sm-4 mui-text-right" id="distanceprice"></div>
+				</div>
+				<div class="mui-row fymx_div pl20 pr20 box_s border_b">
+					<div class="mui-col-sm-4">重量费</div>
+					<div class="mui-col-sm-4 mui-text-center" id="weight"></div>
+					<div class="mui-col-sm-4 mui-text-right" id="weightprice"></div>
+				</div>
+				<div class="mui-row fymx_div pl20 pr20 box_s border_b">
+					<div class="mui-col-sm-4">优惠券</div>
+					<div class="mui-col-sm-4 mui-text-center">无</div>
+					<div class="mui-col-sm-4 mui-text-right">0元</div>
+				</div>
+			</div>
+			<p class="pl20 pr20 pt20 pb20 mui-text-right fs32" id="zprice"></p>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/app.js"></script>
+	<script src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		
+		var weight = 0;
+		var distance = 0;
+		apiready = function(){
+			weight = api.pageParam.endWeight;
+			distance = api.pageParam.Ndistance;
+			priceDetail(weight,distance);
+		};
+		function priceDetail(weight,distance){
+			var price = 5;
+			var weightprice = 2.5;
+			var distanceprice = 2.5;
+			var newdistance = (distance-3);
+			var newweight = (weight-3);
+			//重量和里程起步范围
+			if(newdistance <= 0 && newweight <=0){
+				price = 5;
+			}
+			//里程大于起步范围
+			if(newdistance >0){
+				price += (newdistance*1);
+				distanceprice += (newdistance*1);
+				// alert(distanceprice);
+			}
+			//重量大于起步范围
+			if(newweight >0 && newweight <=17){
+				price += (newweight*1);
+				weightprice += (newweight*1);
+			}
+			//重量大于限定范围20公斤
+			if(newweight >17){
+				price +=17;
+			}
+			$('#weightprice').html(weightprice+'元');
+			$('#distanceprice').html(distanceprice+'元');
+			$('#distance').html(distance+'km');
+			$('#weight').html(weight+'公斤');
+			$('#zprice').html('合计：￥'+price);
+		}
+	</script>
+</html>

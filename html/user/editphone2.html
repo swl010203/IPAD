@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="pad_20">
+		<div class="inputContainer">
+			<input class="loginInpt loginInpt01" id="phone" placeholder="请输入手机号" autocomplete="off">
+		</div>
+		
+		<div class="inputContainer">
+
+			<a href="#" class="gainCode">获取验证码</a>
+			<input type="number" class="loginInpt loginInpt01" placeholder="请输入验证码" autocomplete="off">
+		</div>
+
+		
+		<div style="padding-top: 2rem;" onclick="submit();">
+		<a href="javascript:void(0)" class="btn01">确 定</a>
+		</div>
+	
+	</div>
+	
+</div>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+
+<script>
+
+	var userinfo = "";
+	apiready = function(){
+		userinfo = $api.getStorage('userinfo');
+
+	};
+	
+	
+	function submit(){
+
+		var phone = $("#phone").val();
+		if(phone  ==""){
+			_toast('请输入手机号');
+			return false;
+		}
+		if(!_isPhone(phone)){
+			_toast('手机号不正确');
+			return false;
+		}
+		
+		_ajax(ajax_url + "Index/User/upMobile",{'uid':userinfo.uid,'token':userinfo.token,'mobile':phone},'post',function(ret){
+			if(ret.status==1){
+				userinfo.mobile = phone;
+				$api.setStorage('userinfo',userinfo);
+				api.sendEvent({
+				    name: 'refresh_userinfo',
+				    extra: {
+				        userinfo:userinfo
+				    }
+				});
+				_toast(ret.msg,function(){
+					api.closeToWin({
+	                    name: 'userinfo_window_head'
+                    });
+				})
+			}else{
+				_toast(ret.msg);
+			}
+		
+		});
+	
+	}
+	
+	
+</script>
+</body>
+</html>

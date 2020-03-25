@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+		<meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	   		 头部bar的样式-->
+		<title>收银台</title>
+		<link rel="stylesheet" type="text/css" href="../../css/food/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/food/checkstand.css"/>
+	</head>
+	<body>
+		<div class="bgCover hide_"></div>
+		<div class="outInp hide_">
+			<p class="inputTitle">
+				请输入支付密码
+				<i></i>
+			</p>
+			<p class="inputCont">
+				<input type="password" maxlength="6"/>
+			</p>		
+		</div>
+		<p class="lis beizhu">备注:<span>请尽力安排我包房</span></p>
+		
+		<div class="list">
+			<div class="listTop">
+					<a href="javascript:">预约订餐</a>
+			</div>
+			<p class="lis huitong">惠通卡<i></i><span class="lisel"></span></p>
+			<p class="lis zhifubao">支付宝<span></span></p>
+			<p class="lis weixin">微信<span></span></p>	
+		</div>
+		<p class="pBtn"><a href="javascript:">确定</a></p>
+	</body>
+	<script type="text/javascript" src="../../script/food/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/food/index.js"></script>
+	<script type="text/javascript" src="../../script/food/checkstand.js"></script>
+</html>

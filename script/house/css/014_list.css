@@ -1,0 +1,39 @@
+.main-list {
+  width: 100%;
+  margin-top: 0.1rem;
+  background-color: #fff;
+  border-top: 1px solid #E0E0E0;
+  padding: 0 20px;
+  clear:both;
+}
+.main-list .box ul:last-child {
+  margin-bottom: 0.2rem;
+}
+.main-list .box .tit {
+  color: #282828;
+  font-weight: bold;
+  height: 0.3rem;
+  line-height: 0.3rem;
+  font-size: 18px;
+  border-bottom: 1px solid #E0E0E0;
+  clear:both;
+}
+.main-list .box .desc {
+  font-size: 14px;
+  color: #656565;
+  line-height: 0.2rem;
+  text-indent: 2em;
+  margin-top: 0.1rem;
+  clear:both;
+}
+.main-list .box .pic {
+  height: 2rem;
+  width: 100%;
+  margin-top: 0.1rem;
+}
+.main-list .box .pic img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/*# sourceMappingURL=014_list.css.map */

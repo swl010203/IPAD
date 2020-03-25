@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css" />
+	</head>
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgRed">
+			<h1 class="mui-title">限时秒杀</h1>
+			<!--<button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right">积分规则</button>-->
+			<a class="mui-icon mui-icon-back"></a>
+		</header>
+		<div class="mui-content">
+			<div class="bgRed mui-row time_ms">
+				<div class="mui-col-sm-4 mui-col-xs-4 mui-text-center">
+					<p class="fs36">10:00</p>
+					<p class="fs24">11月29日 正在进行</p>
+				</div>
+				<div class="mui-col-sm-4 mui-col-xs-4 mui-text-center active">
+					<p class="fs36">10:00</p>
+					<p class="fs24">11月29日 正在进行</p>
+				</div>
+				<div class="mui-col-sm-4 mui-col-xs-4 mui-text-center">
+					<p class="fs36">10:00</p>
+					<p class="fs24">11月29日 正在进行</p>
+				</div>
+			</div>
+			<div class="bgwhite">
+				<div class="jjkq_div pt10 pb10 pl20 pr20 box-s">
+					<p>即将开枪</p>
+					<div class="djs_div">
+		        			<span>01</span> :
+		        			<span>01</span> :
+		        			<span>01</span>
+		        		</div>
+				</div>
+				<ul class="ms_conList">
+					<li class="pl20 pr20 box-s pt20 pb20 clearfloat border_t">
+						<div class="fl ms_img">
+							<img src="../../images/jfsc6.jpg"/>
+						</div>
+						<div class="fl ms_con">
+							<p class="mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<div class="mt20 ms_con_contents">
+								<p class="colorRed">
+									<span class="fs24">￥</span>
+									<span class="fs36">29</span> 
+									<span class="fs32">.99</span>
+									<span class="fs24 oldPrice">￥35</span>
+								</p>
+								<div class="clearfloat jdt_ms">
+									<div id="demo1" class="mui-progressbar fl progress_div">
+										<span></span>
+									</div>
+									<span class="colorHui999 fs24 ml10">已售100%</span>
+								</div>
+								<button type="button" class="mui-btn mui-btn-danger ms_con_btn">提醒我</button>
+							</div>
+						</div>
+					</li>
+					<li class="pl20 pr20 box-s pt20 pb20 clearfloat border_t">
+						<div class="fl ms_img">
+							<img src="../images/jfsc6.jpg"/>
+						</div>
+						<div class="fl ms_con">
+							<p class="mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<div class="mt20 ms_con_contents">
+								<p class="colorRed">
+									<span class="fs24">￥</span>
+									<span class="fs36">29</span> 
+									<span class="fs32">.99</span>
+									<span class="fs24 oldPrice">￥35</span>
+								</p>
+								<div class="clearfloat jdt_ms">
+									<div id="demo1" class="mui-progressbar fl progress_div">
+										<span></span>
+									</div>
+									<span class="colorHui999 fs24 ml10">已售0%</span>
+								</div>
+								<button type="button" class="mui-btn mui-btn-warning ms_con_btn">取消提醒</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$(function(){
+			mui("#demo1").progressbar({progress:20}).show();
+		})
+	</script>
+</html>

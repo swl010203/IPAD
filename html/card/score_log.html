@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>公益商城</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<style>
+	tr{border-bottom: 1px dashed #dedede;}
+</style>
+</head>
+<body class="bg_fff">
+<!-- 头部 -->
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="">
+		<table cellspacing="0" cellpadding="0" class="card_tab">
+		<thead>
+			<th>时间</th>
+			<th>类型</th>
+			<th>积分</th>
+			<th style="width: 13%">说明</th>			
+		</thead>			
+		<tbody class="list">
+			<!--<tr>
+				<td>2016.06.07 17:30:30</td>
+				<td>充值</td>
+				<td>账户余额</td>
+				<td>饮水</td>
+				<td>-10.00</td>
+				<td>未圈存</td>
+			</tr>-->
+			
+		</tbody>
+		</table>
+	
+	</div>
+	
+</div>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script>
+	var userinfo='';
+	var page=1;//分页
+	var is_page=true;//总页数
+	apiready = function(){
+		loading('score_log');
+		userinfo=$api.getStorage('userinfo');   
+	
+		api.setRefreshHeaderInfo({
+		    visible: true,
+		    loadingImg: 'widget://image/refresh.png',
+		    bgColor: '#ccc',
+		    textColor: '#fff',
+		    textDown: '下拉刷新...',
+		    textUp: '松开刷新...',
+		    showTime: true
+		}, function(ret, err) {
+			is_page = true;
+			page=1;
+			ready();
+		});
+				
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+			}, function(ret, err){ 
+			     
+			    if(is_page){
+			     page=page+1;
+			     ready();
+			    }
+		});
+		
+		ready();
+	};
+	
+	function ready(){
+		_ajax(ajax_url +"Index/User/getScoreLog",{'uid':userinfo.uid,'token':userinfo.token,'p':page},'post',function(ret){		
+			api.refreshHeaderLoadDone();
+			closeloading();
+			
+			var strVar = "";
+			if(ret.status  ==1){
+				$.each(ret.data,function(k,v){
+					    strVar += "<tr>";
+					    strVar += "<td>"+v['date']+"<\/td>";
+					    strVar += "<td>"+v['typename']+"<\/td>";					    
+					    strVar += "<td>"+v['integral']+"<\/td>";
+					    strVar += "<td>"+v['mark']+"<\/td>";
+					    strVar += "<\/tr>";
+				});
+				if(page==1){
+			    	$(".list").html(strVar);
+			    }else{
+			    	$(".list").append(strVar);
+			    }
+			    
+			}else{
+				is_page=false;
+				_toast(ret.msg);
+			}
+		});
+	}
+</script>
+</body>
+</html>

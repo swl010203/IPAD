@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>033立即预约</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+
+        <!--中间内容-->
+        <div class="baoxiufuwuOuterDiv">
+            <div>
+                <div class="fl leftDiv">您的姓名：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="text" name="real_name" id="real_name" placeholder="请填写" />
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">联系电话：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="text" name="mobile" id="mobile" placeholder="请填写" />
+                    <!--<span class="styleSpan colorRed">&nbsp;&nbsp;*必须填写联系电话才能领取</span>-->
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">装修人数：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="number" name="position" id="position" placeholder="请填写装修人数" />
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">装修时间：</div>
+                <div class="rightDiv wuxiala">
+                    <input type="date" name="zhuangtime" id="zhuangtime" placeholder="请选择装修时间" />
+                </div>
+            </div>
+        </div>
+        <!--<div class="baoxiufuwuOuterDiv mar_t">
+            <div>
+                <i class="xian"></i>
+                <span>请选择您需要的服务</span>
+            </div>
+            <ul class="huaLine mar_t" id="styleList">
+                <li>
+                    <div class="huaBtn click">全部</div>
+                </li>
+                <li>
+                    <div class="huaBtn">全部</div>
+                </li>
+      
+            </ul>
+        </div>-->
+        <div class="baoxiufuwuOuterDiv mar_t">          
+            <div>
+                <div class="fl leftDiv">装修内容：</div>
+                <div class="rightDiv">
+                	<input style="height:30px;width:15%;" type="checkbox" name="position_desc" value="改水电"/><label>改水电</label><br/>
+                    <input style="height:30px;width:15%;" type="checkbox" name="position_desc" value="改结构"/><label>改结构</label><br/>
+                    <input style="height:30px;width:15%;" type="checkbox" name="position_desc" value="改门窗"/><label>改门窗</label><br/>
+                    <input style="height:30px;width:15%;" type="checkbox" name="position_desc" value="是否安装新风系统"/><label>是否安装新风系统</label>
+                    <!--<textarea name="position_desc" id="position_desc" cols="" placeholder="请输入装修位置说明"></textarea>-->
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">装修队伍：</div>
+                <div class="rightDiv">
+                	<input style="height:30px;width:15%;" type="radio" name="description" value="业主自装"/><label>业主自装</label><br/>
+                    <input style="height:30px;width:15%;" type="radio" name="description" value="外包装修"/><label>外包装修</label><br/>
+                    <input style="height:30px;width:15%;" type="radio" name="description" value="物业推荐"/><label>物业推荐</label>           
+                    <!--<textarea name="description" id="description" rows="" cols="" placeholder="请输入主要施工说明"></textarea>-->
+                </div>
+            </div>
+            <div>
+                <div class="fl leftDiv">装修需求：</div>
+                <div class="rightDiv">
+                    <textarea name="selectSpan" id="selectSpan" style="width:100%;" placeholder="请输入你的需求..." ></textarea>
+                </div>
+            </div>
+        </div>
+        <!--提交-->
+        <div class="btnTijiao" onclick="appointment();">确定</div>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    
+    
+     <script type="text/javascript" >
+    		
+    		
+	    	var page =1;
+	    	var is_page = true;
+	    	//var style_id = 0;
+	    	apiready = function(){
+
+				
+	    		//获取装修风格
+	    		//getStyle();
+	    	};
+	    	
+	    	function getStyle(){
+	    		_ajax(ajax_url+"Index/Decorate/style" ,{},'get',function(ret){
+					var strVar = "";
+					strVar += "<li>\n";
+				    strVar += "<div onclick=\"setStyle(0,this)\" class=\"huaBtn click\">全部<\/div>\n";
+				    strVar += "<\/li>\n";
+					if(ret.status ==1){
+						
+				   		$(ret.data).each(function(k,v){
+				   			strVar += "<li>\n";
+						    strVar += "<div onclick=\"setStyle('"+v['name']+"',this)\" class=\"huaBtn\">"+v['name']+"<\/div>\n";
+						    strVar += "<\/li>\n";
+				   		})
+					}
+					
+					$("#styleList").html(strVar);
+					
+				
+				});
+	    	}
+	    	
+	    	function setStyle(id , el){
+	    		style_id = id;
+	    		
+	    		$("#styleList li .huaBtn").removeClass('click');
+	    		$(el).addClass('click');
+	    		
+	    		
+	    	}
+	    	
+	    	
+	    	function appointment(){
+	    		var style_id = $('#selectSpan').val();
+	    		var real_name = $("#real_name").val();
+	    		var mobile = $("#mobile").val();
+	    		var zhuangtime = $("#zhuangtime").val();
+	    		var position = $("#position").val();
+	    		var position_desc  = '';
+	    		var chk_value  = [];
+	    		var zhuangstr = $("input[name='position_desc']:checked");//装修内容	    		
+	    		$(zhuangstr).each(function(){  
+  				   chk_value.push($(this).val()); 			                                		  
+			    });
+			    position_desc = chk_value.join(',');
+	    		var description = $("input[name='description']:checked").val();
+
+	    		if(!real_name){
+	    			_toast('请填写姓名');
+	    			return false;
+	    		}
+	    		if(!mobile){
+	    			_toast('请填写联系电话');
+	    			return false;
+	    		}
+	    		
+	    		if(!_isPhone(mobile)){
+	    			_toast('联系电话格式不正确');
+	    			return false;
+	    		}
+	    		
+	    		
+	    		var uid = localStorage.getItem("uid");
+	    		
+	    		_ajax(ajax_url+"Index/Decorate/appointment" ,{
+	    			'uid'      :uid,
+	    			'real_name':real_name,
+	    			'fit_time':zhuangtime,
+	    			'mobile'   :mobile,
+	    			'style'    :style_id,
+	    			'position' :position,
+	    			'position_desc' :position_desc,
+	    			'description'   :description
+	    		},'post',function(ret){
+					if(ret.status==1){
+						_openWinByUrl('appoint_success' , '../order/appoint_success');
+//						_toast(ret.info,function(){
+//							api.closeWin();
+//						});
+					}else{
+						_toast(ret.info);
+					}
+				});
+	    	}
+	    	
+	    	
+	    	
+	</script>	    	
+</html>

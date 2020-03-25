@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+		<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+		<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>订单详情</title>
+		<link rel="stylesheet" href="../../css/user/style.css" />
+		<link rel="stylesheet" href="../../css/user/allStyle.css">
+		<script type="text/javascript" src="../../script/user/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="../../script/user/index.js"></script>
+		<script type="text/javascript" src="../../script/api.js"></script>
+		<script type="text/javascript" src="../../script/app.js"></script>
+	</head>
+	<style>
+		ul.jiudianH p{font-size:18px;line-height:0.25rem;}
+		.jiudianC ul{font-size:18px;width:auto;height: 0.6rem;}
+		.jiwan{font-size:18px;}
+		.w_xList>li:nth-child(1){padding-left: 10px;}
+		.jiwan{position: absolute;
+				top: 0.18rem;
+				left: 50%;
+				margin-left:-0.2rem;
+				width: 0.5rem;
+				height: 0.22rem;
+				border: 1px solid #e0e0e0;
+				border-radius: 0.11rem;
+				line-height: 0.22rem;
+				text-align: center;
+				color: black;}
+		.w_renjian{font-size:18px;padding-top:10px;margin-top:0;}
+		ul.jiudianH{font-size:18px;}
+		.jiudianC ul li p{line-height: 0.25rem;}
+		ul.jiudianH{height:auto;margin-top: 10px;}
+		.w_xList li{height:64px;line-height:54px;font-size:18px;}
+		.w_xList>li:nth-child(1):after{content: "";
+				width: 2px;
+				height: 23px;
+				position: absolute;
+				left: 0rem;
+				top: 0.12rem;
+				background-color: #d12a18;}
+		.jiudianC{height:auto;}
+		.jiudianC ul li p{line-height:0.15rem;font-size:14px;}
+		.jiudianC ul{height:0.35rem;border-radius:7px;box-shadow: 0rem 0.03rem 0.1rem #999;}
+		.jiwan{top:0.08rem;font-size:14px;border-radius:12px;height: 0.16rem;line-height:0.16rem;width: 0.4rem;}
+		.w_renjian ul li{padding-top:0.05rem;}
+			</style>
+	<body>
+		<ul class="w_listTwo jifen border-b xianzhu pl_14 pr_14 mt_20 border-t jiudianH pt_20 box-s" >
+			<p style="width:100%;"><h3 class="qianlu" style="float:left;font-size:20px;" id="shopname"></h3><span id='status' style="color:red;float:right;"></span><div style="clear:both;"></div></p>
+			<p>地址：<span id="shopaddress"></span></p>
+			<p>电话：<span id="shoptel"></span></p>
+			<p>早餐：<span id="breakfast"></span></p>
+			<p>床型：<span id="bed_type"></span></p>
+			<p>宽带：<span id="net"></span></p>
+		</ul>
+		<div class="w_renjian pl_14 pr_14 box-s mt_10 jiudianC pt_20 box-s">
+			<ul class="clearfloat">
+				<li class="fl">
+					<p>入住</p>
+					<p class="red" id="start"></p>
+				</li>
+				<li class="fr">
+					<p>入住</p>
+					<p class="red" id="end"></p>
+				</li>
+				<div class="jiwan">共<span id="daynum">0</span>晚</div>
+			</ul>
+		</div>
+		<ul class="w_xList mt_10 pl_14 pr_14 border-b border-t">
+			<li>费用及优惠</li>
+			<ul>
+				<li>
+					<span class="fl">优惠</span>
+					<span class="red fr">￥<i id="c_val">0.00</i></span>
+				</li>
+				<li>
+					<span class="fl">合计</span>
+					<span class="red fr">￥<i id="order_price">0.00</i></span>
+				</li>
+			</ul>
+		</ul>
+		<ul class="w_xList mt_10 pl_14 pr_14 border-b border-t">
+			<li>订单信息</li>
+			<ul>
+				<li>
+					订单号：<span id="order_sn">-</span>
+				</li>
+				<li>
+					下单时间：<span id="add_time">-</span>
+				</li>
+				<li>
+					房间数：<span id="roomnum">0间</span>
+				</li>
+				<li>
+					联系人：<span id="consignee">-</span>
+				</li>
+			</ul>
+		</ul>
+	</body>
+	<script>
+		var id='';
+		var uid='';
+		apiready = function(){
+			id=api.pageParam['id'];
+			uid=localStorage.getItem("uid");
+			ready();
+		};
+		
+		function ready(){
+			loading('hotel_order_detail_body');
+			_ajax(ajax_url+"Index/HotelOrder/getHotelOrderDetail",{'id':id},'post',function(ret){
+				closeloading();
+				if(ret.status==1){
+					$('#shopname').text(ret.hotelOrder.shopname);
+					$('#status').text(ret.hotelOrder.hotelstatsu.msg);
+					$('#shopaddress').text(ret.hotelOrder.address);
+					$('#shoptel').text(ret.hotelOrder.telphone);
+					$('#breakfast').text(ret.hotelOrder.breakfast_name);
+					$('#bed_type').text(ret.hotelOrder.bed_type_name);
+					$('#net').text(ret.hotelOrder.net_name);
+					$('#start').text(ret.hotelOrder.start_date);
+					$('#end').text(ret.hotelOrder.end_date);
+					$('#daynum').text(ret.hotelOrder.daynum);					
+					$('#c_val').text(ret.hotelOrder.coupons_val);
+					$('#order_price').text(ret.hotelOrder.order_price);
+					$('#order_sn').text(ret.hotelOrder.order_sn);
+					$('#add_time').text(ret.hotelOrder.add_time);
+					$('#roomnum').text(ret.hotelOrder.room_num);
+					$('#consignee').text(ret.hotelOrder.consignee);					
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+	</script>
+</html>

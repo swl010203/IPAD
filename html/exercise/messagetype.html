@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>华海</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+	<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+	.hinfor_lir{margin-left:0rem;}
+	.yidu{
+		width: auto;
+		position: absolute;
+		top: 10px;
+		right: 5px;
+	}
+	li{position: relative;}
+</style>
+</head>
+<body>
+<!-- 头部 -->
+
+<!-- 登录内容 -->
+<div class="wp_100">
+	<div class="hinfor_wrap mt15">
+		<ul class="hinfor_ul list">
+			<!--<li><a href="javascript:void(0);" onclick=opendetail("messagedetail","user/messagedetail","消息详情","'+data[i]['message_id']+'"); class="hinfor_lia">
+				<div class="hinfor_lir">
+					<p class="hinfor_lirp01">'+data[i]['title']+'</p>
+					<p class="hinfor_lirp01 yidu">已读</p>
+					<p class="hinfor_lirp02">'+data[i]['message']+'</p>
+				</div>
+			</a></li>
+			<li><a href="javascript:void(0);" onclick=opendetail("messagedetail","user/messagedetail","消息详情","'+data[i]['message_id']+'"); class="hinfor_lia">
+				<div class="hinfor_lir">
+					<p class="hinfor_lirp01">'+data[i]['title']+'</p>
+					<p class="hinfor_lirp01 yidu">已读</p>
+					<p class="hinfor_lirp02">'+data[i]['message']+'</p>
+				</div>
+			</a></li>-->
+		</ul>
+	</div>
+</div>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		mui.init();
+	var userinfo = '';
+	var type = '';
+	apiready = function(){
+		type = api.pageParam.type;
+		api.addEventListener({
+		    name: 'yidu'
+		}, function(ret, err){
+		    getinfo();
+		});
+
+		userinfo = $api.getStorage('userinfo');
+		getinfo();
+  	};
+  	function getinfo(){
+  		_ajax(ajax_url+'Index/Exercise/message',{'uid':userinfo.uid,'type':type},'post',function(ret, err){
+  			if(ret.status == 1){
+				var strVar = '';
+				$.each(ret.data,function(k,v){
+					strVar +='<li>';
+					strVar +='	<a href="javascript:void(0);" onclick=opendetail("messagedetail","./exercise/messagedetail","消息详情","'+v.id+'"); class="hinfor_lia">';
+					strVar +='		<div class="hinfor_lir">';
+					strVar +='			<p class="hinfor_lirp01">'+v.title+'</p>';
+					if(v.s_readed == 1){
+						strVar +='			<p class="hinfor_lirp01 yidu">已读</p>';
+					}else{
+						strVar +='			<p class="hinfor_lirp01 yidu">未读</p>';
+					}
+					strVar +='			<p class="hinfor_lirp02">'+v.message+'</p>';
+					strVar +='		</div>';
+					strVar +='	</a>';
+					strVar +='</li>';
+				});
+				$('.hinfor_ul').html(strVar);
+  			}else{
+  				_toast(ret.msg);
+				return false;
+  			}
+
+  		})
+  	}
+  	function opendetail(name,url,title,id){
+  		_openWinByUrl(name+'_head','../window_head',{'furl':url,'frame':name,'title':title,'id':id});
+  	}
+</script>
+</body>
+</html>

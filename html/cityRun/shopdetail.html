@@ -1,0 +1,1133 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<span class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed" id="fanhui_btn"></span>
+			<button class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">蓝色港湾鲜花（北京店）</button>
+			<span class="opcitySpan opcitySpan_new mui-pull-right mui-clearfix colorRed">
+				<span class="mui-pull-right iconfont icon-xihuan" onclick="collectShop();"></span>
+				<span class="mui-pull-right iconfont icon-fenxiang1"></span>
+				<span class="mui-pull-right iconfont icon-sousuo"></span>
+			</span>
+		</header>
+		<div class="mui-content bgwhite">
+			<div>
+				<ul class="goods_list pl20 pr20 box_s border_b">
+					<li class="clearfloat border_b pt20 pb20">
+						<div class="mui-pull-left fl_divImg">
+							<img src="../../images/bwm4.jpg" id="shopLogo"/>
+						</div>
+						<div class="mui-pull-left fr_div_con">
+							<p class="clearfloat">
+								<span class="fl span_tit dy_dd"></span>
+								<span class="fr span_mi">m</span>
+							</p>
+							<p class="xing_p">
+								<span class="xingxing" id="star_list">
+									<!--<span class="iconfont icon-wujiaoxingx colorOrange"></span>
+									<span class="iconfont icon-wujiaoxingx"></span>
+									<span class="iconfont icon-wujiaoxingx"></span>
+									<span class="iconfont icon-wujiaoxingx"></span>
+									<span class="iconfont icon-wujiaoxingx"></span>-->
+								</span>
+								<span id="comment_score"></span>
+								<span id="sales_volume"></span>
+							</p>
+							<p class="active_p">
+								<span>2个活动</span>
+							</p>
+							<p class="activity"></p>
+							<p>配送费限时优惠</p>
+						</div>
+					</li>
+				</ul>
+				<div>
+					<ul class="shop_dpDiv_ul border_b">
+						<li class="after active" onclick="click_tab( 1 );">点餐</li>
+						<li class="after" onclick="click_tab( 2 );">评价</li>
+						<li class="" onclick="click_tab( 3 );">商家</li>
+					</ul>
+					<!--点餐-->
+					<div class="shopDetailsOrder_div">
+						<div class="pl20 pr20 box_s bgWhite border_b">
+							<p class="shopDetailsOrder_div_tit">品质套餐</p>
+							<ul class="shopDetailsOrder_div_ul clearfloat" id="goods_sell_list">
+								<!--<li>
+									<div class="shopDetailsOrder_div_ulImg">
+										<img src="../../images/bwm3.jpg">
+									</div>
+									<p class="shopDetailsOrder_div_ulName">小龙虾加饭</p>
+									<p class="shopDetailsOrder_div_ulXiaoliang">月售<span>456</span></p>
+									<div class="clearfloat">
+										<span class="colorRed">￥<span class="price_span">139</span></span>
+										<div class="fr">
+											<div class="btn">
+												<span class="iconfont icon-jian minus"></span>
+												<i>0</i>
+												<span class="iconfont icon-jia add"></span>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="shopDetailsOrder_div_ulImg">
+										<img src="../../images/bwm3.jpg">
+									</div>
+									<p class="shopDetailsOrder_div_ulName">小龙虾加饭</p>
+									<p class="shopDetailsOrder_div_ulXiaoliang">月售<span>456</span></p>
+									<div class="clearfloat dpxq_btn">
+										<span class="colorRed">￥<span class="price_span">139</span></span>
+										<div class="fr">
+											<div class="btn">
+												<span class="iconfont icon-jian minus"></span>
+												<i>0</i>
+												<span class="iconfont icon-jia add"></span>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="shopDetailsOrder_div_ulImg">
+										<img src="../../images/bwm3.jpg">
+									</div>
+									<p class="shopDetailsOrder_div_ulName">小龙虾加饭</p>
+									<p class="shopDetailsOrder_div_ulXiaoliang">月售<span>456</span></p>
+									<div class="clearfloat">
+										<span class="colorRed">￥<span class="price_span">139</span></span>
+										<div class="fr">
+											<div class="btn">
+												<span class="iconfont icon-jian minus"></span>
+												<i>0</i>
+												<span class="iconfont icon-jia add"></span>
+											</div>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="shopDetailsOrder_div_ulImg">
+										<img src="../../images/bwm3.jpg">
+									</div>
+									<p class="shopDetailsOrder_div_ulName">小龙虾加饭</p>
+									<p class="shopDetailsOrder_div_ulXiaoliang">月售<span>456</span></p>
+									<div class="clearfloat">
+										<span class="colorRed">￥<span class="price_span">139</span></span>
+										<div class="fr">
+											<div class="btn">
+												<span class="iconfont icon-jian minus"></span>
+												<i>0</i>
+												<span class="iconfont icon-jia add"></span>
+											</div>
+										</div>
+									</div>
+								</li>-->
+							</ul>
+						</div>
+						<!--点餐底部部分-->
+						<div class="main margin_bottom">
+							<p class="main_tit pl_20 pr_20 box-s bgWhite border_b">热销美食</p>
+							<div class="left-menu">
+								<ul id="cate_list">
+									<!--<li class="active">营养套餐</li>
+									<li class="">酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料</li>
+									<li>酒水饮料1</li>-->
+								</ul>
+							</div>
+							<div class="con clearfloat" id="cate_goods_list">
+								<!--<div class="right-con" style="display: block;">
+									<ul>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="right-con" style="display: none;">
+									<ul>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="right-con" style="display: none;">
+									<ul>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="right-con" style="display: none;">
+									<ul>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="right-con" style="display: none;">
+									<ul>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="right-con" style="display: none;">
+									<ul>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<div class="right-con" style="display: none;">
+									<ul>
+										<li>
+											<div class="menu-img"><img src="../../images/bwm3.jpg" width="55" height="55"></div>
+											<div class="menu-txt">
+												<h4>宫保鸡丁</h4>
+												<p class="list1 clearfloat">
+													<span>月售456</span>
+													<span>好评率100%</span>
+												</p>
+												<p class="list2"><b>￥25</b></p>
+												<div class="btn">
+													<span class="iconfont icon-jian minus"></span>
+													<i>0</i>
+													<span class="iconfont icon-jia add"></span>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>-->
+							</div>
+						</div>
+					</div>
+					<!--评价-->
+					<div class="shopDetailsOrder_div mui-hidden">
+						<div class="clearfloat pingfen_div border_b bgWhite">
+							<div class="fl pingfen_div_left">
+								<p class="colorRed" id="comment_score_score"></p>
+								<p>综合评分</p>
+								<p>高于周边商家99.9%</p>
+							</div>
+							<div class="fl pingfen_div_right">
+								<div class="clearfloat" id="logistics_star_list">
+									<!--<span class="fl">服务态度</span>
+									<span class="xingxing">
+										<span class="iconfont icon-wujiaoxingx colorOrange"></span>
+										<span class="iconfont icon-wujiaoxingx colorOrange"></span>
+										<span class="iconfont icon-wujiaoxingx colorOrange"></span>
+										<span class="iconfont icon-wujiaoxingx"></span>
+										<span class="iconfont icon-wujiaoxingx"></span>
+									</span>
+									<span class="colorRed">5.0</span>-->
+								</div>
+								<div class="clearfloat" id="goods_star_list">
+									<!--<span class="fl mr_20">商品评分</span>
+									<span class="xingxing">
+										<span class="iconfont icon-wujiaoxingx colorOrange"></span>
+										<span class="iconfont icon-wujiaoxingx colorOrange"></span>
+										<span class="iconfont icon-wujiaoxingx colorOrange"></span>
+										<span class="iconfont icon-wujiaoxingx"></span>
+										<span class="iconfont icon-wujiaoxingx"></span>
+									</span>
+									<span class="colorRed">5.0</span>-->
+								</div>
+								<p><span class="mr20">送达时间</span><span id="average_time"></span></p>
+							</div>
+						</div>
+						<div class="border_t10 clearfloat pt20 pb20 border_b choose_pinglun">
+							<span class="btn_whiteSpan btn_span fl"  data-type="0" onclick="comment_tab(this);">全部(<span id="comment_all_num">860</span>)</span>
+							<span class="btn_whiteSpan fl"  data-type="1" onclick="comment_tab(this);">满意(<span id="comment_ok_num">860</span>)</span>
+							<span class="btn_whiteSpan fl"  data-type="2" onclick="comment_tab(this);">不满意(<span id="comment_no_num">860</span>)</span>
+							<span class="btn_whiteSpan fl"  data-type="3" onclick="comment_tab(this);">有图(<span id="comment_pic_num">860</span>)</span>
+						</div>
+						<ul class="pingjia_ul bgWhite">
+							<!--<li class="clearfloat pl20 pr20 box_s pb20 border_b pt20">
+								<div class="fl pingjia_ul_img">
+									<img src="../../images/bwm2.png">
+								</div>
+								<div class="fl pingjia_ul_con">
+									<p class="pingjia_ul_tit">
+										<span>灿烂阳光</span>
+										<span class="fr">2018-03-12</span>
+									</p>
+									<p class="pingjia_ul_p">
+										<span>商家服务：<i class="pingjia_icon pingjia_icon_henhao"></i><span class="orgDiv"> 很好</span></span>
+										<span>商品：<i class="pingjia_icon pingjia_icon_manyi"></i><span class="orgDiv"> 满意</span></span>
+									</p>
+								</div>
+							</li>
+							<li class="clearfloat pl20 pr20 box_s pb20 border_b pt20">
+								<div class="fl pingjia_ul_img">
+									<img src="../../images/bwm2.png">
+								</div>
+								<div class="fl pingjia_ul_con">
+									<p class="pingjia_ul_tit">
+										<span>灿烂阳光</span>
+										<span class="fr">2018-03-12</span>
+									</p>
+									<p class="pingjia_ul_p">
+										<span>商家服务：<i class="pingjia_icon pingjia_icon_henhao"></i><span class="orgDiv"> 很好</span></span>
+										<span>商品：<i class="pingjia_icon pingjia_icon_manyi"></i><span class="orgDiv"> 满意</span></span>
+									</p>
+									<p class="mt10">
+										<span>龙虾饭：</span>
+										<span class="blackColor">味道可以说是棒极了，特别满意，下次还会来吃的，带上朋友</span>
+									</p>
+								</div>
+							</li>
+							<li class="clearfloat pl20 pr20 box_s pb20 border_b pt20">
+								<div class="fl pingjia_ul_img">
+									<img src="../../images/bwm2.png">
+								</div>
+								<div class="fl pingjia_ul_con">
+									<p class="pingjia_ul_tit">
+										<span>灿烂阳光</span>
+										<span class="fr">2018-03-12</span>
+									</p>
+									<p class="pingjia_ul_p">
+										<span>商家服务：<i class="pingjia_icon pingjia_icon_fcManyi"></i><span class="orgDiv"> 非常满意</span></span>
+										<span>商品：<i class="pingjia_icon pingjia_icon_bumanyi"></i><span class="orgDiv"> 不满意</span></span>
+									</p>
+								</div>
+							</li>-->
+						</ul>
+					</div>
+					<!--商家-->
+					<div class="shopDetailsOrder_div mui-hidden">
+						<ul class="shangjia_divImg bgWhite" id="list_logo">
+							<!--<li>
+								<img src="../../images/bwm4.jpg" alt="">
+							</li>
+							<li>
+								<img src="../../images/bwm4.jpg" alt="">
+							</li>
+							<li>
+								<img src="../../images/bwm4.jpg" alt="">
+							</li>
+							<li>
+								<img src="../../images/bwm4.jpg" alt="">
+							</li>
+							<li>
+								<img src="../../images/bwm4.jpg" alt="">
+							</li>
+							<li>
+								<img src="../../images/bwm4.jpg" alt="">
+							</li>-->
+						</ul>
+						<p class="shangjia_divContent border_b" id="shop_desc"></p>
+						<ul class="mt_20 border-t list_ul_shangjia">
+							<li class="pl20 pr20 box_s border_b pt20 pb20 border_t10">
+								<span class="blackColor">商家名称</span>
+								<span class="fr shop_title">北京蝴蝶效应餐厅</span>
+							</li>
+							<li class="pl20 pr20 box_s border_b pt20 pb20">
+								<span class="blackColor">商家品类</span>
+								<span class="fr" id="shop_category">盖浇饭/简餐</span>
+							</li>
+							<li class="pl20 pr20 box_s border_b pt20 pb20 clearfloat">
+								<span class="blackColor">商家地址</span>
+								<span class="fr width_p" id="address"></span>
+							</li>
+							<li class="pl20 pr20 box_s border_b pt20 pb20">
+								<span class="blackColor">商家电话</span>
+								<span class="fr" id="telephone">010-2865678</span>
+							</li>
+							<li class="pl20 pr20 box_s border_b pt20 pb20">
+								<span class="blackColor">营业时间</span>
+								<span class="fr" id="open_close_time">09：30-20：30</span>
+							</li>
+							<li class="pl20 pr20 box_s border_b pt20 pb20 border_t10">
+								<p class="blackColor">商家服务</p>
+								<p class="mt20"><i class="icon_peifu"></i>商家原因导致订单取消，赔付代金券</p>
+							</li>
+							<li class="pl20 pr20 box_s border_b pt20 pb20 border_t10" onclick="zizhi();">
+								<p class="blackColor">营业资质<i class="iconfont icon-arrow-right fr"></i></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div style="height: 90px;background: #FFFFFF;"></div>
+			<p class="pt20 pb20 box_s pl20 pr20 bgqianOrange colorBlack tishi_p mui-text-center">满20减5，满40减15，满60减50，满100减60</p>
+			<footer class="cart_footer clearfloat fs24 mui-row pl20 box_s">
+				<div class="mui-col-sm-9 mui-col-xs-9">
+					<div class="bianjiClick_div">
+						<p style="line-height: 50px;">
+							<span class="iconfont icon-cart posRel colorRed" onclick="click_cart();"><span class="mui-badge mui_badge" id="totalcountshow">0</span></span>
+							<span class="fs28 colorRed">￥</span>
+							<span class="fs36 colorRed" id="totalpriceshow">0.00</span>
+						</p>
+					</div>
+				</div>
+				<div class="mui-col-sm-3 mui-col-xs-3">
+					<div class="buyNow colorWhite" onclick="goSubmit()">去下单</div>
+				</div>
+			</footer>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/common.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+		var sid = 0;
+	    var page    = 1;
+	    var is_page = true;
+	    var comment_click = 0;
+	    var lon = 1;
+	    var lat = 1;
+		var uid = '';
+	
+	    var license_pic = [];
+	    
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		//点击标题效果
+		$(".shop_dpDiv_ul li").click(function(){
+			$(".shopDetailsOrder_div").addClass("mui-hidden");
+			$(this).addClass("active").siblings().removeClass("active");
+			var index_ = $(this).index();
+			$(".shopDetailsOrder_div").eq(index_).removeClass("mui-hidden");
+		});
+		
+		
+//		//加的效果  
+//		$(".add").click(function () {  
+//			$(this).prevAll().css("display", "inline-block");  
+//			var n = $(this).prev().text();  
+//			var num = parseInt(n) + 1;  
+//			if (num == 0) { return; }  
+//			$(this).prev().text(num);  
+//			var danjia = $(this).next().text();//获取单价  
+//			var a = $("#totalpriceshow").html();//获取当前所选总价  
+//			$("#totalpriceshow").html((a * 1 + danjia * 1).toFixed(2));//计算当前所选总价  
+//			var nm = $("#totalcountshow").html();//获取数量  
+//			$("#totalcountshow").html(nm*1+1);  
+//			jss();//<span style='font-family: Arial, Helvetica, sans-serif;'></span>   改变按钮样式
+//		});  
+//		//减的效果  
+//		$(".minus").click(function () {  
+//			var n = $(this).next().text();  
+//			var num = parseInt(n) - 1;  
+//			$(this).next().text(num);//减1  
+//			var danjia = $(this).nextAll(".price").text();//获取单价  
+//			var a = $("#totalpriceshow").html();//获取当前所选总价  
+//			$("#totalpriceshow").html((a * 1 - danjia * 1).toFixed(2));//计算当前所选总价  
+//			var nm = $("#totalcountshow").html();//获取数量  
+//			$("#totalcountshow").html(nm * 1 - 1);  
+//			//如果数量小于或等于0则隐藏减号和数量  
+//			if (num <= 0) {  
+//				$(this).next().css("display", "none");  
+//				$(this).css("display", "none");  
+//				jss();//改变按钮样式  
+//				 return  
+//			}
+//		}); 
+//		//列表选项卡
+//		$(".left-menu li").click(function(){
+//			$(this).addClass("active").siblings().removeClass("active");
+//			var n = $(this).index();
+//			$(".con .right-con").hide();
+//			$(".con .right-con").eq(n).show();	
+//		});
+		//评论区点击效果
+		$(".choose_pinglun>span").click(function(){
+			$(this).addClass("btn_span").siblings().removeClass("btn_span");
+		});
+		
+		apiready = function(){
+			sid = api.pageParam.sid;
+			uid = localStorage.getItem('uid');
+			lon = localStorage.getItem( "lon" );
+	        lat = localStorage.getItem( "lat" );
+
+			api.addEventListener({
+			    name: 'TakeoutDelCart'
+			}, function(ret, err){
+			    if(ret.value.status == 'success'){
+					getShopDetail();
+				}
+			});
+
+			getShopDetail();//店铺详情
+		};
+		//点餐、评价、商家按钮
+		function click_tab( clickNum ) {
+			if( clickNum == 2 ) {
+				comment_click = 1;
+				if( $.trim( $('#comment_list').text() ).length == 0 ) {
+					comment();
+				}
+			} else {
+				comment_click = 0;
+			}
+		}
+
+		//商铺详情
+		function getShopDetail(){
+	        _ajax(ajax_url+"Index/Takeout/getShopInfo" ,{id:sid, uid:uid},'post',function(ret) {
+				if(ret.status == 1){
+					$('#shopLogo').attr('src',ret.data.logo);
+					$('.span_tit').html(ret.data.name);
+					$('.mui-btn-nav').html(ret.data.name);
+					//店铺活动
+					if( ret.data.activity != '' ) {
+	                    $('.activity').text( ret.data.activity );
+	                }
+
+					if(ret.data.is_collect ==1){
+						$(".icon-xihuan").addClass('icon-iconlike');
+					}
+
+
+					//店铺评分
+	                var star_html = '';
+	                var inum = ret.data.comment_star;//星星个数
+	                if( inum > 0 ) {
+	                    for( var i=1; i<=inum; i++) {
+	                        star_html += '<span class="iconfont icon-wujiaoxingx colorOrange"></span>';
+	                    }
+	                }
+	                var jnum = 5-inum;//剩余个数
+	                if( jnum > 0 ) {
+	                    for( var j=1; j<=jnum; j++) {
+	                        star_html += '<span class="iconfont icon-wujiaoxingx"></span>';
+	                    }
+	                }
+					$('#star_list').html( star_html );
+					$('#comment_score').html( ret.data.comment_score+'分' );
+	                $('#sales_volume').html( '销量'+ret.data.sales_volume );
+
+
+					// 品质套餐
+					var goods_sell_html = '';
+	                if( ret.data.goods_sell.length > 0 ) {
+	                    $.each(ret.data.goods_sell, function(key, val) {
+							goods_sell_html += '<li>';
+							goods_sell_html += '	<div class="shopDetailsOrder_div_ulImg">';
+							goods_sell_html += '		<img src="'+val.goods_img+'">';
+							goods_sell_html += '	</div>';
+							goods_sell_html += '	<p class="shopDetailsOrder_div_ulName">'+val.name+'</p>';
+							goods_sell_html += '	<p class="shopDetailsOrder_div_ulXiaoliang">销量<span>'+val.sell+'</span></p>';
+							goods_sell_html += '	<div class="clearfloat">';
+							goods_sell_html += '		<span class="colorRed">￥<span class="price_span">'+val.promo_price+'</span></span>';
+							goods_sell_html += '		<div class="fr">';
+							goods_sell_html += '			<div class="btn">';
+							goods_sell_html += '				<span class="iconfont icon-jian minus" data-goods-id="'+val.id+'" data-price="'+val.promo_price+'"></span>';
+							goods_sell_html += '				<i>0</i>';
+							goods_sell_html += '				<span class="iconfont icon-jia add" data-goods-id="'+val.id+'" data-price="'+val.promo_price+'"></span>';
+							goods_sell_html += '			</div>';
+							goods_sell_html += '		</div>';
+							goods_sell_html += '	</div>';
+							goods_sell_html += '</li>';
+	                    });
+	                }
+	                $('#goods_sell_list').html( goods_sell_html );
+
+
+					//热销美食
+	                var cate_html = '';
+	                var cate_goods_html = '';
+	                if( ret.data.goods_category.length > 0 ) {
+	                    $.each(ret.data.goods_category, function(key, val) {
+	                        if( key == 0 ) {
+	                            cate_html += '<li class="active" onclick="left_menu_li(this);">'+val.title+'<span class="num-price"></span></li>';
+	                        } else {
+	                            cate_html += '<li onclick="left_menu_li(this);">'+val.title+'</li>';
+	                        }
+	                    });
+	                    $('#cate_list').html( cate_html );
+
+	                    var cate_goods = ret.data.goods_list;
+	                    $.each(ret.data.goods_category, function(key, val) {
+	                        if( key == 0 ) {
+	                            cate_goods_html += '<div class="right-con" style="display: block;">';
+	                        } else {
+	                            cate_goods_html += '<div class="right-con" style="display: none;">';
+	                        }
+	                        cate_goods_html += '    <ul>';
+	                        var goods_list = cate_goods[val.id];
+	                        if( typeof goods_list != 'undefined' && goods_list.length > 0 ) {
+	                        //return false;
+	                        $.each(goods_list, function(k, v) {
+								cate_goods_html += '<li>';
+								cate_goods_html += '	<div class="menu-img"><img src="'+v.goods_img+'" width="55" height="55"></div>';
+								cate_goods_html += '	<div class="menu-txt">';
+								cate_goods_html += '		<h4>'+v.name+'</h4>';
+								cate_goods_html += '		<p class="list1 clearfloat">';
+								cate_goods_html += '			<span>月售'+v.sell+'</span>';
+								cate_goods_html += '			<span>好评率100%</span>';
+								cate_goods_html += '		</p>';
+								cate_goods_html += '		<p class="list2"><b>￥'+v.promo_price+'</b></p>';
+								cate_goods_html += '		<div class="btn">';
+								cate_goods_html += '			<span class="iconfont icon-jian minus" data-goods-id="'+v.id+'" data-price="'+v.promo_price+'"></span>';
+								cate_goods_html += '			<i>0</i>';
+								cate_goods_html += '			<span class="iconfont icon-jia add" data-goods-id="'+v.id+'" data-price="'+v.promo_price+'"></span>';
+								cate_goods_html += '		</div>';
+								cate_goods_html += '	</div>';
+								cate_goods_html += '</li>';
+	                        });
+	                        }
+	                        cate_goods_html += '    </ul>';
+	                        cate_goods_html += '</div>';
+	                    });
+	                }
+	                $('#cate_goods_list').html( cate_goods_html );
+					jiajian();
+					$('#totalcountshow').html( ret.data.cart_all_num ); //购物车数量
+					$('#comment_score_score').text( ret.data.comment_score );
+					total_price = ret.data.cart_all_price * 1;
+	            	$("#totalpriceshow").html( total_price.toFixed(2) );//计算当前所选总价
+
+					//物流服务
+	                var logistics_star_html = '<span class="fl mr_20">物流评分</span>';
+					logistics_star_html +='<span class="xingxing">';
+	                var inum = ret.data.logistics_star;//星星个数
+	                if( inum > 0 ) {
+	                    for( var i=1; i<=inum; i++) {
+	                        logistics_star_html += '<span class="iconfont icon-wujiaoxingx colorOrange"></span>';
+	                    }
+	                }
+	                var jnum = 5-inum;//剩余个数
+	                if( jnum > 0 ) {
+	                    for( var j=1; j<=jnum; j++) {
+	                        logistics_star_html += '<span class="iconfont icon-wujiaoxingx"></span>';
+	                    }
+	                }
+					logistics_star_html +='</span>';
+	                logistics_star_html += '<span class="colorRed">'+ret.data.logistics_star_score+'</span>';
+	                $('#logistics_star_list').html( logistics_star_html );
+
+	                //商品质量
+	                var goods_star_html = '<span class="fl mr_20">商品评分</span>';
+					goods_star_html += '<span class="xingxing">';
+	                var inum = ret.data.goods_star;//星星个数
+	                if( inum > 0 ) {
+	                    for( var i=1; i<=inum; i++) {
+	                        goods_star_html += '<span class="iconfont icon-wujiaoxingx colorOrange"></span>';
+	                    }
+	                }
+	                var jnum = 5-inum;//剩余个数
+	                if( jnum > 0 ) {
+	                    for( var j=1; j<=jnum; j++) {
+	                        goods_star_html += '<span class="iconfont icon-wujiaoxingx"></span>';
+	                    }
+	                }
+					goods_star_html += '</span>';
+
+	                goods_star_html += '<span class="colorRed">'+ret.data.goods_star_score+'</span>';
+
+
+	                $('#goods_star_list').html( goods_star_html );
+
+	                $('#average_time').text( ret.data.setting.average_time+'分钟' );
+
+
+					$('#comment_all_num').text( ret.data.comment_all_num );
+	                $('#comment_ok_num').text( ret.data.comment_ok_num );
+	                $('#comment_no_num').text( ret.data.comment_no_num );
+	                $('#comment_pic_num').text( ret.data.comment_pic_num );
+
+					//商家信息
+					//店铺图片
+	                var list_logo_html = '';
+	                var logo_data = ret.data.list_logo;
+	                if( logo_data.length > 0 ) {
+	                    $.each(ret.data.list_logo, function(kk, vv) {
+	                        list_logo_html += '<li><img src="'+vv+'" alt="" /></li>';
+	                    });
+	                }
+	                $('#list_logo').html( list_logo_html );
+	                $('#shop_desc').html( ret.data.detail ); //店铺介绍
+					$('#address').text( ret.data.address ); //店铺地址
+	                $('#telephone').text( ret.data.telphone ); //店铺电话
+	                $('#open_close_time').text( ret.data.setting.open_close_time );//店铺营业时间
+					$('#shop_category').text( ret.data.category_ids );//店铺品类
+					//商品资质
+					$(ret.data.license_pic).each( function(pic_k , pic_v){
+	                	license_pic.push(pic_v);
+	                });
+
+				}else{
+					_toast(ret.msg);
+					return false;
+				}
+			});
+		}
+
+
+		function comment_tab( that ) {
+	        $(that).addClass("btn_span").siblings().removeClass("btn_span");
+	        is_page = true;
+	        page = 1;
+	        comment();
+	    }
+
+
+		//评价列表
+	    function comment() {
+	        var type = $('.btn_span').attr( 'data-type' );
+	        _ajax(ajax_url+"Index/Takeout/getComments" ,{sid:sid, type:type, p:page},'post',function(ret) {
+	            var comment_html = '';
+	            if(ret.status ==1){
+	                if( ret.data.length > 0 ) {
+	                    $.each(ret.data, function(key, val) {
+	                        var imgObj = {'1':'1901_1.png', '2':'1902_1.png', '3':'1903_1.png', '4':'1904_1.png'};
+							comment_html +='<li class="clearfloat pl20 pr20 box_s pb20 border_b pt20">';
+							comment_html +='	<div class="fl pingjia_ul_img">';
+							comment_html +='		<img onerror="this.src=\'../../image/takeout/moren.jpg\';" src="'+val.username_pic+'">';
+							comment_html +='	</div>';
+							comment_html +='	<div class="fl pingjia_ul_con">';
+							comment_html +='		<p class="pingjia_ul_tit">';
+							comment_html +='			<span>'+val.username+'</span>';
+							comment_html +='			<span class="fr">'+val.add_time+'</span>';
+							comment_html +='		</p>';
+							comment_html +='		<p class="pingjia_ul_p">';
+							comment_html +='            <span>物流服务：<i class="pingjia_icon pingjia_icon_henhao" style="background: url(../../../image/takeout/'+imgObj[val.satisfaction]+') center center;background-size: 0.24rem 0.24rem;"></i><span class="orgDiv"> '+val.satisfaction_name+'</span></span>';
+						   	comment_html += '           <span>商品质量：<i class="pingjia_icon pingjia_icon_manyi" style="background: url(../../../image/takeout/'+imgObj[val.satisfaction]+') center center;background-size: 0.24rem 0.24rem;"></i><span class="orgDiv"> '+val.satisfaction_name+'</span></span>';
+							comment_html +='		</p>';
+							comment_html += '        <p class="mt_10">';
+	                        comment_html += '            <span>'+val.comment_goods_name+'：</span>';
+	                        comment_html += '            <span class="blackColor">'+val.content+'</span>';
+	                        comment_html += '        </p>';
+
+	                        //判断是否有图片
+	                        if(val.comment_pic.length > 0){
+	                        	var picIndex = 0;
+
+	                        	$(val.comment_pic).each(function(k,v){
+	                        		comment_html += '<div class="fl pingjia_ul_img pr_10">';
+			                        comment_html += '    <img onclick="bigpic(\''+v.big_pic+'\',0);"  src="'+v.pic+'"/>';
+			                        comment_html += '</div>';
+			                        picIndex++;
+	                        	})
+
+	                        }
+							comment_html +='	</div>';
+							comment_html +='</li>';
+	                    });
+	                } else {
+	                    is_page = false;
+	                    _toast( '没有更多记录了' );
+	                }
+	                if( page > 1 ) {
+	                    $('.pingjia_ul').append( comment_html );
+	                } else {
+	                    $('.pingjia_ul').html( comment_html );
+	                }
+	            }else{
+	                is_page = false;
+	                _toast(ret.msg);
+	            }
+	        });
+	    }
+
+		//点击分类显示商品
+		function left_menu_li(obj) {
+			$(obj).addClass("active").siblings().removeClass("active");
+			var n = $(obj).index();
+			$(".con .right-con").hide();
+			$(".con .right-con").eq(n).show();
+        }
+
+
+		function jiajian(){
+			//加的效果
+			$(".add").click(function () {
+				$(this).prevAll().css("display", "inline-block");
+				var n = $(this).prev().text();
+				var num = parseInt(n) + 1;
+				if (num == 0) { return; }
+				$(this).prev().text(num);
+				var danjia = $(this).attr('data-price');//获取单价
+				var a = $("#totalpriceshow").html();//获取当前所选总价
+				$("#totalpriceshow").html((a * 1 + danjia * 1).toFixed(2));//计算当前所选总价
+				var nm = $("#totalcountshow").html();//获取数量
+				$("#totalcountshow").html(nm*1+1);
+				var goodsIdStr = $(this).attr('data-goods-id'); //商品id
+				addCart(goodsIdStr , 1);
+			});
+			//减的效果
+			$(".minus").click(function () {
+				var n = $(this).next().text();
+				var num = parseInt(n) - 1;
+				$(this).next().text(num);//减1
+				var danjia = $(this).attr('data-price');//获取单价
+				var a = $("#totalpriceshow").html();//获取当前所选总价
+				$("#totalpriceshow").html((a * 1 - danjia * 1).toFixed(2));//计算当前所选总价
+				var nm = $("#totalcountshow").html();//获取数量
+				$("#totalcountshow").html(nm * 1 - 1);
+				var goodsIdStr = $(this).attr('data-goods-id'); //商品id
+				addCart(goodsIdStr , -1);
+				//如果数量小于或等于0则隐藏减号和数量
+				if (num <= 0) {
+					$(this).next().css("display", "none");
+					$(this).css("display", "none");
+
+				}
+			});
+		}
+
+		//商品资质
+		function zizhi(){
+	    	photoBrowser(license_pic,0);
+	    }
+
+		//加入购物车
+		function addCart(goods_id , goods_num ){
+			api.sendEvent({
+			    name: 'ref_cart',
+			    extra: {
+			        key1: '1'
+			    }
+			});
+
+			if( uid == '' || uid == 0 || uid == null || typeof uid == 'undefined' ) {
+				_openWinByUrl('login' , '../../login');
+	            return false;
+	        }
+
+	        if( goods_id == '' || goods_num == '' ) {
+	            _toast( '请选择商品' );
+	            return false;
+	        }
+
+			_ajax(ajax_url+"Index/TakeoutOrder/addCart" ,{uid:uid, sid:sid, goods_id:goods_id, goods_num:goods_num},'post',function(ret) {
+
+	            if(ret.status != 1){
+					_toast('操作失败');
+					return false;
+	            }
+	        });
+		}
+
+		//跳转购物车
+	    function click_cart() {
+	        var uid = localStorage.getItem("uid");
+	        if (!uid || uid == '' || uid == 0 || typeof uid == 'undefined') {
+	            _toast('请登录!');
+	            return false;
+	        }
+	        _openWinByUrl('cart_head', './order/cart_head');
+	    }
+
+
+		//去结算
+		function goSubmit() {
+			// if( $(".right").find("a").hasClass("disable") ) {
+			// 	return false;
+			// }
+			if( uid == '' || uid == 0 || uid == null || typeof uid == 'undefined' ) {
+				_openWinByUrl('login' , '../../login');
+				return false;
+			}
+			_ajax(ajax_url+"Index/TakeoutOrder/getUserCardId" ,{uid:uid, sid:sid},'post',function(ret) {
+				if(ret.status ==1){
+					//跳转下单页面 确认订单页面
+					var cart_id = ret.data;
+					_openWinByUrl('sureorder','sureorder',{cart_id:cart_id});
+					// _openWinByUrl('../order/order_head','../order/order_head',{cart_id:cart_id});
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+
+		//收藏店铺
+        function collectShop() {
+            var uid = localStorage.getItem( "uid" );
+            if( uid == 0 || uid == ''  || uid == null || typeof uid == 'undefined' ) {
+            	_openWinByUrl('login' , '../../login');
+//              _toast( '请先登录再收藏' );
+                return false;
+            }
+            if( sid == 0 || sid == '' || sid == null ||  typeof sid == 'undefined' ) {
+                _toast( '收藏失败' );return false;
+            }
+            _ajax(ajax_url+"Index/TakeoutCollect/collectShop" ,{uid:uid, sid:sid},'post',function(ret) {
+                if(ret.status == 1){
+                	$(".icon-xihuan").addClass('icon-iconlike');
+                    _toast(ret.msg);
+                }if(ret.status == 2){
+                	$(".icon-xihuan").removeClass('icon-iconlike');
+                    _toast(ret.msg);
+                }else{
+                    _toast(ret.msg);
+                }
+            });
+        }
+
+		function bigpic(src){
+			photoBrowser([src]);
+//			api.openFrame({
+//				pageParam:{src:src},
+//				name : 'showimg',
+//				url  : '../showimg.html',
+//	
+//				bounces   : false,
+//				animation : {
+//					type    : "fade",           //动画类型（详见动画类型常量）
+//					subType : "from_top",       //动画子类型（详见动画子类型常量）
+//					duration: 400               //动画过渡时间，默认300毫秒
+//				}
+//			});
+		}
+	</script>
+</html>

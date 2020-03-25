@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+        <title>确认订单</title>
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/style.css" />
+        <link rel="stylesheet" type="text/css" href="../../../css/takeout/takeOutCommon.css" />
+        <style>
+        	
+        </style>
+    </head>
+
+    <body>
+        <div class="myInfor_div mt_20">
+            <ul class="border-t">
+                <li class="border-b pl_20 pr_20 box-s address_li" onclick="_openWinByUrl('address_head','../../user/address_head')">
+                    <p class="clearfloat"><span class="fl" style="width: 50%;" id="add_name">暂无地址,请添加地址</span>
+                    <span class="fl" style="width: 50%;" id="add_phone"></span></p>
+                    <p class="mt_10" id="add_add"></p>
+                </li>
+                <li class="bgWhite border-b pl_20 pr_20 box-s lijipeisong_click">
+                    <i class="fl myInfor_icon peisong_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">配送时间<i class="right_arrow fr myInfor_icon"></i><span class="fr red lijipeisong_clickHtml"></span></p>
+                </li>
+            </ul>
+        </div>
+        <div class="cancel_div mt_20">
+            <ul class="order_outerUl border-b">
+                <li class="outer_cartDiv_ul_tit clearfloat pl_20 pr_20 box-s border-b">
+                    <i class="fl shop_icon1"></i>
+                    <a href="#">
+                        <p class="outer_cartDiv_ul_tit_p clearfloat fl">
+                            <span class="fl outer_cartDiv_ul_tit_span" id="shopName"></span>
+                            <i class="fl right_arrow order_arrow"></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="pl_20 pr_20 box-s">
+                    <ul class="order_innerUl" id="goodsList">
+                       <!-- <li>
+                            <span>进口水晶葡萄</span>
+                            <span class="fr red">￥30</span>
+                            <span style="width: 2rem;" class="fr">x4</span>
+                            
+                        </li>-->
+                    </ul>
+                </li>
+            </ul>
+            <div class="cancel_div1 pl_20 pr_20 box-s bgWhite pt_10">
+                <div class="outer_cartDiv_ul_footer">
+                    <p class="clearfloat">
+                        <span class="fl">包装费</span>
+                        <span class="fr red" id="box_fee">￥0</span>
+                    </p>
+                    <p class="clearfloat border-b">
+                        <span class="fl">配送费</span>
+                        <span class="fr red" id="cost">￥0</span>
+                    </p>
+                    <div class="mt_20 border-b actitityinfo" style="display: block;">
+                        <p class="clearfloat is_new_user" style="display: none;">
+                            <i class="icon_small icon_newUser"></i>
+                            <span class="fl">新用户立减</span>
+                            <span class="fr red is_new_user_price">-￥0</span>
+                        </p>
+                        <p class="clearfloat is_activity" style="display: none;">
+                            <i class="icon_small icon_newUser"></i>
+                            <span class="fl">立减优惠</span>
+                            <span class="fr red is_activity_price">-￥0</span>
+                        </p>
+                        
+                       <!-- <p class="outer_cartDiv_ul_footer_p">
+                            <i class="icon_small icon_integral"></i>
+                            <span>积分抵现</span>
+                            <span class="fr">剩余积分<span class="integral"></span><input class="inp_small" id="integral" type="text" /></span>
+                        </p>-->
+                        <p class="outer_cartDiv_ul_footer_p ">
+                            <i class="icon_small icon_vouchers"></i>
+                            <span>代金券</span>
+                            <span class="fr"><a id="coupons_str">无可用代金券</a><i class="right_arrow fr"></i></span>
+                        </p>
+                    </div>
+                    
+                    <p class="clearfloat sumNum_p">小计<span class="red" id="xiaoji">￥0</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="myInfor_div mt_20">
+            <ul class="border-t">
+                <li class="bgWhite border-b pl_20 pr_20 box-s canju_click">
+                    <i class="fl myInfor_icon bianji_icon"></i>
+                    <p class="outer_cartDiv_ul_tit_p">备注/餐具份数<i class="right_arrow fr myInfor_icon"></i><span class="fr canjuext">请选择</span></p>
+                </li>
+            </ul>
+        </div>
+        <footer class="footer_fixedScreen clearfloat">
+            <span class="fl red mr_20">￥<span class="fontSize_big" id="total_price"></span></span>
+            <span class="fl ml_20">已优惠<span class="red" id="discounts_price">￥0</span></span>
+            <span class="fr btn_jiesuan ordder_staus">去结算</span>
+        </footer>
+        <div class="mark hide_ mark_1">
+            <div id="wrapper3" class="cancle_mark hide_">
+               
+				<ul style="height: auto;position: absolute;" class="cancle_mark_ul" >
+                    <li style="background: #F2F2F2;line-height: 0.88rem;padding-left: 0.2rem;padding-right: 0.2rem;box-sizing: border-box;" class="clearfloat">
+                        <span>选择送达时间</span>
+                        <span class="fr mark_1_click">取消</span>
+                    </li>
+                    <div id="cost_time">
+                    	<!--<li class="red pl_20 pr_20 box-s clearfloat">
+	                        <span class="time_span">立即配送 约15:24送达</span>
+	                        <span class="fr">￥5</span>
+	                    </li>
+	                    <li class="pl_20 pr_20 box-s clearfloat">
+	                        <span class="time_span">15:28</span>
+	                        <span class="fr">￥5</span>
+	                    </li>-->
+                    </div>
+                   
+                </ul>
+            </div>
+        </div>
+        <div class="mark mark_2 hide_">
+            <ul class="mark_2_ul hide_">
+                <li style="background: #F2F2F2;line-height: 0.88rem;padding-left: 0.2rem;padding-right: 0.2rem;box-sizing: border-box;" class="clearfloat">
+                    <span class="mark_2_sure">确定</span>
+                    <span class="fr mark_2_click">取消</span>
+                </li>
+                <li class="bgWhite clearfloat pb_20">
+                    <span class="btn_whiteSpan fl mt_20 ">不吃辣</span>
+                    <span class="btn_whiteSpan fl mt_20 ">少放辣</span>
+                    <span class="btn_whiteSpan fl mt_20">多放辣</span>
+                    <span class="btn_whiteSpan fl mt_20">不吃醋</span>
+                    <span class="btn_whiteSpan fl mt_20">不吃香菜</span>
+                    <span class="btn_whiteSpan fl mt_20">不吃蒜</span>
+                    <span class="btn_whiteSpan fl mt_20">多放醋</span>
+                    <span class="btn_whiteSpan fl mt_20">多放饭</span>
+                </li>
+                <li class="bgWhite pl_20 pr_20 box-s pb_20">
+                    <textarea class="textarea_li" name="note" maxlength=30 id="note" rows="" cols="" placeholder="请输入备注,最多30个文字"></textarea>
+                </li>
+                <li class="footer_li clearfloat bgWhite pl_20 pr_20 box-s border-t">
+                    <span>餐具份数</span>
+                    <div class="fr footer_li_div clearfloat">
+                        <span class="span_reduction fl">-</span>
+                        <input class="inp_num" type="text" name="canju_num" readonly="" id="canju_num" value="1"/>
+                        <span class="span_add fr">+</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </body>
+    <script type="text/javascript" src="../../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../../script/api.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/index.js"></script>
+    <script type="text/javascript" src="../../../script/app.js"></script>
+    <script type="text/javascript" src="../../../script/takeout/iscroll.js"></script>
+    <script type="text/javascript">
+		var myScroll3 = new IScroll('#wrapper3', { 
+			 mouseWheel: true, 
+			 hScrollbar:false,
+			 vScrollbar:false,
+			 click:true,
+//			 bounce:true
+		});
+		//备注选择
+		$(".btn_whiteSpan").click(function(){
+			
+			var nodeval = $("#note").val();
+			
+			if( nodeval.length > 30){
+				_toast('最多30个文字');
+			} else {
+				$("#note").val( nodeval +  ' ' + $(this).text());
+			}
+			
+			if( $(this).hasClass('btn_span')){
+				
+			}
+		});
+        //选择配送时间
+        $(".lijipeisong_click").click(function(){
+            $(".mark_1").removeClass("hide_");
+            $(".cancle_mark").slideDown(500);
+            myScroll3.refresh();
+        });
+        $(document).on('click', ".cancle_mark li.box-s" , function() {
+        //$(".cancle_mark li.box-s").click(function() {
+        		cost_time = $(this).attr('data-time');
+                $(this).addClass("red").siblings("li").removeClass("red");
+                var html_ = $(this).find("span.time_span").html();
+                $(".lijipeisong_clickHtml").html(html_);
+                $(".cancle_mark").slideUp(500,function(){
+                    $(".mark_1").addClass("hide_");
+                });
+//              document.body.removeEventListener('touchmove',bodyScroll,true);
+//              $("body").css("overflow-y","scroll");
+        });
+        $(".mark_1_click").click(function(){
+            $(".cancle_mark").slideUp(500,function(){
+                $(".mark_1").addClass("hide_");
+            });
+        });
+        
+        //请选择餐具份数
+        $(".canju_click").click(function(){
+            $(".mark_2").removeClass("hide_");
+            $(".mark_2_ul").slideDown(500);
+        });
+        $(".mark_2_sure").click(function(){
+            $(".mark_2_ul").slideUp(500,function(){
+                $(".mark_2").addClass("hide_");
+            });
+        });
+        $(".mark_2_click").click(function(){
+            $(".mark_2_ul").slideUp(500,function(){
+                $(".mark_2").addClass("hide_");
+            });
+        });
+        //减
+        var num_ = $(".inp_num").val();
+        $(".span_reduction").click(function(){
+            num_--;
+            if(num_<=1){
+                num_ = 1;
+            }
+            $(".inp_num").val(num_);
+        });
+        //加
+        $(".span_add").click(function(){
+            num_++;
+            $(".inp_num").val(num_);
+        });
+        //失去焦点时重新获取input的值
+        $(".inp_num").blur(function(){
+            num_ = $(".inp_num").val();
+        });
+        //点击确定赋值
+        $(".mark_2_sure").click(function(){
+            var num_ = $(".inp_num").val();
+            $(".canjuext").html(num_);
+        });
+        
+        
+        var uid = localStorage.getItem( "uid" );
+        var address_id = "";
+        var cart_ids ="";  //商品购物车id
+        var cost_time = "";
+        var note ="";
+        var goods_price = 0; //商品总金额金额
+        var coupons_id = "";
+        var integral  = 0; //积分数量
+        apiready = function(){
+        	cart_ids = api.pageParam.cart_id;
+        	
+        	//监听选择优惠券
+        	api.addEventListener({
+	            name:'takeout_order'
+            },function(ret,err){
+            	coupons_id = ret.value.coupons_id;
+            	getCartOrderInfo();
+            });
+        	//监听收获地址
+			api.addEventListener({
+			    name: 'sureaddress'
+			}, function(ret, err) {
+				address_id = ret.value.address_id;
+			    //重新加载订单
+				getCartOrderInfo();
+			});
+			
+			//getUserScore(); //获取用户积分
+        	getCartOrderInfo();
+        };
+        
+//      function getUserScore(){
+//			if( typeof uid  !='undefined'  &&  uid !='' && uid !=null){
+//				 _ajax(ajax_url+'Index/User/score',{
+//							uid : uid
+//				},'post',function(ret, err) {
+//				   if( ret.code == 1 ){
+//					    var data=ret.data;
+//					    $(".integral").html(data);
+//				   }
+//				})
+//			}
+//		}
+	
+        
+        //获取订单信息
+        function getCartOrderInfo(){
+        	_ajax(ajax_url+"Index/TakeoutOrder/getCartOrderInfo" ,{uid:uid ,'cart_ids': cart_ids , 'address_id' :address_id ,'coupons_id':coupons_id },'post',function(ret) {
+	            if( ret.status == 1 ){
+	            	
+	            	var orderInfo = ret.data.order; //订单信息
+	            	var shopInfo = ret.data.shop; //店铺信息
+	            	var goodsInfo = ret.data.goods; //商品信息
+	            	var addressInfo = ret.data.address; //address收获地址信息
+	            	var costTime = ret.data.cost_time;
+	            	
+					if(addressInfo != -1){
+						$("#add_name").html(addressInfo.consignee);
+						$("#add_phone").html(addressInfo.mobile);
+						$("#add_add").html(addressInfo.address);
+						address_id = addressInfo.address_id;
+					}
+					
+					var strVar = "";
+					$(goodsInfo).each(function(k,v){
+					    strVar += "<li>\n";
+					    strVar += "    <span>"+v['goods_name']+"<\/span>\n";
+					    strVar += "    <span class=\"fr red\">￥"+v['goods_price']+"<\/span>\n";
+					    strVar += "    <span style=\"width: 2rem;\" class=\"fr\">x"+v['goods_num']+"<\/span>\n";
+					    strVar += "<\/li>\n";
+					});
+					$("#goodsList").html(strVar);
+					$("#shopName").html(shopInfo.name);
+					//订单信息
+					$("#cost").text("￥"+ shopInfo.cost);
+					$("#box_fee").text("￥"+ orderInfo.box_fee);
+					
+					goods_price = orderInfo.goods_price;
+					$("#total_price").text(orderInfo.total_price);
+					$("#xiaoji").text( parseFloat(orderInfo.box_fee) + parseFloat(shopInfo.cost) + parseFloat(orderInfo.goods_price) );
+					$("#discounts_price").text("￥"+ (parseFloat(orderInfo.discounts.discounts_price) + parseFloat(orderInfo.coupons_val)) );
+					if(orderInfo.ordder_staus == 1){
+						$(".ordder_staus").text('去结算');
+						$(".ordder_staus").attr('onclick' , 'order()');
+						$(".ordder_staus").css("background","linear-gradient(to right, #df6711, #d12c18);");
+					} else {
+						$(".ordder_staus").text(orderInfo.ordder_staus_str);
+						$(".ordder_staus").css("background","#dbdbdb");
+					}
+					//优惠信息
+					if( orderInfo.discounts.is_new_user == 1){
+						
+						$(".is_new_user").show();
+						$(".is_new_user_price").text("-￥" + orderInfo.discounts.is_new_user_price);
+					}
+					if( orderInfo.discounts.is_activity == 1){
+						
+						$(".is_activity").show();
+						$(".is_activity_price").text("-￥" + orderInfo.discounts.is_activity_price);
+					}
+					
+					if( orderInfo.coupons !==false){
+						$("#coupons_str").text('请选择代金券');
+						$("#coupons_str").attr('onclick' , 'coupons()');
+						if(orderInfo.coupons_val ){
+							$("#coupons_str").text("￥" + orderInfo.coupons_val + '元代金券');
+						}
+					}
+					
+					
+					//配送时间段
+					var strVar = "";
+					if(costTime == -1 ){
+						$(".lijipeisong_clickHtml").html('不在配送时间内');
+					} else {
+						$(costTime).each(function(k,v){
+							if(k == 0){
+								cost_time = v['time'];
+								$(".lijipeisong_clickHtml").html(v['time_str']);
+								strVar += "<li data-time='"+v['time']+"' class=\"red pl_20 pr_20 box-s clearfloat\">\n";
+							} else {
+								strVar += "<li data-time='"+v['time']+"' class=\" pl_20 pr_20 box-s clearfloat\">\n";
+							}
+						    
+						    strVar += "    <span class=\"time_span\">"+v['time_str']+"<\/span>\n";
+						    strVar += "    <span class=\"fr\">￥"+v['cost']+"<\/span>\n";
+						    strVar += "<\/li>\n";
+						});
+						$("#cost_time").html(strVar);
+					}
+	            }
+	        });
+        }
+        
+        function coupons(){
+        	_openWinByUrl('coupons_head','../my/coupons_head' , {'goods_price':goods_price , 'is_order' : 1});
+        }
+        
+        
+       	//下单
+        function order(){
+        	if(typeof uid =='undefined' || uid ==''  || uid ==null){
+				_openWinByUrl('login','../../login');
+				return false;
+			}
+			
+			if(!address_id){
+				_toast('请选择收货地址');
+				return false;
+			}
+			
+			if(!cost_time){
+				_toast('请选择配送时间');
+				return false;
+			}
+			
+			note = $("#note").val();
+			canju_num = $("#canju_num").val();
+			note = " 餐具" +canju_num + "份";
+			
+//			integral = $("#integral").val();
+        	
+        	_ajax(ajax_url+"Index/TakeoutOrder/order" ,{
+        		uid:uid ,'cart_ids': cart_ids , 'address_id' :address_id ,
+        		'cost_time' :cost_time , 'note':note,'coupons_id':coupons_id 
+        	},'post',function(ret) { 
+	            if(ret.status ==1){
+					_toast(ret.msg,function(){
+						_openWinByUrl('pay_head','../../order/pay_head',{'order_sn':ret.data,'pay_notify_type':13});
+					});
+				}else{
+					_toast(ret.msg);
+				}
+	        });
+        }
+    </script>
+</html>

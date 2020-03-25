@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<style>
+	.trade_title {
+			overflow: hidden;
+	}
+</style>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+
+<!-- 内容 -->
+
+<!--<div class="trade_title">
+	<div class="trade_titleline"></div>
+	<div class="trade_titletxt"><span class="trade_titletxt01">中奖记录</span></div>
+</div>-->
+<div class="wp_100 list">
+	<!--<div class="balaWrap">
+		<p class="rechargetxt">超市沸</p>
+		<p class="rechargetime">2016.10.10 13:15</p>
+		<p class="rechargetime address"></p>
+		<span class="rechargeMoney" style="color: #199908;">+20</span>
+	</div>-->
+	
+
+</div>
+<script type="text/javascript">
+var page=1;//分页
+var is_page=true;//总页数
+var userinfo ="";
+apiready=function(){
+	userinfo = $api.getStorage('userinfo');
+
+ 	api.addEventListener({
+	    name:'scrolltobottom',
+	    extra:{
+	        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+	    }
+		}, function(ret, err){        
+		    if(is_page){
+		     page=page+1;
+		     ready();
+		    }
+	});
+	loading('turntable');
+   	ready();
+};
+	function ready(){
+		_ajax(ajax_url +"Index/User/getUserPrize",{'uid':userinfo.uid,'token':userinfo.token,'p':page},'post',function(ret){
+			var strVar = "";
+			if(ret.status  ==1){
+				//判断是否还有下一页
+				if(ret.data.length==0  && page !=1){
+					is_page = false;
+					return false;
+				}
+
+				$.each(ret.data,function(k,v){
+					//v['address']  领奖地址
+				    strVar += "<div class=\"balaWrap\">";
+				    strVar += "	<p class=\"rechargetxt\">";
+				    strVar += v['prize_name'];
+				    strVar += "	<\/p>";
+				    strVar += "	<p class=\"rechargetime\">";
+				    strVar += v['add_time'];
+				    strVar += "	<\/p>";
+				    if(v['turntable_type'] ==1){
+					    strVar += "	<p class=\"rechargetime address\">";
+					    strVar += "领取地址："+v['address'];
+					    strVar += "	<\/p>";
+				    }
+				    strVar += "	<span class=\"rechargeMoney\" style=\"color: #199908;\">";
+				    if(v['turntable_type'] ==1){
+				    	strVar+='提取码：'+v['extract_code'];
+				    }
+				    
+				    if(v['is_prize'] ==1){
+				    strVar+='(已领取)';
+				    }
+				    strVar +="<\/span>";
+				    strVar += "<\/div>";
+				});
+				    
+			}else{
+				is_page = false;
+				_toast(ret.msg);
+			}
+			
+			if(page==1){
+		    	$(".list").html(strVar);
+		    }else{
+		    	$(".list").append(strVar);
+		    }
+			
+			closeloading();
+			api.refreshHeaderLoadDone();
+			
+		})
+	   
+	}
+</script>
+</body>
+</html>

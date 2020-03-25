@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/mall_estate.css"/>
+	</head>
+
+	<body>
+		<header id="header" class="mui-bar mui-bar-nav bgwhite border_b">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left colorRed"></a>
+			<h1 class="mui-title inp_muiTitle inp_muiTitle_fenlei colorRed">订单</h1>
+		</header>
+		<div class="mui-content bgwhite">
+			<div>
+				<div id="goods">
+					<!--<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+						<div class="mui-col-sm-4 mui-col-xs-4">
+							<div class="jfrd_imgDiv">
+								<img src="../../images/pingguo.jpg"/>
+							</div>
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+							<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<p class="clearfloat btn_pLine clearfloat">
+								<span class="fs28 mt10">x 10</span>
+								<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+							</p>
+						</div>
+					</div>
+					<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">
+						<div class="mui-col-sm-4 mui-col-xs-4">
+							<div class="jfrd_imgDiv">
+								<img src="../../images/pingguo.jpg"/>
+							</div>
+						</div>
+						<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">
+							<p class="fs32 mui-ellipsis-2">良品铺子  开心果 坚果零食 干果休闲炒货 办公室小吃98g</p>
+							<p class="clearfloat btn_pLine clearfloat">
+								<span class="fs28 mt10">x 10</span>
+								<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">29</span>.99</span>
+							</p>
+						</div>
+					</div>-->
+				</div>
+				<div class="wddd_fullDiv_li_bottomNew border_t pl20 pr20 pt20 pb20 clearfloat">
+					<button type="button" class="mui-btn mui-btn-danger fs24 mui-pull-right mui-hidden" id="tuikuan">退款</button>
+					<button type="button" class="mui-btn mui-btn-danger fs24 mui-pull-right mui-hidden" onclick="sureOrder();" id="sureOrder">确认收货</button>
+					<button type="button" style="margin-left:10px;" class="mui-btn mui-btn-danger fs24 mui-pull-right mui-hidden" id="goPay">去支付</button>
+					<button type="button" class="mui-btn mui-btn-danger fs24 mui-pull-right mui-hidden" onclick="canOrder();" id="cancelOrder">取消订单</button>
+					<p class="fs24 mui-pull-right colorRed mui-hidden" id="orderStatus"></p>
+				</div>
+			</div>
+			<div class="border_t10 jsOrder_div fs28 pt10 pb10 pl20 pr20 box_s">
+				<ul class="pb20">
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>商品金额</span></div>
+						<div class="mui-pull-right">
+							<span id="price"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>运费</span></div>
+						<div class="mui-pull-right">
+							<span>-￥0.00</span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>优惠券</span></div>
+						<div class="mui-pull-right">
+							<span>-￥0.00</span>
+						</div>
+					</li>
+				</ul>
+				<div class="clearfloat border_t pt20 pb20 pt20">
+					<div class="mui-pull-left colorHui999"><span>支付金额</span></div>
+					<div class="mui-pull-right">
+						<span id="zprice"></span>
+					</div>
+				</div>
+			</div>
+			<div class="pl20 pr20 jsOrder_div box_s border_t10 fs28">
+				<div class="estate_tit border_tXu">
+					<p class="pt20 pb20">
+						<span class="estateSpan_lineH fs28 font_weightB">订单详情</span>
+					</p>
+				</div>
+				<ul class="pt20">
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>订单号</span></div>
+						<div class="mui-pull-right">
+							<span id="order_sn"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat extract_code mui-hidden">
+						<div class="mui-pull-left colorHui999"><span>自提码</span></div>
+						<div class="mui-pull-right">
+							<span id="extract_code"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat take_date mui-hidden">
+						<div class="mui-pull-left colorHui999"><span>自提时间</span></div>
+						<div class="mui-pull-right">
+							<span id="take_date"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>下单时间</span></div>
+						<div class="mui-pull-right">
+							<span id="addtime"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>支付方式</span></div>
+						<div class="mui-pull-right">
+							<span id="pay_name"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>收货人姓名</span></div>
+						<div class="mui-pull-right">
+							<span id="consignee"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>收货人电话</span></div>
+						<div class="mui-pull-right">
+							<span id="mobile"></span>
+						</div>
+					</li>
+				</ul>
+				<div>
+					<div class="border_t fs28 pb20">
+						<p class="pt20 pb20">
+							<span class="iconfont icon-dizhi colorQianBlue font_weightB mr10"></span>
+							<span class="colorHui999">收货地址</span>
+						</p>
+						<p id="address"></p>
+					</div>
+					<div class="border_t fs28 pb20">
+						<p class="pt20 pb20">
+							<span class="iconfont icon-bianji1 colorRed font_weightB mr10"></span>
+							<span class="colorHui999">备注</span>
+						</p>
+						<p id="postscript"></p>
+					</div>
+				</div>
+			</div>
+			<div class="pl20 pr20 jsOrder_div box_s border_t10 fs28 psinfo">
+				<ul class="pt20">
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>配送员</span></div>
+						<div class="mui-pull-right">
+							<span id="psusername"></span>
+						</div>
+					</li>
+					<li class="qrdd_fangshi_li clearfloat">
+						<div class="mui-pull-left colorHui999"><span>配送员电话</span></div>
+						<div class="mui-pull-right">
+							<span id="psmobile"></span>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script src="../../script/jquery_2_1_4.js"></script>
+	<script src="../../script/api.js"></script>
+	<script src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		var uid = '';
+		var order_sn = '';
+		apiready = function(){
+			order_sn = api.pageParam.order_sn;
+			uid = localStorage.getItem('uid');
+			getOrderDetail();
+		};
+		function getOrderDetail(){
+			_ajax(ajax_url+'Index/ExerciseShop/getOrderDetail',{'uid':uid,'order_sn':order_sn},'post',function(ret,err){
+				if(ret.status == 1){
+					var goodsInfo = ret.data.goodsInfo;
+					var orderInfo = ret.data.orderInfo;
+					var distributeInfo = ret.data.distributeInfo;
+					var goods = '';
+					$.each(goodsInfo,function(k,v){
+						goods += '<div class="wddd_fullDiv_li_con mui-row pt20 pb10 pl20 pr20 box_s border_b">';
+						goods += '<div class="mui-col-sm-4 mui-col-xs-4">';
+						goods += '	<div class="jfrd_imgDiv">';
+						goods += '		<img src="'+v.goods_img+'"/>';
+						goods += '	</div>';
+						goods += '</div>';
+						goods += '<div class="mui-col-sm-8 mui-col-xs-8 jfdh_div_outer">';
+						goods += '	<p class="fs32 mui-ellipsis-2">'+v.goods_name+'</p>';
+						goods += '	<p class="clearfloat btn_pLine clearfloat">';
+						goods += '		<span class="fs28 mt10">x '+v.goods_number+'</span>';
+						goods += '		<span class="fs28 colorRed mui-pull-right">￥<span class="fs36 font_weightB">'+v.goods_price+'</span></span>';
+						goods += '	</p>';
+						goods += '</div>';
+						goods += '</div>';
+					});
+					if(orderInfo.pay_status == 1){
+						if(orderInfo.shipping_status == 1){
+							orderStatus = '待收货';
+							$('#sureOrder').removeClass('mui-hidden');
+//							$('#orderStatus').addClass('mui-hidden');
+						}else if(orderInfo.shipping_status == 2){
+							orderStatus = '已完成';
+							$('#orderStatus').removeClass('mui-hidden');
+						}else{
+							orderStatus = '待发货';
+							$('#tuikuan').removeClass('mui-hidden');
+//							$('#orderStatus').addClass('mui-hidden');
+						}
+
+						
+						
+					}else{
+//						orderStatus = '未支付';
+						$('#goPay,#cancelOrder').removeClass('mui-hidden');
+					}
+					if(orderInfo.shipping_type == 1){
+						$('.extract_code').removeClass('mui-hidden');
+						$('.take_date').removeClass('mui-hidden');
+						$('#extract_code').html(orderInfo.extract_code);
+						$('#take_date').html(orderInfo.take_date+' '+orderInfo.take_time);
+						$('.psinfo').addClass('mui-hidden');
+						
+					}
+					$('#goods').html(goods);
+					$('#price').html('￥'+ret.data.order_amount);
+					$('#zprice').html('￥'+ret.data.order_amount);
+					$('#order_sn').html(ret.data.info_order_sn);
+					$('#mobile').html(orderInfo.mobile);
+					$('#consignee').html(orderInfo.consignee);
+					$('#addtime').html(ret.data.addtime);
+					$('#pay_name').html(orderInfo.pay_name);
+					$('#address').html(orderInfo.address);
+					$('#postscript').html(orderInfo.postscript);
+					$('#orderStatus').html(orderStatus);
+					if(orderInfo.shipping_type != 1 && orderInfo.pay_status == 1 && orderInfo.shipping_status != 0){
+						$('#psusername').html(distributeInfo.real_name);
+						$('#psmobile').html(distributeInfo.mobile);
+					}
+					
+				}else{
+					_toast(ret.msg);
+					return false;
+				}
+			});
+		}
+		//取消订单
+		function canOrder(){
+			_ajax(ajax_url+'Index/ExerciseShop/cancelOrder',{'order_sn':order_sn},'post',function(ret,err){
+				if(ret.status == 1){
+					api.sendEvent({
+	                    name:'cancelOrder',
+	                    extra:{
+	                    	status:'success'
+	                    }
+                    });
+                    _toast(ret.msg,function(){
+                    	api.closeToWin({
+							name:'mineOrder'
+						});
+                    });
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+		//确认收货
+		function sureOrder(){
+			_ajax(ajax_url+'Index/ExerciseShop/sureOrder',{'order_sn':order_sn},'post',function(ret,err){
+				if(ret.status == 1){
+					api.sendEvent({
+	                    name:'sureOrder',
+	                    extra:{
+	                    	status:'success'
+	                    }
+	                });
+					_toast(ret.msg,function(){
+						api.closeToWin({
+							name:'mineOrder'
+						});			
+					});
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+	</script>
+</html>

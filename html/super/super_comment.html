@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="format-detection" content="telephone=no">
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/iscroll.js"></script>
+<!-- banner轮播js -->
+<script src="../../script/swiper.min.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<style>
+	.pj_main {padding-top: 0.8rem;}
+	.eval_maintop {
+		position: fixed;
+		width: 100%;
+	}
+	
+</style>
+
+</head>
+<body>
+
+
+<!-- 商家首页结束 评价开始-->
+<div class="tabBox" >
+	<div class="wp_100">
+	<div class="eval_maintop">
+		<ul class="eval_topul">
+			<li class="eval_topli eval_topli02 eval_toplicur"><a href="javascript:void(0)" onclick="getCommentPage(1,this)" class="eval_toplia">全部(<span class='comm'>0</span>)</a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="getCommentPage(2,this)" class="eval_toplia">好评(<span class='comm5'>0</span>)</a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="getCommentPage(3,this)" class="eval_toplia">中评(<span class='comm3'>0</span>)</a><span class="eval_line"></span></li>
+			<li class="eval_topli eval_topli02"><a href="javascript:void(0)" onclick="getCommentPage(4,this)" class="eval_toplia">差评(<span class='comm1'>0</span>)</a></li>
+		
+			
+		</ul>
+	</div>
+	<div class="pj_main">
+			<ul class="pj_mainul" id="comm_list">
+				<!--<li class="pj_mainli">
+					<div class="pj_mainlil">
+						<a href="#"><img src="images/pj_img.png"></a>
+					</div>
+					<div class="pj_mainlir">
+						<p class="pj_mainlirp01">
+							<span class="pj_mainlirname dy_dd">135****1869</span>
+							<span class="pj_mainlirtime">2015-6-17  14:57:33</span>
+						</p>
+						<p class="pj_mainlirp02">
+							建立自主品牌的第一步是艰难的，如何建立自
+							主品牌，据徐超强介绍，首先要找准细分市场
+							从而避免与强者直接对话。
+						</p>
+					</div>
+				</li>
+				<li class="pj_mainli">
+					<div class="pj_mainlil">
+						<a href="#"><img src="images/pj_img.png"></a>
+					</div>
+					<div class="pj_mainlir">
+						<p class="pj_mainlirp01">
+							<span class="pj_mainlirname dy_dd">135****1869</span>
+							<span class="pj_mainlirtime">2015-6-17  14:57:33</span>
+						</p>
+						<p class="pj_mainlirp02">
+							建立自主品牌的第一步是艰难的，如何建立自
+							主品牌，据徐超强介绍，首先要找准细分市场
+							从而避免与强者直接对话。
+						</p>
+					</div>
+				</li>-->
+	
+			</ul>
+		</div>
+</div>
+</div>
+
+
+
+<script type="text/javascript">
+var id=0;
+	apiready = function(){		
+		//监听滚动条是否到底部
+		api.addEventListener({
+		    name:'scrolltobottom',
+		    extra:{
+		        threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+		    }
+		}, function(ret, err){        
+		     if(is_page){
+		       page++;
+			   getCommentsDetail();
+		     }
+			  
+		});
+		
+		//加载状态
+		//loading('mall_shop_comment');
+		
+		getCommentsLeveNum();
+		
+		getCommentsDetail();
+	};
+	
+	function getCommentsLeveNum(){
+		_ajax(ajax_url +"Index/Super/getCommentsLeveNum",{'id':id},'get',function(ret){
+			var strVar = "";
+			if(ret.status ==1){
+				$(".comm").html(ret.comm_count);
+				$(".comm5").html(ret.comm_hao);
+				$(".comm3").html(ret.comm_zhong);
+				$(".comm1").html(ret.comm_cha);
+			}else{
+				_toast(ret.msg);
+			}
+		});
+	}
+	
+	
+	var page = 1;  //评价分页
+	var is_page =true;
+	var is_rank = 1;
+	function getCommentPage(rank,el){
+		$(".eval_topul li").removeClass('eval_toplicur');
+		$(el).parent('.eval_topli').addClass('eval_toplicur');
+		 page =1;
+		 is_rank = rank;
+		 getCommentsDetail();
+	}
+	
+	function getCommentsDetail(){
+		_ajax(ajax_url +"Index/Super/getCommentsDetail",{'id':id,'type':is_rank,p:page},'get',function(ret){
+			var strVar = "";
+			if(ret.status ==1){
+				$.each(ret.data,function(k,v){
+				    strVar += "<li class=\"pj_mainli\" style='border-bottom: 1px solid #dedede;'>";
+				    strVar += "<div class=\"pj_mainlil\">";
+				    strVar += "	<a href=\"#\"><img src=\""+v['portrait']+"\"><\/a>";
+				    strVar += "<\/div>";
+				    strVar += "<div class=\"pj_mainlir pj_mainlirreplay\">";
+				     if(v['pics']  != -1 && v['pics'].length>0 ){
+				     	strVar += "	<div class=\"pj_mainlir01\">";
+				     }else{
+				     	strVar += "<div>";
+				     }
+				    strVar += "		<p class=\"pj_mainlirp01\">";
+				    strVar += "			<span class=\"pj_mainlirname dy_dd\">"+v['username']+"<\/span>";
+				    var time = v['add_time'];
+				    strVar += "			<span class=\"pj_mainlirtime\">"+time+"<\/span>";
+				    strVar += "		<\/p>";
+				    strVar += "		<div class=\"store_detail\">";
+				    strVar += "			<span class=\"busi_indexstar\">";
+				    for( i=1;i<= v['rank'] ;i++){
+						strVar += '<img src="../../images/star02.png">';
+					}
+					
+					for( i=1;i<= 5-v['rank'] ;i++){
+						strVar += '<img src="../../images/star01.png">';
+					}	
+				    strVar += "		<\/span><\/div>";
+				    strVar += "		<p class=\"pj_mainlirp02\">";
+				    strVar += v['content'];
+				    strVar += "		<\/p>";
+				    strVar += "	<\/div>";
+				    
+				    if(v['pics']  != -1 && v['pics'].length>0 ){
+				    	strVar += "	<div class=\"pj_mainlir02\">";
+				    	for(pic in v['pics']){
+				    		strVar += "<a href=\"javascript:void(0)\" onclick=\"photoBrowser(['"+v['picy'][pic]+"'])\" class=\"pj_mainlir0201\"><img src=\""+v['pics'][pic]+"\"><\/a>";
+				   		}
+				    	strVar += "	<\/div>";
+					}
+					if(v['pics']  != -1 && v['pics'].length>0 ){
+						strVar += "<div>";
+					}else{
+					 	strVar += "<div>";
+					}
+				    strVar += "	<\/div>";
+				    strVar += "<\/div>";
+				    strVar += "<\/li>";
+				});
+//				$.each(ret.data,function(k,v){
+//				    strVar += "<li class=\"pj_mainli\">";
+//				    strVar += "<div class=\"pj_mainlil\">";
+//				    strVar += "	<a href=\"#\"><img src=\""+v['portrait']+"\"><\/a>";
+//				    strVar += "<\/div>";
+//				    strVar += "<div class=\"pj_mainlir pj_mainlirreplay\">";
+//				    strVar += "	<div class=\"pj_mainlir01\">";
+//				    strVar += "		<p class=\"pj_mainlirp01\">";
+//				    strVar += "			<span class=\"pj_mainlirname dy_dd\">"+v['username']+"<\/span>";
+//				    strVar += "			<span class=\"pj_mainlirtime\">"+v['add_time']+"<\/span>";
+//				    strVar += "		<\/p>";
+//				    strVar += "		<div class=\"store_detail\">";
+//				    strVar += "			<span class=\"busi_indexstar\">";
+//				    for( i=1;i<= v['rank'] ;i++){
+//						strVar += '<img src="../../images/star02.png">';
+//					}
+//					
+//					for( i=1;i<= 5-v['rank'] ;i++){
+//						strVar += '<img src="../../images/star01.png">';
+//					}	
+//				    strVar += "		<\/span><\/div>";
+//				    strVar += "		<p class=\"pj_mainlirp02\">";
+//				    strVar += v['content'];
+//				    strVar += "		<\/p>";
+//				    strVar += "	<\/div>";
+//				    if(v['pics']  != -1  && v['pics'].length>0){
+//				    	strVar += "	<div class=\"pj_mainlir02\">";
+//				    	for(pic in v['pics']){
+//				    		strVar += "		<a href=\"javascript:void(0)\" onclick=\"photoBrowser(['"+v['picy'][pic]+"'])\" class=\"pj_mainlir0201\"><img src=\""+v['pics'][pic]+"\"><\/a>";
+//				   		}
+//				    	strVar += "	<\/div>";
+//					}
+//				    
+//				    strVar += "	<div class=\"hotel_replay\">";
+//				    strVar += "	<\/div>";
+//				    strVar += "<\/div>";
+//				    strVar += "<\/li>";
+//				});
+		    
+		    
+			    if(page==1){
+			    	$("#comm_list").html(strVar);
+			    }else{
+			    	$("#comm_list").append(strVar);
+			    }
+			}else{
+				if( page !=1){
+					is_page = false;
+					$("#comm_list").append(strVar);
+				}else{
+				$("#comm_list").html(strVar);
+				}
+				
+				_toast(ret.msg);
+			}
+			
+	
+		});
+	}
+	
+	
+
+	
+</script>
+</body>
+</html>

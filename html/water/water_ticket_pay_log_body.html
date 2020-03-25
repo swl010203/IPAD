@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	    <!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+	    <!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+	    <meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>购票记录</title>
+		<link rel="stylesheet" type="text/css" href="../../css/property/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/property/allStyle.css"/>
+	</head>
+	<body>
+
+		<div id="list">
+
+		</div>
+		<!--<ul class="mt_20 pl_20 pr_20 managerRecordUl">
+			<li class="titLi clearfloat border-b">
+				<span class="fl">电表编号：物品托管</span>
+				<span class="fr">20170630</span>
+			</li>
+			<li class="border-b">
+				<p class="clearfloat">
+					<span class="fl">付款方式:</span>
+					<span class="fr">支付宝</span>
+				</p>
+				<p class="clearfloat">
+					<span class="fl">缴费金额:</span>
+					<span class="fr">￥680</span>
+				</p>
+				<p class="clearfloat">
+					<span class="fl">缴费时间:</span>
+					<span class="fr">2017-09-20</span>
+				</p>
+			</li>
+			<li>
+				<span class="fl">订单编号:</span>
+				<span class="fr">76457876453674875637</span>
+			</li>
+		</ul>
+		<ul class="mt_20 pl_20 pr_20 managerRecordUl">
+			<li class="titLi clearfloat border-b">
+				<span class="fl">订单编号：</span>
+				<span class="fr">76457876453674875637</span>
+			</li>
+			<li class="border-b">
+				<p class="clearfloat">
+					<span class="fl">付款方式:</span>
+					<span class="fr">支付宝</span>
+				</p>
+				<p class="clearfloat">
+					<span class="fl">缴费金额:</span>
+					<span class="fr">￥680</span>
+				</p>
+				<p class="clearfloat">
+					<span class="fl">缴费时间:</span>
+					<span class="fr">2017-09-20</span>
+				</p>
+			</li>
+
+		</ul>-->
+	</body>
+	<script type="text/javascript" src="../../script/property/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="../../script/property/index.js"></script>
+	<script type="text/javascript" src="../../script/api.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script>
+		var userinfo = '';
+		var uid = '';
+		var family_uid = localStorage.getItem("is_family_account");   //家庭账户用户id
+        var page = 1;
+        var is_page = true;
+        var type = 0;
+        apiready = function(){
+            //type = api.pageParam.type;   //1电表 2水表 3物业费
+            loading('water_ticket_pay_log_body');
+            
+            userinfo = $api.getStorage('userinfo');
+			uid  = userinfo.uid;
+
+            api.setRefreshHeaderInfo({
+                visible: true,
+                loadingImg: 'widget://image/refresh.png',
+                bgColor: '#ccc',
+                textColor: '#fff',
+                textDown: '下拉刷新...',
+                textUp: '松开刷新...',
+                showTime: true
+            }, function(ret, err) {
+                is_page = true;
+                page=1;
+                getTicketPayLog();
+            });
+
+        	api.addEventListener({
+	            name:'refe_water_pay_log'
+            },function(ret,err){
+            	is_page =true;
+				page =1;
+            	getTicketPayLog();
+            });
+
+            //监听滚动条是否到底部
+            api.addEventListener({
+                name:'scrolltobottom',
+                extra:{
+                    threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+                }
+            }, function(ret, err){
+                 if(is_page){
+                     page++;
+                     getTicketPayLog();
+                 }
+            });
+
+            getTicketPayLog();
+        };
+
+        function endChange(){
+            page    = 1;
+            is_page = true;
+            getTicketPayLog();
+        }
+
+        function getTicketPayLog(){
+            var start = $('#start').val();
+            var end   = $('#end').val();
+            //var type  = 2;
+            _ajax(ajax_url+"Index/WaterService/getTicketPayLog" ,{uid:uid, page:page},'get',function(ret){
+                api.refreshHeaderLoadDone();
+                closeloading();
+                var strVar = '';
+                if(ret.status ==1){
+                    if( ret.data.length > 0 ) {
+                        $.each(ret.data, function(key, val) {
+                        	    strVar += "<ul class=\"mt_20 pl_20 pr_20 managerRecordUl\">\n";
+							    strVar += "	<li class=\"titLi clearfloat border-b\">\n";
+							    strVar += "		<span class=\"fl\">购票数量：<\/span>\n";
+							    strVar += "		<span class=\"fr\">"+val['count']+"<\/span>\n";
+
+							    strVar += "	<\/li>\n";
+							    strVar += "	<li class=\"border-b\">\n";
+//							    strVar += "		<p class=\"clearfloat\">\n";
+//							    strVar += "			<span class=\"fl\">付款方式:<\/span>\n";
+//							    strVar += "			<span class=\"fr\">"+val['pay_type']+"<\/span>\n";
+//							    strVar += "		<\/p>\n";
+							    strVar += "		<p class=\"clearfloat\">\n";
+							    strVar += "			<span class=\"fl\">缴费金额:<\/span>\n";
+							    strVar += "			<span class=\"fr\">￥"+val['price']+"<\/span>\n";
+							    strVar += "		<\/p>\n";
+							    strVar += "		<p class=\"clearfloat\">\n";
+							    strVar += "			<span class=\"fl\">缴费时间:<\/span>\n";
+							    strVar += "			<span class=\"fr\">"+val['pay_time']+"<\/span>\n";
+							    strVar += "		<\/p>\n";
+							    strVar += "	<\/li>\n";
+							    strVar += "<li>\n";
+							    strVar += "	<span class=\"fl\">订单编号:<\/span>\n";
+							    strVar += "	<span class=\"fr\">"+val['order_sn']+"<\/span>\n";
+							    strVar += "<\/li>\n";
+
+							    strVar += "<\/ul>\n";
+
+
+                        });
+                    } else {
+                        is_page = false;
+                        _toast( '没有更多记录了' );
+                    }
+                    if( page > 1 ) {
+                        $('#list').append( strVar );
+                    } else {
+                        $('#list').html( strVar );
+                    }
+                }else{
+					is_page = false;
+					_toast( '没有更多记录了' );
+                }
+            });
+        }
+	</script>
+</html>

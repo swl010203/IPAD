@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>华海物业星级服务</title>
+        <link rel="stylesheet" href="../../css/account/reset.css" />
+        <link rel="stylesheet" href="../../css/account/newAllStyle.css" />
+    </head>
+    <body>
+        <!--头部-->
+        <header class="clearfloat header" >
+
+            <div class="fl" onclick="bank();" >
+                <i class="back"></i>
+                <span>返回</span>
+            </div>
+            <div class="topCon" >
+                华海物业星级服务
+            </div>
+        </header>
+        <!--中间内容-->
+        <ul class="fuwuDiv clearfloat">
+
+            <!-- <li onclick="_openWinByUrl('yanzhengyezhu','yanzhengyezhu');" > -->
+            <li onclick="check_property();" >
+
+                <a href="javascript:void(0);"><img src="../../images/account/2901.png"/></a>
+            </li>
+            <!--<li onclick="_openWinByUrl('zhuangxiushenqing','zhuangxiushenqing');">-->
+            <li onclick="_openWinByUrl('lijiyuyue','lijiyuyue');">
+                <a href="javascript:void(0);"><img src="../../images/account/2902.png"/></a>
+            </li>
+            <!--暂不开放-->
+            <!--<li onclick="_openWinByUrl('shangwuzhongxin','shangwuzhongxin');">
+                <a href="javascript:void(0);"><img src="../../images/account/2903.png"/></a>
+            </li>-->
+            <!--<li onclick="_openWinByUrl('tuoguanzhongxin','tuoguanzhongxin');">
+                <a href="javascript:void(0);"><img src="../../images/account/2904.png"/></a>
+            </li>-->
+            <!--暂不开放-->
+            <!--<li onclick="_openWinByUrl('house','../house/house', {type_tab:'property'});">
+                <a href="javascript:void(0);"><img src="../../images/account/2905.png"/></a>
+            </li>-->
+            <li onclick="_openWinByUrl('wentifankui','wentifankui');">
+                <a href="javascript:void(0);"><img src="../../images/account/2906.png"/></a>
+            </li>
+            <li onclick="_openWinByUrl('expressService','../owner/expressService');">
+                <a href="javascript:void(0);"><img src="../../images/account/kuaidifuwu.png"/></a>
+            </li>
+            
+           <!-- <li onclick="_openWinByUrl('owner_mall','owner_mall');">
+                <a href="javascript:void(0);"><img src="../../images/account/2906.png"/></a>
+            </li>-->
+        </ul>
+    </body>
+    <script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    <script>
+    
+    //初始化用户Id
+        var uid = localStorage.getItem("uid");
+    //关闭页面
+        function bank(){
+            api.closeWin();
+        }
+        
+        
+        apiready = function(){
+        	addEventUserInfo();
+        };
+        
+        //判断是否验证业主
+        function check_property() {
+            _ajax(ajax_url+"Index/Family/familyInfo" ,{'uid':uid},'get',function(ret){
+                if(ret.status ==1){
+                    if( ret.user.cust_id && ret.user.cust_id > 0 ) {
+                        var RmID   = ret.user.rm_id;
+                        var CustID = ret.user.cust_id;
+                        _openWinByUrl('baoxiufuwu','baoxiufuwu', {rm_id:RmID, cust_id:CustID});
+                    } else {
+                        _openWinByUrl('yanzhengyezhu','yanzhengyezhu', {jump_type:'repair'});
+                    }
+                }else{
+                    _toast(ret.msg);
+                }
+            });
+        }
+    </script>
+</html>

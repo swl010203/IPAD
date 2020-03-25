@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>035价格明细</title>
+		<link rel="stylesheet" type="text/css" href="../../css/account/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/account/newAllStyle.css"/>
+	</head>
+	<body>
+		<!--中间内容-->
+		<div class="jiagemingxiDiv" id="list">
+			<!--<img style="width: 100%;" src="http://123.57.36.72:8103/Uploads/Picture/Picture/2017-07-20/5970246f5982d.jpg">
+			<img style="width: 100%;" src="http://123.57.36.72:8103/Uploads/Picture/Picture/2017-07-20/5970246f5982d.jpg">-->
+		</div>	
+	</body>
+	<script type="text/javascript" src="../../script/api.js"></script>
+    <script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+    <script type="text/javascript" src="../../script/app.js"></script>
+    
+    <script>
+    	//默认加载
+    	apiready = function(){
+    	 	//获取商务信息
+    	 	getCommerce();
+    	};
+    	
+    	//获取商务信息
+    	function getCommerce(){
+    		_ajax(ajax_url+"Index/Commerce/index",{},'post',function(ret){
+    			if(ret.status==1){   				
+    				var html='';
+    				for(var i in ret.info.price){
+    					html+='<img style="width:100%;" src="'+ret.info.price[i].img+'" />';
+    				}
+    				$('#list').html(html);
+    			}
+    		});
+    	}
+    </script>
+</html>

@@ -1,0 +1,443 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="../../css/account/swiper.min.css"/>
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript" src="../../script/swiper1.min.js"></script>
+
+
+</head>
+<body>
+
+<!-- 内容 -->
+<div class="wp_100">
+	<style type="text/css">
+.pinpai_intrcon img {display:block;margin:0px;padding:0px;}
+
+.couponslist li {margin-right:5px;}
+
+.to_coupona {
+	min-width: 74px;
+	width:auto;
+	min-height: 46px;
+	height: auto;
+	font-size:14px;
+}
+.to_couponspan{
+	padding: 2px 10px;
+}
+.goods_desc img{width:100%;}
+.goods_desc table{width:100%!important;}
+.goods_desc table img{width:100%;}
+
+.payList2{width: 150px;float:left;display:inline-block;}
+
+.payListr{padding-left:0px;width:auto;display:inline-block;}
+.payListrli01{width:auto;}
+			.outLunboImg .swiper-container1{width:100%;height: 256px;overflow:hidden;}
+			/*修改内部单元的宽度和高度*/
+			.outLunboImg .swiper-slide {width:624px;height: 256px;overflow:hidden;}
+			.outLunboImg .swiper-slide img{width: 100%;height: 100%;}
+			.outLunboImg .pagination {position: absolute;z-index: 20;left: 0;right: 0;margin:0 auto;text-align:center;bottom: 180px;}
+			.outLunboImg .swiper-pagination-switch {display: inline-block;width: 8px;height: 8px;border-radius: 8px;background: #222;
+			  margin-right: 5px;opacity: 0.8;border: 1px solid #fff;cursor: pointer;}
+			.outLunboImg .swiper-active-switch {background: #fff;}
+			/*修改左右遮罩层的宽度*/
+			.outLunboImg .shadeLeft{position:absolute;left:0;top:0;width:200px;height:256px;z-index:30;
+				background-color:#000000;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}
+			.outLunboImg .shadeRight{position:absolute;right:0;top:0;width:200px;height:256px;opacity:0.8;z-index:30;
+				background-color:#000000;filter:alpha(opacity=50);-moz-opacity:0.5;-khtml-opacity: 0.5;opacity: 0.5;}
+			.swiper-slide{
+				height:265px;
+			}
+			.swiper-slide img{
+				width: 100%;
+				height:100%
+			}
+</style>
+
+
+<div class="outLunboImg">
+	<div class="swiper-container1">
+		<div class="shadeLeft swiper-no-swiping"></div>
+		<div class="shadeRight swiper-no-swiping"></div>
+	    <div class="swiper-wrapper goodsbanner">
+		    <!--<div class="swiper-slide">
+		      	<img src="../images/account/201.jpg"/>
+		    </div>-->
+		    
+		</div>
+	    <div class="pagination"></div>
+	</div>
+</div>
+
+<div class="seckilltxt is_activity" style="display: none;">
+		<span class="seckilltxtl">抢购中</span>
+		<span class="seckilltxtr">
+			
+				<div class="li_bt">
+				<p class="tg_js" style="margin-right: 0.1rem;color: #686868;">距离结束</p>
+				<p class="djs_bt" id="djs_id02">过期失效</p>
+
+				</div>
+		
+		 </span>
+	</div>
+<!-- 商品名称 -->
+	<div class="good_detail">
+		<p class="good_detailtxt txt2"><a href="javascript:void(0)" class="goods_name">
+</a></p>
+<p class="good_detailprice">
+	<span class="good_detailpricespan"><b class="good_detailpriceb">￥</b> <span class="shop_price"></span></span>
+	<span class="good_detailpricespan01">原价：￥<span class="market_price"></span></span>
+	<!--&nbsp;&nbsp;&nbsp;&nbsp;<span class="good_detailpricespan" style="font-size:20px;">库存：<span class="kucunnums"></span></span>-->
+</p>
+
+	</div>
+
+	<!-- 促销 -->
+<div class="sales_promotion " style="display:none;">
+	<div class="to_coupon">
+	<div class="to_couponcon">
+		<a href="#" class=""></a>
+		<span class="to_coupontxt">促销</span>
+		<ul class="to_couponul couponslist">
+		
+			<!--<li><a href="#" class="to_coupona"><span class="to_couponspan">满999减10</span></a></li>
+			<li><a href="#" class="to_coupona"><span class="to_couponspan">满99减3</span></a></li>
+			<li><a href="#" class="to_coupona"><span class="to_couponspan">满49减1</span></a></li>
+			<li><a href="#" class="to_coupona"><span class="to_couponspan">满49减1</span></a></li>
+			<li><a href="#" class="to_coupona"><span class="to_couponspan">满49减1</span></a></li>-->
+			
+			
+			
+		</ul>
+	</div>
+</div>
+</div>
+
+<!--属性规格-->
+<div class="attr" style="background-color: #fff;overflow: hidden;color:#333;height:auto;padding:20px;margin-bottom: 10px;">
+
+
+	<!--<div class="list">
+		<div class="payList2 payList201">asdasd：</div>
+		<div class="payListr" >
+		     <div class="payListrli01">								     																		
+				<label for="">白色</label>					
+		     				     	
+			</div>	
+				    																														
+		</div>
+	</div>-->
+	
+	<!--<div class="list">
+		<div class="payList2 payList201">asdasd：</div>
+		<div class="payListr">
+		     <div class="payListrli01">								     																		
+				<label for="'+attr_val[j]['id']+'">attr_va</label>					
+		     	<img style="width:30px;heihgt:30px;" src='' />			     	
+			</div>
+			<div class="payListrli01">								     																		
+				<label for="'+attr_val[j]['id']+'">attr_va</label>					
+		     	<img style="width:30px;heihgt:30px;" src='' />			     	
+			</div>				    																														
+		</div>
+	</div>-->
+	
+	
+</div>
+<!-- 品牌规格 -->
+<div class="brand_guige">
+	<a href="#" class="brand_guigecon">
+		<div class="brand_guigeconl dy_dd">品牌</div>
+		<div class="brand_guigeconr dy_dd brand"></div>
+	</a>
+</div>
+
+<!-- 图文详情 -->
+<div class="pinpai_intr">
+	<div class="pinpai_intrtop"><i class="good_detailicon"></i>图文详情</div>
+	<div class="pinpai_intrcon goods_desc">
+		 
+	</div>
+</div>
+</div>
+
+<!-- banner轮播js -->
+<script src="js/swiper.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	// 选择规格
+	$('.brand_chanpin').click(function(){
+		$('.maskBg').show();
+		$('.etc_pay').stop().slideDown(1000);
+	});
+	$('.bot_btnapay').click(function(){
+		$('.maskBg').hide();
+		$('.etc_pay').stop().slideUp(1000);
+	})
+});
+	
+apiready=function(){
+	 	//改变商品价格和市场价
+		api.addEventListener({
+		    name: 'superattr'
+		}, function(ret, err) {
+		    if(ret && ret.value){
+					if (ret.value.key1 == 'success') {	
+					    $(".shop_price").html(ret.value.shop_price);//商品价格
+                      $(".market_price").html(ret.value.market_price);//商品市场价格
+									  											 
+					}
+				}
+		});
+   var goods_id=api.pageParam['goods_id'];
+// alert("body里边："+goods_id);
+   aid = api.pageParam.aid; //活动id
+getinfo(goods_id);
+getGoodsKucun(goods_id);
+
+api.addEventListener({
+		    name:'viewappear'
+		}, function(ret, err){        
+		  
+		   getCartNum();
+	});
+};
+
+
+ /**
+  * 获取购物车数量 
+  */
+function getCartNum(){
+	userinfo  =$api.getStorage('userinfo');
+	if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+		return false;
+	}
+	
+	_ajax(ajax_url +"Index/Mall/getCartNum",{'uid':userinfo.uid},'post',function(ret){
+		var strVar = "";
+		if(ret.code  ==1){
+			var cartnum =  +ret.num;
+			
+			api.sendEvent({
+	            name:'super_attr_cart',
+	            extra:{
+	            	key1:'success',
+	            	is_activity:false,
+	            	cart_num:cartnum
+	            }
+            });
+		}
+	});
+}
+
+/*
+ * 获取商品规格
+ */
+function getGoodsKucun(id){
+	api.ajax({
+		url : ajax_url+'Index/Super/getGoodsKucun',
+		method : 'post',
+		data : {
+			values : {
+			gid:id
+			},
+		}
+	}, function(ret, err) {
+	   if(ret){
+		   if(ret.code){
+			    var data=ret.data;
+			    attr=data.attr;//商品属性
+			    var attrHtml='';
+			    attr_val=data.attrval;//商品属性值
+			    if(attr!=null && attr.length>0){
+				     for(var i in attr){
+					     if(attr[i]['name']!=null){
+					        attrHtml+='	<div class="list" style="background-color: #fff;height:30px;">'+
+								'<div class="payList2 payList201" style="width:1.4rem;float:left;">'+attr[i]['name']+'：</div>'+
+							'<div class="payListr" style="width:auto;float:left;padding-left:0;height:auto;">';
+							   for(var  j in attr_val){
+							    if(attr_val[j]['pid']==attr[i]['id']){
+							     attrHtml+='<div class="payListrli01" style="heihgt:30px;">';								     																		
+									attrHtml+='<label for="'+attr_val[j]['id']+'">'+attr_val[j]['color_name']+'</label>&nbsp;&nbsp;&nbsp;&nbsp;';
+									if(attr_val[j]['img']){
+							     		//attrHtml+='<img style="width:30px;heihgt:30px;" src='+attr_val[j]['img']+' />';
+							     	}
+								attrHtml+='</div>';
+							    }
+							   }
+																																		
+							attrHtml+='</div>'+
+							'</div><br/>';
+					     }				   
+				     }
+			    }
+			    $(".attr").html(attrHtml);
+		   }
+	  	}else{
+	  		_alert('网络连接失败,请稍后重试');
+	  	}
+	});
+}
+/*
+ * 获取商品信息
+ */
+function detail_siwper_photo(index){
+	photoBrowser(detail_swiper_path,index);
+}
+/*
+ * 获取商品详情
+ */
+function getinfo(id){
+		api.ajax({
+				url : ajax_url+'Index/Super/getGoodsDetail',
+				method : 'post',
+				data : {
+					values : {
+					gid:id,
+					ac_id:aid,
+					uid:localStorage.getItem("uid")
+					},
+				}
+			}, function(ret, err) {
+			  if(ret){
+			    if(ret.status==1){
+			     
+			     var goods=ret.goods;//商品详情
+			     var collectGood=ret.collectGood;//是否收藏
+			     var cartnum=ret.cartnum;//购物车数量
+			     var goodspic=ret.goodspic;//商品相册
+			     var coupons=ret.coupons;//可领优惠券
+			     var goodsbannerHtml=''; //banner
+			     var couponsHtml='';//优惠券
+			     var sid=ret.goods.shop_id;//商品的店铺id
+			     $('.kucunnums').text(goods.goods_number);
+			     //商品轮播
+			     detail_swiper_path=[];
+			     var detail_swiper_path_k = 0;
+			     if(goodspic!=null &&goodspic.length>0){
+				      for(var i in goodspic){
+				      	detail_swiper_path[detail_swiper_path_k]=goodspic[i];
+				     	 goodsbannerHtml+='<div onclick="detail_siwper_photo('+detail_swiper_path_k+')" class="swiper-slide swiper-no-swiping" ><img src="'+goodspic[i]+'" width="100%" height="100%"></div>';
+				      	 detail_swiper_path_k++;
+				      }
+			     }
+			     $(".goodsbanner").html(goodsbannerHtml);
+				var mySwiper = new Swiper('.swiper-container1',{
+				    pagination: '.pagination',
+				    loop:true,
+				//  eventTarget:container, //包含在container内的所有元素都可以触发移动
+				    autoplay:2000,
+				    autoplayDisableOnInteraction:false,
+				    slidesOffsetBefore:200,
+					slidesOffsetAfter:200,
+				    paginationClickable: true,
+				    slidesPerView: 'auto',
+				    paginationAsRange : false
+				});
+//				$(".swiper-container1 .swiper-slide").css({height:$(window).width()/1});
+//              $(".swiper-container1 .swiper-slide img").css({height:$(window).width()/1});
+                $(".goods_name").html(goods.goods_name);//商品名称
+               // $(".shop_price").html(goods.shop_price);//商品价格
+                $(".market_price").html(goods.market_price);//商品市场价格
+                $(".goods_desc").html(goods.goods_desc);//商品描述
+                
+                //判断有活动
+		    	if(ret.ac_info != -1){
+		    		is_activity = true;
+		    		//$(".shop_price").html(ret.ac_info.price);//商品活动价格
+		    		if(ret.ac_info.type!='full_reduction'  && ret.ac_info.type!='full_fold' ){
+		    			$(".shop_price").html(ret.ac_info.price);//商品活动价格
+		    		}else{
+		    			$(".shop_price").html(goods.shop_price);//商品价格
+		    		}
+		    		
+		    		if(ret.ac_info.type =='seckill'){
+		    			gettime2(ret.ac_info['end_time']-Math.round(new Date().getTime()/1000));
+		    			
+		    			$(".is_activity").show();
+		    			
+		    		}
+		    	}else{
+		    		is_activity = false;
+		    		$(".shop_price").html(goods.shop_price);//商品价格
+		    		$(".is_activity").hide();
+		    	}
+		    	api.sendEvent({
+	                name:'detail_activity',
+	                extra:{
+	                	is_activity:is_activity
+	                }
+                });
+                
+                 //优惠券
+                 if(coupons!=null && coupons.length>0){
+                 $(".coupons").show();
+                  for(var j in coupons){
+                  couponsHtml+='<li><a href="javascript:void(0);" class="to_coupona"><span class="to_couponspan">'+coupons[j]['info']['name']+'</span></a></li>';
+                  }
+                 }else{
+                  $(".coupons").hide();
+                 }
+                 $(".couponslist").html(couponsHtml);
+                 $(".brand").html(goods.brand);//品牌
+                 //收藏
+                  	api.sendEvent({
+							name : 'goodsdetailbody',
+							extra : {
+								key1 : 'success',
+								collectflag:collectGood,
+								cartnum:cartnum,
+								sid:sid,
+							}
+						});
+			    }else{
+			    	_toast(ret.msg,function(){
+			    		api.closeWin();
+			    	},1500)
+			    }
+			  }else{
+			  _alert('网络连接失败,请稍后重试');
+			  }
+			})
+}
+
+
+function gettime2(intDiff){
+		 var int=window.setInterval(function(){
+		 var day=0,
+		     hour=0,
+		     minute=0,
+		     second=0;//默认值    		   
+		 if(intDiff > 0){		   
+		     hour = Math.floor(intDiff / (60 * 60));
+		     minute = Math.floor(intDiff / 60) - (hour * 60);
+		     second = Math.floor(intDiff) - (hour * 60 * 60) - (minute * 60);
+		 }
+		 if (minute <= 9) minute = '0' + minute;
+		 if (second <= 9) second = '0' + second;
+		 if(intDiff>1){
+		 	$('#djs_id02').html("<span class='sfmsj'>"+hour+"</span><span class='fhgk'>:</span><span class='sfmsj'>"+minute+"</span><span class='fhgk'>:</span><span class='sfmsj'>"+second+"</span>");		
+		 }else{
+		  	$("#djs_id02").hide();
+		 }			
+		 intDiff--;
+		 }, 1000);
+	} 
+
+
+</script>
+</body>
+</html>

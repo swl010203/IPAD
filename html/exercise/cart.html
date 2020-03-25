@@ -1,0 +1,953 @@
+<!doctype html>
+<html class="bgwhite">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+    <style>
+        .checkbox_div i{
+            line-height: 10px!important;
+            /*background: green;*/
+        }
+
+    </style>
+</head>
+
+<body class="bgwhite">
+<header id="header" class="mui-bar mui-bar-nav bgRed">
+    <h1 class="mui-title">购物车</h1>
+    <button class="mui-btn mui-btn-blue mui-btn-link mui-pull-right bianjiClick">编辑</button>
+    <a class="mui-icon mui-icon-back" onclick="api.closeWin();"></a>
+</header>
+<div class="mui-content bgwhite">
+    <!--空购物车-->
+    <div class="mui-hidden emptyCart">
+        <div class="nullCart bgwhite pb30">
+            <div class="cartNull_img"></div>
+            <p class="mui-text-center fs28 colorHui999">辛苦一天，幸福的事莫过于买买买</p>
+            <div class="btn_small" onclick="api.closeWin();">去逛逛</div>
+        </div>
+        <div class="shopInfoCon_tit colorHei888"><span>猜你喜欢</span></div>
+        <div class="mui-content mui_content_paixu mui_content_paixu_border">
+            <div class="shopDiv_info bgwhite mui-row hotGoods">
+                <!-- <div class="mui-col-sm-6 mui-col-xs-6">
+                    <div class="shopDiv_infoImg">
+                        <img src="../../images/pingguo2.jpg"/>
+                    </div>
+                    <div class="pl20 pr20 box_s">
+                        <p class="mui-ellipsis fs28 mt20">花牛苹果/蛇果 12个 单</p>
+                        <div class="fs24 mt20">
+                            <span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">2倍积分</span>
+                        </div>
+                        <div class="shopDiv_infoPrice mui-row mt30">
+                            <div class="mui-col-sm-8 mui-col-xs-8">
+                                <p class="colorRed"><span class="fs24">￥</span><span class="fs36">29</span>. <span class="fs32">99</span></p>
+                                <p class="fs24 oldPrice">￥35</p>
+                            </div>
+                            <div class="mui-col-sm-4 mui-col-xs-4">
+                                <div class="addShop"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6">
+                    <div class="shopDiv_infoImg">
+                        <img src="../../images/pingguo.jpg"/>
+                    </div>
+                    <div class="pl20 pr20 box_s">
+                        <p class="mui-ellipsis fs28 mt20">花牛苹果/蛇果 12个 单</p>
+                        <div class="fs24 mt20">
+                            <span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">2倍积分</span>
+                        </div>
+                        <div class="shopDiv_infoPrice mui-row mt30">
+                            <div class="mui-col-sm-8 mui-col-xs-8">
+                                <p class="colorRed"><span class="fs24">￥</span><span class="fs36">29</span>. <span class="fs32">99</span></p>
+                                <p class="fs24 oldPrice">￥35</p>
+                            </div>
+                            <div class="mui-col-sm-4 mui-col-xs-4">
+                                <div class="addShop"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6">
+                    <div class="shopDiv_infoImg">
+                        <img src="../../images/pingguo.jpg"/>
+                    </div>
+                    <div class="pl20 pr20 box_s">
+                        <p class="mui-ellipsis fs28 mt20">花牛苹果/蛇果 12个 单</p>
+                        <div class="fs24 mt20">
+                            <span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">2倍积分</span>
+                        </div>
+                        <div class="shopDiv_infoPrice mui-row mt30">
+                            <div class="mui-col-sm-8 mui-col-xs-8">
+                                <p class="colorRed"><span class="fs24">￥</span><span class="fs36">29</span>. <span class="fs32">99</span></p>
+                                <p class="fs24 oldPrice">￥35</p>
+                            </div>
+                            <div class="mui-col-sm-4 mui-col-xs-4">
+                                <div class="addShop"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mui-col-sm-6 mui-col-xs-6">
+                    <div class="shopDiv_infoImg">
+                        <img src="../../images/pingguo2.jpg"/>
+                    </div>
+                    <div class="pl20 pr20 box_s">
+                        <p class="mui-ellipsis fs28 mt20">花牛苹果/蛇果 12个 单</p>
+                        <div class="fs24 mt20">
+                            <span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">2倍积分</span>
+                        </div>
+                        <div class="shopDiv_infoPrice mui-row mt30">
+                            <div class="mui-col-sm-8 mui-col-xs-8">
+                                <p class="colorRed"><span class="fs24">￥</span><span class="fs36">29</span>. <span class="fs32">99</span></p>
+                                <p class="fs24 oldPrice">￥35</p>
+                            </div>
+                            <div class="mui-col-sm-4 mui-col-xs-4">
+                                <div class="addShop"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <!--非空购物车-->
+    <div class="haveGoodsDiv">
+        <!--店铺-->
+        <!-- <ul class="Dp_info Dp_info_1 pl20 pr20 box_s bgwhite border_b10 pt20">
+           <li class="goods_tit fs28 font_weightB">
+               <div onclick="dp_name(this)" class="checkbox_div"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+               <i class="Dp_icon ml60"></i>
+               商城特惠
+           </li>
+           <li class="goods_active fs28 colorHui999 clearfloat ml60">
+               <div class="mui-pull-left">
+                   <i class="sp_activeIcon"></i>
+                   <span>还差100元，就可立减10元</span>
+               </div>
+               <div class="mui-pull-right colorRed">去凑单<i class="fs36 mui-icon mui-icon-arrowright"></i></div>
+           </li>
+           <li class="goods_goods">
+               &lt;!&ndash;店铺里面的商品&ndash;&gt;
+               <ul class="Sp_Info Sp_Info_1">
+                   <li class="clearfloat mui-row clearfloat">
+                       <div class="mui-col-sm-1 mui-col-xs-1">
+                           <div class="checkbox_div" onclick="sp_info(this,1)"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+                       </div>
+                       <div class="mui-col-sm-3 mui-col-xs-3">
+                           <div class="Sp_Info_img"><img src="../../images/cart1.jpg"/></div>
+                       </div>
+                       <div class="mui-col-sm-8 mui-col-xs-8">
+                           <p class="Sp_Info_tit mui-ellipsis mb20">苹果水果山东沂源红富士水果</p>
+                           <div class="Sp_Info_active fs24 mb20">
+                               <span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">满100减10</span>
+                           </div>
+                           <div class="clearfloat">
+                               <div class="mui-pull-left">
+                                   <p class="colorRed">
+                                       <span class="fs24">￥</span>
+                                       <span class="fs36">29<span class="fs32">.99</span></span>
+                                       <span class="fs24 oldPrice">￥35</span>
+                                   </p>
+                               </div>
+                               <div class="mui-pull-right">
+                                   <div class="mui-numbox mui_numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
+                                       <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                       <input class="mui-numbox-input mui_numbox_input" type="number" />
+                                       <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="Sp_Info_tishi mui-hidden">
+                           <i class="tishi_icon"></i>
+                           <span class="fs24">此商品库存不足10件，请调整数量再购买</span>
+                       </div>
+                   </li>
+               </ul>
+           </li>
+       </ul> -->
+        <!--店铺-->
+        <!-- <ul class="Dp_info Dp_info_2 pl20 pr20 box_s bgwhite border_b10 pt20">
+            <li class="goods_tit fs28 font_weightB">
+                <div class="checkbox_div" onclick="dp_name(this)"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+                <i class="Dp_icon ml60"></i>
+                超市直供
+            </li>
+            <li class="goods_active fs28 colorHui999 clearfloat ml60">
+                <div class="mui-pull-left">
+                    <i class="sp_activeIcon"></i>
+                    <span>还差100元，就可立减10元</span>
+                </div>
+                <div class="mui-pull-right colorRed">去凑单<i class="fs36 mui-icon mui-icon-arrowright"></i></div>
+            </li>
+            <li class="goods_goods">
+                店铺里面的商品
+                <ul class="Sp_Info Sp_Info_2">
+                    <li class="clearfloat mui-row clearfloat">
+                        <div class="mui-col-sm-1 mui-col-xs-1">
+                            <div class="checkbox_div" onclick="sp_info(this,2)"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+                        </div>
+                        <div class="mui-col-sm-3 mui-col-xs-3">
+                            <div class="Sp_Info_img"><img src="../../images/cart1.jpg"/></div>
+                        </div>
+                        <div class="mui-col-sm-8 mui-col-xs-8">
+                            <p class="Sp_Info_tit mui-ellipsis mb20">苹果水果山东沂源红富士水果</p>
+                            <div class="Sp_Info_active fs24 mb20">
+                                <span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">满100减10</span>
+                            </div>
+                            <div class="clearfloat">
+                                <div class="mui-pull-left">
+                                    <p class="colorRed">
+                                        <span class="fs24">￥</span>
+                                        <span class="fs36">29<span class="fs32">.99</span></span>
+                                        <span class="fs24 oldPrice">￥35</span>
+                                    </p>
+                                </div>
+                                <div class="mui-pull-right">
+                                    <div class="mui-numbox mui_numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
+                                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                        <input class="mui-numbox-input mui_numbox_input" type="number" />
+                                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Sp_Info_tishi mui-hidden">
+                            <i class="tishi_icon"></i>
+                            <span class="fs24">此商品库存不足10件，请调整数量再购买</span>
+                        </div>
+                    </li>
+                    <li class="clearfloat mui-row clearfloat">
+                        <div class="mui-col-sm-1 mui-col-xs-1">
+                            <div class="checkbox_div" onclick="sp_info(this,2)"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+                        </div>
+                        <div class="mui-col-sm-3 mui-col-xs-3">
+                            <div class="Sp_Info_img"><img src="../../images/cart1.jpg"/></div>
+                        </div>
+                        <div class="mui-col-sm-8 mui-col-xs-8">
+                            <p class="Sp_Info_tit mui-ellipsis mb20">苹果水果山东沂源红富士水果</p>
+                            <div class="Sp_Info_active fs24 mb20">
+                                <span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">满100减10</span>
+                            </div>
+                            <div class="clearfloat">
+                                <div class="mui-pull-left">
+                                    <p class="colorRed">
+                                        <span class="fs24">￥</span>
+                                        <span class="fs36">29<span class="fs32">.99</span></span>
+                                        <span class="fs24 oldPrice">￥35</span>
+                                    </p>
+                                </div>
+                                <div class="mui-pull-right">
+                                    <div class="mui-numbox mui_numbox" data-numbox-step='1' data-numbox-min='0' data-numbox-max='100'>
+                                        <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
+                                        <input class="mui-numbox-input mui_numbox_input" type="number" />
+                                        <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Sp_Info_tishi">
+                            <i class="tishi_icon"></i>
+                            <span class="fs24">此商品库存不足10件，请调整数量再购买</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+        </ul> -->
+    </div>
+    <div style="height: 80px;background: #FFFFFF;"></div>
+    <footer class="cart_footer clearfloat fs24 mui-row">
+        <div class="mui-col-sm-3 mui-col-xs-3">
+            <div class="allCheck clearfloat">
+                <div class="checkbox_div mui-pull-left"><i class="mui-icon mui-icon-checkmarkempty"></i></div>
+                <span>全选</span>
+            </div>
+        </div>
+        <div class="mui-col-sm-7 mui-col-xs-7">
+            <div class="bianjiClick_div">
+                <p>合计:￥<span class="allPrice">0</span> <span class="giftName" style="color: red;"></span></p>
+                <p class="colorHui999">共计:￥<span class="allPrice">0</span>&nbsp;&nbsp;已优惠￥<span>0</span></p>
+            </div>
+
+        </div>
+        <div class="mui-col-sm-2 mui-col-xs-2">
+            <div class="buyNow colorWhite bianjiClick_del" onclick="order();">去结算</div>
+        </div>
+    </footer>
+</div>
+</body>
+<script src="../../script/jquery-1.10.1.min.js"></script>
+
+<script src="../../script/mui.min.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+<script type="text/javascript">
+    mui.init();
+
+    //点击编辑
+    var flag = true;
+    var num_1 = 0;
+    $(".bianjiClick").on("tap", function () {
+        if (flag) {
+            $(".bianjiClick_div").addClass("mui-hidden");
+            $(this).text("完成");
+            flag = false;
+            $(".bianjiClick_del").text("删除");
+            $(".bianjiClick_del").attr('onclick', 'delsCart()');
+            $(".bianjiClick_del").css({"background": "#858585"}, {"color": "#ffffff"});
+
+            //点击编辑时去掉所有勾选
+            $('.allCheck').find("div.checkbox_div").removeClass("active");
+            $(".haveGoodsDiv div.checkbox_div").removeClass("active");
+        } else {
+            $(".bianjiClick_div").removeClass("mui-hidden");
+            $(this).text("编辑");
+            flag = true;
+            $(".bianjiClick_del").text("去结算");
+            $(".bianjiClick_del").attr('onclick', 'order()');
+            $(".bianjiClick_del").css({"background": ""}, {"color": ""});
+        }
+    });
+
+    //全选非全选
+    $(".allCheck").on("tap", function () {
+
+        if ($(this).find("div.checkbox_div").hasClass("active")) {
+            $(this).find("div.checkbox_div").removeClass("active");
+            $(".haveGoodsDiv div.checkbox_div").removeClass("active");
+        } else {
+            $(this).find("div.checkbox_div").addClass("active");
+            $(".haveGoodsDiv div.checkbox_div").addClass("active");
+        }
+        allPrice();
+    });
+
+    //点击店铺进行店铺商品下的全选
+    function dp_name(obj) {
+        if ($(obj).hasClass("active")) {
+            $(obj).removeClass("active");
+            $(obj).parents("ul.Dp_info").find("div.checkbox_div").removeClass("active");
+        } else {
+            $(obj).find("div.checkbox_div").addClass("active");
+            $(obj).parents("ul.Dp_info").find("div.checkbox_div").addClass("active");
+        }
+        allChecked();
+        allPrice();
+    }
+
+    // var num_all = 0;
+    //点击店铺里面的商品
+    function sp_info(obj, index) {
+        var num_c = 0;
+        var length_ = $(".Sp_Info_" + index + ">li").length;
+        if ($(obj).hasClass("active")) {
+            $(obj).removeClass("active");
+        } else {
+            $(obj).addClass("active");
+        }
+        for (var i = 0; i < length_; i++) {
+            if ($(".Sp_Info_" + index + ">li").eq(i).find("div.checkbox_div").hasClass("active")) {
+                num_c++;
+            }
+        }
+        if (num_c == length_) {
+            $(".Dp_info_" + index).find(" li.goods_tit div.checkbox_div").addClass("active");
+        } else {
+            $(".Dp_info_" + index).find(" li.goods_tit div.checkbox_div").removeClass("active");
+        }
+        allChecked();
+        allPrice();
+    }
+
+    //判断是否所有店铺下的商品全部选中
+    function allChecked() {
+        var num_all = 0;
+        for (var i = 0; i < $(".haveGoodsDiv ul.Dp_info").length; i++) {
+            if ($(".haveGoodsDiv ul.Dp_info").eq(i).find("li.goods_tit div.checkbox_div").hasClass("active")) {
+                num_all++;
+            }
+        }
+        if (num_all == $(".haveGoodsDiv ul.Dp_info").length) {
+            $("footer div.checkbox_div").addClass("active");
+
+        } else {
+            $("footer div.checkbox_div").removeClass("active");
+        }
+    }
+
+    // 获取已选中商品
+    var goods_id   = "";    //商品id
+    var goods_num  = "";    //商品数量
+    var goods_attr = "";    //商品属性
+    var goods_type = "";    //商品所属类型  商城 超市
+    var goods_sid  = "";    //商品所属店铺 id
+    var goods_price= "";    //商品属性价格
+    var food_type  = "";    //餐饮类型
+    var goods_attr_str =""; //商品属性描述
+    var aid = '';   // 活动 id
+    var activityId = '';    // 子活动id
+
+    function getSelectGoods(){
+        $('html').find('div.checkbox_div').each(function(){
+            if(typeof $(this).attr('attr-gid') != 'undefined'){
+                if($(this).hasClass('active')){
+                    if(goods_id == ''){
+                        goods_id  = $(this).attr('attr-gid');
+                        goods_num = mui($(this).parent().parent()).numbox().getValue();
+
+                        goods_price = $(this).attr('attr_price');
+                        goods_attr  = $(this).attr('attr-attr');
+                        goods_attr_str = $(this).attr('attr-attr-str');
+                        goods_type = $(this).attr('attr-type');
+                        goods_sid  = $(this).attr('attr-sid');
+                        food_type  = $(this).attr('food_type');
+                    }else{
+                        goods_id  += ',' + $(this).attr('attr-gid');
+                        goods_num += ',' + mui($(this).parent().parent()).numbox().getValue();
+
+                        goods_price += ',' + $(this).attr('attr_price');
+                        goods_attr  += ',' + $(this).attr('attr-attr');
+                        goods_attr_str += ',' + $(this).attr('attr-attr-str');
+                        goods_type += ',' + $(this).attr('attr-type');
+                        goods_sid  += ',' + $(this).attr('attr-sid');
+                        food_type  += ',' + $(this).attr('food_type');
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * 去结算
+     */
+    function order(){
+        goods_id   = "";    //商品id
+        goods_num  = "";    //商品数量
+        goods_attr = "";    //商品属性
+        goods_type = "";    //商品所属类型  商城 超市
+        goods_sid  = "";    //商品所属店铺id
+        goods_price= "";    //商品属性价格
+        food_type  = "";    //餐饮类型
+        goods_attr_str =""; //商品属性描述
+        // aid = '';
+        if(typeof userinfo ==undefined || userinfo ==''  || userinfo ==null){
+            _openWinByUrl('login','login');
+            return false;
+        }
+        getSelectGoods();
+
+        if(goods_id==''){
+            _toast('请选择商品');
+            return false;
+        }
+
+        _openWinByUrl('sureOrder','sureOrder',{
+            'goods_id'  : goods_id,
+            'goods_num' : goods_num,
+            'goods_sid' : goods_sid,
+            'goods_attr' : goods_attr,
+            'goods_attr_str' : goods_attr_str,
+            'goods_type'  : goods_type,
+            'goods_price' : goods_price,
+            'food_type'   : food_type,
+            'dot_type' : 'cart_pay',
+            'aid': activityId,
+        });
+    }
+
+
+    var frame="";
+    var allCheck = 0;  //是否全选择
+    // App.openWinReload = true;
+
+    var setBool = false;
+    apiready = function(){
+
+        var parframe = api.pageParam.frame_name;
+        if(parframe != undefined && typeof parframe !=undefined){
+            frame = parframe;
+        }
+
+        api.addEventListener({
+            name: 'viewappear'
+        }, function (ret, err) {
+            getCart();
+        });
+
+        api.addEventListener({
+            name:frame+'CheckAllEdit'
+        },function(ret,err){
+            //coding...
+            var allCheck =ret.value.type;
+            shopCheckAllEdit(allCheck);
+        });
+
+        api.addEventListener({
+            name:frame+'CheckAll'
+        },function(ret,err){
+            //coding...
+            allCheck =ret.value.type;
+
+            shopCheckAll(allCheck);
+        });
+
+        // 购物车数据整理完之后追加页面
+
+
+        api.addEventListener({
+            name: 'insertHtml',
+        }, function(ret, err){
+            var html = ret.value.html;
+
+            $('.haveGoodsDiv').html('');
+            $('.haveGoodsDiv').html(html);
+
+
+            $('.jianNum').on('tap', function(){
+                /*if($('.diffPrice').html() == '0元'){
+                    return false;
+                }*/
+                var count_num = 0;
+                count_num = $('.goodsNum').val();
+
+                var price = $(this).attr('data-diffPrice');
+                var type = $(this).attr('data-type');
+                var goodsPrice = $(this).attr('data-goodsPrice');
+                var id = $(this).attr('data-goodsId');
+
+                upCartNum(id,1,type,count_num,goodsPrice,price);
+            });
+
+            $('.jiaNum').on('tap', function(){
+                /*if($('.diffPrice').html() == '0元'){
+                    return false;
+                }*/
+                var count_num = 0;
+                count_num = $('.goodsNum').val();
+
+                var price = $(this).attr('data-diffPrice');
+                var type = $(this).attr('data-type');
+                var goodsPrice = $(this).attr('data-goodsPrice');
+                var id = $(this).attr('data-goodsId');
+
+                upCartNum(id,1,type,count_num,goodsPrice,price);
+            });
+
+
+            // 默认全选
+            $("div.checkbox_div").addClass("active");
+            allPrice();
+            $("input.mui_numbox_input").change(function(){
+                allPrice();
+            });
+
+            $(".is_putaway").hide();
+
+            api.sendEvent({
+                name:frame+'cartempty',
+                extra:{
+                    empty:false
+                }
+            });
+            mui(".mui_numbox").numbox();
+            api.hideProgress();
+        });
+
+           getCart();
+    };
+
+    /**
+     * 获取购物车信息
+     */
+    var total_price = 0.00;  //总价
+
+    function goHtml(){
+        api.sendEvent({
+            name: 'goHtml',
+            extra: {
+                val: true,
+            }
+        });
+    }
+
+    function getCart(){
+        $('.haveGoodsDiv').html('');
+        userinfo = $api.getStorage('userinfo');
+        if(typeof userinfo == undefined || userinfo == ''  || userinfo == null){
+            return true;
+        }
+        api.showProgress({
+            style: 'default',
+            animationType: 'fade',
+            title: '加载中...',
+            text: '',
+            modal: false
+        });
+        $('.giftName').text('');
+
+        api.ajax({
+            url: ajax_url + "Index/ExerciseShop/getExerciseCart",
+            method: 'post',
+            data:{
+                values:{
+                    'uid':userinfo.uid
+                }
+            },
+            tag: 'getCart',
+        }, function(ret){
+            if(ret.status ==1){
+                var strVar = "";
+
+                // 判断中秋活动
+                var cartActGoods = []; // 购物车中参加活动的商品 id
+                var preActName   = '';    // 可参与的活动名称
+                var nextActName  = '';    // 下一个活动名称
+                var diff_price   = '';    // 差价
+                var nextGiftImg  = '';    // 下一个赠品图片
+                var preGiftImg   = '';    // 当前赠品图片
+                var nextGiftName = '';    // 下一个赠品名称
+                var preGiftName  = '';    // 当前赠品名称
+                var superTotalMoney = 0;    // 购物车中超市商品总价格
+                var superGoodsId    = '';   // 购物车中超市商品 id
+                var superGoodsChannel = '';
+                $.each(ret.cartlist,function(k,v){
+                    if(v.good[0].channel_id == 2){
+                        // 超市
+                        superGoodsChannel = v.good[0].channel_id;   // 超市 channel
+                        $.each(v.good, function(stk, stv){
+                            superTotalMoney = Number(superTotalMoney) + Number(stv.price);
+                            superGoodsId    = (superGoodsId + stv.gid + ',');
+                        });
+                        superGoodsId = superGoodsId.substring(0, superGoodsId.length-1);
+                        _ajax(ajax_url+'Index/Activity/getMidAutumnInfo', {}, 'get', function(ret1){
+                            if(ret1.status == 1){
+                                if(ret1.data.actStatus == 1){
+                                    aid = ret1.data.id;
+                                    // 活动进行中
+                                    _ajax(ajax_url + 'Index/Activity/getChildActivity', {
+                                        'pid': ret1.data.id,
+                                        'superGoodsId': superGoodsId,
+                                        'superGoodsChannel': superGoodsChannel
+                                    }, 'post', function (re) {
+                                        if(re.status == 1){
+                                            var reData = re.data;
+                                            var reDataRet = re.data.return;
+
+                                            cartActGoods = reData.cartActGid;
+                                            if(reDataRet.pre){
+                                                preActName   = reDataRet.pre.name;  // 当前活动
+                                                preGiftImg  = reDataRet.pre.gift_image;
+                                                preGiftName = reDataRet.pre.gift_name;
+                                                $('.giftName').text('');
+                                                $('.giftName').text('免费赠送' + preGiftName);
+                                            }
+                                            nextActName = reDataRet.next.name;      // 下一活动
+                                            diff_price  = re.data.diff_price;
+                                            nextGiftImg = reDataRet.next.gift_image;
+                                            nextGiftName= reDataRet.next.gift_name;
+                                            if(!reDataRet.pre && reDataRet.next && diff_price == 0){
+                                                $('.giftName').text('免费赠送  ' + nextGiftName);
+                                            }else if((!reDataRet.pre && diff_price != 0)){
+                                                $('.giftName').text('');
+                                            }
+                                            if(reDataRet.next.canDiff == 1){
+                                                if(typeof reDataRet.pre != 'undefined'){
+                                                    activityId = reDataRet.pre.id;
+                                                }else{
+                                                    activityId = reDataRet.next.id;
+                                                }
+
+                                            }
+                                            goHtml();
+                                        }else{
+                                            goHtml();
+                                        }
+                                    });
+                                }else{
+                                    aid = '';
+                                    goHtml();
+                                }
+                            }else{
+                                aid = '';
+                                goHtml();
+                            }
+                        });
+                    }else{
+                        aid = '';
+                        goHtml();
+                    }
+
+                    api.addEventListener({
+                        name: 'goHtml',
+                    }, function(ret){
+                        if(ret.value.val){
+                            strVar += '<ul class="Dp_info Dp_info_'+(Number(k)+1)+' pl20 pr20 box_s bgwhite border_b10 pt20">';
+                            strVar +=   '<li class="goods_tit fs28 font_weightB">';
+                            strVar +=       '<div class="checkbox_div" onclick="dp_name(this)"><i class="mui-icon mui-icon-checkmarkempty"></i></div>';
+                            strVar +=       '<i class="Dp_icon ml60"></i>'+v.shop.name;
+                            strVar +=   '</li>';
+//							中秋活动满赠活动
+//                          strVar +=   '<li class="goods_active fs28 colorHui999 clearfloat ml60" style="margin-bottom: 30px;">';
+//                          strVar +=       '<div class="mui-pull-left">';
+//                          // strVar +=           '<i class="sp_activeIcon"></i>';
+//                          if(nextActName){
+//                              strVar +=           '<span>'+ nextActName + '  还差<span class="diffPrice">' + diff_price + '元</span>，就可以免费送<span style="color: red;">' + nextGiftName +'</span></span>';
+//                          }
+//                          if(nextActName){
+//                              strVar +=       '<div class="mui-pull-right colorRed" onclick="coudan();">去凑单<i class="fs36 mui-icon mui-icon-arrowright"></i></div>';
+//                          }
+//                          strVar +=       '</div>';
+//
+//
+//                          strVar +=   '</li>';
+                            strVar +=   '<li class="goods_goods">';
+                            strVar +=       '<ul class="Sp_Info Sp_Info_'+(Number(k)+1)+'">';
+                            $.each(v.good, function(gk, gv){
+                                if(gv['is_putaway'] == 1 && gv['is_kucun'] != -1 ){
+                                    /************正常商品 Start************/
+                                    // total_price += Number(gv.num) * Number(gv.goods_price);
+                                    strVar +=           '<li class="clearfloat mui-row clearfloat">';
+                                    strVar +=               '<div class="mui-col-sm-1 mui-col-xs-1">';
+                                    strVar +=                   '<div class="checkbox_div" onclick="sp_info(this,'+(Number(k)+1)+')" id="a_pl'+gv['id']+'" attr_price="'+gv['goods_price']+'" attr-gid="'+gv['gid']+'" food_type="'+gv['food_type']+'"  attr-id="'+gv['id']+'" attr-sid="'+gv['sid']+'"  attr-attr="'+gv['attribute']+'" attr-attr-str="'+gv['attribute_name']+'"  attr-type="'+gv['channel_id']+'"   attr-num="'+gv['num']+'" type="checkbox" name="goods_input"><i class="mui-icon mui-icon-checkmarkempty"></i></div>';
+                                    strVar +=               '</div>';
+                                    strVar +=               '<div class="mui-col-sm-3 mui-col-xs-3">';
+                                    strVar +=                   '<div class="Sp_Info_img"><img src="'+gv.goods_img+'"/></div>';
+                                    strVar +=               '</div>';
+                                    strVar +=               '<div class="mui-col-sm-8 mui-col-xs-8">';
+                                    strVar +=                   '<p class="Sp_Info_tit mui-ellipsis mb20">'+gv.goods_name+'</p>';
+                                    strVar +=                   '<div class="Sp_Info_active fs24 mb20">';
+                                    // strVar +=                       '<span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">满100减10</span>';
+                                    strVar +=                   '</div>';
+                                    strVar +=                   '<div class="clearfloat">';
+                                    strVar +=                       '<div class="mui-pull-left">';
+                                    strVar +=                           '<p class="colorRed">';
+                                    strVar +=                               '<span class="fs24">￥</span>';
+                                    strVar +=                               '<span class="fs36">'+gv.goods_price.split('.')[0]+'<span class="fs32">.'+gv.goods_price.split('.')[1]+'</span></span> ';
+                                    strVar +=                               '<span class="fs24 oldPrice">￥'+gv.goods_price+'</span>';
+                                    strVar +=                           '</p>';
+                                    strVar +=                       '</div>';
+                                    strVar +=                       '<div class="mui-pull-right">';
+                                    strVar +=                           '<div class="mui-numbox mui_numbox" data-numbox-step="1" data-numbox-min="1" data-numbox-max="100">';
+                                    // strVar +=                             '<button data-diffPrice="'+ diff_price +'" data-type="2" data-goodsPrice="'+ gv.goods_price +'" data-goodsId="'+ gv['id'] +'" onclick="changePrice(\''+diff_price+'\',2,'+gv.goods_price+','+gv['id']+')" class="mui-btn mui-numbox-btn-minus jianNum" type="button">-</button>';
+                                    strVar +=                             '<button data-diffPrice="'+ diff_price +'" data-type="2" data-goodsPrice="'+ gv.goods_price +'" data-goodsId="'+ gv['id'] +'" class="mui-btn mui-numbox-btn-minus jianNum" type="button">-</button>';
+                                    strVar +=                             '<input class="mui-numbox-input mui_numbox_input goodsNum" type="number" readonly="" value="'+gv.num+'" />';
+                                    // strVar +=                             '<button onclick="changePrice(\''+diff_price+'\',1,'+gv.goods_price+','+gv['id']+')" class="mui-btn mui-numbox-btn-plus jiaNum" type="button">+</button>';
+                                    strVar +=                             '<button data-diffPrice="'+ diff_price +'" data-type="1" data-goodsPrice="'+ gv.goods_price +'" data-goodsId="'+ gv['id'] +'" class="mui-btn mui-numbox-btn-plus jiaNum" type="button">+</button>';
+                                    strVar +=                           '</div>';
+                                    strVar +=                       '</div>';
+                                    strVar +=                   '</div>';
+                                    strVar +=               '</div>';
+                                    strVar +=               '<div class="Sp_Info_tishi mui-hidden">';
+                                    strVar +=                   '<i class="tishi_icon"></i>';
+                                    strVar +=                   '<span class="fs24">此商品库存不足10件，请调整数量再购买</span>';
+                                    strVar +=               '</div>';
+                                    strVar +=           '</li>';
+                                    /************正常商品 End************/
+                                }else{
+                                    /************失效商品 Start************/
+                                    strVar +=           '<li class="clearfloat mui-row clearfloat">';
+                                    strVar +=               '<div class="mui-col-sm-1 mui-col-xs-1">';
+                                    strVar +=                   '<div class="checkbox_div" onclick="sp_info(this,'+(Number(k)+1)+')" id="a_pl'+gv['id']+'" attr-gid="'+gv['gid']+'" food_type="'+gv['food_type']+'"  attr-id="'+gv['id']+'" attr-sid="'+gv['sid']+'" attr_price="'+gv['goods_price']+'"  attr-attr="'+gv['attribute']+'" attr-attr-str="'+gv['attribute_name']+'"  attr-type="'+gv['channel_id']+'"   attr-num="'+gv['num']+'" type="checkbox" name="goods_input"><i class="mui-icon mui-icon-checkmarkempty"></i></div>';
+                                    strVar +=               '</div>';
+                                    strVar +=               '<div class="mui-col-sm-3 mui-col-xs-3">';
+                                    strVar +=                   '<div class="Sp_Info_img"><img src="'+gv.goods_img+'"/></div>';
+                                    strVar +=               '</div>';
+                                    strVar +=               '<div class="mui-col-sm-8 mui-col-xs-8">';
+                                    strVar +=                   '<p class="Sp_Info_tit mui-ellipsis mb20">'+gv.goods_name+'</p>';
+                                    strVar +=                   '<div class="Sp_Info_active fs24 mb20">';
+                                    strVar +=                       '<span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">满100减10</span>';
+                                    strVar +=                   '</div>';
+                                    strVar +=                   '<div class="clearfloat">';
+                                    strVar +=                       '<div class="mui-pull-left">';
+                                    strVar +=                           '<p class="colorRed">';
+                                    strVar +=                               '<span class="fs24">￥</span>';
+                                    strVar +=                               '<span class="fs36">'+gv.goods_price.split('.')[0]+'<span class="fs32">.'+gv.goods_price.split('.')[1]+'</span></span> ';
+                                    strVar +=                               '<span class="fs24 oldPrice">￥'+gv.goods_price+'</span>';
+                                    strVar +=                           '</p>';
+                                    strVar +=                       '</div>';
+                                    strVar +=                       '<div class="mui-pull-right">';
+                                    strVar +=                           '<div class="mui-numbox mui_numbox" data-numbox-step="1" data-numbox-min="1" data-numbox-max="100">';
+                                    strVar +=                             '<button class="mui-btn mui-numbox-btn-minus jianNum" type="button">-</button>';
+                                    strVar +=                             '<input class="mui-numbox-input mui_numbox_input GoodsNum" type="number" readonly="" value="'+gv.num+'" />';
+                                    strVar +=                             '<button class="mui-btn mui-numbox-btn-plus jiaNum" type="button">+</button>';
+                                    strVar +=                           '</div>';
+                                    strVar +=                       '</div>';
+                                    strVar +=                   '</div>';
+                                    strVar +=               '</div>';
+                                    strVar +=               '<div class="Sp_Info_tishi">';
+                                    strVar +=                   '<i class="tishi_icon"></i>';
+                                    strVar +=                   '<span class="fs24">此商品已失效</span>';
+                                    strVar +=               '</div>';
+                                    strVar +=           '</li>';
+                                    /************失效商品 End************/
+                                }
+                            });
+                            strVar +=       '</ul>';
+                            strVar +=   '</li>';
+                            strVar += '</ul>';
+
+                            $('.emptyCart').addClass('mui-hidden');
+                            $(".bianjiClick_div").removeClass("mui-hidden");
+                            $('.bianjiClick, footer').css('display', 'block');
+
+                            api.sendEvent({
+                                name: 'insertHtml',
+                                extra: {
+                                    html: strVar
+                                }
+                            });
+                        }
+                    });
+
+                });
+            }else{
+                api.hideProgress();
+                $('.haveGoodsDiv').html('');
+                $('.bianjiClick, footer').css('display', 'none');
+                api.sendEvent({
+                    name:'cart_body_edit_hide'
+                });
+                //空购物车
+                emptyCart();
+                api.sendEvent({
+                    name:frame+'cartPrice',
+                    extra:{
+                        price:total_price.toFixed(2)
+                    }
+                });
+                $(".is_putaway").hide();
+            }
+            $("#cartList").html(strVar);
+
+
+            if(allCheck){
+                shopCheckAll(allCheck);
+            }
+            //api.refreshHeaderLoadDone();
+            closeloading();
+        });
+    }
+
+    /**
+     * 空购物车
+     */
+    function emptyCart(){
+        api.sendEvent({
+            name:'refresh_cartinfo'
+        });
+        $('.emptyCart').removeClass('mui-hidden');
+        getHotGoods();
+        api.sendEvent({
+            name:frame+'cartempty',
+            extra:{
+                empty:true
+            }
+        });
+    }
+
+    function coudan(){
+        _openWinByUrl('activity_head', '../activity_head', {
+            'frame': 'mid_autumn',
+            'furl': 'mid_autumn',
+            'title': '中秋活动',
+        });
+    }
+
+    // 查看商品详情
+    function showDetail(gid){
+        _openWinByUrl('goods_detail', 'goods_detail', {'goods_id': gid});
+    }
+
+    /**
+     * 删除购物车商品信息
+     */
+    function delsCart(){
+        var goods_id="";    //获取选择商品id
+        $('html').find('div.checkbox_div').each(function(){
+            if(typeof $(this).attr('attr-id') != 'undefined'){
+                if($(this).hasClass('active')){
+                    if(goods_id==""){
+                        goods_id=$(this).attr('attr-id');
+                    }else{
+                        goods_id+=","+$(this).attr('attr-id');
+                    }
+                }
+
+            }
+        });
+
+        //失效商品
+        $("input[name='goods_edit_input']:checked").each(function(){
+            if(goods_id==""){
+                goods_id=$(this).attr('attr-id');
+            }else{
+                goods_id+=","+$(this).attr('attr-id');
+            }
+        });
+
+        if(!goods_id){
+            _toast('请选中商品');
+            return false;
+        }
+
+        //删除购物车
+        _ajax(ajax_url + "Index/ExerciseShop/delCart",{'uid':userinfo.uid,'ids':goods_id},'post',function(ret){
+            if(ret.status ==1){
+                //删除成功 从新加载购物车
+                total_price = 0;
+                getCart();
+                api.sendEvent({
+                    name:'event_cart_num'
+                });
+            }else{
+                _toast(ret.msg);
+            }
+        });
+    }
+
+    // 计算总价格
+    var totalP = 0;
+    function allPrice(){
+        totalP = 0;
+        $('html').find('div.checkbox_div').each(function(){
+            if (typeof $(this).attr('attr_price') !== 'undefined'){
+                if($(this).hasClass('active')){
+                    var price = $(this).attr('attr_price');
+                    var num = $(this).parent().parent().find('div.mui_numbox input').val();
+                    totalP += Number(price) * Number(num);
+                }
+            }
+        });
+        $('.allPrice').text(Number(totalP).toFixed(2));
+    }
+
+
+    /**
+	 * 修改购物车数量
+	 */
+	function upCartNum(id,num,type,count_num,goodsPrice,price){
+		_ajax(ajax_url + "Index/ExerciseShop/upCartNum",{'uid':userinfo.uid,'id':id,'num':num,'type':type},'post',function(ret){
+			if(ret.status ==1){
+                if(type ==1){
+                    newprice = (Number(price)-Number(goodsPrice));
+                }else if(type == 2){
+                    newprice = (Number(price)+Number(goodsPrice));
+                }
+                $('.diffPrice').html(newprice.toFixed(1)+'元');
+                getCart();
+                allPrice();
+                api.sendEvent({
+                    name: 'event_ecart_num'
+                });
+			}else{
+				_toast(ret.msg);
+			}
+		});
+	}
+</script>
+</html>

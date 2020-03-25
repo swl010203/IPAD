@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/swiper.min.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+</head>
+<body>
+<!-- 头部 -->
+	<header>
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">心爱商品</h1>
+			<a href="#" class="headerRight">
+				<span class="headerRighttxt cart_edit">编辑</span>
+			</a>
+		</div>
+	</header>
+
+
+
+<!--全选-->
+<footer class="footer_01" style="border: 0; background: #f5f5f5">
+<div class="cart_02" style="display: none;">
+<div class="wp_100">
+		<div class="botH"></div>
+	</div>
+	<div class="edit_cartwrap">
+		<div class="edit_cartbox">
+		<div class="cartTopl" >
+			<input id="a_pl3" type="checkbox" name="checkAll" value="1" class="duo_checkbox05" onclick="checkAll();">
+			<label for="a_pl3" style="color: #1f2228;">全选</label>
+		</div>
+		<div class="edit_cartboxr">
+			<!--<a href="#" class="edit_cartboxrbtn">删 除</a>-->
+			<a href="javascript:void(0);" onclick=getAllSelect(); class="edit_cartboxrbtn; edit_cartboxrbtncur">取消收藏</a>
+		</div>
+		</div>
+	</div>
+</div>
+</footer>
+<script type="text/javascript">
+	// 编辑购物车按钮
+		var flag=true;
+		$('.cart_edit').click(function(){
+			if(flag){
+				$(this).text('完成');
+				change(flag);
+				$('.siteSearchul').addClass('siteSearchuledit');
+					$('.cart_01').hide();
+					$('.cart_02').show();
+					$('.cartClosepos').hide();
+					flag = false;
+		
+			}else{
+				$(this).text('编辑');
+				change(flag);	
+				$('.cart_edit').show();
+				$('.siteSearchul').removeClass('siteSearchuledit');
+				$('.cart_01').show();
+				$('.cart_02').hide();
+				$('.cartClosepos').show();
+				flag = true;	
+			}
+			
+		});
+		$('.edit_cartboxrbtncur').click(function(){
+			$('.cart_edit').text('编辑');
+			change(flag);
+			$('.cart_edit').show();
+			$('.siteSearchul').removeClass('siteSearchuledit');
+			$('.cart_01').show();
+			$('.cart_02').hide();
+			$('.cartClosepos').show();
+			flag=true;
+		});
+			function change(flag){
+			var jsfun = 'change_text('+flag+');';
+			execute(jsfun);
+			}
+				/*
+			 * 全选
+			 */
+			function checkAll(){
+			 var check_all=$("input[name=checkAll]:checked").val();
+			 pitch(check_all);		
+			}
+				/*
+			 * 执行collectshopbody页面函数
+			 */
+			
+			function pitch(flag){
+				var jsfun = 'check_all('+flag+');';
+			     execute(jsfun);
+			}
+			
+				/*
+			 * 执行collectshopbody页面函数
+			 */
+			function execute(parm){
+			 api.execScript({
+				    name: 'collectgoods',
+				    frameName: 'collectgoodsbody',
+				    script: parm
+				});
+			}
+			function getAllSelect(){
+			 var jsfun = 'get_select();';
+			 execute(jsfun);
+			}
+			var idstr='';//要删除的id串
+			apiready = function() {
+			//如监听网络连接事件
+			api.addEventListener({
+			    name: 'collectgoodsbody'
+			}, function(ret, err) {
+			    if(ret && ret.value){
+						if (ret.value.key1 == 'success') {	
+						  //取消收藏操作
+						  idstr=ret.value.idstr;
+						  cancel();
+						  											 
+						}
+					}
+			});
+				api.addEventListener({
+				    name: 'collectgoodschecked'
+				}, function(ret, err) {
+				    if(ret && ret.value){
+							if (ret.value.key1 == 'success') {	
+							  //设置全选是否备选中
+							  if(ret.value.checkFlag){
+							  $("input[name=checkAll]").prop("checked",true);
+							  }else{
+							  $("input[name=checkAll]").prop("checked",false);
+							  }
+							  						  											 
+							}
+						}
+				});
+			    $api.fixStatusBar($api.dom('header')); 
+				var body_h = $api.offset($api.dom('body')).h;
+				var header_h = $api.offset($api.dom('header')).h;
+				var footer_h = $api.offset($api.dom('footer')).h;
+				var height_h = body_h - header_h - footer_h-10;
+				openFrameUrl('collectgoodsbody', header_h+10, height_h);
+			};
+			
+				/*
+			 * 进行取消收藏操作
+			 */
+			function cancel(){
+			api.ajax({
+				url : ajax_url+'Index/Collection/delCollectGoods',
+				method : 'post',
+				data : {
+					values : {
+					ids:idstr,
+					},
+				}
+			}, function(ret, err) {
+			  if(ret){
+			   if(ret.status==1){
+			    _toast(ret.msg);
+			    //将页面还原成最初状态，删除之后刷新页面
+			    $(this).text('编辑');
+			    flag=false;
+					change(flag);
+					$('.cart_edit').show();
+					$('.siteSearchul').removeClass('siteSearchuledit');
+					$('.cart_01').show();
+					$('.cart_02').hide();
+					$('.cartClosepos').show();
+					flag = true;			
+					
+					//刷新页面
+					 	api.sendEvent({
+							name : 'collectgoods',
+							extra : {
+								key1 : 'success',
+							}
+						});
+			   }else{
+			    _toast(ret.msg);
+			   }
+			  }else{
+			   _alert('网络连接失败,请稍后重试');
+			  }
+			})
+			}
+</script>
+</body>
+</html>

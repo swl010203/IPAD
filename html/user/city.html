@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+</head>
+<body class="bg_fff">
+
+<!-- 内容 -->
+<div class="wp_100">
+<div class="">
+	<div class="top_classifylist citylist" style="border-top: 1px solid #ccc">
+		<!--<a href="javascript:;" class="top_classifya"><span class="top_classifyspan01">北京市</span><span class="top_classifyspan02"></span></a>-->
+		
+		
+	</div>
+</div>
+	
+</div>
+<script type="text/javascript">
+var province=0;//省
+var city=0;//市
+var area=0; //区
+var district=0;//乡
+  apiready=function(){
+  //加载状态
+		//loading();
+   getinfo(0);
+  };
+ function getinfo(type,id){
+ var region_type=0;//类型区别
+    region_type=Number(type)+Number(1);
+   if(type==1){
+   province=id;
+   }else if(type==2){
+   city=id;
+   }else if(type==3){
+   area=id;
+   }else if(type==4){
+   district=id;
+   } 
+   if(area==1107){
+     if(type==4){
+      back();
+     }else{
+     info(region_type,id);
+     }
+   }else{
+     if(type==3){
+      back();
+     }else{
+     info(region_type,id);
+     }
+   }
+
+
+  }
+  /*
+   * 返回
+   */
+  function back(){
+  //根据省市区获取省市区名称
+            api.ajax({
+		    url: ajax_url+'Index/Base/regionName',
+		    dataType: "json",
+		    method: 'post',
+				 data: { 
+				 values : {
+						province:province,	
+						city:city,
+						area:area,
+						district:district				
+					},    
+             }
+		},function(ret, err){
+		 if(ret){
+		  if(ret.code){
+		   var data=ret.data;
+		   var detail=data['provincename']+data['cityname']+data['areaname']+data['districtname'];
+		    api.sendEvent({
+					name: 'city',
+					extra: {key1:'success',province:province,city:city,area:area,district:district,detail:detail}
+				});
+			api.closeWin({});	
+		  }else{
+		  closeloading();
+		   _toast(ret.msg);
+		  }
+		 }else{
+		 closeloading();
+		 _alert('网络连接失败,请稍后重试');
+		 }
+		})
+ 
+  }
+  /*
+   * 获取省市区
+   */
+  function info(region_type,id){
+          api.ajax({
+		    url: ajax_url+'Index/Base/getRegionAnguo',
+		    dataType: "json",
+		    method: 'post',
+				 data: { 
+				 values : {
+						pid:id,					
+					},    
+             }
+		},function(ret, err){
+		 if(ret){
+		  if(ret.status){
+		  		province = ret.city.province;
+				city= ret.city.city;
+				area= ret.city.area;
+				region_type = 4;
+		     var data=ret.region;
+		     var html='';
+		     if(data!=null && data.length>0){
+		      for(var i in data){
+		       html+='		<a href="javascript:void(0);" onclick=getinfo('+region_type+','+data[i]['region_id']+') class="top_classifya"><span class="top_classifyspan01">'+data[i]['region_name']+'</span><span class="top_classifyspan02"></span></a>';
+		      }
+		     }
+		     $(".citylist").html(html);
+		   }else{
+		    _toast(ret.msg);
+		    return false;
+		   }
+		 }else{
+		  _alert('网络连接失败,请稍后重试');
+		 }
+		})
+  }
+</script>
+</body>
+</html>

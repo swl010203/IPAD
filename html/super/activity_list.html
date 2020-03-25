@@ -1,0 +1,189 @@
+<!doctype html>
+<html class="bgwhite">
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/common.css"/>
+		<style type="text/css">
+			.activeLunbo_div .mui-slider .mui-slider-group{
+				height: 220px;
+			}
+		</style>
+	</head>
+
+	<body class="bgwhite">
+		<header id="header" class="mui-bar mui-bar-nav bgRed">
+			<h1 class="mui-title">商品</h1>
+			<a class="mui-icon mui-icon-back"></a>
+		</header>
+		<div class="mui-content">
+			<div>
+				<div class="jfscLunbo_div activeLunbo_div mui-hidden">
+					<div class="mui-slider">
+						<div class="mui-slider-group mui-slider-loop">
+							<div class="mui-slider-item mui-slider-item-duplicate">
+								<img src="../images/index1.jpg"/>
+							</div>
+							<!--第一个内容区容器-->
+							<div class="mui-slider-item">
+								<img src="../images/jfsc1.jpg"/>
+							</div>
+							<!--第二个内容区-->
+							<div class="mui-slider-item">
+								<img src="../images/fujin2.jpg"/>
+							</div>
+							<!--第二个内容区-->
+							<div class="mui-slider-item">
+								<img src="../images/index1.jpg"/>
+							</div>
+							<!--第二个内容区-->
+							<div class="mui-slider-item mui-slider-item-duplicate">
+								<img src="../images/jfsc1.jpg"/>
+							</div>
+						</div>
+						<div class="mui-slider-indicator">
+						    <div class="mui-indicator mui-active"></div>
+						    <div class="mui-indicator"></div>
+						    <div class="mui-indicator"></div>
+						</div>
+					</div>
+				</div>
+				<div class="shopInfoCon_tit colorHei888"><span>活动商品</span></div>
+				<div class="mui-content mui_content_paixu mui_content_paixu_border">
+					<div class="shopDiv_info bgwhite mui-row" id="list">
+						<!--<div class="mui-col-sm-6 mui-col-xs-6">
+							<div class="shopDiv_infoImg">
+								<img src="../images/pingguo2.jpg"/>
+							</div>
+							<div class="pl20 pr20 box_s">
+								<p class="mui-ellipsis fs28 mt20">花牛苹果/蛇果 12个 单</p>
+								<div class="fs24 mt20">
+									<span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">活动商品</span>
+								</div>
+								<div class="shopDiv_infoPrice mui-row mt30">
+									<div class="mui-col-sm-8 mui-col-xs-8">
+										<p class="colorRed"><span class="fs24">￥</span><span class="fs36">29</span>. <span class="fs32">99</span></p>
+										<p class="fs24 oldPrice">￥35</p>
+									</div>
+									<div class="mui-col-sm-4 mui-col-xs-4">
+										<div class="addShop"></div>
+									</div>
+								</div>
+							</div>
+						</div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../script/mui.min.js"></script>
+	<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+	<script type="text/javascript" src="../../script/app.js"></script>
+	<script type="text/javascript">
+		mui.init();
+		$('.mui-action-back').on('tap',function(){
+			api.closeWin();
+		});
+//		setTimeout(function(){
+//		    var gallery = mui('.mui-slider');
+//		    gallery.slider({
+//		         interval:1800//自动轮播周期，若为0则不自动播放，默认为0；
+//		    });
+//		},300);
+
+
+    var page = 1;
+    var is_page = true;
+	 apiready = function(){
+        loading('mid_autumn');
+		addEventUserInfo();
+        //听滚动条是否到底部
+        api.addEventListener({
+            name:'scrolltobottom',
+            extra:{
+                threshold:0            //设置距离底部多少距离时触发，默认值为0，数字类型
+            }
+        }, function(ret, err){
+            if(is_page){
+                page = page +1;
+                getActGoods(page);
+            }
+
+        });
+
+        getActGoods(page);
+    };
+	
+	/**
+     * 获取活动商品
+     */
+    function getActGoods(page){
+        var url = ajax_url + 'Index/Activity/activityGoods';
+        var data = {'type': "every_activity", 'p': page};
+        _ajax(url, data, 'get', function(ret){
+        	console.log("================"+JSON.stringify(ret));
+            if(ret.status == 1){
+                var inner_html = '';
+                $.each(ret.data, function(k, v){
+//                  inner_html += '<li class="busi_fenleili">';
+//                  inner_html +=     '<div class="busi_fenlei" onclick="showDetail('+ v.gid + ', ' + v.channel_id +')">';
+//                  inner_html +=         '<a href="javascript:;" class="busi_fenleia"><img src="'+ v.goods_img +'"></a>';
+//                  inner_html +=         '<div class="busi_fenleir">';
+//                  inner_html +=             '<p class="busi_fenleirtxt">';
+//                  inner_html +=                 '<a href="javascript:;" class="busi_fenleirtxtady_dd">'+ v.name +'</a>';
+//                  inner_html +=             '</p>';
+//                  inner_html +=             '<p class="busi_fenleirrice">';
+//                  inner_html +=                 '<b class="busi_fenleirpriceb">￥</b>'+ v.price +'<a href="javascript:;" class="cart_icon"  style="position:inherit; float:right"></a>';
+//                  inner_html +=             '</p>';
+//                  inner_html +=         '</div>';
+//                  inner_html +=     '</div>';
+//                  inner_html += '</li>';
+                    
+                    inner_html += '<div class="mui-col-sm-6 mui-col-xs-6" onclick="showDetail('+ v.gid + ', ' + v.channel_id +')">';
+					inner_html += '	<div class="shopDiv_infoImg">';
+					inner_html += '		<img src="'+ v.goodsInfo.goods_img +'"/>';
+					inner_html += '	</div>';
+					inner_html += '	<div class="pl20 pr20 box_s">';
+					inner_html += '		<p class="mui-ellipsis fs28 mt20">'+ v.name +'</p>';
+					inner_html += '		<div class="fs24 mt20">';
+					inner_html += '			<span class="pl20 pr20 pt10 pb10 whiteBg_spanRedb">活动商品</span>';
+					inner_html += '		</div>';
+					inner_html += '		<div class="shopDiv_infoPrice mui-row mt30">';
+					inner_html += '			<div class="mui-col-sm-8 mui-col-xs-8">';
+					inner_html += '				<p class="colorRed"><span class="fs24">￥</span>'+ v.goodsInfo.shop_price +'</p>';
+					inner_html += '				<p class="fs24 oldPrice">￥'+ v.goodsInfo.market_price +'</p>';
+					inner_html += '			</div>';
+//					inner_html += '			<div class="mui-col-sm-4 mui-col-xs-4">';
+//					inner_html += '				<div class="addShop"></div>';
+//					inner_html += '			</div>';
+					inner_html += '		</div>';
+					inner_html += '	</div>';
+					inner_html += '</div>';
+                });
+                if(page == 1){
+                    $('#list').html(inner_html);
+                }else{
+                    $('#list').append(inner_html);
+                }
+
+            }else{
+                // _toast(ret.msg);
+                _toast('没有更多商品');
+            }
+        });
+    }
+    
+    // 显示详情
+    function showDetail(goods_id, channel){
+        if(channel == 1){
+            // 商城
+        }else if(channel == 2){
+            // 超市
+            _openWinByUrl('super_goodsdetail', 'super_goodsdetail', {'isActivity': 'yes', 'goods_id': goods_id});
+        }
+    }
+	</script>
+</html>

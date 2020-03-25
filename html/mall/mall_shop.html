@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>华海</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<link href="../../css/index.css" rel="stylesheet" type="text/css" />
+<link href="../../css/h_index.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../script/jquery_2_1_4.js"></script>
+<script type="text/javascript" src="../../script/common.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+	<style type="text/css">
+
+	.header_h1a a{ width: 50%; display: inline-block; float: left; color: #232323; background: none;padding-right:0;}
+	/*.listBox{ height: 4rem; }*/
+	.header_h1a a.header_h1acur{ color: #d12a18;}
+
+</style>
+</head>
+<body>
+
+
+<div id="header" style="background:#fff;">
+<!-- 头部 -->
+	<header>
+		<div class="header_top">
+			
+			<a href="#" class="headerLeft" id="fanhui_btn">
+				<span class="backBefor"></span>
+			</a>
+			<h1 class="header_h1">商家</h1>
+			<!--<h1 class="header_h1 header_h1a"><a href="javascript:;" onclick="randomSwitchBtn(0)" id="index_0" class="header_h1acur">商家</a>
+				<a id="index_1" onclick="randomSwitchBtn(1)" class="" href="javascript:;">评价</a></h1>-->
+			<a href="javascript:void(0);" onclick="collect(1)"; class="headerRight">
+				<span class="topcollect_icon "></span>
+			</a>
+		</div>
+	</header>
+	
+
+</div>
+	
+
+<script type="text/javascript">
+	var uid='';
+	var sid='';
+	apiready = function(){
+		api.parseTapmode();
+		
+		addEventUserInfo();
+		
+		var header = $api.byId('header');
+        $api.fixStatusBar(header); 
+        var headerPos = $api.offset(header);
+        var body_h = $api.offset($api.dom('body')).h;
+		//var footer_h = $api.offset($api.dom('footer')).h;
+		//加载状态
+//		
+//		
+//		api.openFrameGroup({
+//		    name: 'mall_shop_group',
+//		    background: '#fff',
+//		    scrollEnabled: false,
+//		    rect: {
+//		        x: 0,
+//		        y: headerPos.h+1,
+//		        w: 'auto',
+//		        h: 'auto'
+//		    },
+//		    index: 0,
+//		    preload:0,
+//		    frames: [{
+//		        name: 'mall_shop_body',
+//		        url: 'mall_shop_body.html',
+//		        pageParam:api.pageParam, 
+//		    }, {
+//		        name: 'mall_shop_comment',
+//		        url: 'mall_shop_comment.html',
+//		        pageParam:api.pageParam, 
+//		        bounces:false
+//		    }]
+//		}, function(ret, err) {
+//		    var index = ret.index;
+//		  	randomSwitchBtn(index);
+//		});
+
+
+        api.openFrame({
+            name: 'mall_shop_body',
+            url: 'mall_shop_body.html',
+            bounces: true,
+            rect: {
+                x: 0,
+                y: headerPos.h+1,
+                w: headerPos.w,
+                h: 'auto'
+            },
+			pageParam:api.pageParam
+        });
+		
+		sid=api.pageParam.id;
+		uid=localStorage.getItem("uid");
+		//获取商家是否被收藏
+		getshopcollect();
+		
+	};
+	
+	//获取商家是否被收藏
+	function getshopcollect(){
+		if(uid){
+			_ajax(ajax_url+'Index/Collection/getCollectShop',{sid:sid,uid:uid},'post',function(ret){
+				if(ret.status==1){
+					$(".topcollect_icon").addClass("topcollect_iconyet");
+					$('.headerRight').attr('onclick','collect(2);');
+				}else{
+					$(".topcollect_icon").removeClass("topcollect_iconyet");
+					$('.headerRight').attr('onclick','collect(1);');
+				}
+			});
+		}
+	}
+	
+	//收藏操作
+	function collect(type){
+		if(!uid){
+			_toast('您没有登录！');
+		}else{
+			_ajax(ajax_url+'Index/Collection/collectShop',{sid:sid,uid:uid,type:type},'post',function(ret){
+				if(ret.status==1){
+					if(type==1){
+						$(".topcollect_icon").addClass("topcollect_iconyet");
+						$('.headerRight').attr('onclick','collect(2);');						
+					}else{
+						$(".topcollect_icon").removeClass("topcollect_iconyet");
+						$('.headerRight').attr('onclick','collect(1);');
+					}
+					_toast(ret.msg);
+				}else{
+					_toast(ret.msg);
+				}
+			});
+		}
+	}
+	
+	  // 随意切换按钮
+    function randomSwitchBtn(index) {
+ 		$(".header_h1 a").removeClass('header_h1acur');
+		$("#index_"+index).addClass('header_h1acur');
+		api.setFrameGroupIndex({
+            name: 'mall_shop_group',
+            index: index
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<!--可视区宽度等与设备的宽度，禁止缩放，缩放比例1:1-->
+	    <meta name="App-config" content="fullscreen=yes,useHistoryState=yes,transition=yes">
+		<!--保留系统的一些配置（历史记录，动画效果，全屏）-->
+		<meta name="apple-mobile-web-app-capable" content="yes"><!--苹果专有的meta信息，允许网页以APP形式运行-->
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"><!--苹果专有的，
+	    	头部bar的样式-->
+		<title>订单详情</title>
+		<link rel="stylesheet" href="../../css/user/style.css" />
+	<link rel="stylesheet" href="../../css/user/allStyle.css">
+	<style>
+		.qugao{
+			height:auto!important;
+			padding-bottom:0.2rem;
+		}
+		
+		.w_xiangQ .w_listCon .w_zhuangtai li {
+			width: 33.333%;
+		}
+		.w_renjian{height:50px;line-height:40px;font-size:18px;}
+		.w_xList li{height:60px;line-height:50px;font-size:18px;}
+		.w_xList>li:nth-child(1):after{width:2px;height:23px;top:0.1rem;}
+		.w_xList>li:nth-child(1){padding-left:10px;}
+		.w_xList{margin-bottom:0;padding-bottom:0;}
+		.w_touxiangBag{width:200px!important;height:180px!important;}
+		.w_touxiangBag img{width:100%;height:100%;}
+		.xianzhu .w_lastDiv p{margin-top:0;}
+		.w_xiangQ{
+			height:200px;
+		}
+		.w_xiangQ .w_zhuangtai li>div{
+			position:relative;
+		}
+		.w_xiangQ .w_zhuangtai li>div p{
+			position:absolute;
+			left:-15px;
+			bottom:10px;
+			width:100%;
+		}
+		/*.daifukuan .w_zhuangtai>div.hongxian{
+			top:0;
+		}*/
+	</style>
+	</head>
+	<body>
+		<ul class="w_listSi daifukuan w_xiangQ">
+			<li class="w_title pl_14 pr_14"></li>
+			<ul class="w_listCon pt_20 box-s pl_14 pr_14">
+				<li>
+					<ul class="w_zhuangtai clearfloat">
+						<li>
+							<div class="progress1">
+								<p>订单已提交</p>
+								<div class=" tu1 "></div>
+							</div>
+						</li>
+						<li class="chang">
+							<div class="progress2">
+								<p>商户确认</p>
+								<div class="tu2"></div>
+							</div>
+						</li>
+						<li>
+							<div class="progress3" >
+								<p>订单已完成</p>
+								<div class="tu4"></div>
+							</div>
+						</li>
+						<!--<li >
+							<div class="progress3" >
+								<p>订单已完成</p>
+								<div class="tu4"></div>
+							</div>
+						</li>-->
+						<div class="huixian"></div>
+						<div class="hongxian"></div>
+					</ul>
+				</li>
+			</ul>
+		</ul>
+		<ul class="w_listTwo jifen border-b xianzhu qugao">
+			<li class="w_title pl_14 pr_14">
+				<div class="fl w_titWenzi">订单编号：<span class='order_sn'></span></div>
+			</li>
+			<div  class="listDiv">
+				<!--<ul class="w_listCon pt_20 box-s pl_14 pr_14">
+					<li class="border-b">
+						<div class="w_touxiangBag fl">
+							<img src="../../images/user/7504.png" alt="" />
+						</div>
+						<div class="w_neirong chou">
+							<p>德国咸猪手 味道好吃 肥而不腻</p>
+							<p></p>
+							<p class="clearfloat">
+								<span class="red">￥243</span>
+								<span class="fr">x1</span>
+							</p>
+						</div>
+					</li>
+				</ul>-->
+			
+			
+			</div>
+			
+			<li class="pt_20 pb_20 box-s pr_14">
+					<div class="w_lastDiv">
+						<p class="dy_dd fr red">商品总金额：<span class="price">￥0</span></p>
+					</div>
+			</li>
+		</ul>
+
+		<div class="w_renjian pl_14 pr_14 box-s mt_10">就餐人数：<span class="number"></span>人</div>
+		<div class="w_renjian pl_14 pr_14 box-s ">就餐时间：<span class="appoint_time"></span></div>
+		
+		<ul class="w_xList mt_10 pl_14 pr_14 border-b border-t mb_100">
+			<li>费用<!--及优惠--></li>
+			<ul>
+				<!--<li>
+					<span class="fl">包装费</span>
+					<span class="red fr">￥9</span>
+				</li>
+				<li>
+					<span class="fl">包间费</span>
+					<span class="red fr">￥243</span>
+				</li>-->
+				<!--<li>
+					<span class="fl">优惠</span>
+					<span class="red fr">-￥0</span>
+				</li>-->
+				<li>
+					<span class="fl">合计</span>
+					<span class="red fr price" >￥0</span>
+				</li>
+			</ul>
+		</ul>
+	</body>
+	<script type="text/javascript" src="../../script/user/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../../script/user/index.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/app.js"></script>
+
+<script>
+
+	var id = 0;
+	apiready = function(){
+		api.parseTapmode();
+		id=api.pageParam.id;
+		
+		ready();
+	};
+	
+	function ready(){
+		_ajax(ajax_url +"Index/UserFoodOrder/foodEvaluate" ,{'id':id},'post',function(ret){
+			var strVar = "";
+			if(ret.status==1){
+			
+				var progress_xian= 0;
+				var progress = ret.foodOrder.status_wz.type;
+				if(progress ==3  || progress ==4  ||  progress ==1 || progress==2){
+					$(".progress1").addClass('red');
+					$(".progress1").find("div").addClass('tu_1_1');
+					progress_xian = 20;
+				}
+				
+				if( progress ==5){
+					$(".progress1").addClass('red');
+					$(".progress1").find("div").addClass('tu_1_1');
+					
+					$(".progress2").addClass('red');
+					$(".progress2").find("div").addClass('tu_2_1');
+					progress_xian = 50;
+				}
+				
+				
+				if( progress ==7  || progress ==8 ){
+					$(".progress1").addClass('red');
+					$(".progress1").find("div").addClass('tu_1_1');
+					
+					$(".progress2").addClass('red');
+					$(".progress2").find("div").addClass('tu_2_1');
+					
+					$(".progress4").addClass('red');
+					$(".progress4").find("div").addClass('tu_4_1');
+					progress_xian = 79;
+				}	
+				
+				$(".hongxian").css('width',progress_xian+'%');
+			
+				$(".order_status_str").html(ret.foodOrder.status_wz.msg);
+				
+				$(".order_sn").html(ret.foodOrder.order_sn);
+				
+				$(".price").html("￥"+ret.foodOrder.price);
+				
+				var appoint_time = ret.foodOrder.appoint_time;
+				$(".appoint_time").html(_formatDate(appoint_time*1000 , true));
+				$(".number").html(ret.foodOrder.number);
+				
+				$.each(ret.foodOrder.goods,function(k,v){
+					    strVar += "<ul class=\"w_listCon pt_20 box-s pl_14 pr_14\">\n";
+					    strVar += "	<li class=\"border-b\">\n";
+					    strVar += "	<div class=\"w_touxiangBag fl\">\n";
+					    strVar += "		<img src=\""+v['goods_img']+"\" alt=\"\"/>\n";
+					    strVar += "	<\/div>\n";
+					    strVar += "	<div class=\"w_neirong chou\">\n";
+					    strVar += "		<p>\n";
+					    strVar += v['goods_name'];
+					    strVar += "		<\/p>\n";
+					    strVar += "		<p>\n";
+					    strVar += "		<\/p>\n";
+					    strVar += "		<p class=\"clearfloat\">\n";
+					    strVar += "			<span class=\"red\">￥"+v['goods_price']+"<\/span>\n";
+					    strVar += "			<span class=\"fr\">x"+v['goods_num']+"<\/span>\n";
+					    strVar += "		<\/p>\n";
+					    strVar += "	<\/div>\n";
+					    strVar += "	<\/li>\n";
+					    strVar += "<\/ul>\n";
+					    
+					
+				});
+			    
+				$(".listDiv").html(strVar);
+			}else{
+				_toast(ret.msg);
+			}
+		})
+	}
+</script>
+</html>
